@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-         <div class="overlay"></div>
+        <div class="overlay"></div>
     </div>
     <%@include file="components/recepFooter.html" %>
     <script src="assets/js/jquery-3.2.1.min.js"></script>
@@ -120,43 +120,8 @@
     <script type="text/javascript">
         window.onload = function () {
             var clinicId = localStorage.getItem("clinicId");
+            clinicId = 1;
             var token = localStorage.getItem("key");
-            $.ajax({
-                type: "GET",
-                dataType: "text",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/userinfor/count/2/" + clinicId,
-                success: function (data) {
-                    document.getElementById("doctorCount").innerHTML = data;
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-            });
-
-
-            $.ajax({
-                type: "GET",
-                dataType: "text",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/userinfor/count/4/" + clinicId,
-                success: function (data) {
-                    document.getElementById("receptionistCount").innerHTML = data;
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-            });
 
             $.ajax({
                 type: "GET",
@@ -164,18 +129,12 @@
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/examination/findbyclinicid/" + clinicId,
+                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
                 success: function (data) {
-                    var list = [];
-                    var length = data.length.toString();
-                    document.getElementById("examCount").innerHTML = length;
-                    for (var i = 0; i < data.length; i++) {
-                        if (!list.includes(data[i].userId.id)) {
-                            list.push(data[i].userId.id);
-                        }
-                    }
-                    document.getElementById("patientCount").innerHTML = list.length;
-
+                    document.getElementById("doctorCount").innerHTML = data.totalDoctor;
+                    document.getElementById("patientCount").innerHTML = data.totalPatient;
+                    document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
+                    document.getElementById("examCount").innerHTML = data.totalExamination;
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -190,6 +149,8 @@
         $(document).ajaxStop(function () {
             $("div").removeClass("loading");
         });
+        
+       
 
     </script>
 

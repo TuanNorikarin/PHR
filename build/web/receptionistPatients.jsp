@@ -89,8 +89,8 @@
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                             <div id="d" class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="selectService.jsp"><i class="fa fa-check-square m-r-5"></i> Select patient</a>
                                                 <a class="dropdown-item" href="edit-patient.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-check-square"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -117,242 +117,86 @@
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
-//            function searchFunction() {
-//                var input, filter, table, tr, nameSearch, i, txtValue, phoneSearch;
-//                input = document.getElementById("searchPatient");
-//                filter = input.value.toUpperCase();
-//                table = document.getElementById("patientTable");
-//                tr = table.getElementsByTagName("tr");
-//                for (i = 0; i < tr.length; i++) {
-//                    nameSearch = tr[i].getElementsByTagName("td")[0];
-//                    phoneSearch = tr[i].getElementsByTagName("td")[3];
-//                    if (nameSearch || phoneSearch) {
-//                        txtValueName = nameSearch.textContent || nameSearch.innerText;
-//                        txtValuePhone = phoneSearch.textContent || phoneSearch.innerText;
-//                        if (txtValueName.toUpperCase().indexOf(filter) > -1) {
-//                            tr[i].style.display = "";
-//                        } else if (txtValuePhone.toUpperCase().indexOf(filter) > -1) {
-//                            tr[i].style.display = "";
-//                        } else {
-//                            tr[i].style.display = "none";
-//                        }
-//                    }
-//                }
-//            }
-//            ;
+            var dataTable;
+//========================================== TÌm theo số điện thoại====================================================
             window.onload = function () {
                 var token = localStorage.getItem("key");
                 var clinicId = localStorage.getItem("clinicId");
-                var tableData = "";
-                $('#buttonPatient').on('click', function ()
-                {
-                    var count = 0;
+                clinicId = 1;
+                $('#buttonPatient').on('click', function () {
+                    console.log('button clicked');
                     var searchPatientValue = $('#searchPatient').val();
                     $.ajax({
                         type: "GET",
                         dataType: "json",
                         contentType: "application/json; charset=UTF-8",
                         headers: {
-                            Authorization: 'Bearer ' + token},
-                        url: "https://bt-application.herokuapp.com/api/userinfor/roleid/3",
-                        success: function (data) {
-                            var arraySearch = [];
-                            if (tableData.$.length === 0) {
-                                tableData.destroy();
-                                tableData.rows().remove().draw();
-                            }
-
-                            for (var i = 0; i < data.length; i++) {
-                                if (data[i].phone === searchPatientValue) {
-                                    $('#patientTable tbody').on('click', 'td', function ()
-                                    {
-                                        var tr = $(this).closest("tr");
-                                        var rowindex = tr.index();
-                                        table = document.getElementById("patientTable");
-                                        tr = table.getElementsByTagName("tr");
-                                        td = tr[rowindex + 1].getElementsByTagName("td")[4];
-                                        txtValue = td.textContent;
-                                        $.each(data, function (index, value) {
-                                            if (value.phone === txtValue) {
-                                                localStorage.setItem("dataPat", JSON.stringify(value));
-                                            }
-                                        });
-
-                                    }
-                                    );
-                                    count++;
-                                    arraySearch.push(data[i]);
-                                    tableData = $('#patientTable').DataTable({
-                                        data: arraySearch,
-                                        columns: [
-                                            {data: "image",
-                                                "render": function (data, type, row, meta) {
-                                                    return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
-                                                }},
-                                            {data: 'fullname'},
-                                            {data: 'dob'},
-                                            {data: 'address'},
-                                            {data: 'phone'},
-                                            {data: 'mail'},
-                                            {data: 'status'},
-                                            {
-                                                defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "selectService.jsp"><i class="fa fa-check-square"></i> &nbsp; Select Patient</a ><a class = "dropdown-item" href = "edit-patientReceptionist.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
-
-                                            },
-                                        ],
-                                        "bDestroy": true,
-                                        "bFilter": true,
-                                        language: {
-                                            search: 'Search:',
-                                            searchPlaceholder: ""
-                                        },
-                                        "createdRow": function (row, data, dataIndex) {
-                                            if (data.status === "Inactive") {
-                                                $('td', row).css('color', '#b5b5b5');
-                                                $('td', row).css('font-style', 'italic');
-                                            }
-                                            if (data.status === "Active") {
-                                                $('td:eq(6)', row).css('color', '#2a9c31');
-                                                $('td:eq(6)', row).css('font-weight', 'bolder');
-
-                                            }
-                                        }
-
-
-                                    });
-                                }
-                            }
-                            if (count === 0) {
-                                tableData = $('#patientTable').dataTable({
-                                    data: arraySearch,
-                                    columns: [
-                                        {data: "image",
-                                            "render": function (data, type, row, meta) {
-                                                return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
-                                            }},
-                                        {data: 'fullname'},
-                                        {data: 'dob'},
-                                        {data: 'address'},
-                                        {data: 'phone'},
-                                        {data: 'mail'},
-                                        {data: 'status'},
-                                        {
-                                            defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "selectService.jsp"><i class="fa fa-check-square"></i> &nbsp; Select Patient</a ><a class = "dropdown-item" href = "edit-patientReceptionist.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
-
-                                        },
-                                    ],
-                                    "bDestroy": true,
-                                    "bFilter": true,
-                                    language: {
-                                        "language": {
-                                            "emptyTable": "No data available in table"
-                                        }
-                                    },
-                                    "createdRow": function (row, data, dataIndex) {
-                                        if (data.status === "Inactive") {
-                                            $('td', row).css('color', '#b5b5b5');
-                                            $('td', row).css('font-style', 'italic');
-                                        }
-                                        if (data.status === "Active") {
-                                            $('td:eq(6)', row).css('color', '#2a9c31');
-                                            $('td:eq(6)', row).css('font-weight', 'bolder');
-
-                                        }
-                                    }
-
-                                });
-                            }
-                        }});
+                            'Access-Control-Allow-Origin': '*'},
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/account/" + searchPatientValue,
+                        statusCode: {
+                            200: function (data) {
+                                console.log('data khi click:  ', data);
+                                dataTable.clear();
+                                dataTable.rows.add([data]);
+                                dataTable.draw();
+                            },
+                            404: function () {
+                                alert("Patient is not found!");
+                            },
+                            400: function () {
+                                alert("Patient's phone can not null");
+                            },
+                        }
+                    });
                 });
-
+//====================================================Load List Patient==========================================
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
+//                    headers: {
+//                        Authorization: 'Bearer ' + token},
                     headers: {
-                        Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/examination/findbyclinicid/" + clinicId,
-                    success: function (data) {
-                        var a = JSON.stringify(data);
-                        $('#patientTable tbody').on('click', 'td', function ()
-                        {
-                            var tr = $(this).closest("tr");
-                            var rowindex = tr.index();
-                            table = document.getElementById("patientTable");
-                            tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[4];
-                            txtValue = td.textContent;
-                            $.each(data, function (index, value) {
-                                if (value.userId.phone === txtValue) {
-                                    console.log(value.userId);
-                                    localStorage.setItem("dataPat", JSON.stringify(value.userId));
-                                }
-                            });
+                        'Access-Control-Allow-Origin': '*'},
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/clinic/" + clinicId,
+                    statusCode: {
+                        200: function (data) {
+                            console.log('data khi load: ', data);
+                            dataTable = $('#patientTable').DataTable({
+                                data: data,
+                                columns: [
+                                    {data: "image",
+                                        "render": function (data, type, row, meta) {
+                                            return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
+                                        }},
+                                    {data: 'name'},
+                                    {data: 'doB'},
+                                    {data: 'address'},
+                                    {data: 'phone'},
+                                    {data: 'gender'},
+                                    {data: 'status'},
+                                    {
+                                        defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class="dropdown-item" href="selectService.jsp"><i class="fa fa-check-square m-r-5"></i> Select patient</a><a class="dropdown-item" href="edit-patient.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a> </div></div></td>'
 
-                        }
-                        );
-                        $('td').click(function () {
-                            var row_index = $(this).parent().index();
-
-                        });
-//                                   
-
-
-
-                        var b = JSON.parse(a);
-                        var uniqueArray = b
-                                .map(v => v['userId'])
-                                .map(v => v['id'])
-                                .map((v, i, array) => array.indexOf(v) === i && i)
-                                .filter(v => b[v])
-                                .map(v => b[v]);
-                        tableData = $('#patientTable').DataTable({
-                            data: uniqueArray,
-                            columns: [
-                                {data: "userId.image",
-                                    "render": function (data, type, row, meta) {
-                                        return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
-                                    }},
-                                {data: 'userId.fullname'},
-                                {data: 'userId.dob'},
-                                {data: 'userId.address'},
-                                {data: 'userId.phone'},
-                                {data: 'userId.mail'},
-                                {data: 'userId.status'},
-                                {
-                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "selectService.jsp"><i class="fa fa-check-square"></i> &nbsp; Select Patient</a ><a class = "dropdown-item" href = "edit-patientReceptionist.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
-
+                                    }
+                                ],
+                                "bDestroy": true,
+                                "bFilter": false,
+                                language: {
+                                    search: 'Search:',
+                                    searchPlaceholder: ""
                                 },
-                            ],
-                            "bDestroy": true,
-                            "bFilter": true,
-                            language: {
-                                search: 'Search:',
-                                searchPlaceholder: ""
-                            },
-                            "createdRow": function (row, data, dataIndex) {
-                                if (data.userId.status === "Inactive") {
-                                    $('td', row).css('color', '#b5b5b5');
-                                    $('td', row).css('font-style', 'italic');
-                                    $('td:eq(7)', row).css('display', 'none');
-                                    
-                                }
-                                if (data.userId.status === "Active") {
-                                    $('td:eq(6)', row).css('color', '#2a9c31');
-                                    $('td:eq(6)', row).css('font-weight', 'bolder');
-
-                                }
-                            }
-
-
-                        });
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(' Error in processing! ' + textStatus);
+                            });
+                        },
+                        400: function (jqXHR, textStatus, errorThrown) {
+                            console.log(' Error in processing! ' + textStatus);
+                        }
                     }
 
-                })
-            };
+                });
+            };//end load
+
+
 
 
 
