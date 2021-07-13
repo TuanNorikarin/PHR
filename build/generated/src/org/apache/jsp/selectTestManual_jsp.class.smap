@@ -1,10 +1,10 @@
 SMAP
-receptionistIndex_jsp.java
+selectTestManual_jsp.java
 JSP
 *S JSP
 *F
-+ 0 receptionistIndex.jsp
-receptionistIndex.jsp
++ 0 selectTestManual.jsp
+selectTestManual.jsp
 + 1 recepHeader.html
 components/recepHeader.html
 + 2 recepSidebar.html
@@ -12,11 +12,11 @@ components/recepSidebar.html
 + 3 recepFooter.html
 components/recepFooter.html
 *L
-1,49:51
-1#1,122:100
-49#0,2:222
-1#2,101:224
-50#0,63:325
-1#3,220:388
-112#0,50:607
+1,65:51
+1#1,122:115
+65#0,2:237
+1#2,101:239
+66#0,59:340
+1#3,220:399
+124#0,130:618
 *E

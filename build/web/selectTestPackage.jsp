@@ -3,8 +3,9 @@
 
 
     <!-- blog23:34-->
+
     <head>
-        <%@page contentType="text/html" pageEncoding="UTF-8"%>
+        <%@page contentType="text/html" pageEncoding="UTF-8" %>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
         <title>MPMR - Manage Personal Medical Record</title>
@@ -25,14 +26,16 @@
                 background-color: #e3e7e8;
             }
 
-            .selectPackage{
+            .selectPackage {
                 float: right;
             }
+
             #patientTable {
                 width: 100% !important;
             }
-            #description{
-                display: none;    
+
+            #description {
+                display: none;
             }
         </style>
     </head>
@@ -47,31 +50,32 @@
                     <h4 class="page-title">Test Package</h4>
                 </div>
                 <!--                <div class="col-sm-8 col-9 text-right m-b-20">
-                                    <a href="add-testPackage.jsp" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Test Package</a>
-                                </div>-->
+                                <a href="add-testPackage.jsp" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Test Package</a>
+                            </div>-->
             </div>
             <!--            <form role="form" id="form-buscar">
-                            <div class="form-group">
-                                <div class="input-group ">
-                                    <input id="1" class="custom-seach " type="text" name="search" placeholder="Search..." required/>
-                                    <span class="input-group-btn">
-                                        &nbsp;
-                                        <button class="btn btn-success custom-btn " type="submit">
-                                            <i class="fa fa-search"></i> Search
-                                        </button>
-                                    </span>
-                                </div>
+                        <div class="form-group">
+                            <div class="input-group ">
+                                <input id="1" class="custom-seach " type="text" name="search" placeholder="Search..." required/>
+                                <span class="input-group-btn">
+                                    &nbsp;
+                                    <button class="btn btn-success custom-btn " type="submit">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </span>
                             </div>
-                        </form>-->
+                        </div>
+                    </form>-->
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
+                        <table id="patientTable"
+                               class="table table-border table-striped custom-table datatable mb-0">
                             <thead>
                                 <tr>
                                     <th style="width: 25%">Name</th>
 
-                                    <th id="description" style="width: 30%">Description</th>
+                                    <th style="width: 70%">Description</th>
 
 
                                     <th style="width: 5%" class="text-right">Action</th>
@@ -84,7 +88,7 @@
                                     <td id="description"></td>
 
                                     <td>
-                                        <button class="selectPackage"> <a > Select</a> </button> 
+                                        <button class="selectPackage"> <a> Select</a> </button>
                                     </td>
                                 </tr>
 
@@ -106,75 +110,38 @@
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
+
             window.onload = function () {
+
                 var token = localStorage.getItem("key");
+                var allData;
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
-                        Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/package/getall",
+                        // Authorization: 'Bearer ' + token
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/packages/packages",
                     success: function (data) {
-                        var a = JSON.stringify(data);
-                        $('#patientTable tbody').on('click', 'td', function ()
-                        {
-                            var tr = $(this).closest("tr");
-                            var rowindex = tr.index();
-                            table = document.getElementById("patientTable");
-                            tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-                            txtValue = td.textContent;
-                            $.each(data, function (index, value) {
-                                console.log(value.name);
-                                if (value.name === txtValue) {
-                                    $.ajax({
-                                        type: "GET",
-                                        dataType: "json",
-                                        contentType: "application/json; charset=UTF-8",
-                                        headers: {
-                                            Authorization: 'Bearer ' + token},
-                                        url: "https://bt-application.herokuapp.com/api/packagetest/findbypackageid/" + value.id,
-                                        success: function (data) {
-                                            var dataArrayId = [];
-                                            for (var i = 0; i < data.length; i++) {
-                                                dataArrayId.push(data[i].testId.id);
-                                            }
-                                            localStorage.setItem("arrayIdTestForExam", dataArrayId);
-                                            window.location.href = "createExamination.jsp";
-                                        }, error: function (jqXHR, textStatus, errorThrown) {
-
-                                        }})
-                                    localStorage.setItem("dataPackage", JSON.stringify(value));
-                                }
-                            });
-
-                        }
-                        );
-                        $('td').click(function () {
-                            var row_index = $(this).parent().index();
-
-                        });
-//                                   
-
-
-
-                        var b = JSON.parse(a);
-
-                        $('#patientTable').DataTable({
-                            data: b,
+                        console.log(data);
+                        allData = $('#patientTable').DataTable({
+                            data: data,
                             columns: [
                                 {data: 'name'},
                                 {data: 'description'},
                                 {
-                                    defaultContent: '<td><button class="selectPackage"> <a> Select</a> </button></td>'
-
+                                    data: 'id',
+                                    "render": function (data, type, row, meta) {
+                                        return '<td><button type="button" onclick="getpackageId(' + data + ')" class="btn btn-success">Select</button></td>'
+                                    }
                                 }
                             ],
                             "bDestroy": true,
                             "bFilter": true,
-                            "createdRow": function (row, data, dataIndex) {
-                                $('td:eq(1)', row).css('display', 'none');
+                            select: {
+                                style: 'single'
                             }
                         });
                     },
@@ -182,13 +149,24 @@
                         console.log(' Error in processing! ' + textStatus);
                     }
 
-                })
+                });
             };
 
-
+            /*
+                     
+             */
+            function getpackageId(id) {
+                localStorage.setItem('packageId', id);
+                if (confirm('Do you want to choose some other testing services?')) {
+                    window.location.href = "selectTestManual.jsp";
+                } else {
+                    window.location.href = "createExamination.jsp";
+                }
+            }
         </script>
     </body>
 
 
     <!-- patients23:19-->
+
 </html>

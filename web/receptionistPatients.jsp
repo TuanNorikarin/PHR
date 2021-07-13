@@ -176,7 +176,10 @@
                                     {data: 'gender'},
                                     {data: 'status'},
                                     {
-                                        defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class="dropdown-item" href="selectService.jsp"><i class="fa fa-check-square m-r-5"></i> Select patient</a><a class="dropdown-item" href="edit-patient.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a> </div></div></td>'
+                                       data:'id',
+                                       "render": function(data, type, row, meta){
+                                           return '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class="dropdown-item" onclick="getPatientId('+data+')" href="selectService.jsp"><i class="fa fa-check-square m-r-5"></i> Select patient</a><a class="dropdown-item" href="edit-patient.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a> </div></div></td>'
+                                       }
 
                                     }
                                 ],
@@ -196,7 +199,10 @@
                 });
             };//end load
 
-
+            function getPatientId(id){
+                console.log(id);
+                localStorage.setItem('patientId', id);
+            }
 
 
 

@@ -119,6 +119,7 @@
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
         window.onload = function () {
+//            localStorage.clear();
             var clinicId = localStorage.getItem("clinicId");
             clinicId = 1;
             var token = localStorage.getItem("key");
