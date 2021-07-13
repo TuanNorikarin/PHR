@@ -30,7 +30,7 @@
             #imgClinic{
                 overflow:hidden
             }
-
+            
         </style>
     </head>
 
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                         </div>
-
+                       
                         <div class="form-group">
                             <label>Clinic Description</label>
                             <textarea cols="30" rows="6" id="description" name="description" class="form-control"></textarea>
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                         <div class="m-t-20 text-center">
-                            <button id="createClinic"  class="btn btn-primary submit-btn">Update Clinic</button>
+                            <button id="createClinic"  class="btn btn-primary submit-btn">Create Clinic</button>
                         </div>
                     </form>
                 </div>
@@ -158,12 +158,12 @@
                                             }
 //                =====================================Insert===============================================
                                             $(document).ready(function () {
-//                                                function uuidv4() {
-//                                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//                                                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-//                                                        return v.toString(16);
-//                                                    });
-//                                                }
+                                                function uuidv4() {
+                                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                                                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                                                        return v.toString(16);
+                                                    });
+                                                }
                                                 var firebaseConfig = {
                                                     apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
                                                     authDomain: "upload-image-45245.firebaseapp.com",
@@ -193,34 +193,19 @@
                                                     $('#inputPhone').removeClass('error');
                                                     document.getElementById('messagePhone').innerHTML = '';
                                                 });
-                                                var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
-                                                $("input[name='clinicName']").val(clinicInf.name);
-                                                $("input[name='district']").val(clinicInf.district);
-//                                                
-                                                $("textarea[name='description']").val(clinicInf.description);
-                                                $("input[name='address']").val(clinicInf.address);
-                                                $("input[name='phone']").val(clinicInf.phone);
-//                                                $("#clinic_active").val(clinicInf.status);
-                                                var image = clinicInf.image;
-                                                $("#imgPreview").attr('src', image);
-                                                var statusOld = clinicInf.status;
-                                                if (statusOld === "Active") {
-                                                    $("#clinic_active").prop("checked", true);
-                                                } else {
-                                                    $("#clinic_inactive").prop("checked", true);
-                                                }
                                                 $("#createClinic").click(function (event) {
                                                     event.preventDefault();
-                                                    $('#inputClinicname').removeClass('error');
+                                                     $('#inputClinicname').removeClass('error');
                                                     document.getElementById('messageClinicname').innerHTML = '';
                                                      $('#inputAddress').removeClass('error');
                                                     document.getElementById('messageAddress').innerHTML = '';
-                                                     $('#inputDistrict').removeClass('error');
+                                                    $('#inputDistrict').removeClass('error');
                                                     document.getElementById('messageDistrict').innerHTML = '';
-                                                     $('#inputPhone').removeClass('error');
+                                                    $('#inputPhone').removeClass('error');
                                                     document.getElementById('messagePhone').innerHTML = '';
-                                                    var imageOld = clinicInf.image;
-                                                    var clinicName = $("input[name='clinicName']").val(); //lấy giá trị trong input user
+                                                    
+                                                    
+                                                    var clinicName = $("input[name='clinicName']").val(); //lấy giá trị trong input clinic
 
                                                     var district = $("input[name='district']").val();
                                                     var imgClinic = $("input[name='imgClinic']").val();
@@ -231,12 +216,22 @@
                                                     var status;
                                                     var token = localStorage.getItem("key");
                                                     var selectSta = $('input[id="clinic_active"]:checked').val();
+                                                    
+                                                    console.log(clinicName + " clinicName");
+                                                    console.log(phone + " phone");
+                                                    console.log(uuidv4() + " id");
+                                                    console.log(description + " description");
+                                                    console.log(imgClinic + " imgClinic");
+                                                    console.log(address + " address");
+                                                    console.log(status + " status");
+                                                    console.log(selectSta + " selectSta");
+                                                    console.log(district + " district");
+                                                    
                                                     if (selectSta === "on") {
                                                         status = "Active";
                                                     } else {
                                                         status = "Inactive";
                                                     }
-                                                    console.log(status);
                                                     if (clinicName.length === 0) {
                                                         $('#inputClinicname').addClass('error');
                                                         document.getElementById('messageClinicname').style.color = 'red';
@@ -298,12 +293,12 @@
                                                                     ajax(url);
                                                                 });
                                                             } else {
-                                                                ajax(imageOld);
+                                                                ajax("assets/img/user.jpg");
                                                             }
                                                         }
                                                         function ajax(url) {
                                                             return  $.ajax({
-                                                                type: "PUT",
+                                                                type: "POST",
                                                                 dataType: "json",
                                                                 contentType: "application/json; charset=utf-8",
                                                                 headers: {
@@ -311,18 +306,20 @@
                                                                 data: JSON.stringify({
                                                                     "address": address,
                                                                     "name": clinicName,
-                                                                    "id": clinicInf.id,
+//                                                                    "id": "2",
+                                                                    "coordinate": "HCM",
                                                                     "image": url,
                                                                     "phone": phone,
                                                                     "status": status,
                                                                     "district": district,
+                                                                    "clinicGroupId": "1",
                                                                     "description": description
                                                                 }),
-                                                                url: "https://bt-application.herokuapp.com/api/clinic/edit",
+                                                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic",
                                                                 complete: function (jqXHR) {
-                                                                    console.log(jqXHR.status);
                                                                     if (jqXHR.status === 200) {
                                                                         window.location.href = "clinics.jsp";
+                                                                        console.log(data);
                                                                     }
                                                                 }
                                                             });

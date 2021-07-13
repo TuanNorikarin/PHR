@@ -62,7 +62,7 @@
                                     <span id='messageLastname'></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+<!--                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Username <span class="text-danger">*</span></label>
                                     <input id='inputUsername' class="form-control" name="username" type="text">
@@ -75,7 +75,7 @@
                                     <input id='inputEmail' class="form-control" name="email" type="email">
                                     <span id='messageEmail'></span>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Password <span class="text-danger">*</span></label>
@@ -90,15 +90,15 @@
                                     <span id='message'></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+<!--                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date of Birth</label>
                                     <div class="cal-icon">
                                         <input type="text" name="dob" class="form-control datetimepicker">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6">
+                            </div>-->
+<!--                            <div class="col-sm-6">
                                 <div class="form-group gender-select">
                                     <label class="gen-label">Gender:</label>
                                     <div class="form-check-inline">
@@ -112,8 +112,8 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-12">
+                            </div>-->
+<!--                            <div class="col-sm-12">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
@@ -123,7 +123,7 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone <span class="text-danger">*</span> </label>
@@ -251,12 +251,12 @@
                                                             }
                                                         }
                                                     });
-                                                    function uuidv4() {
-                                                        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                                                            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                                                            return v.toString(16);
-                                                        });
-                                                    }
+//                                                    function uuidv4() {
+//                                                        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+//                                                            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+//                                                            return v.toString(16);
+//                                                        });
+//                                                    }
 
 
                                                     var firebaseConfig = {
@@ -309,10 +309,10 @@
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
                                                     });
-                                                    $("#inputUsername").click(function () {
-                                                        $('#inputUsername').removeClass('error');
-                                                        document.getElementById('messageUsername').innerHTML = '';
-                                                    });
+//                                                    $("#inputUsername").click(function () {
+//                                                        $('#inputUsername').removeClass('error');
+//                                                        document.getElementById('messageUsername').innerHTML = '';
+//                                                    });
                                                     $("#inputPassword").click(function () {
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
@@ -321,66 +321,66 @@
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
                                                     });
-                                                    $("#inputEmail").click(function () {
-                                                        $('#inputEmail').removeClass('error');
-                                                        document.getElementById('messageEmail').innerHTML = '';
-                                                    });
+//                                                    $("#inputEmail").click(function () {
+//                                                        $('#inputEmail').removeClass('error');
+//                                                        document.getElementById('messageEmail').innerHTML = '';
+//                                                    });
                                                     $("#createPatient").click(function (event) {
                                                         event.preventDefault();
                                                         $('#inputFirstname').removeClass('error');
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-                                                        $('#inputUsername').removeClass('error');
-                                                        document.getElementById('messageUsername').innerHTML = '';
+//                                                        $('#inputUsername').removeClass('error');
+//                                                        document.getElementById('messageUsername').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
-                                                        $('#inputEmail').removeClass('error');
-                                                        document.getElementById('messageEmail').innerHTML = '';
+//                                                        $('#inputEmail').removeClass('error');
+//                                                        document.getElementById('messageEmail').innerHTML = '';
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
                                                         for (var i = 0; i < alluser.length; i++) {
-                                                            if (alluser[i].username === document.getElementById('inputUsername').value) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username already exists ✘';
-                                                                count = 1;
-                                                            }
+//                                                            if (alluser[i].username === document.getElementById('inputUsername').value) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username already exists ✘';
+//                                                                count = 1;
+//                                                            }
                                                             if (alluser[i].phone === document.getElementById('inputPhone').value) {
                                                                 $('#inputPhone').addClass('error');
                                                                 document.getElementById('messagePhone').style.color = 'red';
                                                                 document.getElementById('messagePhone').innerHTML = 'Phone already exists ✘';
                                                                 count = 1;
                                                             }
-                                                            if (alluser[i].mail === document.getElementById('inputEmail').value) {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Email already exists ✘';
-                                                                count = 1;
-                                                            }
+//                                                            if (alluser[i].mail === document.getElementById('inputEmail').value) {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Email already exists ✘';
+//                                                                count = 1;
+//                                                            }
                                                         }
                                                         var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
                                                         var lastName = $("input[name='lastName']").val();
-                                                        var username = $("input[name='username']").val();
+//                                                        var username = $("input[name='username']").val();
                                                         var password = $("input[name='password']").val();
-                                                        var dob = $("input[name='dob']").val();
+//                                                        var dob = $("input[name='dob']").val();
                                                         var clinicID = $("select[id='clinicID']").val();
-                                                        var gender = $("input[name='gender']").val();
-                                                        var email = $("input[name='email']").val();
-                                                        var address = $("input[name='address']").val();
+//                                                        var gender = $("input[name='gender']").val();
+//                                                        var email = $("input[name='email']").val();
+//                                                        var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
                                                         var status = $("input[name='status']").val();
                                                         var token = localStorage.getItem("key");
-                                                        var selectGen = $('input[id="male"]:checked').val();
-                                                        if (selectGen === "on") {
-                                                            gender = 1;
-                                                        } else {
-                                                            gender = 0;
-                                                        }
+//                                                        var selectGen = $('input[id="male"]:checked').val();
+//                                                        if (selectGen === "on") {
+//                                                            gender = 1;
+//                                                        } else {
+//                                                            gender = 0;
+//                                                        }
 
                                                         var selectSta = $('input[id="patient_active"]:checked').val();
                                                         if (selectSta === "on") {
@@ -388,6 +388,11 @@
                                                         } else {
                                                             status = "Inactive";
                                                         }
+                                                        
+                                                        console.log(firstName + " firtname");
+                                                        console.log(phone + " phone");
+                                                        console.log(clinicID + " clinic");
+                                                        
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
                                                             $('#inputFirstname').addClass('error');
                                                             document.getElementById('messageFirstname').style.color = 'red';
@@ -397,16 +402,16 @@
                                                                 document.getElementById('messageLastname').style.color = 'red';
                                                                 document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
                                                             }
-                                                            if (username.length > 30 || username.length < 6) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            }
-                                                            if (validateEmail(email) === false && email !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
+//                                                            if (username.length > 30 || username.length < 6) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            }
+//                                                            if (validateEmail(email) === false && email !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -418,20 +423,21 @@
                                                                 document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                             }
 
-                                                        } else if (lastName.length === 0 || !validateName(removeAscent(lastName)) || lastName.length > 35) {
+                                                        }
+                                                        else if (lastName.length === 0 || !validateName(removeAscent(lastName)) || lastName.length > 35) {
                                                             $('#inputLastname').addClass('error');
                                                             document.getElementById('messageLastname').style.color = 'red';
                                                             document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
-                                                            if (username.length > 30 || username.length < 6) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            }
-                                                            if (validateEmail(email) === false && email !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
+//                                                            if (username.length > 30 || username.length < 6) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            }
+//                                                            if (validateEmail(email) === false && email !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -442,40 +448,43 @@
                                                                 document.getElementById('messagePhone').style.color = 'red';
                                                                 document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                             }
-                                                        } else if (username.length > 30 || username.length < 6) {
-                                                            $('#inputUsername').addClass('error');
-                                                            document.getElementById('messageUsername').style.color = 'red';
-                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            if (validateEmail(email) === false && email !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (validateEmail(email) === false && email !== "") {
-                                                            $('#inputEmail').addClass('error');
-                                                            document.getElementById('messageEmail').style.color = 'red';
-                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (password.length > 30 || password.length < 6) {
+                                                        }
+//                                                        else if (username.length > 30 || username.length < 6) {
+//                                                            $('#inputUsername').addClass('error');
+//                                                            document.getElementById('messageUsername').style.color = 'red';
+//                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            if (validateEmail(email) === false && email !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
+//                                                            if (password.length > 30 || password.length < 6) {
+//                                                                $('#inputPassword').addClass('error');
+//                                                                document.getElementById('messagePassword').style.color = 'red';
+//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+//                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+//                                                        }
+//                                                        else if (validateEmail(email) === false && email !== "") {
+//                                                            $('#inputEmail').addClass('error');
+//                                                            document.getElementById('messageEmail').style.color = 'red';
+//                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            if (password.length > 30 || password.length < 6) {
+//                                                                $('#inputPassword').addClass('error');
+//                                                                document.getElementById('messagePassword').style.color = 'red';
+//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+//                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+//                                                        }
+                                                        else if (password.length > 30 || password.length < 6) {
                                                             $('#inputPassword').addClass('error');
                                                             document.getElementById('messagePassword').style.color = 'red';
                                                             document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
@@ -516,30 +525,31 @@
                                                                     headers: {
                                                                         Authorization: 'Bearer ' + token},
                                                                     data: JSON.stringify({
-                                                                        "address": address,
-                                                                        "gender": gender,
-                                                                        "dob": dob,
-                                                                        "mail": email,
-                                                                        "fullname": lastName + " " + firstName,
-                                                                        "id": uuidv4(),
+//                                                                        "address": address,
+//                                                                        "gender": gender,
+//                                                                        "dob": dob,
+//                                                                        "mail": email,
+                                                                        "name": lastName + " " + firstName,
+//                                                                        "id": uuidv4(),
                                                                         "image": url,
                                                                         "password": password,
                                                                         "phone": phone,
-                                                                        "roleId": {
-                                                                            "id": 2
-
-                                                                        },
+//                                                                        "roleId": {
+//                                                                            "id": 2
+//
+//                                                                        },
                                                                         "status": status,
-                                                                        "clinicId": {"id": clinicID},
-                                                                        "token": "",
-                                                                        "username": username
+//                                                                        "clinicId": {"id": clinicID},
+                                                                        "clinicId": clinicID,
+                                                                        "token": ""
+                                                                        
 
 
                                                                     }),
-                                                                    url: "https://bt-application.herokuapp.com/api/userinfor/insert",
+                                                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor",
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
-                                                                        if (jqXHR.status === 201) {
+                                                                        if (jqXHR.status === 200 || jqXHR.status === 201) {
                                                                             window.location.href = "doctors.jsp";
                                                                         }
                                                                     }

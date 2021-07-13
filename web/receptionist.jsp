@@ -55,11 +55,11 @@
                                 <tr>
                                     <th style="width: 3%">Avatar</th>
                                     <th style="width: 15%">Name</th>
-                                    <th style="width: 15%">Date of Birth</th>
+                                    <!--<th style="width: 15%">Date of Birth</th>-->
                                     <th style="width: 30%">Clinic</th>
 
                                     <th style="width: 10%">Phone</th>
-                                    <th style="width: 5%">Email</th>
+                                    <!--<th style="width: 5%">Email</th>-->
                                     <th style="width: 10%">Status</th>
                                     <th style="width: 3%" class="text-right">Action</th>
                                 </tr>
@@ -70,11 +70,11 @@
                                 <tr>
                                     <td id="avatar"></td>
                                     <td id="name"></td>
-                                    <td id="dob"></td>
+                                    <!--<td id="dob"></td>-->
                                     <td id="address"></td>
                                     <td id="phoneNum"></td>
 
-                                    <td id="email"></td>
+                                    <!--<td id="email"></td>-->
                                     <td id="status"></td>
 
 
@@ -147,7 +147,7 @@
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json",
-                    url: "https://bt-application.herokuapp.com/api/userinfor/getall",
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/accounts",
                     success: function (data) {
                         localStorage.setItem("alluser", JSON.stringify(data));
                     }});
@@ -158,7 +158,7 @@
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/userinfor/roleid/4",
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionists",
                     success: function (data) {
                         var a = JSON.stringify(data);
                         $('#patientTable tbody').on('click', 'td', function ()
@@ -167,7 +167,7 @@
                             var rowindex = tr.index();
                             table = document.getElementById("patientTable");
                             tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[4];
+                            td = tr[rowindex + 1].getElementsByTagName("td")[3];
                             txtValue = td.textContent;
                             $.each(data, function (index, value) {
                                 if (value.phone === txtValue) {
@@ -180,28 +180,28 @@
                                             headers: {
                                                 Authorization: 'Bearer ' + token},
                                             data: JSON.stringify({
-                                                "address": value.address,
-                                                "gender": value.gender,
-                                                "dob": value.dob,
-                                                "fullname": value.fullname,
+//                                                "address": value.address,
+//                                                "gender": value.gender,
+//                                                "doB": value.doB,
+                                                "name": value.name,
                                                 "id": value.id,
-                                                "mail": value.mail,
+//                                                "mail": value.mail,
                                                 "password": value.password,
                                                 "phone": value.phone,
                                                 "roleId": {
                                                     "id": 4
                                                 },
-                                                "status": "Inactive",
+                                                "status": "disable",
                                                 "image": value.image,
                                                 "token": value.token,
                                                 "clinicId": {
                                                     "id": value.clinicId.id
                                                 },
-                                                "username": value.username
+                                                
                                             }),
-                                            url: "https://bt-application.herokuapp.com/api/userinfor/edit",
+                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionist",
                                             complete: function (jqXHR) {
-                                                if (jqXHR.status === 200) {
+                                                if (jqXHR.status === 200 || jqXHR.status === 201) {
                                                     window.location.href = "receptionist.jsp";
                                                 }
                                             }
@@ -215,11 +215,10 @@
                         );
 
 //                                   
-
-
+                      
 
                         var b = JSON.parse(a);
-
+                        console.log(b);
                         $('#patientTable').DataTable({
                             data: b,
                             columns: [
@@ -227,11 +226,11 @@
                                     "render": function (data, type, row, meta) {
                                         return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
                                     }},
-                                {data: 'fullname'},
-                                {data: 'dob'},
-                                {data: 'clinicId.name'},
+                                {data: 'name'},
+//                                {data: 'doB'},
+                                {data: 'clinicName'},
                                 {data: 'phone'},
-                                {data: 'mail'},
+//                                {data: 'gender'},
                                 {data: 'status'},
                                 {
                                     defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "edit-reception.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  <a id ="delete" class = "dropdown-item" href = "#" data - toggle = "modal"> <i class = "fa fa-trash-o m-r-5" > </i> Delete</a > </div></div></td>'
@@ -245,11 +244,11 @@
                                 searchPlaceholder: ""
                             },
                             "createdRow": function (row, data, dataIndex) {
-                                if (data.status === "Inactive") {
+                                if (data.status === "disable") {
                                     $('td', row).css('color', '#b5b5b5');
                                     $('td', row).css('font-style', 'italic');
                                 }
-                                if (data.status === "Active") {
+                                if (data.status === "enable") {
                                     $('td:eq(6)', row).css('color', '#2a9c31');
                                     $('td:eq(6)', row).css('font-weight', 'bolder');
                                 }

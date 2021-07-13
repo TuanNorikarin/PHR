@@ -70,7 +70,7 @@
                                     <span id='messageLastname'></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+<!--                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Username <span class="text-danger">*</span></label>
                                     <input id='inputUsername' class="form-control" name="username" type="text" required>
@@ -83,7 +83,7 @@
                                     <input id='inputEmail' class="form-control" name="email" type="email" required>
                                     <span id='messageEmail'></span>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Password <span class="text-danger">*</span></label>
@@ -137,7 +137,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone <span class="text-danger">*</span></label>
-                                    <input id='inputPhone' class="form-control" name="phone" type="number">
+                                    <input id='inputPhone' class="form-control" name="phone" type="number" readonly>
                                     <span id='messagePhone'></span>
                                 </div>
                             </div>
@@ -160,13 +160,13 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="patient_active" value="on" checked>
                                 <label class="form-check-label" for="patient_active">
-                                    Active
+                                    Enable
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="patient_inactive" value="off">
                                 <label class="form-check-label" for="patient_inactive">
-                                    Inactive
+                                    Disable
                                 </label>
                             </div>
                         </div>
@@ -227,25 +227,26 @@
                                                     }
                                                 }
                                                 var data = JSON.parse(localStorage.getItem("dataPat"));
+                                                console.log(data);
                                                 window.onload = function () {
-                                                    var fullName = data.fullname;
-                                                    var firstName = fullName.split(" ");
-                                                    var lastName = fullName.replace(firstName[firstName.length - 1], "");
+                                                    var name = data.name;
+                                                    var firstName = name.split(" ");
+                                                    var lastName = name.replace(firstName[firstName.length - 1], "");
                                                     lastName = lastName.trim();
                                                     $("#inputFirstname").val(firstName[firstName.length - 1]);
-                                                    $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
-                                                    var username = data.username;
-                                                    $("#inputUsername").val(username);
-                                                    var mail = data.mail;
-                                                    $("#inputEmail").val(mail);
+                                                    $("#inputLastname").val(lastName);              //đổi thứ tự last name vs firstname
+//                                                    var username = data.username;
+//                                                    $("#inputUsername").val(username);
+//                                                    var mail = data.mail;
+//                                                    $("#inputEmail").val(mail);
                                                     var password = data.password;
                                                     $("#inputPassword").val(password);
                                                     var confirmPass = data.password;
                                                     $("#confirmPass").val(confirmPass);
-                                                    var dob = data.dob;
-                                                    $("#datepicker").val(dob);
+                                                    var doB = data.doB;
+                                                    $("#datepicker").val(doB);
                                                     var gender = data.gender;
-                                                    if (gender === 0) {
+                                                    if (gender === "Male") {
                                                         $("#male").prop("checked", true);
                                                     } else {
                                                         $("#female").prop("checked", true);
@@ -258,7 +259,7 @@
                                                     $('#img').attr('src', image);
 //                                            var avatar = $("input[name='avatar']").val();
                                                     var status = data.status;
-                                                    if (status === "Active") {
+                                                    if (status === "enable") {
                                                         $("#patient_active").prop("checked", true);
                                                     } else {
                                                         $("#patient_inactive").prop("checked", true);
@@ -291,11 +292,11 @@
                                                     };
                                                     // Initialize Firebase
                                                     firebase.initializeApp(firebaseConfig);
-                                                    function validateEmail(email)
-                                                    {
-                                                        var re = /\S{3,}@\S+\.\S+/;
-                                                        return re.test(email);
-                                                    }
+//                                                    function validateEmail(email)
+//                                                    {
+//                                                        var re = /\S{3,}@\S+\.\S+/;
+//                                                        return re.test(email);
+//                                                    }
                                                     function removeAscent(str) {
                                                         if (str === null || str === undefined) {
                                                             return str;
@@ -328,10 +329,10 @@
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
                                                     });
-                                                    $("#inputUsername").click(function () {
-                                                        $('#inputUsername').removeClass('error');
-                                                        document.getElementById('messageUsername').innerHTML = '';
-                                                    });
+//                                                    $("#inputUsername").click(function () {
+//                                                        $('#inputUsername').removeClass('error');
+//                                                        document.getElementById('messageUsername').innerHTML = '';
+//                                                    });
                                                     $("#inputPassword").click(function () {
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
@@ -340,10 +341,10 @@
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
                                                     });
-                                                    $("#inputEmail").click(function () {
-                                                        $('#inputEmail').removeClass('error');
-                                                        document.getElementById('messageEmail').innerHTML = '';
-                                                    });
+//                                                    $("#inputEmail").click(function () {
+//                                                        $('#inputEmail').removeClass('error');
+//                                                        document.getElementById('messageEmail').innerHTML = '';
+//                                                    });
                                                     $("#createPatient").click(function (event) {
                                                         event.preventDefault();
                                                         var imageOld = data.image;
@@ -353,45 +354,46 @@
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-                                                        $('#inputUsername').removeClass('error');
-                                                        document.getElementById('messageUsername').innerHTML = '';
+//                                                        $('#inputUsername').removeClass('error');
+//                                                        document.getElementById('messageUsername').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
-                                                        $('#inputEmail').removeClass('error');
-                                                        document.getElementById('messageEmail').innerHTML = '';
+//                                                        $('#inputEmail').removeClass('error');
+//                                                        document.getElementById('messageEmail').innerHTML = '';
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
                                                         for (var i = 0; i < alluser.length; i++) {
-                                                            if (alluser[i].username === document.getElementById('inputUsername').value &&document.getElementById('inputUsername').value !== data.username ) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username already exists ✘';
-                                                                count = 1;
-                                                            }
+//                                                            if (alluser[i].username === document.getElementById('inputUsername').value &&document.getElementById('inputUsername').value !== data.username ) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username already exists ✘';
+//                                                                count = 1;
+//                                                            }
                                                             if (alluser[i].phone === document.getElementById('inputPhone').value && document.getElementById('inputPhone').value !== data.phone) {
                                                                 $('#inputPhone').addClass('error');
                                                                 document.getElementById('messagePhone').style.color = 'red';
                                                                 document.getElementById('messagePhone').innerHTML = 'Phone already exists ✘';
                                                                 count = 1;
                                                             }
-                                                            if (alluser[i].mail === document.getElementById('inputEmail').value && document.getElementById('inputEmail').value !== data.mail) {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Email already exists ✘';
-                                                                count = 1;
-                                                            }
+//                                                            if (alluser[i].mail === document.getElementById('inputEmail').value && document.getElementById('inputEmail').value !== data.mail) {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Email already exists ✘';
+//                                                                count = 1;
+//                                                            }
                                                         }
                                                         var idUpdate = data.id;
+                                                        var idAccountUpdate = data.accountId;
                                                         var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
                                                         var lastName = $("input[name='lastName']").val();
-                                                        var username = $("input[name='username']").val();
-                                                        var mail = $("input[name='email']").val();
+//                                                        var username = $("input[name='username']").val();
+//                                                        var mail = $("input[name='email']").val();
                                                         var password = $("input[name='password']").val();
-                                                        var dob = $("input[name='dob']").val();
+                                                        var doB = $("input[name='dob']").val();
                                                         var gender = $("input[name='gender']").val();
                                                         var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
@@ -400,17 +402,31 @@
                                                         var token = localStorage.getItem("key");
                                                         var selectGen = $('input[id="male"]:checked').val();
                                                         if (selectGen === "on") {
-                                                            gender = 0;
+                                                            gender = "Male";
                                                         } else {
-                                                            gender = 1;
+                                                            gender = "Female";
                                                         }
 
                                                         var selectSta = $('input[id="patient_active"]:checked').val();
                                                         if (selectSta === "on") {
-                                                            status = "Active";
+                                                            status = "enable";
                                                         } else {
-                                                            status = "Inactive";
+                                                            status = "disable";
                                                         }
+                                                        
+                                                        console.log(firstName +" firstName");
+                                                        console.log(lastName +" lastName");
+                                                        console.log(idUpdate +" idUp");
+                                                        console.log(idAccountUpdate +" idAccountUpdate");
+                                                        console.log(phone +" phone");
+                                                        console.log(password +" password");
+                                                        console.log(doB +" dob");
+                                                        console.log(gender +" gender");
+                                                        console.log(phone +" phone");
+                                                        console.log(password +" password");
+                                                        console.log(avatar +" avatar");
+                                                        console.log(status +" status");
+                                                        
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
                                                             $('#inputFirstname').addClass('error');
                                                             document.getElementById('messageFirstname').style.color = 'red';
@@ -420,16 +436,16 @@
                                                                 document.getElementById('messageLastname').style.color = 'red';
                                                                 document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
                                                             }
-                                                            if (username.length > 30 || username.length < 6) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            }
-                                                            if (validateEmail(mail) === false && mail !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
+//                                                            if (username.length > 30 || username.length < 6) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            }
+//                                                            if (validateEmail(mail) === false && mail !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -445,16 +461,16 @@
                                                             $('#inputLastname').addClass('error');
                                                             document.getElementById('messageLastname').style.color = 'red';
                                                             document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
-                                                            if (username.length > 30 || username.length < 6) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            }
-                                                            if (validateEmail(mail) === false && mail !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
+//                                                            if (username.length > 30 || username.length < 6) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            }
+//                                                            if (validateEmail(mail) === false && mail !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -465,40 +481,43 @@
                                                                 document.getElementById('messagePhone').style.color = 'red';
                                                                 document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                             }
-                                                        } else if (username.length > 30 || username.length < 6) {
-                                                            $('#inputUsername').addClass('error');
-                                                            document.getElementById('messageUsername').style.color = 'red';
-                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            if (validateEmail(mail) === false && mail !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (validateEmail(mail) === false && mail !== "") {
-                                                            $('#inputEmail').addClass('error');
-                                                            document.getElementById('messageEmail').style.color = 'red';
-                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (password.length > 30 || password.length < 6) {
+                                                        }
+//                                                        else if (username.length > 30 || username.length < 6) {
+//                                                            $('#inputUsername').addClass('error');
+//                                                            document.getElementById('messageUsername').style.color = 'red';
+//                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            if (validateEmail(mail) === false && mail !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
+//                                                            if (password.length > 30 || password.length < 6) {
+//                                                                $('#inputPassword').addClass('error');
+//                                                                document.getElementById('messagePassword').style.color = 'red';
+//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+//                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+//                                                        } 
+//                                                        else if (validateEmail(mail) === false && mail !== "") {
+//                                                            $('#inputEmail').addClass('error');
+//                                                            document.getElementById('messageEmail').style.color = 'red';
+//                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            if (password.length > 30 || password.length < 6) {
+//                                                                $('#inputPassword').addClass('error');
+//                                                                document.getElementById('messagePassword').style.color = 'red';
+//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+//                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+//                                                        }
+                                                        else if (password.length > 30 || password.length < 6) {
                                                             $('#inputPassword').addClass('error');
                                                             document.getElementById('messagePassword').style.color = 'red';
                                                             document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
@@ -541,21 +560,20 @@
                                                                     data: JSON.stringify({
                                                                         "address": address,
                                                                         "gender": gender,
-                                                                        "dob": dob,
-                                                                        "fullname": lastName + " " + firstName,
+                                                                        "doB": doB,
+                                                                        "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
-                                                                        "mail": mail,
+                                                                        "email": " ",
                                                                         "image": url,
                                                                         "password": password,
-                                                                        "phone": phone,
-                                                                        "roleId": {
-                                                                            "id": 3
-                                                                        },
-                                                                        "status": status,
-                                                                        "token": "",
-                                                                        "username": username
+                                                                        "medicalNote": "",
+                                                                        "accountId": idAccountUpdate,
+//                                                                        "status": status,
+                                                                        "bloodType": "",
+//                                                                        "token": ""
+//                                                                        "username": username
                                                                     }),
-                                                                    url: "https://bt-application.herokuapp.com/api/userinfor/edit",
+                                                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/" + data.id,
                                                                     complete: function (jqXHR) {
 
                                                                         if (jqXHR.status === 200) {

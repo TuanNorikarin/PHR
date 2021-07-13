@@ -117,29 +117,7 @@
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
-//            function searchFunction() {
-//                var input, filter, table, tr, nameSearch, i, txtValue, phoneSearch;
-//                input = document.getElementById("searchPatient");
-//                filter = input.value.toUpperCase();
-//                table = document.getElementById("patientTable");
-//                tr = table.getElementsByTagName("tr");
-//                for (i = 0; i < tr.length; i++) {
-//                    nameSearch = tr[i].getElementsByTagName("td")[0];
-//                    phoneSearch = tr[i].getElementsByTagName("td")[3];
-//                    if (nameSearch || phoneSearch) {
-//                        txtValueName = nameSearch.textContent || nameSearch.innerText;
-//                        txtValuePhone = phoneSearch.textContent || phoneSearch.innerText;
-//                        if (txtValueName.toUpperCase().indexOf(filter) > -1) {
-//                            tr[i].style.display = "";
-//                        } else if (txtValuePhone.toUpperCase().indexOf(filter) > -1) {
-//                            tr[i].style.display = "";
-//                        } else {
-//                            tr[i].style.display = "none";
-//                        }
-//                    }
-//                }
-//            }
-//            ;
+//========================================== TÌm theo số điện thoại====================================================
             window.onload = function () {
                 var token = localStorage.getItem("key");
                 var clinicId = localStorage.getItem("clinicId");
@@ -154,13 +132,13 @@
                         contentType: "application/json; charset=UTF-8",
                         headers: {
                             Authorization: 'Bearer ' + token},
-                        url: "https://bt-application.herokuapp.com/api/userinfor/roleid/3",
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patients/0968784568",       
                         success: function (data) {
                             var arraySearch = [];
-                            if (tableData.$.length === 0) {
-                                tableData.destroy();
-                                tableData.rows().remove().draw();
-                            }
+//                            if (tableData.$.length === 0) {
+//                                tableData.destroy();
+//                                tableData.rows().remove().draw();
+//                            }
 
                             for (var i = 0; i < data.length; i++) {
                                 if (data[i].phone === searchPatientValue) {
@@ -189,11 +167,11 @@
                                                 "render": function (data, type, row, meta) {
                                                     return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
                                                 }},
-                                            {data: 'fullname'},
-                                            {data: 'dob'},
+                                            {data: 'name'},
+                                            {data: 'doB'},
                                             {data: 'address'},
                                             {data: 'phone'},
-                                            {data: 'mail'},
+                                            {data: 'gender'},
                                             {data: 'status'},
                                             {
                                                 defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "selectService.jsp"><i class="fa fa-check-square"></i> &nbsp; Select Patient</a ><a class = "dropdown-item" href = "edit-patientReceptionist.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
@@ -230,11 +208,11 @@
                                             "render": function (data, type, row, meta) {
                                                 return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
                                             }},
-                                        {data: 'fullname'},
-                                        {data: 'dob'},
+                                        {data: 'name'},
+                                        {data: 'doB'},
                                         {data: 'address'},
                                         {data: 'phone'},
-                                        {data: 'mail'},
+                                        {data: 'gender'},
                                         {data: 'status'},
                                         {
                                             defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "selectService.jsp"><i class="fa fa-check-square"></i> &nbsp; Select Patient</a ><a class = "dropdown-item" href = "edit-patientReceptionist.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
@@ -264,14 +242,16 @@
                             }
                         }});
                 });
-
+//====================================================Load List Patient==========================================
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
+//                    headers: {
+//                        Authorization: 'Bearer ' + token},
                     headers: {
-                        Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/examination/findbyclinicid/" + clinicId,
+                    'Access-Control-Allow-Origin': '*'},
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/account/" + searchPatientValue,
                     success: function (data) {
                         var a = JSON.stringify(data);
                         $('#patientTable tbody').on('click', 'td', function ()
@@ -283,46 +263,74 @@
                             td = tr[rowindex + 1].getElementsByTagName("td")[4];
                             txtValue = td.textContent;
                             $.each(data, function (index, value) {
-                                if (value.userId.phone === txtValue) {
-                                    console.log(value.userId);
-                                    localStorage.setItem("dataPat", JSON.stringify(value.userId));
+                                if (value.phone === txtValue) {
+                                    localStorage.setItem("dataPat", JSON.stringify(value));
+                                    $(document).on('click', '[id^="delete"]', function () {
+                                        console.log(value);
+                                        $.ajax({
+                                            type: "PUT",
+                                            dataType: "json",
+                                            contentType: "application/json; charset=UTF-8",
+                                            headers: {
+                                                Authorization: 'Bearer ' + token},
+                                            data: JSON.stringify({
+                                                "address": value.address,
+                                                "gender": value.gender,
+                                                "dob": value.dob,
+                                                "fullname": value.name,
+                                                "id": value.id,
+                                                "mail": value.mail,
+                                                "password": value.password,
+                                                "phone": value.phone,
+                                                "roleId": {
+                                                    "id": 1
+                                                },
+                                                "status": "Inactive",
+                                                "image": value.image,
+                                                "token": value.token,
+                                                "username": value.username
+                                            }),
+//                                            url: "https://bt-application.herokuapp.com/api/userinfor/edit",
+//                                            complete: function (jqXHR) {
+//                                                if (jqXHR.status === 200) {
+//                                                    window.location.href = "patients.jsp";
+//                                                }
+//                                            }
+                                            
+                                        });
+
+                                    });
                                 }
                             });
-
                         }
                         );
                         $('td').click(function () {
                             var row_index = $(this).parent().index();
-
                         });
 //                                   
 
 
 
                         var b = JSON.parse(a);
-                        var uniqueArray = b
-                                .map(v => v['userId'])
-                                .map(v => v['id'])
-                                .map((v, i, array) => array.indexOf(v) === i && i)
-                                .filter(v => b[v])
-                                .map(v => b[v]);
-                        tableData = $('#patientTable').DataTable({
-                            data: uniqueArray,
+                        console.log(b);
+                        console.log(a);
+                        $('#patientTable').DataTable({
+                            data: b,
                             columns: [
-                                {data: "userId.image",
+                                {data: "image",
                                     "render": function (data, type, row, meta) {
                                         return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
                                     }},
-                                {data: 'userId.fullname'},
-                                {data: 'userId.dob'},
-                                {data: 'userId.address'},
-                                {data: 'userId.phone'},
-                                {data: 'userId.mail'},
-                                {data: 'userId.status'},
+                                {data: 'name'},
+                                {data: 'doB'},
+                                {data: 'address'},
+                                {data: 'phone'},
+                                {data: 'gender'},
+                                {data: 'status'},
                                 {
-                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "selectService.jsp"><i class="fa fa-check-square"></i> &nbsp; Select Patient</a ><a class = "dropdown-item" href = "edit-patientReceptionist.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
+                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "edit-patient.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  <a id="delete" class = "dropdown-item" href = "#" data - toggle = "modal"> <i class = "fa fa-trash-o m-r-5" > </i> Delete</a > </div></div></td>'
 
-                                },
+                                }
                             ],
                             "bDestroy": true,
                             "bFilter": true,
@@ -331,20 +339,16 @@
                                 searchPlaceholder: ""
                             },
                             "createdRow": function (row, data, dataIndex) {
-                                if (data.userId.status === "Inactive") {
+                                if (data.status === "Inactive") {
+                                    console.log(row);
                                     $('td', row).css('color', '#b5b5b5');
                                     $('td', row).css('font-style', 'italic');
-                                    $('td:eq(7)', row).css('display', 'none');
-                                    
                                 }
-                                if (data.userId.status === "Active") {
+                                if (data.status === "Active") {
                                     $('td:eq(6)', row).css('color', '#2a9c31');
                                     $('td:eq(6)', row).css('font-weight', 'bolder');
-
                                 }
                             }
-
-
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -353,6 +357,8 @@
 
                 })
             };
+
+
 
 
 

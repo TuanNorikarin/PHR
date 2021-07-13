@@ -210,12 +210,12 @@
                                                 "token": value.token,
                                                 "username": value.username
                                             }),
-//                                            url: "https://bt-application.herokuapp.com/api/userinfor/edit",
-//                                            complete: function (jqXHR) {
-//                                                if (jqXHR.status === 200) {
-//                                                    window.location.href = "patients.jsp";
-//                                                }
-//                                            }
+                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patients",
+                                            complete: function (jqXHR) {
+                                                if (jqXHR.status === 200) {
+                                                    window.location.href = "patients.jsp";
+                                                }
+                                            }
                                             
                                         });
 
