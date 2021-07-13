@@ -201,7 +201,7 @@
 
             function getPatientId(id){
                 console.log(id);
-                localStorage.setItem('patientId', id);
+                localStorage.setItem('patientId', id)
             }
 
 

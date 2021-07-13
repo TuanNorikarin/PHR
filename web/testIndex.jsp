@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -119,7 +119,7 @@
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/testresultsample/getall",
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
                     success: function (data) {
                         var valueArray = [];
                         var valueArrayTotal = [];
@@ -128,10 +128,11 @@
                         var idData = null;
                         for (var i = 0; i < data.length; i++) {
                             if (data[i] !== undefined) {
-                                valueArray.push(data[i].testId.name);
-                                valueArray.push(data[i].testId.description);
-                                valueId.push(data[i].testId.name);
-                                valueId.push(data[i].testId.id);
+                                valueArray.push(data[i].id.name);
+                                
+                                valueArray.push(data[i].id.description);
+                                valueId.push(data[i].id.name);
+                                valueId.push(data[i].id);
                                 if (data[i].type === 'Male') {
                                     valueArray.splice(2, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
                                     valueId.splice(2, 0, data[i].id);
@@ -147,11 +148,11 @@
                                     valueId.push(data[i].id);
 
                                 }
-                                idData = data[i].testId.id;
+                                idData = data[i].id;
                                 delete data[i];
                                 for (var k = 0; k < data.length; k++) {
                                     if (data[k] !== undefined) {
-                                        if (data[k].testId.id === idData) {
+                                        if (data[k].id === idData) {
                                             if (data[k].type === 'Male') {
                                                 valueArray.splice(2, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
                                                 valueId.splice(2, 0, data[k].id);
