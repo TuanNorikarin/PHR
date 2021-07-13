@@ -202,7 +202,7 @@
                                     type: "GET",
                                     dataType: "json",
                                     contentType: "application/json",
-                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/2",
+                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor",
                                     success: function (data) {
                                         localStorage.setItem("dataDoctor", JSON.stringify(data));
                                     }});

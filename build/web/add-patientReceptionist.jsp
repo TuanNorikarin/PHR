@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
@@ -65,7 +65,8 @@
                                     <span id='messageLastname'></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            
+<!--                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Username <span class="text-danger">*</span></label>
                                     <input id='inputUsername' class="form-control" name="username" type="text" required>
@@ -78,11 +79,11 @@
                                     <input id='inputEmail' class="form-control" name="email" type="email" required>
                                     <span id='messageEmail'></span>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Password <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="inputPassword" name="password" type="password" onkeyup='check()'>
+                                    <input class="form-control" id='inputPassword' name="password" type="password" onkeyup='check()'>
                                     <span id='messagePassword'/></span>
                                 </div>
                             </div>
@@ -122,7 +123,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label>Address</label>
+                                            <label>Address </label>
                                             <input type="text" name="address" class="form-control ">
                                         </div>
                                     </div>
@@ -131,8 +132,8 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Phone <span class="text-danger">*</span> </label>
-                                    <input id='inputPhone' class="form-control" name="phone" type="text">
+                                    <label>Phone <span class="text-danger">*</span></label>
+                                    <input id='inputPhone' class="form-control" name="phone" type="number">
                                     <span id='messagePhone'/></span>
                                 </div>
                             </div>
@@ -141,7 +142,7 @@
                                     <label>Avatar</label>
                                     <div class="profile-upload">
                                         <div class="upload-img">
-                                            <img id='img' alt="" src="assets/img/user.jpg">
+                                            <img id="img" alt="" src="assets/img/user.jpg">
                                         </div>
                                         <div class="upload-input">
                                             <input id="avatar" type="file" name="avatar" class="form-control" accept="image/x-png,image/gif,image/jpeg" onchange="validateFileType()">
@@ -222,27 +223,29 @@
                                                 }
 //                =====================================Insert===============================================
 
-                                        $(document).ready(function () {
-                                            function uuidv4() {
-                                                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                                                    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-                                                    return v.toString(16);
-                                                });
-                                            };
-                                            var firebaseConfig = {
-                                                apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                authDomain: "upload-image-45245.firebaseapp.com",
-                                                databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                projectId: "upload-image-45245",
-                                                storageBucket: "upload-image-45245.appspot.com",
-                                                messagingSenderId: "758652365413",
-                                                appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                measurementId: "G-S5ECRSMKRB"
-                                            };
+                                                $(document).ready(function () {
+//                                                    function uuidv4() {
+//                                                        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+//                                                            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+//                                                            return v.toString(16);
+//                                                        });
+//                                                    }
+//                                                    ;
 
-                                            // Initialize Firebase
-                                            firebase.initializeApp(firebaseConfig);
-                                             function validateEmail(email)
+                                                    var firebaseConfig = {
+                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
+                                                        authDomain: "upload-image-45245.firebaseapp.com",
+                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
+                                                        projectId: "upload-image-45245",
+                                                        storageBucket: "upload-image-45245.appspot.com",
+                                                        messagingSenderId: "758652365413",
+                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
+                                                        measurementId: "G-S5ECRSMKRB"
+                                                    };
+
+                                                    // Initialize Firebase
+                                                    firebase.initializeApp(firebaseConfig);
+                                                    function validateEmail(email)
                                                     {
                                                         var re = /\S{3,}@\S+\.\S+/;
                                                         return re.test(email);
@@ -279,10 +282,10 @@
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
                                                     });
-                                                    $("#inputUsername").click(function () {
-                                                        $('#inputUsername').removeClass('error');
-                                                        document.getElementById('messageUsername').innerHTML = '';
-                                                    });
+//                                                    $("#inputUsername").click(function () {
+//                                                        $('#inputUsername').removeClass('error');
+//                                                        document.getElementById('messageUsername').innerHTML = '';
+//                                                    });
                                                     $("#inputPassword").click(function () {
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
@@ -291,77 +294,82 @@
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
                                                     });
-                                                    $("#inputEmail").click(function () {
-                                                        $('#inputEmail').removeClass('error');
-                                                        document.getElementById('messageEmail').innerHTML = '';
-                                                    });
-                                                    var idHealth = uuidv4();
-                                                    var idUser = uuidv4();
+//                                                    $("#inputEmail").click(function () {
+//                                                        $('#inputEmail').removeClass('error');
+//                                                        document.getElementById('messageEmail').innerHTML = '';
+//                                                    });
+//                                                    var idHealth = uuidv4();
+//                                                    var idUser = uuidv4();
+                                                    
                                                     $("#createPatient").click(function (event) {
                                                         event.preventDefault();
-                                                         $('#inputFirstname').removeClass('error');
+                                                        $('#inputFirstname').removeClass('error');
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-                                                        $('#inputUsername').removeClass('error');
-                                                        document.getElementById('messageUsername').innerHTML = '';
+//                                                        $('#inputUsername').removeClass('error');
+//                                                        document.getElementById('messageUsername').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
-                                                        $('#inputEmail').removeClass('error');
-                                                        document.getElementById('messageEmail').innerHTML = '';
+//                                                        $('#inputEmail').removeClass('error');
+//                                                        document.getElementById('messageEmail').innerHTML = '';
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
                                                         for (var i = 0; i < alluser.length; i++) {
-                                                            if (alluser[i].username === document.getElementById('inputUsername').value) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username already exists ✘';
-                                                                count = 1;
-                                                            }
+//                                                            if (alluser[i].username === document.getElementById('inputUsername').value) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username already exists ✘';
+//                                                                count = 1;
+//                                                            }
                                                             if (alluser[i].phone === document.getElementById('inputPhone').value) {
                                                                 $('#inputPhone').addClass('error');
                                                                 document.getElementById('messagePhone').style.color = 'red';
                                                                 document.getElementById('messagePhone').innerHTML = 'Phone already exists ✘';
                                                                 count = 1;
                                                             }
-                                                            if (alluser[i].mail === document.getElementById('inputEmail').value && document.getElementById('inputEmail').value !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Email already exists ✘';
-                                                                count = 1;
-                                                            }
+                                                            console.log();
+//                                                            if (alluser[i].mail === document.getElementById('inputEmail').value && document.getElementById('inputEmail').value !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Email already exists ✘';
+//                                                                count = 1;
+//                                                            }
                                                         }
-                                                var idUser = uuidv4();
-                                                var idHealth = uuidv4();
-                                                var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
-                                                var lastName = $("input[name='lastName']").val();
-                                                var username = $("input[name='username']").val();
-                                                var password = $("input[name='password']").val();
-                                                var dob = $("input[name='dob']").val();
-                                                var gender = $("input[name='gender']").val();
-                                                var mail = $("input[name='email']").val();
-                                                var address = $("input[name='address']").val();
-                                                var phone = $("input[name='phone']").val();
-                                                var status = $("input[name='status']").val();
-                                                var token = localStorage.getItem("key");
-                                                var selectGen = $('input[id="male"]:checked').val();
-                                                if (selectGen === "on") {
-                                                    gender = 0;
-                                                } else {
-                                                    gender = 1;
-                                                }
+                                                        var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
+                                                        var lastName = $("input[name='lastName']").val();
+//                                                        var username = $("input[name='username']").val();
+                                                        var password = $("input[name='password']").val();
+                                                        var dob = $("input[name='dob']").val();
+                                                        var gender = $("input[name='gender']").val();
+//                                                        var mail = $("input[name='email']").val();
+                                                        var address = $("input[name='address']").val();
+                                                        var phone = $("input[name='phone']").val();
+                                                        var status = $("input[name='status']").val();
+                                                        var token = localStorage.getItem("key");
+                                                        var selectGen = $('input[id="male"]:checked').val();
+                                                        
+                                                        if (selectGen === "on") {
+                                                            gender = "Male";
+                                                        } else {
+                                                            gender = "Female";
+                                                        }
 
-                                                var selectSta = $('input[id="patient_active"]:checked').val();
-                                                if (selectSta === "on") {
-                                                    status = "Active";
-                                                } else {
-                                                    status = "Inactive";
-                                                }
-                                                if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
+                                                        var selectSta = $('input[id="patient_active"]:checked').val();
+                                                        if (selectSta === "on") {
+                                                            status = "Active";
+                                                        } else {
+                                                            status = "Inactive";
+                                                        }
+                                                        
+                                                        console.log(firstName + " firtname");
+                                                        console.log(phone + " phone");
+                                                        
+                                                        if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
                                                             $('#inputFirstname').addClass('error');
                                                             document.getElementById('messageFirstname').style.color = 'red';
                                                             document.getElementById('messageFirstname').innerHTML = 'First Name invalid ✘';
@@ -370,16 +378,16 @@
                                                                 document.getElementById('messageLastname').style.color = 'red';
                                                                 document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
                                                             }
-                                                            if (username.length > 30 || username.length < 6) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            }
-                                                            if (validateEmail(mail) === false && mail !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
+//                                                            if (username.length > 30 || username.length < 6) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            }
+//                                                            if (validateEmail(mail) === false && mail !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -395,16 +403,16 @@
                                                             $('#inputLastname').addClass('error');
                                                             document.getElementById('messageLastname').style.color = 'red';
                                                             document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
-                                                            if (username.length > 30 || username.length < 6) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            }
-                                                            if (validateEmail(mail) === false && mail !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
+//                                                            if (username.length > 30 || username.length < 6) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            }
+//                                                            if (validateEmail(mail) === false && mail !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -415,40 +423,43 @@
                                                                 document.getElementById('messagePhone').style.color = 'red';
                                                                 document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                             }
-                                                        } else if (username.length > 30 || username.length < 6) {
-                                                            $('#inputUsername').addClass('error');
-                                                            document.getElementById('messageUsername').style.color = 'red';
-                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            if (validateEmail(mail) === false && mail !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (validateEmail(mail) === false && mail !== "") {
-                                                            $('#inputEmail').addClass('error');
-                                                            document.getElementById('messageEmail').style.color = 'red';
-                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (password.length > 30 || password.length < 6) {
+                                                        } 
+//                                                        else if (username.length > 30 || username.length < 6) {
+//                                                            $('#inputUsername').addClass('error');
+//                                                            document.getElementById('messageUsername').style.color = 'red';
+//                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            if (validateEmail(mail) === false && mail !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
+//                                                            if (password.length > 30 || password.length < 6) {
+//                                                                $('#inputPassword').addClass('error');
+//                                                                document.getElementById('messagePassword').style.color = 'red';
+//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+//                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+//                                                        }
+//                                                        else if (validateEmail(mail) === false && mail !== "") {
+//                                                            $('#inputEmail').addClass('error');
+//                                                            document.getElementById('messageEmail').style.color = 'red';
+//                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            if (password.length > 30 || password.length < 6) {
+//                                                                $('#inputPassword').addClass('error');
+//                                                                document.getElementById('messagePassword').style.color = 'red';
+//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+//                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+//                                                        }
+                                                        else if (password.length > 30 || password.length < 6) {
                                                             $('#inputPassword').addClass('error');
                                                             document.getElementById('messagePassword').style.color = 'red';
                                                             document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
@@ -464,138 +475,127 @@
                                                         } else if (count === 1) {
 
                                                         } else {
-                                                    function uploadImage() {
-                                                        const ref = firebase.storage().ref();
-                                                        const file = document.querySelector("#avatar").files[0];
-                                                        if (file) {
-                                                            const name = +new Date() + "-" + file.name;
-                                                            const metadata = {
-                                                                contentType: file.type
-                                                            };
-                                                            const task = ref.child(name).put(file, metadata);
-                                                            task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                                                ajax(url);
-                                                            });
-                                                        } else {
-                                                            ajax("assets/img/user.jpg");
-                                                        }
-                                                    }
-                                                    toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                                    function ajax(url) {
-                                                        return $.ajax({
-                                                            type: "POST",
-                                                            dataType: "json",
-                                                            contentType: "application/json; charset=utf-8",
-                                                            headers: {
-                                                                Authorization: 'Bearer ' + token},
-                                                            data: JSON.stringify({
-                                                                "address": address,
-                                                                "gender": gender,
-                                                                "dob": dob,
-                                                                "fullname": lastName + " " + firstName,
-                                                                "mail": mail,
-                                                                "id": idUser,
-                                                                "image": url,
-                                                                "password": password,
-                                                                "phone": phone,
-                                                                "roleId": {
-                                                                    "id": 3,
-                                                                    "name": "user"
-                                                                },
-                                                                "status": status,
-                                                                "token": "",
-                                                                "username": username
-
-
-                                                            }),
-                                                            url: "https://bt-application.herokuapp.com/api/userinfor/insert",
-                                                            complete: function (jqXHR) {
-                                                                console.log(jqXHR.status);
-                                                                if (jqXHR.status === 201) {
-                                                                    //--add--//
-                                                                    $.ajax({
-                                                                        type: "POST",
-                                                                        dataType: "json",
-                                                                        contentType: "application/json; charset=utf-8",
-                                                                        headers: {
-                                                                            Authorization: 'Bearer ' + token},
-                                                                        data: JSON.stringify({
-                                                                            "id": idHealth,
-                                                                            "userId": {
-                                                                                "id": idUser
-                                                                            }
-                                                                        }),
-                                                                        url: "https://bt-application.herokuapp.com/api/healthrecord/insert",
-                                                                        complete: function (jqXHR) {
-                                                                            console.log(jqXHR.status);
-                                                                            if (jqXHR.status === 201) {
-                                                                                $.ajax({
-                                                                                    type: "POST",
-                                                                                    dataType: "json",
-                                                                                    contentType: "application/json; charset=UTF-8",
-                                                                                    headers: {
-                                                                                        Authorization: 'Bearer ' + token},
-                                                                                    data: JSON.stringify({
-                                                                                        "sharedInformationContext": "Share",
-                                                                                        "sharedInformationTypeId": {
-                                                                                            "id": 2 //2:private
-                                                                                        },
-                                                                                        "healthRecordId": {
-                                                                                            "id": idHealth
-                                                                                        }
-                                                                                    }),
-                                                                                    url: "https://bt-application.herokuapp.com/api/sharedinformation/insert",
-                                                                                    complete: function (jqXHR) {
-                                                                                        console.log(jqXHR.status);
-                                                                                        if (jqXHR.status === 201) {
-                                                                                            $.ajax({
-                                                                                                type: "GET",
-                                                                                                dataType: "json",
-                                                                                                contentType: "application/json; charset=UTF-8",
-                                                                                                headers: {
-                                                                                                    Authorization: 'Bearer ' + token},
-                                                                                                url: "https://bt-application.herokuapp.com/api/userinfor/" + idUser,
-                                                                                                success: function (data) {
-                                                                                                    localStorage.setItem("dataPat", JSON.stringify(data));
-                                                                                                    window.location.href = "selectService.jsp";
-                                                                                                }});
-                                                                                        }
-                                                                                    },
-                                                                                    error: function (jqXHR, textStatus, errorThrown) {
-                                                                                        console.log(' Error in processing! ' + textStatus);
-                                                                                    }
-                                                                                });
-                                                                            }
-                                                                        }
+                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                            function uploadImage() {
+                                                                const ref = firebase.storage().ref();
+                                                                const file = document.querySelector("#avatar").files[0];
+                                                                if (file) {
+                                                                    const name = +new Date() + "-" + file.name;
+                                                                    const metadata = {
+                                                                        contentType: file.type
+                                                                    };
+                                                                    const task = ref.child(name).put(file, metadata);
+                                                                    task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
+                                                                        ajax(url);
                                                                     });
-                                                                    //--end add--//
+                                                                } else {
+                                                                    ajax("assets/img/user.jpg");
                                                                 }
                                                             }
-                                                        });
-                                                    }
-                                                    uploadImage();
-                                                }
-                                            });
-                                        });
+                                                            function ajax(url) {
+                                                                return   $.ajax({
+                                                                    type: "POST",
+                                                                    dataType: "json",
+                                                                    contentType: "application/json; charset=utf-8",
+                                                                    headers: {
+                                                                        Authorization: 'Bearer ' + token},
+                                                                    data: JSON.stringify({
+                                                                        "address": address,
+                                                                        "gender": gender,
+                                                                        "doB": dob,
+                                                                        
+                                                                        "name": lastName + " " + firstName,
+                                                                        
+                                                                        "id": "121",
+                                                                        "image": url,
+                                                                        "password": password,
+                                                                        
+                                                                        "phone": phone,
+                                                                        "accountId": {
+                                                                            "id": 6,
+                                                                            "name": "patient"
+                                                                        },
+                                                                        "status": status,
+                                                                        
+                                                                        "token": ""
+
+
+                                                                    }),
+                                                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient",
+                                                                    complete: function (jqXHR) {
+                                                                        if (jqXHR.status === 201) {
+                                                                            //--add--//
+//                                                                            $.ajax({
+//                                                                                type: "POST",
+//                                                                                dataType: "json",
+//                                                                                contentType: "application/json; charset=utf-8",
+//                                                                                headers: {
+//                                                                                    Authorization: 'Bearer ' + token},
+//                                                                                data: JSON.stringify({
+//                                                                                    "id": idHealth,
+//                                                                                    "userId": {
+//                                                                                        "id": idUser
+//                                                                                    }
+//                                                                                }),
+//                                                                                url: "https://bt-application.herokuapp.com/api/healthrecord/insert",
+//                                                                                complete: function (jqXHR) {
+//                                                                                    console.log(jqXHR.status);
+//                                                                                    if (jqXHR.status === 201) {
+//                                                                                        $.ajax({
+//                                                                                            type: "POST",
+//                                                                                            dataType: "json",
+//                                                                                            contentType: "application/json; charset=UTF-8",
+//                                                                                            headers: {
+//                                                                                                Authorization: 'Bearer ' + token},
+//                                                                                            data: JSON.stringify({
+//                                                                                                "sharedInformationContext": "Share",
+//                                                                                                "sharedInformationTypeId": {
+//                                                                                                    "id": 2 //2:private
+//                                                                                                },
+//                                                                                                "healthRecordId": {
+//                                                                                                    "id": idHealth
+//                                                                                                }
+//                                                                                            }),
+//                                                                                            url: "https://bt-application.herokuapp.com/api/sharedinformation/insert",
+//                                                                                            complete: function (jqXHR) {
+////                                                                                                window.location.href = "patients.jsp";
+//
+//                                                                                            },
+//                                                                                            error: function (jqXHR, textStatus, errorThrown) {
+//                                                                                                console.log(' Error in processing! ' + textStatus);
+//                                                                                            }
+//                                                                                        });
+//                                                                                    }
+//                                                                                }
+//                                                                            });
+                                                                            //--end add--//
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                            uploadImage();
+                                                        }
+                                                    });
+                                                });
 //       ================================================Check Confirm Password========================================
 
-                                        var check = function () {
-                                            if (document.getElementById('inputPassword').value ===
-                                                    document.getElementById('confirmPass').value && document.getElementById('inputPassword').value !== "") {
-                                                document.getElementById('message').style.color = 'green';
-                                                document.getElementById('message').innerHTML = 'OK ✔';
-                                                $("#createPatient").removeAttr("disabled");
-                                            } else {
-                                                if (document.getElementById('inputPassword').value !== "") {
-                                                    document.getElementById('message').style.color = 'red';
-                                                    document.getElementById('message').innerHTML = 'not matching ✘';
-                                                    $("#createPatient").attr("disabled", "disabled");
-                                                } else {
-                                                    document.getElementById('message').innerHTML = '';
-                                                }
+                                                var check = function () {
+                                                    if (document.getElementById('inputPassword').value ===
+                                                            document.getElementById('confirmPass').value && document.getElementById('inputPassword').value !== "") {
+                                                        document.getElementById('message').style.color = 'green';
+                                                        document.getElementById('message').innerHTML = 'OK ✔';
+                                                        $("#createPatient").removeAttr("disabled");
+                                                    } else {
+                                                        if (document.getElementById('inputPassword').value !== "") {
+                                                            document.getElementById('message').style.color = 'red';
+                                                            document.getElementById('message').innerHTML = 'not matching ✘';
+                                                            $("#createPatient").attr("disabled", "disabled");
+                                                        } else {
+                                                            document.getElementById('message').innerHTML = '';
+                                                        }
 
-                                            }
-                                        };
+                                                    }
+                                                };
         </script>
     </body>
 

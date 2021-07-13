@@ -240,6 +240,8 @@
                                                 }
 
                                                 window.onload = function () {
+                                                    var id = data;
+                                                    console.log("this is id " + id);
                                                     var name = data.name;
                                                     var firstName = name.split(" ");
                                                     var lastName = name.replace(firstName[firstName.length - 1], "");
@@ -257,6 +259,20 @@
 //                                                    var dob = data.dob;
 //                                                    $("#datepicker").val(dob);
 //                                                    var gender = data.gender;
+
+
+                                                    $.ajax({
+                                                        type: "GET",
+                                                        dataType: "json",
+                                                        contentType: "application/json",
+                                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
+                                                        success: function (data) {
+                                                            alert(">>>>>");
+                                                            console.log(data + "Idddddddddddddd");
+                                                            var doctorInf = "";
+                                                        }});
+
+
                                                     $.ajax({
                                                         type: "GET",
                                                         dataType: "json",
