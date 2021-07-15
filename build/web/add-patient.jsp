@@ -367,7 +367,7 @@
                                                         }
                                                         
                                                         console.log(firstName + " firtname");
-                                                        console.log(phone + " phone");
+                                                        console.log(dob + " dob");
                                                         
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
                                                             $('#inputFirstname').addClass('error');
@@ -502,21 +502,11 @@
                                                                     data: JSON.stringify({
                                                                         "address": address,
                                                                         "gender": gender,
-                                                                        "doB": dob,
-                                                                        
+                                                                        "dob": dob,
                                                                         "name": lastName + " " + firstName,
-                                                                        
-                                                                        "id": "121",
                                                                         "image": url,
                                                                         "password": password,
-                                                                        
                                                                         "phone": phone,
-                                                                        "accountId": {
-                                                                            "id": 6,
-                                                                            "name": "patient"
-                                                                        },
-                                                                        "status": status,
-                                                                        
                                                                         "token": ""
 
 

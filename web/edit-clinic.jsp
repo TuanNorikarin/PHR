@@ -40,7 +40,7 @@
         <div class="content">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
-                    <h4 class="page-title">Add Clinic</h4>
+                    <h4 class="page-title">Edit Clinic</h4>
                 </div>
             </div>
             <div class="row">
@@ -194,6 +194,8 @@
                                                     document.getElementById('messagePhone').innerHTML = '';
                                                 });
                                                 var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
+                                                console.log(clinicInf +" dsds");
+                                                
                                                 $("input[name='clinicName']").val(clinicInf.name);
                                                 $("input[name='district']").val(clinicInf.district);
 //                                                
@@ -310,6 +312,8 @@
                                                                     Authorization: 'Bearer ' + token},
                                                                 data: JSON.stringify({
                                                                     "address": address,
+                                                                    "clinicGroupId": "1",
+                                                                    "coordinate": "",
                                                                     "name": clinicName,
                                                                     "id": clinicInf.id,
                                                                     "image": url,
@@ -318,7 +322,7 @@
                                                                     "district": district,
                                                                     "description": description
                                                                 }),
-                                                                url: "https://bt-application.herokuapp.com/api/clinic/edit",
+                                                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic",
                                                                 complete: function (jqXHR) {
                                                                     console.log(jqXHR.status);
                                                                     if (jqXHR.status === 200) {

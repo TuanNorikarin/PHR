@@ -424,6 +424,8 @@
 //                                                        }
                                                         
                                                         console.log(idUpdate +" idUp");
+                                                        console.log(lastName +" lastName");
+                                                        console.log(firstName +" firstName");
                                                         console.log(phone +" phone");
                                                         console.log(password +" password");
                                                         console.log(avatar +" avatar");
@@ -566,31 +568,19 @@
 //                                                                        Authorization: 'Bearer ' + token,
                                                                         'Access-Control-Allow-Origin': '*'},
                                                                     data: JSON.stringify({
-//                                                                        "address": address,
-//                                                                        "gender": gender,
-//                                                                        "dob": dob,
-
-//                                                                        "phone": phone,
-//                                                                        "roleId": {
-//                                                                            "id": 4,
-//                                                                            "name": "user"
-//                                                                        },
-//                                                                        "status": status,
+//                                                                        
                                                                         "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
-//                                                                        "mail": mail,
                                                                         "image": url,
                                                                         "password": password,
-                                                                        "token": "",
-                                                                        
-//                                                                        "clinicId": {"id": clinicID},
+//                                                                        "token": "",
                                                                         
                                                                     }),
-                                                                    url: " ",
+                                                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionist",
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
-//                                                                            window.location.href = "receptionist.jsp";
+                                                                            window.location.href = "receptionist.jsp";
                                                                         }
                                                                     }
                                                                 });

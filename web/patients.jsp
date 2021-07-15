@@ -242,7 +242,7 @@
                                         return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
                                     }},
                                 {data: 'name'},
-                                {data: 'doB'},
+                                {data: 'dob'},
                                 {data: 'address'},
                                 {data: 'phone'},
                                 {data: 'gender'},

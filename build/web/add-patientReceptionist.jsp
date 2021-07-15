@@ -367,6 +367,10 @@
                                                         }
                                                         
                                                         console.log(firstName + " firtname");
+                                                        console.log(password + " password");
+                                                        console.log(dob + " dob");
+                                                        console.log(firstName + " firtname");
+                                                        console.log(gender + " gender");
                                                         console.log(phone + " phone");
                                                         
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
@@ -500,22 +504,25 @@
                                                                     headers: {
                                                                         Authorization: 'Bearer ' + token},
                                                                     data: JSON.stringify({
-                                                                        "address": address,
+"address": address,
                                                                         "gender": gender,
                                                                         "doB": dob,
-                                                                        
+                                                                        "height": "",
+                                                                        "weight": "",
+                                                                        "bloodType": "",
+                                                                        "medicalNote": "",
                                                                         "name": lastName + " " + firstName,
                                                                         
-                                                                        "id": "121",
+//                                                                        "id": "121",
                                                                         "image": url,
                                                                         "password": password,
                                                                         
                                                                         "phone": phone,
-                                                                        "accountId": {
-                                                                            "id": 6,
-                                                                            "name": "patient"
-                                                                        },
-                                                                        "status": status,
+//                                                                        "accountId": {
+//                                                                            "id": 6,
+//                                                                            "name": "patient"
+//                                                                        },
+//                                                                        "status": status,
                                                                         
                                                                         "token": ""
 

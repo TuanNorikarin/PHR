@@ -90,12 +90,14 @@ div.doc-prof{
 div.profile-widget{
     height: 200px;
 }
-div.pagination__controls{
+/*div.pagination__controls{
     padding-left: 1%;
-}
+}*/
 
 div.pagination__controls{
+    width: 100%;
     padding-left: 45%;
+    display: inline;
 }
 
 /*============Page Title============*/

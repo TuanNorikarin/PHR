@@ -560,7 +560,7 @@
                                                                     data: JSON.stringify({
                                                                         "address": address,
                                                                         "gender": gender,
-                                                                        "doB": doB,
+                                                                        "dob": doB,
                                                                         "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
                                                                         "email": " ",

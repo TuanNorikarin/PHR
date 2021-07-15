@@ -85,7 +85,7 @@
                                     <span id='messageEmail'></span>
                                 </div>
                             </div>-->
-<!--                            <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input  id='inputPassword' class="form-control" id="password" name="password" type="password" onkeyup='check()'>
@@ -98,7 +98,7 @@
                                     <input class="form-control" id="confirmPass" name="confirmPass" type="password" onkeyup='check()'>
                                     <span id='message'></span>
                                 </div>
-                            </div>-->
+                            </div>
 <!--                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date of Birth</label>
@@ -138,7 +138,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone </label>
-                                    <input id='inputPhone' class="form-control" name="phone" type="number">
+                                    <input id='inputPhone' class="form-control" name="phone" type="number" readonly>
                                     <span id='messagePhone'/></span>
                                 </div>
                             </div>
@@ -242,20 +242,20 @@
                                                 window.onload = function () {
                                                     var id = data;
                                                     console.log("this is id " + id);
-                                                    var name = data.name;
-                                                    var firstName = name.split(" ");
-                                                    var lastName = name.replace(firstName[firstName.length - 1], "");
-                                                    lastName = lastName.trim();
-                                                    $("#inputFirstname").val(firstName[firstName.length - 1]);
-                                                    $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
-//                                                    var username = data.username;
-//                                                    $("#inputUsername").val(username);
-//                                                    var mail = data.mail;
-//                                                    $("#inputEmail").val(mail);
-                                                    var password = data.password;
-                                                    $("#inputPassword").val(password);
-                                                    var confirmPass = data.password;
-                                                    $("#confirmPass").val(confirmPass);
+//                                                    var name = data.name;
+//                                                    var firstName = name.split(" ");
+//                                                    var lastName = name.replace(firstName[firstName.length - 1], "");
+//                                                    lastName = lastName.trim();
+//                                                    $("#inputFirstname").val(firstName[firstName.length - 1]);
+//                                                    $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
+////                                                    var username = data.username;
+////                                                    $("#inputUsername").val(username);
+////                                                    var mail = data.mail;
+////                                                    $("#inputEmail").val(mail);
+//                                                    var password = data.password;
+//                                                    $("#inputPassword").val(password);
+//                                                    var confirmPass = data.password;
+//                                                    $("#confirmPass").val(confirmPass);
 //                                                    var dob = data.dob;
 //                                                    $("#datepicker").val(dob);
 //                                                    var gender = data.gender;
@@ -265,74 +265,34 @@
                                                         type: "GET",
                                                         dataType: "json",
                                                         contentType: "application/json",
-                                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
-                                                        success: function (data) {
-                                                            alert(">>>>>");
-                                                            console.log(data + "Idddddddddddddd");
-                                                            var doctorInf = "";
-                                                        }});
-
-
-                                                    $.ajax({
-                                                        type: "GET",
-                                                        dataType: "json",
-                                                        contentType: "application/json; charset=utf-8",
                                                         headers: {
-                                                            Authorization: 'Bearer ' + token},
-                                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinics",
-                                                        success: function (data1) {
-                                                            var select = document.getElementById("clinicID");
-                                                            for (var i in data1) {
-                                                                $(select).append('<option value=' + data1[i].id + '>' + data1[i].name + '</option>');
-
-                                                            }
-                                                            var clinicID = data.clinicName;
-                                                            $("select option").filter(function () {
-                                                                return $(this).text() === clinicID;
-                                                            }).attr('selected', true);
-                                                        }
-                                                    });
-
-//                                                    if (gender === 0) {
-//                                                        $("#male").prop("checked", true);
-//                                                    } else {
-//                                                        $("#female").prop("checked", true);
+                                                            'Access-Control-Allow-Origin': '*'},
+                                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
+//                                                        
+                                                        success: function (data) {
+                                                            
+                                                            var name = data.name;
+                                                            var firstName = name.split(" ");
+                                                            var lastName = name.replace(firstName[firstName.length - 1], "");
+                                                            lastName = lastName.trim();
+                                                            $("#inputFirstname").val(firstName[firstName.length - 1]);
+                                                            $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
+                                                            var password = data.password;
+                                                            $("#inputPassword").val(password);
+                                                            var confirmPass = data.password;
+                                                            $("#confirmPass").val(confirmPass);
+                                                            var phone = data.phone;
+                                                            var image = data.image;
+                                                            $('#img').attr('src', image);
+                                                            $("#inputPhone").val(phone);
+                                                            var status = data.status;
+                                                            $(document).ready(function () {
+//                                                    
+//                                                    function validateEmail(email)
+//                                                    {
+//                                                        var re = /\S{3,}@\S+\.\S+/;
+//                                                        return re.test(email);
 //                                                    }
-//                                                    var address = data.address;
-//                                                    $("#address").val(address);
-                                                    var phone = data.phone;
-                                                    var image = data.image;
-                                                    $('#img').attr('src', image);
-                                                    $("#inputPhone").val(phone);
-//                                            var avatar = $("input[name='avatar']").val();
-                                                    var status = data.status;
-//                                                    if (status === "enable") {
-//                                                        $("#patient_active").prop("checked", true);
-//                                                    } else {
-//                                                        $("#patient_inactive").prop("checked", true);
-//                                                    }
-
-
-                                                };
-                                                $(document).ready(function () {
-//                                                    function readURL(input) {
-//                                                        if (input.files && input.files[0]) {
-//                                                            var reader = new FileReader();
-//                                                            reader.onload = function (e) {
-//                                                                $('#img').attr('src', e.target.result);
-//                                                            }
-//
-//                                                            reader.readAsDataURL(input.files[0]); // convert to base64 string
-//                                                        }
-//                                                    }
-//                                                    $('#avatar').change(function () {
-//                                                        readURL(this);
-//                                                    });
-                                                    function validateEmail(email)
-                                                    {
-                                                        var re = /\S{3,}@\S+\.\S+/;
-                                                        return re.test(email);
-                                                    }
                                                     function removeAscent(str) {
                                                         if (str === null || str === undefined) {
                                                             return str;
@@ -439,29 +399,35 @@
                                                         var idUpdate = data.id;
                                                         var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
                                                         var lastName = $("input[name='lastName']").val();
-                                                        var username = $("input[name='username']").val();
-                                                        var email = $("input[name='email']").val();
+//                                                        var username = $("input[name='username']").val();
+//                                                        var email = $("input[name='email']").val();
                                                         var password = $("input[name='password']").val();
-                                                        var dob = $("input[name='dob']").val();
-                                                        var gender = $("input[name='gender']").val();
-                                                        var address = $("input[name='address']").val();
+//                                                        var dob = $("input[name='dob']").val();
+//                                                        var gender = $("input[name='gender']").val();
+//                                                        var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
-                                                        var clinicID = $("select[id='clinicID']").val();
-                                                        var status = $("input[name='status']").val();
+//                                                        var clinicID = $("select[id='clinicID']").val();
+//                                                        var status = $("input[name='status']").val();
                                                         var token = localStorage.getItem("key");
-                                                        var selectGen = $('input[id="male"]:checked').val();
-                                                        if (selectGen === "on") {
-                                                            gender = 0;
-                                                        } else {
-                                                            gender = 1;
-                                                        }
+//                                                        var selectGen = $('input[id="male"]:checked').val();
+//                                                        if (selectGen === "on") {
+//                                                            gender = 0;
+//                                                        } else {
+//                                                            gender = 1;
+//                                                        }
 
                                                         var selectSta = $('input[id="patient_active"]:checked').val();
-                                                        if (selectSta === "on") {
-                                                            status = "Active";
-                                                        } else {
-                                                            status = "Inactive";
-                                                        }
+                                                        
+                                                        console.log(idUpdate +" idUp");
+                                                        console.log(phone +" phone");
+                                                        console.log(password +" password");
+                                                        console.log(imageOld +" avatar");
+                                                        
+//                                                        if (selectSta === "on") {
+//                                                            status = "Active";
+//                                                        } else {
+//                                                            status = "Inactive";
+//                                                        }
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
                                                             $('#inputFirstname').addClass('error');
                                                             document.getElementById('messageFirstname').style.color = 'red';
@@ -471,16 +437,16 @@
                                                                 document.getElementById('messageLastname').style.color = 'red';
                                                                 document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
                                                             }
-                                                            if (username.length > 30 || username.length < 6) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            }
-                                                            if (validateEmail(email) === false && email !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
+//                                                            if (username.length > 30 || username.length < 6) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            }
+//                                                            if (validateEmail(email) === false && email !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -496,16 +462,16 @@
                                                             $('#inputLastname').addClass('error');
                                                             document.getElementById('messageLastname').style.color = 'red';
                                                             document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
-                                                            if (username.length > 30 || username.length < 6) {
-                                                                $('#inputUsername').addClass('error');
-                                                                document.getElementById('messageUsername').style.color = 'red';
-                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            }
-                                                            if (validateEmail(email) === false && email !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
+//                                                            if (username.length > 30 || username.length < 6) {
+//                                                                $('#inputUsername').addClass('error');
+//                                                                document.getElementById('messageUsername').style.color = 'red';
+//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            }
+//                                                            if (validateEmail(email) === false && email !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -516,40 +482,42 @@
                                                                 document.getElementById('messagePhone').style.color = 'red';
                                                                 document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                             }
-                                                        } else if (username.length > 30 || username.length < 6) {
-                                                            $('#inputUsername').addClass('error');
-                                                            document.getElementById('messageUsername').style.color = 'red';
-                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-                                                            if (validateEmail(email) === false && email !== "") {
-                                                                $('#inputEmail').addClass('error');
-                                                                document.getElementById('messageEmail').style.color = 'red';
-                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            }
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (validateEmail(email) === false && email !== "") {
-                                                            $('#inputEmail').addClass('error');
-                                                            document.getElementById('messageEmail').style.color = 'red';
-                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (password.length > 30 || password.length < 6) {
+                                                        }
+//                                                        else if (username.length > 30 || username.length < 6) {
+//                                                            $('#inputUsername').addClass('error');
+//                                                            document.getElementById('messageUsername').style.color = 'red';
+//                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
+//                                                            if (validateEmail(email) === false && email !== "") {
+//                                                                $('#inputEmail').addClass('error');
+//                                                                document.getElementById('messageEmail').style.color = 'red';
+//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            }
+//                                                            if (password.length > 30 || password.length < 6) {
+//                                                                $('#inputPassword').addClass('error');
+//                                                                document.getElementById('messagePassword').style.color = 'red';
+//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+//                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+//                                                        } else if (validateEmail(email) === false && email !== "") {
+//                                                            $('#inputEmail').addClass('error');
+//                                                            document.getElementById('messageEmail').style.color = 'red';
+//                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
+//                                                            if (password.length > 30 || password.length < 6) {
+//                                                                $('#inputPassword').addClass('error');
+//                                                                document.getElementById('messagePassword').style.color = 'red';
+//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+//                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+//                                                        }
+                                                        else if (password.length > 30 || password.length < 6) {
                                                             $('#inputPassword').addClass('error');
                                                             document.getElementById('messagePassword').style.color = 'red';
                                                             document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
@@ -590,28 +558,23 @@
                                                                     headers: {
                                                                         Authorization: 'Bearer ' + token},
                                                                     data: JSON.stringify({
-                                                                        "address": address,
-                                                                        "gender": gender,
-                                                                        "dob": dob,
-                                                                        "fullname": lastName + " " + firstName,
+//                                                                        "address": address,
+//                                                                        "gender": gender,
+//                                                                        "dob": dob,
+                                                                        "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
-                                                                        "mail": email,
                                                                         "password": password,
                                                                         "phone": phone,
-                                                                        "roleId": {
-                                                                            "id": 2
-                                                                        },
-                                                                        "status": status,
+//                                                                        "status": status,
                                                                         "image": url,
                                                                         "token": data.token,
-                                                                        "clinicId": {"id": clinicID},
-                                                                        "username": username
+//                                                                        "clinicId": {"id": clinicID},
                                                                     }),
-                                                                    url: "https://bt-application.herokuapp.com/api/userinfor/edit",
+                                                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor",
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
-                                                                            window.location.href = "doctors.jsp";
+//                                                                            window.location.href = "doctors.jsp";
                                                                         }
                                                                     }
                                                                 });
@@ -620,6 +583,50 @@
                                                         }
                                                     });
                                                 });
+                                                            
+                                                        }});
+
+
+                                                    $.ajax({
+                                                        type: "GET",
+                                                        dataType: "json",
+                                                        contentType: "application/json; charset=utf-8",
+                                                        headers: {
+                                                            Authorization: 'Bearer ' + token},
+                                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinics",
+                                                        success: function (data1) {
+                                                            var select = document.getElementById("clinicID");
+                                                            
+                                                            for (var i in data1) {
+                                                                $(select).append('<option value=' + data1[i].id + '>' + data1[i].name + '</option>');
+
+                                                            }
+                                                            var clinicID = data.clinicName;
+                                                            $("select option").filter(function () {
+                                                                return $(this).text() === clinicID;
+                                                            }).attr('selected', true);
+                                                        }
+                                                    });
+
+//                                                    if (gender === 0) {
+//                                                        $("#male").prop("checked", true);
+//                                                    } else {
+//                                                        $("#female").prop("checked", true);
+//                                                    }
+//                                                    var address = data.address;
+//                                                    $("#address").val(address);
+                                                    
+//                                                  var avatar = $("input[name='avatar']").val();
+                                                    
+//                                                    if (status === "enable") {
+//                                                        $("#patient_active").prop("checked", true);
+//                                                    } else {
+//                                                        $("#patient_inactive").prop("checked", true);
+//                                                    }
+
+
+                                                };
+                                                
 //              ==================================Check Password==========================================
                                                 var check = function () {
                                                     if (document.getElementById('inputPassword').value ===

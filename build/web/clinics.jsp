@@ -82,6 +82,7 @@
             .EditClinic {
                 float: right;
             }
+            #pagination-1{}
 
         </style>
     </head>
@@ -101,7 +102,7 @@
             <form role="form" id="form-buscar">
                 <div class="form-group">
                     <div class="input-group ">
-                        <input onkeyup="myFunction()" id="searchClinic" class="custom-seach " type="text" name="search" placeholder="Search..." required/>
+                        <input onkeyup="myFunction()" id="searchClinic" class="custom-seach " type="text" name="search" placeholder="  Search..." required/>
                     </div>
                 </div>
             </form>
@@ -164,7 +165,7 @@
                             $(document).ajaxStop(function () {
                                 $("div.row.grid-blog").html(x);
                                 $('#pagination-1').paginate({
-                                    items_per_page: 5
+                                    items_per_page: 6
                                 });
                                 for (var i = 0; i < inActive.length; i++) {
                                     if (inActive[i].status === "Inactive") {
@@ -207,82 +208,104 @@
                                                         for (var i = 0; i < value.length; i++) {
                                                             count += value[i].rate;
                                                         }
-
-                                                        count = count / value.length;
-                                                        if (count < 0.5) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        }else if (count > 0.5 && count < 1) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        } else if (count > 1 && count < 1.5) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        } else if (count > 1.5 && count < 2) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        } else if (count > 2 && count < 2.5) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        } else if (count > 2.5 && count < 3) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        } else if (count > 3 && count < 3.5) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        } else if (count > 3.5 && count < 4) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        } else if (count > 4 && count < 4.5) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span></div></div></div></div></div>';
-                                                        } else if (count > 4.5 && count < 5) {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span></div></div></div></div></div>';
-                                                        } else {
-                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                    + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span></div></div></div></div></div>';
-                                                        }
-                                                    } else {
                                                         x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
-                                                                + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
-                                                                + data[index].name + '</a></h3><p>\n\ '
-                                                                + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
-                                                                + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>'
+                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+                                                                    + data[index].name + '</a></h3><p>\n\ '
+                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getClinic('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+                                                        
+                                                        
+                                                        
+                                                        
+//                                                        count = count / value.length;
+//                                                        if (count < 0.5) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        
+//                                                        }
+//                                                        else if (count > 0.5 && count < 1) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else if (count > 1 && count < 1.5) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else if (count > 1.5 && count < 2) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else if (count > 2 && count < 2.5) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else if (count > 2.5 && count < 3) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else if (count > 3 && count < 3.5) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else if (count > 3.5 && count < 4) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else if (count > 4 && count < 4.5) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else if (count > 4.5 && count < 5) {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')"  href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span></div></div></div></div></div>';
+//                                                        }
+//                                                        else {
+//                                                            x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                    + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                    + data[index].name + '</a></h3><p>\n\ '
+//                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                    + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span></div></div></div></div></div>';
+//                                                        }
                                                     }
+//                                                    else {
+//                                                        x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+//                                                                + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
+//                                                                + data[index].name + '</a></h3><p>\n\ '
+//                                                                + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getDoctor('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+//                                                                + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>'
+//                                                    }
+                                                    console.log(data);
+                                                    
                                                     $(document).on('click', '[id^="clinicClick"]', function () {
 
                                                         var values = $(this).context.textContent.split(" ");
@@ -291,6 +314,7 @@
                                                         if (item.id === id) {
                                                             localStorage.setItem("clinicInf", JSON.stringify(item));
                                                             localStorage.setItem("rating", JSON.stringify(value));
+                                                            
                                                         }
                                                     });
                                                 }})
@@ -308,6 +332,12 @@
 
                                     }
                                 });
+                            }
+                            
+                            function getClinic(data){
+                                alert(data);
+                                localStorage.setItem("dataClinic", JSON.stringify(data));
+                                console.log(dataDoc);
                             }
 
 //  ===============================================Loading Screen==================================================                          
