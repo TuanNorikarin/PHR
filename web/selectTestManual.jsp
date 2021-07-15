@@ -134,8 +134,10 @@
         <script type="text/javascript">
             var table;
             window.onload = function () {
-                var token = localStorage.getItem("key");
-                var testName = localStorage.getItem("testName");
+//                var token = localStorage.getItem("key");
+//                var testName = localStorage.getItem("testName");
+
+                var packageId = sessionStorage.getItem('packageId');
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -146,57 +148,141 @@
                     },
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
                     success: function (data) {
+
+
+                        jQuery.makeArray(packageId);
+                        var listResult = data;
                         var mainData = [];
-                        console.log(data);
-                        data.forEach(element => {
-                            var dataShow = new Object();
-                            dataShow.id = element.id;
-                            dataShow.name = element.name;
-                            dataShow.description = element.description;
 
-                            dataShow.maleIndex = '-';
-                            dataShow.femaleindex = '-';
-                            dataShow.childIndex = '-'
+                        //get all test of package test to check douple
+                        if (packageId !== null) {
+                            for (var i = 0, max = packageId.length; i < max; i++) {
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: "json",
+                                    contentType: "application/json; charset=UTF-8",
+                                    headers: {
+                                        // Authorization: 'Bearer ' + token
+                                        'Access-Control-Allow-Origin': '*'
+                                    },
+                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + packageId[i],
+                                    success: function (data) {
+                                        for (var j = 0; j < data.length; j++) {
+                                            let id = data[j].id;
+                                            var a = listResult.findIndex(test => test.id === id);
+                                            listResult.splice(a, 1);
+                                        }
 
-                            element.samplelst.forEach(e => {
-                                if (e.type === 'Male') {
-                                    dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                } else if (e.type === 'Female') {
-                                    dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                } else if (e.type === 'Child') {
-                                    dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                }
-                            });
-                            mainData.push(dataShow);
-                        });
-                        console.log(mainData);
-                        table = $('#indexTable').DataTable({
-                            data: mainData,
-                            columns: [
-                                {data: 'name'},
-                                {
-                                    data: 'description',
-                                },
-                                {
-                                    data: 'maleIndex',
-                                },
-                                {
-                                    data: 'femaleindex',
-                                },
-                                {
-                                    data: 'childIndex',
-                                },
-                                {
-                                    data: 'id',
-                                    render: function (data, type, row, meta) {
-                                        return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input" value="' + data + '"id="exampleCheck1"></div></td>'
+                                        console.log(listResult);
+                                        listResult.forEach(element => {
+                                            var dataShow = new Object();
+                                            dataShow.id = element.id;
+                                            dataShow.name = element.name;
+                                            dataShow.description = element.description;
+
+                                            dataShow.maleIndex = '-';
+                                            dataShow.femaleindex = '-';
+                                            dataShow.childIndex = '-'
+
+                                            element.samplelst.forEach(e => {
+                                                if (e.type === 'Male') {
+                                                    dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                                } else if (e.type === 'Female') {
+                                                    dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                                } else if (e.type === 'Child') {
+                                                    dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                                }
+                                            });
+                                            mainData.push(dataShow);
+                                        });
+
+                                        console.log('xxx' + mainData);
+                                        table = $('#indexTable').DataTable({
+                                            data: mainData,
+                                            columns: [
+                                                {data: 'name'},
+                                                {
+                                                    data: 'description',
+                                                },
+                                                {
+                                                    data: 'maleIndex',
+                                                },
+                                                {
+                                                    data: 'femaleindex',
+                                                },
+                                                {
+                                                    data: 'childIndex',
+                                                },
+                                                {
+                                                    data: 'id',
+                                                    render: function (data, type, row, meta) {
+                                                        return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input" value="' + data + '"id="exampleCheck1"></div></td>'
+                                                    }
+                                                },
+                                            ],
+                                            "bDestroy": true,
+                                            "bFilter": true,
+
+                                        });
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        console.log(' Error in processing! ' + textStatus);
                                     }
-                                },
-                            ],
-                            "bDestroy": true,
-                            "bFilter": true,
+                                });
+                            }
+                        } else {
+                            data.forEach(element => {
+                                var dataShow = new Object();
+                                dataShow.id = element.id;
+                                dataShow.name = element.name;
+                                dataShow.description = element.description;
 
-                        });
+                                dataShow.maleIndex = '-';
+                                dataShow.femaleindex = '-';
+                                dataShow.childIndex = '-'
+
+                                element.samplelst.forEach(e => {
+                                    if (e.type === 'Male') {
+                                        dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } else if (e.type === 'Female') {
+                                        dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } else if (e.type === 'Child') {
+                                        dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                    }
+                                });
+                                mainData.push(dataShow);
+                            });
+
+                            console.log('xxx' + mainData);
+                            table = $('#indexTable').DataTable({
+                                data: mainData,
+                                columns: [
+                                    {data: 'name'},
+                                    {
+                                        data: 'description',
+                                    },
+                                    {
+                                        data: 'maleIndex',
+                                    },
+                                    {
+                                        data: 'femaleindex',
+                                    },
+                                    {
+                                        data: 'childIndex',
+                                    },
+                                    {
+                                        data: 'id',
+                                        render: function (data, type, row, meta) {
+                                            return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input" value="' + data + '"id="exampleCheck1"></div></td>'
+                                        }
+                                    },
+                                ],
+                                "bDestroy": true,
+                                "bFilter": true,
+
+                            });
+                        }
+
 
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -207,15 +293,22 @@
             };
 
 
+            function checkDouple(listTest, listPakageId) {
+
+            }
+
+
             $('#addTest').click(function (event) {
-//                localStorage.removeItem('listTestId');
-                var listId = localStorage.getItem('listTestId');
+
+//                sessionStorage.clear();
+//                localStorage.clear();
+                var listId = sessionStorage.getItem('listTestId');
                 var array = jQuery.makeArray(listId);
-                console.log('luc dau' +array);
+                console.log('luc dau' + array);
                 var checkArray = [];
                 if (array.length !== 0) {
-                    checkArray =array[0].toString().split(",");
-                    console.log('......'+checkArray);
+                    checkArray = array[0].toString().split(",");
+                    console.log('......' + checkArray);
                 }
                 var checkboxTMP = document.getElementsByName('checkBox');
                 for (var i = 0; i < checkboxTMP.length; i++) {
@@ -236,11 +329,12 @@
                         }
                     }
                 }
-                console.log('sau khi su li'+array);
-                localStorage.removeItem('listTestId');
-                localStorage.setItem('listTestId', array);
+                console.log('sau khi su li' + array);
 
-               
+                sessionStorage.removeItem('listTestId');
+                sessionStorage.setItem('listTestId', array);
+
+
                 if (confirm('Do you want to choose some other package testing services?')) {
                     window.location.href = "selectTestPackage.jsp";
                 } else {

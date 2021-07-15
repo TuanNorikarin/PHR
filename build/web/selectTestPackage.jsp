@@ -115,6 +115,8 @@
 
                 var token = localStorage.getItem("key");
                 var allData;
+
+
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -153,15 +155,56 @@
             };
 
             /*
-                     
+             
              */
             function getpackageId(id) {
-                localStorage.setItem('packageId', id);
-                if (confirm('Do you want to choose some other testing services?')) {
-                    window.location.href = "selectTestManual.jsp";
-                } else {
-                    window.location.href = "createExamination.jsp";
-                }
+                var listTestId = sessionStorage.getItem('listTestId').split(",");
+                console.log(listTestId);
+                var listTestDouple = [];
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    headers: {
+                        // Authorization: 'Bearer ' + token
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + id,
+                    success: function (data) {
+                        console.log(data);
+                        for (var i = 0; i < data.length; i++) {
+                            let id = data[i].id.toString();
+                            console.log(typeof (id));
+                            for (var j = 0; j < listTestId.length; j++) {
+                                console.log(listTestId[j]);
+                                if (id === listTestId[j]) {
+                                    listTestDouple.push(j);
+
+                                }
+                            }
+                        }
+                        if (listTestDouple.length !== 0) {
+                            let flag = true;
+
+                            while (flag) {
+                                if (confirm('Some test you choice have been in package, do you want to remove them?')) {
+                                    flag = false;
+                                } else {
+                                }
+                            }
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(' Error in processing! ' + textStatus);
+                    }
+                });
+//                sessionStorage.setItem('packageId', id);
+//                if (confirm('Do you want to choose some other testing services?')) {
+//                    window.location.href = "selectTestManual.jsp";
+//                } else {
+//                    window.location.href = "createExamination.jsp";
+//                }
             }
         </script>
     </body>

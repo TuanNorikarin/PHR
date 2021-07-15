@@ -138,10 +138,10 @@
                     var date = "";
                     var type = checkNull($('#inputType').val());
                     var description = checkNull($('#description').val());
-                    var patientId = checkNull(localStorage.getItem('patientId'));
+                    var patientId = checkNull(sessionStorage.getItem('patientId'));
                     var doctorId = checkNull($('option:selected').val());
-                    var listPackageTest = jQuery.makeArray(localStorage.getItem('packageId')).map(i => Number(i));
-                    var listTest = jQuery.makeArray(localStorage.getItem('listTestId')).map(i => Number(i));
+                    var listPackageTest = jQuery.makeArray(sessionStorage.getItem('packageId')).map(i => Number(i));
+                    var listTest = jQuery.makeArray(sessionStorage.getItem('listTestId')).map(i => Number(i));
                     console.log(listPackageTest + "----" + listTest);
                     $.ajax({
                         type: "POST",
