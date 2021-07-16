@@ -158,7 +158,10 @@
              
              */
             function getpackageId(id) {
-                var listTestId = sessionStorage.getItem('listTestId').split(",");
+                var ids = sessionStorage.getItem('listTestId');
+                if (ids !== null) {
+                    var listTestId = ids.split(",");
+                }
                 console.log(listTestId);
                 var listTestDouple = [];
                 $.ajax({
@@ -199,12 +202,12 @@
                         console.log(' Error in processing! ' + textStatus);
                     }
                 });
-//                sessionStorage.setItem('packageId', id);
-//                if (confirm('Do you want to choose some other testing services?')) {
-//                    window.location.href = "selectTestManual.jsp";
-//                } else {
-//                    window.location.href = "createExamination.jsp";
-//                }
+                sessionStorage.setItem('packageId', id);
+                if (confirm('Do you want to choose some other testing services?')) {
+                    window.location.href = "selectTestManual.jsp";
+                } else {
+                    window.location.href = "createExamination.jsp";
+                }
             }
         </script>
     </body>

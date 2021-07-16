@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>MPMR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -65,7 +65,7 @@
                                     <th style="width: 30%">Address</th>
 
                                     <th style="width: 10%">Phone</th>
-                                    <th style="width: 5%">Email</th>
+                                    <th style="width: 5%">Gender</th>
                                     <th style="width: 10%">Status</th>
                                     <th style="width: 3%" class="text-right">Action</th>
                                 </tr>
@@ -81,7 +81,7 @@
                                     <td id="address"></td>
                                     <td id="phoneNum"></td>
 
-                                    <td id="email"></td>
+                                    <td id="gender"></td>
                                     <td id="status"></td>
 
 
@@ -116,7 +116,7 @@
             window.onload = function () {
                 var token = localStorage.getItem("key");
                 var clinicId = localStorage.getItem("clinicId");
-                clinicId = 1;
+                clinicId = 9;
                 $('#buttonPatient').on('click', function () {
                     console.log('button clicked');
                     var searchPatientValue = $('#searchPatient').val();
@@ -156,15 +156,30 @@
                     statusCode: {
                         200: function (data) {
                             console.log('data khi load: ', data);
+                            var listPatient = [];
+                            data.forEach(element => {
+                                var dataShow = new Object();
+                                dataShow.id = element.id;
+                                dataShow.avartar = element.image;
+                                dataShow.name = element.name;
+                                dataShow.dob = element.dob;
+                                dataShow.address = element.address;
+                                dataShow.phone = element.phone;
+                                dataShow.gender = element.gender;
+                                dataShow.status = element.status;
+
+                                listPatient.push(dataShow);
+                            });
+                            console.log(listPatient);
                             dataTable = $('#patientTable').DataTable({
-                                data: data,
+                                data: listPatient,
                                 columns: [
                                     {data: "image",
                                         "render": function (data, type, row, meta) {
                                             return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
                                         }},
                                     {data: 'name'},
-                                    {data: 'doB'},
+                                    {data: 'dob'},
                                     {data: 'address'},
                                     {data: 'phone'},
                                     {data: 'gender'},
@@ -172,7 +187,7 @@
                                     {
                                         data: 'id',
                                         "render": function (data, type, row, meta) {
-                                            return '<td  class="text-right"><button onclick="getPatientId('+data+')" type="button" class="btn btn-primary">Select patient</button></td>'
+                                            return '<td  class="text-right"><button onclick="getPatientId(' + data + ')" type="button" class="btn btn-primary">Select patient</button></td>'
                                         }
 
                                     }

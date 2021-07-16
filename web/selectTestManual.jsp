@@ -293,9 +293,6 @@
             };
 
 
-            function checkDouple(listTest, listPakageId) {
-
-            }
 
 
             $('#addTest').click(function (event) {

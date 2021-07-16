@@ -106,15 +106,15 @@
                 //                =====================================Insert===============================================
                 window.onload = function () {
 
-                    var patientId = localStorage.getItem('patientId');
-                    var listTest = localStorage.getItem('listTestId');
+                    var patientId = sessionStorage.getItem('patientId');
+                    var listTest = sessionStorage.getItem('listTestId');
 
                     console.log('------' + patientId + '-----' + listTest);
                 }
 
                 $(document).ready(function () {
                     var clinicId = localStorage.getItem("clinicId");
-                    clinicId = 1;
+                    clinicId = 9;
                     $.ajax({
                         type: "GET",
                         dataType: "json",
@@ -142,7 +142,7 @@
                     var doctorId = checkNull($('option:selected').val());
                     var listPackageTest = jQuery.makeArray(sessionStorage.getItem('packageId')).map(i => Number(i));
                     var listTest = jQuery.makeArray(sessionStorage.getItem('listTestId')).map(i => Number(i));
-                    console.log(listPackageTest + "----" + listTest);
+                    console.log(listTest);
                     $.ajax({
                         type: "POST",
                         dataType: "json",
@@ -166,9 +166,7 @@
                                 alert("Create Request Successfully");
                                 window.location.href = "receptionistPatients.jsp";
                             }
-                        }
-
-                    });
+                        }               });
                 });
                 function checkNull(data) {
                     if (data === null) {
@@ -178,6 +176,7 @@
                 }
             </script>
             <i onclick="editDoctor()"></i>
+            
             </body>
 
 
