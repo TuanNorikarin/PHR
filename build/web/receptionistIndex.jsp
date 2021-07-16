@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-         <div class="overlay"></div>
+        <div class="overlay"></div>
     </div>
     <%@include file="components/recepFooter.html" %>
     <script src="assets/js/jquery-3.2.1.min.js"></script>
@@ -119,44 +119,10 @@
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
         window.onload = function () {
+//            localStorage.clear();
             var clinicId = localStorage.getItem("clinicId");
+            clinicId = 1;
             var token = localStorage.getItem("key");
-            $.ajax({
-                type: "GET",
-                dataType: "text",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/userinfor/count/2/" + clinicId,
-                success: function (data) {
-                    document.getElementById("doctorCount").innerHTML = data;
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-            });
-
-
-            $.ajax({
-                type: "GET",
-                dataType: "text",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/userinfor/count/4/" + clinicId,
-                success: function (data) {
-                    document.getElementById("receptionistCount").innerHTML = data;
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-            });
 
             $.ajax({
                 type: "GET",
@@ -164,18 +130,12 @@
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/examination/findbyclinicid/" + clinicId,
+                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
                 success: function (data) {
-                    var list = [];
-                    var length = data.length.toString();
-                    document.getElementById("examCount").innerHTML = length;
-                    for (var i = 0; i < data.length; i++) {
-                        if (!list.includes(data[i].userId.id)) {
-                            list.push(data[i].userId.id);
-                        }
-                    }
-                    document.getElementById("patientCount").innerHTML = list.length;
-
+                    document.getElementById("doctorCount").innerHTML = data.totalDoctor;
+                    document.getElementById("patientCount").innerHTML = data.totalPatient;
+                    document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
+                    document.getElementById("examCount").innerHTML = data.totalExamination;
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -190,6 +150,8 @@
         $(document).ajaxStop(function () {
             $("div").removeClass("loading");
         });
+        
+       
 
     </script>
 
