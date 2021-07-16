@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
@@ -159,12 +159,7 @@
 // ======================================================Insert===============================================
 
             $(document).ready(function () {
-                function uuidv4() {
-                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                        return v.toString(16);
-                    });
-                }
+                
                 $("#inputName").click(function () {
                     $('#inputName').removeClass('error');
                     document.getElementById('messageName').innerHTML = '';
@@ -226,15 +221,24 @@
                     var childMax = $("input[name='childMax']").val();
                     var token = localStorage.getItem("key");
                     var count = 0;
-                    console.log(regexp.test(maleMax));
+                    
                     var allTestIndex = JSON.parse(localStorage.getItem("allTestIndex"));
-                    console.log(allTestIndex);
+                    
                     for (var i = 0; i < allTestIndex.length; i++) {
-                        if (allTestIndex[i][0].trim() === name) {
+                        if (allTestIndex[i][0] === name) {
                             count = 1;
                         }
                     }
-                    var testId = uuidv4();
+                    console.log(name +" name");
+                    console.log(regexp.test(maleMax));
+                    console.log(allTestIndex);
+                    console.log(maleMin + " maleMin");
+                    console.log(maleMax + " maleMax");
+                    console.log(femaleMin + " FemaleMin");
+                    console.log(femaleMax + " femaleMax");
+                    
+                    
+//                    var testId = uuidv4();
                     if (name.length === 0 || name.length > 30) {
                         $('#inputName').addClass('error');
                         document.getElementById('messageName').style.color = 'red';
@@ -428,16 +432,16 @@
                         document.getElementById('messageFemaleMax').style.color = 'red';
                         document.getElementById('messageFemaleMax').innerHTML = 'Value invalid ✘';
 
-                        if (!regexp.test(childMin)) {
-                            $('#childMin').addClass('error');
-                            document.getElementById('messageChildMin').style.color = 'red';
-                            document.getElementById('messageChildMin').innerHTML = 'Value invalid ✘';
-                        }
-                        if (!regexp.test(childMax)) {
-                            $('#childMax').addClass('error');
-                            document.getElementById('messageChildMax').style.color = 'red';
-                            document.getElementById('messageChildMax').innerHTML = 'Value invalid ✘';
-                        }
+//                        if (!regexp.test(childMin)) {
+//                            $('#childMin').addClass('error');
+//                            document.getElementById('messageChildMin').style.color = 'red';
+//                            document.getElementById('messageChildMin').innerHTML = 'Value invalid ✘';
+//                        }
+//                        if (!regexp.test(childMax)) {
+//                            $('#childMax').addClass('error');
+//                            document.getElementById('messageChildMax').style.color = 'red';
+//                            document.getElementById('messageChildMax').innerHTML = 'Value invalid ✘';
+//                        }
                     } else if (!regexp.test(childMin)) {
                         $('#childMin').addClass('error');
                         document.getElementById('messageChildMin').style.color = 'red';
@@ -474,95 +478,37 @@
                             headers: {
                                 Authorization: 'Bearer ' + token},
                             data: JSON.stringify({
-                                "id": testId,
+//                              
                                 "name": name,
                                 "description": description,
-                                "status": "Active"
+                                "samplelst": [
+                                        {
+                                          "description": "",
+                                          "indexValueMax": maleMax,
+                                          "indexValueMin": maleMin,
+                                          "type": "Male"
+                                        },
+                                     {
+                                          "description": "",
+                                          "indexValueMax": femaleMax,
+                                          "indexValueMin": femaleMin,
+                                          "type": "Female"
+                                        },
+                                      {
+                                          "description": "",
+                                          "indexValueMax": childMax,
+                                          "indexValueMin": childMin,
+                                          "type": "Child"
+                                        }  
+                                      ],
+                                "status": "enable"
 
                             }),
-                            url: "https://bt-application.herokuapp.com/api/test/insert",
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index",
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 201) {
-                                    if (maleMax !== null || maleMin !== null) {
-                                        $.ajax({
-                                            type: "POST",
-                                            dataType: "json",
-                                            contentType: "application/json; charset=utf-8",
-                                            headers: {
-                                                Authorization: 'Bearer ' + token},
-                                            data: JSON.stringify({
-                                                "id": uuidv4(),
-                                                "indexesName": name,
-                                                "description": description,
-                                                "indexValueMax": maleMax,
-                                                "indexValueMin": maleMin,
-                                                "type": "Male",
-                                                "testId": {
-                                                    "id": testId
-                                                }
-                                            }),
-                                            url: "https://bt-application.herokuapp.com/api/testresultsample/insert",
-                                            complete: function (jqXHR) {
-                                                if (jqXHR.status === 201) {
-                                                    if (femaleMin !== null || femaleMax !== null) {
-                                                        $.ajax({
-                                                            type: "POST",
-                                                            dataType: "json",
-                                                            contentType: "application/json; charset=utf-8",
-                                                            headers: {
-                                                                Authorization: 'Bearer ' + token},
-                                                            data: JSON.stringify({
-                                                                "id": uuidv4(),
-                                                                "indexesName": name,
-                                                                "description": description,
-                                                                "indexValueMax": femaleMax,
-                                                                "indexValueMin": femaleMin,
-                                                                "type": "Female",
-                                                                "testId": {
-                                                                    "id": testId
-                                                                }
-                                                            }),
-                                                            url: "https://bt-application.herokuapp.com/api/testresultsample/insert",
-                                                            complete: function (jqXHR) {
-                                                                if (jqXHR.status === 201) {
-                                                                    if (childMin !== null || childMax !== null) {
-                                                                        $.ajax({
-                                                                            type: "POST",
-                                                                            dataType: "json",
-                                                                            contentType: "application/json; charset=utf-8",
-                                                                            headers: {
-                                                                                Authorization: 'Bearer ' + token},
-                                                                            data: JSON.stringify({
-                                                                                "id": uuidv4(),
-                                                                                "indexesName": name,
-                                                                                "description": description,
-                                                                                "indexValueMax": childMax,
-                                                                                "indexValueMin": childMin,
-                                                                                "type": "Children",
-                                                                                "testId": {
-                                                                                    "id": testId
-                                                                                }
-                                                                            }),
-                                                                            url: "https://bt-application.herokuapp.com/api/testresultsample/insert",
-                                                                            complete: function (jqXHR) {
-                                                                                if (jqXHR.status === 201) {
-                                                                                    window.location.href = "testIndex.jsp";
-                                                                                }
-                                                                            }
-
-                                                                        });
-                                                                    }
-                                                                }
-                                                            }
-
-                                                        });
-                                                    }
-                                                }
-                                            }
-
-                                        });
-                                    }
+                                    
 
 
                                 }

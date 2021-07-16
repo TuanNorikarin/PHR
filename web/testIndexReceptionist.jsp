@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -102,8 +102,8 @@
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
 
-            window.onload = function () {
-                var token = localStorage.getItem("key");
+                window.onload = function () {
+                        var token = localStorage.getItem("key");
                         var testName = localStorage.getItem("testName");
                         $.ajax({
                             type: "GET",
@@ -127,11 +127,11 @@
                                     dataShow.childIndex = '-'
                                     
                                     element.samplelst.forEach(e => {
-                                        if (e.type === 'Male') {
+                                        if (e.type === 'Male' || e.type === 'male') {
                                             dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                        } else if (e.type === 'Female') {
+                                        } else if (e.type === 'Female' || e.type === 'female') {
                                             dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                        } else if (e.type === 'Child') {
+                                        } else if (e.type === 'Child' || e.type === 'child') {
                                             dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
                                         }
                                     });

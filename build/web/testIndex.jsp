@@ -63,7 +63,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>
-                                    <th id='description' style="width: 30%">Description</th>
+                                    <!--<th id='description' style="width: 30%">Description</th>-->
                                     <th style="width: 15%">Male Value</th>
                                     <th style="width: 15%">FeMale Value</th>
                                     <th style="width: 15%">Children Value</th>
@@ -76,7 +76,7 @@
                                 <tr> 
 
                                     <td id="name"></td>
-                                    <td id="description"></td>
+                                    <!--<td id="description"></td>-->
                                     <td id="maleVal"></td>
                                     <td id="femaleVal"></td>
                                     <td id="childVal"></td>
@@ -121,130 +121,88 @@
                         Authorization: 'Bearer ' + token},
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
                     success: function (data) {
-                        var valueArray = [];
-                        var valueArrayTotal = [];
-                        var valueId = [];
-                        var valueIdTotal = [];
-                        var idData = null;
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i] !== undefined) {
-                                valueArray.push(data[i].id.name);
+                        var mainData = [];
+                                console.log(data);
+                                data.forEach(element => {
+                                    var dataShow = new Object();
+                                    dataShow.name = element.name;
+                                    dataShow.description = element.description;
+
+                                    dataShow.maleIndex = '-';
+                                    dataShow.femaleindex = '-';
+                                    dataShow.childIndex = '-'
+                                    
+                                    element.samplelst.forEach(e => {
+                                        if (e.type === 'Male' || e.type === 'male') {
+                                            dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        } else if (e.type === 'Female' || e.type === 'female') {
+                                            dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                        } else if (e.type === 'Child' || e.type === 'child') {
+                                            dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        }
+                                    });
+                                    mainData.push(dataShow);
+                                });
                                 
-                                valueArray.push(data[i].id.description);
-                                valueId.push(data[i].id.name);
-                                valueId.push(data[i].id);
-                                if (data[i].type === 'Male') {
-                                    valueArray.splice(2, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.splice(2, 0, data[i].id);
+                                
+//                        
+//                        localStorage.setItem("allTestIndex", JSON.stringify(mainData));
+//                        var a = JSON.stringify(data);
+//                        var b = JSON.parse(a);
+//                        $('#indexTable tbody').on('click', 'td', function ()
+//                        {
+//                            var tr = $(this).closest("tr");
+//                            var rowindex = tr.index();
+//                            table = document.getElementById("indexTable");
+//                            tr = table.getElementsByTagName("tr");
+//                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
+//                            txtValue = td.textContent;
+//
+//                            $.each(mainData, function (index, value) {
+//                                if (value[0] === txtValue) {
+//                                    localStorage.setItem("dataTest", value);
+//                                }
+//                            });
+//                            $.each(valueIdTotal, function (index, value) {
+//                                console.log(value);
+//                                if (value[0] === txtValue) {
+//                                    localStorage.setItem("dataTestId", value);
+//                                }
+//                            });
+//                        }
+//                        );
+////                                   
 
-                                }
-                                if (data[i].type === 'Female') {
-                                    valueArray.splice(3, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.splice(3, 0, data[i].id);
 
-                                }
-                                if (data[i].type === 'Children') {
-                                    valueArray.push(data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.push(data[i].id);
-
-                                }
-                                idData = data[i].id;
-                                delete data[i];
-                                for (var k = 0; k < data.length; k++) {
-                                    if (data[k] !== undefined) {
-                                        if (data[k].id === idData) {
-                                            if (data[k].type === 'Male') {
-                                                valueArray.splice(2, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.splice(2, 0, data[k].id);
-
-                                            }
-                                            if (data[k].type === 'Female') {
-                                                valueArray.splice(3, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.splice(3, 0, data[k].id);
-
-                                            }
-                                            if (data[k].type === 'Children') {
-                                                valueArray.push(data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.push(data[k].id);
-                                            }
-                                            delete data[k];
+//                      valueArrayTotal -> mainData
+                        $('#indexTable').DataTable({
+                            data: mainData,
+                            columns: [
+                                        { data: 'name' },
+                                        
+                                        {
+                                            data: 'maleIndex',
+                                        },
+                                        {
+                                            data: 'femaleindex',
+                                        },
+                                        {
+                                            data: 'childIndex',
+                                        },
+                                        {
+                                            defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "edit-testIndex.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  </div></div></td>'
 
                                         }
-
-                                    }
-                                }
-                                if (valueArray.length === 5) {
-                                    valueArrayTotal.push(valueArray);
-                                    valueArray = [];
-                                } else if (valueArray.length === 4) {
-                                    valueArrayTotal.push(valueArray);
-                                    valueArray = [];
-                                }
-                                if (valueId.length === 5) {
-                                    valueIdTotal.push(valueId);
-                                    valueId = [];
-                                }
-
-                            }
-                        }
-                        console.log(valueArrayTotal);
-                        localStorage.setItem("allTestIndex", JSON.stringify(valueArrayTotal));
-                        console.log(valueIdTotal);
-                        var a = JSON.stringify(data);
-                        var b = JSON.parse(a);
-                        $('#indexTable tbody').on('click', 'td', function ()
-                        {
-                            var tr = $(this).closest("tr");
-                            var rowindex = tr.index();
-                            table = document.getElementById("indexTable");
-                            tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-                            txtValue = td.textContent;
-
-                            $.each(valueArrayTotal, function (index, value) {
-                                if (value[0] === txtValue) {
-                                    localStorage.setItem("dataTest", value);
-                                }
-                            });
-                            $.each(valueIdTotal, function (index, value) {
-                                console.log(value);
-                                if (value[0] === txtValue) {
-                                    localStorage.setItem("dataTestId", value);
-                                }
-                            });
-                        }
-                        );
-//                                   
-
-
-//
-                        $('#indexTable').DataTable({
-                            data: valueArrayTotal,
-                            columns: [
-                                {data: '0'},
-                                {data: '1'},
-                                {data: '2'},
-                                {data: '3'},
-                                {data: '4'},
-                                {
-                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "edit-testIndex.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  </div></div></td>'
-
-                                }
                             ],
-                            "bDestroy": true,
-                            "bFilter": true,
-                            language: {
-                                search: 'Search:',
-                                searchPlaceholder: ""
+                                    "bDestroy": true,
+                                    "bFilter": true,
+
+                                });
+
                             },
-                            "createdRow": function (row, data, dataIndex) {
-                                $('td:eq(1)', row).css('display', 'none');
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(' Error in processing! ' + textStatus);
                             }
-                        });
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(' Error in processing! ' + textStatus);
-                    }
 
                 })
             };

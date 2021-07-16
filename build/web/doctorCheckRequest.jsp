@@ -65,7 +65,7 @@
                                     <th style="width: 25%">Patient</th>
 
                                     <th style="width: 30%">Type</th>
-                                    <th style="width: 30%">Time</th>
+                                    <!--<th style="width: 30%">Time</th>-->
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
@@ -74,10 +74,10 @@
                                     <td id="name"></td>
 
                                     <td id="description"></td>
-                                    <td id="date"></td>
+                                    <!--<td id="date"></td>-->
 
                                     <td class="text-right">
-
+                                        
                                     </td>
                                 </tr>
 
@@ -120,105 +120,43 @@
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/examination/findbydoctorid/" + id,
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination/6",
                     success: function (data) {
-                        var string = [];
-                        var array = "";
-                        var arrayTime = [];
-                        for (var i = 0; i < data.length; i++) {
-                            data[i].timeStart = data[i].timeStart.replace("T", " ");
-                            data[i].timeStart = data[i].timeStart.replace("Z", "");
-                            string = data[i].timeStart.split("-");
-                            arrayTime = string[2].split(" ");
-                            array = array + arrayTime[0] + "/";
-                            array = array + string[1] + "/";
-                            array = array + string[0] + " ";
-                            array = array + arrayTime[1];
-                            arrayTestRequest.push(data[i].userId.fullname);
-                            arrayTestRequest.push(data[i].type);
-                            arrayTestRequest.push(array);
-                            arrayTestRequestTotal.push(arrayTestRequest);
-                            arrayTestRequest = [];
-                            array = "";
-                        }
-
-//                        var a = JSON.stringify(data);
-                        $('#checkRequestTable tbody').on('click', 'button', function ()
+                        var a = JSON.stringify(data);
+        
+//        ============================= Select to Update========================================
+                         $('#patientTable tbody').on('click', 'td', function ()
                         {
-                            var getStringClick = [];
-                            var arrayClick = "";
-                            arrayTimeClick = [];
                             var tr = $(this).closest("tr");
                             var rowindex = tr.index();
-                            table = document.getElementById("checkRequestTable");
+                            table = document.getElementById("patientTable");
                             tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[2];
+                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
                             txtValue = td.textContent;
-                            getStringClick = txtValue.split("/");
-                            arrayTimeClick = getStringClick[2].split(" ");
-                            arrayClick += arrayTimeClick[0] + "-";
-                            arrayClick += getStringClick[1] + "-";
-                            arrayClick += getStringClick[0] + " ";
-                            arrayClick += arrayTimeClick[1];
-                            for (var i = 0; i < data.length; i++) {
-//                                console.log(data[i].timeStart);
-//                                console.log(arrayClick);
-                                if (data[i].timeStart === arrayClick) {
-                                    localStorage.setItem("idExamination", data[i].id);
-                                    $.ajax({
-                                        type: "GET",
-                                        dataType: "json",
-                                        contentType: "application/json; charset=UTF-8",
-                                        headers: {
-                                            Authorization: 'Bearer ' + token},
-                                        url: "https://bt-application.herokuapp.com/api/testrequest/findbyexaminationid/" + data[i].id,
-                                        success: function (data) {
-                                            localStorage.setItem("dataTestRequestId", JSON.stringify(data));
-                                            window.location.href = "checkMorePackage.jsp";
-                                        }, error: function (jqXHR, textStatus, errorThrown) {
-
-                                        }})
+                            $.each(data, function (index, value) {
+                                if (value.name === txtValue) {
+                                    localStorage.setItem("dataPackage", JSON.stringify(value));
                                 }
-                            }
+                            });
 
                         }
                         );
-//                        $('td').click(function () {
-//                            var row_index = $(this).parent().index();
-//
-//                        });
-////                                   
-//
-//
-//
-//                        var b = JSON.parse(a);
-                        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-                            "date-euro-pre": function (a) {
-                                var x;
-                                if (a.trim() !== '') {
-                                    var frDatea = a.trim().split(' ');
-                                    var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00, 00, 00];
-                                    var frDatea2 = frDatea[0].split('/');
-                                    x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined != frTimea[2]) ? frTimea[2] : 0)) * 1;
-                                } else {
-                                    x = Infinity;
-                                }
+                        $('td').click(function () {
+                            var row_index = $(this).parent().index();
 
-                                return x;
-                            },
-                            "date-euro-asc": function (a, b) {
-                                return a - b;
-                            },
-                            "date-euro-desc": function (a, b) {
-                                return b - a;
-                            }
                         });
+//=================================================================================================
+
+
+
+                        var b = JSON.parse(a);
+                        console.log(b);
+                        console.log(a);
                         $('#checkRequestTable').DataTable({
-                            data: arrayTestRequestTotal.sort(),
+                            data: b,
                             columns: [
-                                {data: '0'},
-                                {data: '1'},
-                                {data: '2'},
+                                {data: 'patientName'},
+                                {data: 'type'},
                                 {
                                     defaultContent: '<td><button class="inputResult"> <a> Select</a> </button></td>'
 
@@ -226,10 +164,9 @@
                             ],
                             "bDestroy": true,
                             "bFilter": true,
-                            columnDefs: [
-                                {type: 'date-euro', targets: 2}
-                            ],
-                            order: [2, 'asc']
+//                             "createdRow": function (row, data, dataIndex) {
+//                                $('td:eq(1)', row).css('display', 'none');
+//                            }
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -238,6 +175,7 @@
 
                 })
             };
+
 
 
         </script>

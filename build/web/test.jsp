@@ -71,7 +71,7 @@
                                 <tr>
                                     <th style="width: 30%">Name</th>
 
-                                    <th id='description' style="width: 30%">Description</th>
+                                    <th style="width: 30%">Description</th>
 
 
                                     <th style="width: 10%" class="text-right">Action</th>
@@ -120,11 +120,15 @@
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/package/getall",
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/packages/packages",
                     success: function (data) {
                         var a = JSON.stringify(data);
                         localStorage.setItem("allDataPackage", JSON.stringify(data));
-                        $('#patientTable tbody').on('click', 'td', function ()
+                        
+        
+        
+//        ============================= Select to Update========================================
+                         $('#patientTable tbody').on('click', 'td', function ()
                         {
                             var tr = $(this).closest("tr");
                             var rowindex = tr.index();
@@ -144,12 +148,13 @@
                             var row_index = $(this).parent().index();
 
                         });
-//                                   
+//=================================================================================================
 
 
 
                         var b = JSON.parse(a);
-
+                        console.log(b);
+                        console.log(a);
                         $('#patientTable').DataTable({
                             data: b,
                             columns: [
@@ -162,9 +167,9 @@
                             ],
                             "bDestroy": true,
                             "bFilter": true,
-                             "createdRow": function (row, data, dataIndex) {
-                                $('td:eq(1)', row).css('display', 'none');
-                            }
+//                             "createdRow": function (row, data, dataIndex) {
+//                                $('td:eq(1)', row).css('display', 'none');
+//                            }
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {

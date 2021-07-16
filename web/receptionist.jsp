@@ -245,12 +245,13 @@
                             },
                             "createdRow": function (row, data, dataIndex) {
                                 if (data.status === "disable") {
+                                    console.log(row);
                                     $('td', row).css('color', '#b5b5b5');
                                     $('td', row).css('font-style', 'italic');
                                 }
                                 if (data.status === "enable") {
-                                    $('td:eq(6)', row).css('color', '#2a9c31');
-                                    $('td:eq(6)', row).css('font-weight', 'bolder');
+                                    $('td:eq(4)', row).css('color', '#2a9c31');
+                                    $('td:eq(4)', row).css('font-weight', 'bolder');
                                 }
                             }
                         });

@@ -530,16 +530,10 @@
 //                                                                        "dob": dob,
 //                                                                        "mail": email,
                                                                         "name": lastName + " " + firstName,
-//                                                                        "id": uuidv4(),
                                                                         "image": url,
                                                                         "password": password,
                                                                         "phone": phone,
-//                                                                        "roleId": {
-//                                                                            "id": 2
-//
-//                                                                        },
                                                                         "status": status,
-//                                                                        "clinicId": {"id": clinicID},
                                                                         "clinicId": clinicID,
                                                                         "token": ""
                                                                         

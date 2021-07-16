@@ -204,28 +204,7 @@
 //                        var a = JSON.stringify(data);
                         for (var i = 0; i < data.length; i++) {
 
-//                        $('#testPackageTable tbody').on('click', 'td', function ()
-//                        {
-//                            var tr = $(this).closest("tr");
-//                            var rowindex = tr.index();
-//                            table = document.getElementById("testPackageTable");
-//                            tr = table.getElementsByTagName("tr");
-//                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-//                            txtValue = td.textContent;
-//                            $.each(data, function (index, value) {
-//                                if (value.name === txtValue) {
-//                                    console.log(txtValue);
-//                                    localStorage.setItem("data", JSON.stringify(value));
-//                                }
-//                            });
-//
-//                        }
-//                        );
-//                        $('td').click(function () {
-//                            var row_index = $(this).parent().index();
-//
-//                        });
-//                                   
+           
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",

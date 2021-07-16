@@ -202,13 +202,10 @@
                                                 "mail": value.mail,
                                                 "password": value.password,
                                                 "phone": value.phone,
-                                                "roleId": {
-                                                    "id": 1
-                                                },
-                                                "status": "Inactive",
+                                                
+                                                "status": "disable",
                                                 "image": value.image,
                                                 "token": value.token,
-                                                "username": value.username
                                             }),
                                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patients",
                                             complete: function (jqXHR) {
@@ -259,12 +256,12 @@
                                 searchPlaceholder: ""
                             },
                             "createdRow": function (row, data, dataIndex) {
-                                if (data.status === "Inactive") {
+                                if (data.status === "disable") {
                                     console.log(row);
                                     $('td', row).css('color', '#b5b5b5');
                                     $('td', row).css('font-style', 'italic');
                                 }
-                                if (data.status === "Active") {
+                                if (data.status === "enable") {
                                     $('td:eq(6)', row).css('color', '#2a9c31');
                                     $('td:eq(6)', row).css('font-weight', 'bolder');
                                 }
