@@ -102,21 +102,21 @@
                                     var roleID = rs.authorities + "";
                                     var user = rs.username + "";
                                     console.log(parseJwt(data));
-                                    
+                                    sessionStorage.setItem("user", user);
                                     if(roleID === "ADMIN"){
-                                        sessionStorage.setItem("user", user);
+                                        
                                         window.location.href = "adminIndex.jsp";
 //                                       
                                         
                                     }
-                                    else if( roleID = "DOCTOR"){
-                                        sessionStorage.setItem("user", user)
+                                    else if( roleID === "DOCTOR"){
+//                                        sessionStorage.setItem("user", user)
                                         window.location.href = "doctorIndex.jsp";
                                         
                                     }
-                                    else if( roleID = "RECEPTIONIST")
+                                    else if( roleID === "RECEPTIONIST")
                                     {
-                                        sessionStorage.setItem("user", user)
+//                                        sessionStorage.setItem("user", user)
                                         window.location.href = "receptionistIndex.jsp";
                                         
                                     }

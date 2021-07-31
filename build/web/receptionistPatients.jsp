@@ -114,7 +114,7 @@
             var dataTable;
 //========================================== TÌm theo số điện thoại====================================================
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 var clinicId = localStorage.getItem("clinicId");
                 clinicId = 9;
                 $('#buttonPatient').on('click', function () {
@@ -148,10 +148,9 @@
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
-//                    headers: {
-//                        Authorization: 'Bearer ' + token},
                     headers: {
-                        'Access-Control-Allow-Origin': '*'},
+                        Authorization: 'Bearer ' + token},
+                    
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/clinic/" + clinicId,
                     statusCode: {
                         200: function (data) {

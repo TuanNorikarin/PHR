@@ -157,9 +157,54 @@
                                                 }
                                             }
 //                =====================================Update===============================================
-                                            $(document).ready(function () {
+//                                            var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
+                                                var clinicID = JSON.parse(localStorage.getItem("clinicID"));
+                                                console.log(clinicID +" id");
+                                                var newImg;
+                                            window.onload = function () {
+                                                
+                                                
+                                                $("#imgClinic").change(function () {
+                                                     var formData = new FormData();
+                                                     var files = $("#imgClinic").get(0).files;
+                                                     if (files.length > 0) {
+                                                            formData.append("image", files[0]);
+                                                            formData.append("role", "clinic");
+                                                        }
+                                                      
+    
+                                                      
+                                                        $.ajax({
+                                                            headers: {
+                                                                Authorization: 'Bearer ' + token,
+                                                            },
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + clinicID,
+                                                            type:"POST",
+                                                            processData: false,
+                                                            contentType: false,
+                                                            data: formData,
+                                                            success: function (response) {
+//                                                                alert("OK rồi");
+                                                                newImg = response;
+                                                            },
+                                                            error: function (er) {
+//                                                                alert("Lỗiiiiiiiiiiiiii");
+                                                            }
 
-                                                var firebaseConfig = {
+                                                        });
+                                                        });
+                                                        
+                                                        
+                                                $.ajax({
+                                                        type: "GET",
+                                                        dataType: "json",
+                                                        contentType: "application/json",
+                                                         headers: {
+                                                            Authorization: 'Bearer ' + token},
+                                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" +clinicID,
+//                                                        
+                                                        success: function (data) { 
+                                                    var firebaseConfig = {
                                                     apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
                                                     authDomain: "upload-image-45245.firebaseapp.com",
                                                     databaseURL: "https://upload-image-45245.firebaseio.com",
@@ -168,10 +213,14 @@
                                                     messagingSenderId: "758652365413",
                                                     appId: "1:758652365413:web:f009f179396e4af4de748c",
                                                     measurementId: "G-S5ECRSMKRB"
-                                                };
+                                                        };
 
                                                 // Initialize Firebase
                                                 firebase.initializeApp(firebaseConfig);
+                                                
+                                                var newImg = data.image;
+                                                var idUpdate = data.id;
+                                                
                                                 $("#inputClinicname").click(function () {
                                                     $('#inputClinicname').removeClass('error');
                                                     document.getElementById('messageClinicname').innerHTML = '';
@@ -188,21 +237,18 @@
                                                     $('#inputPhone').removeClass('error');
                                                     document.getElementById('messagePhone').innerHTML = '';
                                                 });
-                                                var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
-                                                var dataClinic = JSON.parse(localStorage.getItem("dataClinic"));
-                                                console.log(clinicInf +" dsds");
-                                                console.log(dataClinic +" id");
                                                 
-                                                $("input[name='clinicName']").val(clinicInf.name);
-                                                $("input[name='district']").val(clinicInf.district);
+                                                
+                                                $("input[name='clinicName']").val(data.name);
+                                                $("input[name='district']").val(data.district);
 //                                                
-                                                $("textarea[name='description']").val(clinicInf.description);
-                                                $("input[name='address']").val(clinicInf.address);
-                                                $("input[name='phone']").val(clinicInf.phone);
-//                                                $("#clinic_active").val(clinicInf.status);
-                                                var image = clinicInf.image;
+                                                $("textarea[name='description']").val(data.description);
+                                                $("input[name='address']").val(data.address);
+                                                $("input[name='phone']").val(data.phone);
+//                                                $("#clinic_active").val(data.status);
+                                                var image = data.image;
                                                 $("#imgPreview").attr('src', image);
-                                                var statusOld = clinicInf.status;
+                                                var statusOld = data.status;
                                                 if (statusOld === "enable") {
                                                     $("#clinic_active").prop("checked", true);
                                                 } else {
@@ -218,7 +264,7 @@
                                                     document.getElementById('messageDistrict').innerHTML = '';
                                                      $('#inputPhone').removeClass('error');
                                                     document.getElementById('messagePhone').innerHTML = '';
-                                                    var imageOld = clinicInf.image;
+                                                    var imageOld = data.image;
                                                     var clinicName = $("input[name='clinicName']").val(); //lấy giá trị trong input user
 
                                                     var district = $("input[name='district']").val();
@@ -283,24 +329,8 @@
                                                         document.getElementById('messagePhone').style.color = 'red';
                                                         document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                     } else {
-                                                        toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                                        function uploadImage() {
-                                                            const ref = firebase.storage().ref();
-                                                            const file = document.querySelector("#imgClinic").files[0];
-                                                            if (file) {
-                                                                const name = +new Date() + "-" + file.name;
-                                                                const metadata = {
-                                                                    contentType: file.type
-                                                                };
-                                                                const task = ref.child(name).put(file, metadata);
-                                                                task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                                                    ajax(url);
-                                                                });
-                                                            } else {
-                                                                ajax(imageOld);
-                                                            }
-                                                        }
-                                                        function ajax(url) {
+                                                        toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                        
                                                             return  $.ajax({
                                                                 type: "PUT",
                                                                 dataType: "json",
@@ -312,8 +342,8 @@
                                                                     "clinicGroupId": 1,
                                                                     "coordinate": "",
                                                                     "name": clinicName,
-                                                                    "id": clinicInf.id,
-                                                                    "image": url,
+                                                                    "id": idUpdate,
+                                                                    "image": newImg,
                                                                     "phone": phone,
                                                                     "status": status,
                                                                     "district": district,
@@ -323,15 +353,20 @@
                                                                 complete: function (jqXHR) {
                                                                     console.log(jqXHR.status);
                                                                     if (jqXHR.status === 200) {
+                                                                        alert("Update Successfully");
                                                                         window.location.href = "clinics.jsp";
                                                                     }
                                                                 }
                                                             });
-                                                        }
-                                                        uploadImage();
+//                                                        }
+//                                                        uploadImage();
                                                     }
-                                                });
-                                            });
+                                                });                 
+                                                            
+                                                       }});      
+
+                                                
+                                            };
         </script>
     </body>
 

@@ -165,17 +165,18 @@
             var listResult = [];
             var listDiagnose = []
 
-
+                    var token = sessionStorage.getItem("key");
                     window.onload = function () {
 
 
                     var dataTestRequestId = JSON.parse(localStorage.getItem("dataTestRequestId"));
-//                console.log(dataTestRequestId[3].testId +" TestID");
+//                  console.log(dataTestRequestId[3].testId +" TestID");
                     console.log(dataTestRequestId);
                     var dataTestRequest = JSON.parse(localStorage.getItem("dataTestRequestId"));
-                    var patientGender = localStorage.getItem("patientGender");
-                    console.log(patientGender);
-                    var token = localStorage.getItem("key");
+                    
+                    var patientGender = sessionStorage.getItem("patientGender");
+                    console.log(patientGender + " gender");
+                    
                     var namePackage = localStorage.getItem("namePackage");
                     var valueArray = [];
                     var arrayTotal = [];
@@ -217,7 +218,7 @@
                                     {
                                     data: 'testId',
                                             render: function (data, type, row, meta) {
-                                            return '<input id="inputDignose' + data + '" onChange="createDiagnose(' + data + ')" class="inputDiagnose" type="text"></input>'
+                                            return '<textarea id="inputDignose' + data + '" onChange="createDiagnose(' + data + ')" class="inputDiagnose" type="text"></textarea>'
                                             }
                                     },
                                     ],

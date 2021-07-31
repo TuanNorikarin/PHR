@@ -265,7 +265,7 @@
                                                     $("#inputPhone").val(phone);
                                                     var image = data.image;
                                                     $('#img').attr('src', image);
-//                                            var avatar = $("input[name='avatar']").val();
+//                                                  var avatar = $("input[name='avatar']").val();
                                                     var status = data.status;
                                                     if (status === "enable") {
                                                         $("#patient_active").prop("checked", true);
@@ -293,11 +293,11 @@
                                                             contentType: false,
                                                             data: formData,
                                                             success: function (response) {
-                                                                alert("OK rồi");
+//                                                                alert("OK rồi");
                                                                 newImg = response;
                                                             },
                                                             error: function (er) {
-                                                                alert("Lỗiiiiiiiiiiiiii");
+//                                                                alert("Lỗiiiiiiiiiiiiii");
                                                             }
 
                                                         });
@@ -540,7 +540,7 @@
                                                                     complete: function (jqXHR) {
 
                                                                         if (jqXHR.status === 200) {
-                                                                            alert(jqXHR.status);
+                                                                            alert("Create Successfully");
                                                                             window.location.href = "patients.jsp";
                                                                         }
                                                                     }

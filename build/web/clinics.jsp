@@ -320,9 +320,9 @@
                             }
                             
                             function getClinic(data){
-                                alert(data);
-                                localStorage.setItem("dataClinic", JSON.stringify(data));
-                                console.log(dataDoc);
+//                                alert(data);
+                                localStorage.setItem("clinicID", JSON.stringify(data));
+                                
                             }
 
 //  ===============================================Loading Screen==================================================                          

@@ -273,7 +273,7 @@
 
 
                             function getDoctor(data, item){
-                                alert(data);
+//                                alert(data);
 //                                localStorage.setItem("infoDoctor", JSON.stringify(item));
                                 localStorage.setItem("dataDoctor", JSON.stringify(data));
                             }

@@ -118,9 +118,8 @@
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
             var token = sessionStorage.getItem("key");
-            console.log(token);
             var phone = sessionStorage.getItem("user");
-            console.log(phone);
+//            console.log(phone);
             window.onload = function () {
             
             
@@ -135,9 +134,9 @@
                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin/phone-account",
                 success: function (data) {
                     var infor = jQuery.parseJSON(data);
-                    console.log(infor.image);
+                    console.log(infor);
                     var name = sessionStorage.setItem("name", infor.name);
-                    var image = sessionStorage.setItem("image", infor.image);
+                    var image = sessionStorage.setItem("avatar", infor.image);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
 

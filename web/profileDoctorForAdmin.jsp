@@ -90,27 +90,42 @@
 
                 window.onload = function () {
                     var data = JSON.parse(localStorage.getItem("dataDoctor"));
-//                    var data2 = JSON.parse(localStorage.getItem("infoDoctor"));
                     console.log(data);
-//                    console.log(data2);
-                    var userInf = JSON.parse(localStorage.getItem("infoDoctor"));
-                    console.log(userInf);
-                    $('#avatar').attr('src', userInf.image);
-                    document.getElementById("fullname").innerHTML = userInf.name;
-                    document.getElementById("usernameDisplay").innerHTML = userInf.clinicName;
-                    document.getElementById("phoneNum").innerHTML = userInf.phone;
-                    document.getElementById("dob").innerHTML = userInf.dob;
+                   
+                    var id = data;
+                    console.log("this is id " + id);
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        contentType: "application/json",
+                        headers: {
+                        Authorization: 'Bearer ' + token},
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
+//                                                        
+                            success: function (data) {
+                                    $('#avatar').attr('src', data.image);
+                    document.getElementById("fullname").innerHTML = data.name;
+                    document.getElementById("usernameDisplay").innerHTML = data.clinicName;
+                    document.getElementById("phoneNum").innerHTML = data.phone;
+                    document.getElementById("dob").innerHTML = data.dob;
 //                    if (userInf.address === "") {
 //                        document.getElementById("address").innerHTML = "...";
 //                    } else {
 //                        document.getElementById("address").innerHTML = userInf.address;
 //                    }
-                    document.getElementById("gender").innerHTML = userInf.gender;
-                    if (userInf.gender === "Female") {
+                    document.getElementById("gender").innerHTML = data.gender;
+                    if (data.gender === "Female") {
                         document.getElementById("gender").innerHTML = "Female";
-                    } else if (userInf.gender === "Male") {
+                    } else if (data.gender === "Male") {
                         document.getElementById("gender").innerHTML = "Male";
                     }
+                                                            
+                    }});
+                    
+                    
+                    
+                    
+                    
                 }
             </script>
             </body>

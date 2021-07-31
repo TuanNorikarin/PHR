@@ -108,7 +108,9 @@
 
 
 //            =========================================   =====================================
-            window.onload = function () {
+                var doctorID = sessionStorage.getItem("doctorID");
+                console.log(doctorID + " doctorID");
+                window.onload = function () {
                 var token = sessionStorage.getItem("key");
                 var id = localStorage.getItem("userId");
                 var arrayTestRequest = [];
@@ -120,7 +122,7 @@
                     headers: {
                         Authorization: 'Bearer ' + token},
 
-                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination/doctor/7",
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination/doctor/" + doctorID,
 
                     success: function (data) {
                         var string = [];
@@ -147,6 +149,7 @@
                                 listPatient.push(patient);
                             }
                         }
+                        
 
                         $('#checkRequestTable').DataTable({
                             data: listPatient,
@@ -185,12 +188,13 @@
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
-//                    Authorization: 'Bearer ' + token
+                    Authorization: 'Bearer ' + token
                     },
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examination-details/examination-detail/examination/" + examId + "?typeGender=" + gender,
                     success: function (data) {
                         localStorage.setItem("dataTestRequestId", JSON.stringify(data));
 //                                            window.location.href = "checkMorePackage.jsp";
+                        sessionStorage.setItem("patientGender", gender);
                         window.location.href = "inputResult.jsp";
                     }, error: function (jqXHR, textStatus, errorThrown) {
                         console.log(errorThrown)

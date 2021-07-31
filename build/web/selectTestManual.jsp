@@ -162,8 +162,8 @@
                                     dataType: "json",
                                     contentType: "application/json; charset=UTF-8",
                                     headers: {
-                                        // Authorization: 'Bearer ' + token
-                                        'Access-Control-Allow-Origin': '*'
+                                         Authorization: 'Bearer ' + token
+//                                        'Access-Control-Allow-Origin': '*'
                                     },
                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + packageId[i],
                                     success: function (data) {

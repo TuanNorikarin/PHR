@@ -83,6 +83,9 @@
             if (token === "") {
                 document.location.href = "login.html";
             }
+            var doctorID = sessionStorage.getItem("doctorID");
+            
+            
             var user = sessionStorage.getItem("name");
             
             var firstName = user.split(" ");

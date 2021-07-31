@@ -193,7 +193,7 @@
 //                =====================================Update===============================================
 
                                                 var data = JSON.parse(localStorage.getItem("dataDoctor"));
-                                                var data2 = JSON.parse(localStorage.getItem("infoDoctor"));
+//                                                var data2 = JSON.parse(localStorage.getItem("infoDoctor"));
                                                 
                                                 var newImg;
                                                 console.log(data);
@@ -247,11 +247,11 @@
                                                             contentType: false,
                                                             data: formData,
                                                             success: function (response) {
-                                                                alert("OK rồi");
+//                                                                alert("OK rồi");
                                                                 newImg = response;
                                                             },
                                                             error: function (er) {
-                                                                alert("Lỗiiiiiiiiiiiiii");
+//                                                                alert("Lỗiiiiiiiiiiiiii");
                                                             }
 
                                                         });
@@ -266,7 +266,7 @@
                                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
 //                                                        
                                                         success: function (data) {
-                                                            
+                                                            var newImg = data.image;
                                                             var name = data.name;
                                                             var firstName = name.split(" ");
                                                             var lastName = name.replace(firstName[firstName.length - 1], "");
@@ -278,8 +278,9 @@
                                                             var confirmPass = data.password;
                                                             $("#confirmPass").val(confirmPass);
                                                             var phone = data.phone;
-                                                            var newImg = data.image;
-                                                            $('#img').attr('src', newImg);
+                                                            var image = data.image;
+                                                            $('#img').attr('src', image);
+                                                            
                                                             $("#inputPhone").val(phone);
                                                             var status = data.status;
                                                             var dob = data.dob;

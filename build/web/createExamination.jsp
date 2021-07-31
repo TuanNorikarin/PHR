@@ -53,11 +53,9 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <div class="row">
-<<<<<<< Updated upstream
+
                         <div class="col-sm-12">
-=======
-                        <div class="col-sm-6">
->>>>>>> Stashed changes
+
                             <div class="form-group">
                                 <label>Select Doctor</label><br />
                                 <select id="doctorName" name="doctorPhone" class="select">
@@ -65,22 +63,22 @@
                                 </select>
                             </div>
                         </div>
-<<<<<<< Updated upstream
+<!--<<<<<<< Updated upstream
 
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Description</label>
                                 <textarea class="form-control" id="description" maxlength="255"
                                           name="description" rows="3"></textarea>
-=======
-                        <div class="col-sm-6">
+=======-->
+<!--                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Type</label>
                                 <input class="form-control" id='inputType' name="type" type="text">
                                 <span id='messageType' /></span>
->>>>>>> Stashed changes
+
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -90,11 +88,6 @@
                             </div>
                         </div>
 
-
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
                         <div class="m-t-20 text-center">
                             <button id="createExamination" class="btn btn-primary submit-btn">Submit</button>
 
@@ -121,17 +114,10 @@
 
                 //                =====================================Insert===============================================
                 window.onload = function () {
-<<<<<<< Updated upstream
                     
                     var patientId = sessionStorage.getItem('patientId');
                     var listTest = sessionStorage.getItem('listTestId');
 
-=======
-
-                    var patientId = sessionStorage.getItem('patientId');
-                    var listTest = sessionStorage.getItem('listTestId');
-
->>>>>>> Stashed changes
                     console.log('------' + patientId + '-----' + listTest);
                 }
 
@@ -143,19 +129,12 @@
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         headers: {
-<<<<<<< Updated upstream
-//                             Authorization: 'Bearer ' + token,
-=======
-                            // Authorization: 'Bearer ' + token
->>>>>>> Stashed changes
-                            'Access-Control-Allow-Origin': '*',
+
+                             Authorization: 'Bearer ' + token
+
                         },
                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/clinic/" + clinicId,
                         success: function (data) {
-<<<<<<< Updated upstream
-                            console.log(data);
-=======
->>>>>>> Stashed changes
                             for (var i in data) {
                                 $('#doctorName').append('<option value=' + data[i].id + '>' + data[i].name + ' - ' + data[i].phone + '</option>');
                             }
@@ -166,7 +145,7 @@
 
                 //======================================= submit to create examination==========================
                 $('#createExamination').click(function (event) {
-<<<<<<< Updated upstream
+
                     var description = checkNull($('#description').val());
                     var patientId = checkNull(sessionStorage.getItem('patientId'));
                     var doctorId = checkNull($('option:selected').val());
@@ -180,39 +159,33 @@
                     
                     console.log(typeof(listPackageTest));
                     console.log(listPackageTest)
-=======
-                    var date = "";
-                    var type = checkNull($('#inputType').val());
-                    var description = checkNull($('#description').val());
-                    var patientId = checkNull(sessionStorage.getItem('patientId'));
-                    var doctorId = checkNull($('option:selected').val());
-                    var listPackageTest = jQuery.makeArray(sessionStorage.getItem('packageId')).map(i => Number(i));
-                    var listTest = jQuery.makeArray(sessionStorage.getItem('listTestId')).map(i => Number(i));
-                    console.log(listTest);
->>>>>>> Stashed changes
+//=======
+//                    var date = "";
+//                    var type = checkNull($('#inputType').val());
+//                    var description = checkNull($('#description').val());
+//                    var patientId = checkNull(sessionStorage.getItem('patientId'));
+//                    var doctorId = checkNull($('option:selected').val());
+//                    var listPackageTest = jQuery.makeArray(sessionStorage.getItem('packageId')).map(i => Number(i));
+//                    var listTest = jQuery.makeArray(sessionStorage.getItem('listTestId')).map(i => Number(i));
+//                    console.log(listTest);
+//>>>>>>> Stashed changes
                     $.ajax({
                         type: "POST",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         headers: {
-                            // Authorization: 'Bearer ' + token
-                            'Access-Control-Allow-Origin': '*',
+                             Authorization: 'Bearer ' + token
+//                            'Access-Control-Allow-Origin': '*',
                         },
                         data: JSON.stringify({
-<<<<<<< Updated upstream
+
                             "description": description,
-=======
-                            "date": date,
-                            "decription": description,
->>>>>>> Stashed changes
+
                             "doctorId": doctorId,
                             "packageId": listPackageTest,
                             "patientId": patientId,
                             "testId": listTest,
-<<<<<<< Updated upstream
-=======
-                            "type": type
->>>>>>> Stashed changes
+
                         }),
                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT//examinations/examination",
                         complete: function (jqXHR) {
@@ -228,7 +201,7 @@
                     }
                     return data;
                 }
-<<<<<<< Updated upstream
+
                 
                 function parseStringToInt(list){
                    var result = []
@@ -244,11 +217,11 @@
             </script>
             <i onclick="editDoctor()"></i>
 
-=======
+<!--=======
             </script>
             <i onclick="editDoctor()"></i>
             
->>>>>>> Stashed changes
+>>>>>>> Stashed changes-->
             </body>
 
 
