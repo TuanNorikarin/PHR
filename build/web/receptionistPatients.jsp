@@ -160,11 +160,9 @@
                             data.forEach(element => {
                                 var dataShow = new Object();
                                 dataShow.id = element.id;
-<<<<<<< Updated upstream
                                 dataShow.image = element.image;
-=======
                                 dataShow.avartar = element.image;
->>>>>>> Stashed changes
+
                                 dataShow.name = element.name;
                                 dataShow.dob = element.dob;
                                 dataShow.address = element.address;

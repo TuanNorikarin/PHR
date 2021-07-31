@@ -162,7 +162,7 @@
                 $("#buttonAdd").show();
                 $("button[id='buttonX']").removeAttr('disabled');
                 localStorage.setItem("testName", "");
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 var dataPackage = JSON.parse(localStorage.getItem("dataPackage"));
                 var valueArray = [];
                 var arrayTotal = [];
@@ -261,27 +261,30 @@
                             td = tr[rowindex + 1].getElementsByTagName("td")[0];
                             txtValue = td.textContent;
                             for (var i = 0; i < data.length; i++) {
-                                if (data[i].testId.name === txtValue) {
+                                if (data[i].name === txtValue) {
                                     $.ajax({
                                         type: "DELETE",
                                         dataType: "json",
                                         contentType: "application/json; charset=utf-8",
                                         headers: {
                                             Authorization: 'Bearer ' + token},
-                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test/" + data[i].id,
+                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test/" + dataPackage.id + "/" + data[i].id,
                                         complete: function (jqXHR) {
-                                            if (jqXHR.status === 200) {
-                                                for (var k = 0; k < testName.length; k++) {
-                                                    if (txtValue === testName[k]) {
-                                                        testName.splice(k, 1);
-                                                        
-                                                        localStorage.setItem("testName", testName);
-                                                        window.location.href = "test-detail.jsp";
-
-                                                    }
-                                                }
-
-                                            }
+//                                            alert(jqXHR.status);
+                                            localStorage.setItem("testName", testName);
+                                            window.location.href = "test-detail.jsp";
+//                                            if (jqXHR.status === 200) {
+//                                                for (var k = 0; k < testName.length; k++) {
+//                                                    if (txtValue === testName[k]) {
+//                                                        testName.splice(k, 1);
+//                                                        
+//                                                        localStorage.setItem("testName", testName);
+//                                                        window.location.href = "test-detail.jsp";
+//
+//                                                    }
+//                                                }
+//
+//                                            }
                                         }
                                     });
                                 }
@@ -307,8 +310,8 @@
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
-                        // Authorization: 'Bearer ' + token
-                        'Access-Control-Allow-Origin': '*'
+                         Authorization: 'Bearer ' + token
+//                        'Access-Control-Allow-Origin': '*'
                     },
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + dataPackage.id,
                     success: function (data) {

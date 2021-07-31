@@ -149,6 +149,7 @@
                         localStorage.setItem("allTestIndex", JSON.stringify(mainData));
                         var a = JSON.stringify(data);
                         var b = JSON.parse(a);
+                        
                         $('#indexTable tbody').on('click', 'td', function ()
                         {
                             var tr = $(this).closest("tr");
