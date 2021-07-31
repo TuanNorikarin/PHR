@@ -121,7 +121,7 @@
         window.onload = function () {
 //            localStorage.clear();
             var clinicId = localStorage.getItem("clinicId");
-            clinicId = 1;
+            clinicId = 9;
             var token = localStorage.getItem("key");
 
             $.ajax({

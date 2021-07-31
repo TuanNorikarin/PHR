@@ -98,13 +98,13 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="clinic_active" value="on" checked>
                                 <label class="form-check-label" for="clinic_active">
-                                    Active
+                                    Enable
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="clinic_inactive" value="on">
                                 <label class="form-check-label" for="clinic_inactive">
-                                    Inactive
+                                    Disable
                                 </label>
                             </div>
                         </div>
@@ -156,14 +156,9 @@
                                                     $('#imgPreview').attr('src', "assets/img/user.jpg");
                                                 }
                                             }
-//                =====================================Insert===============================================
+//                =====================================Update===============================================
                                             $(document).ready(function () {
-//                                                function uuidv4() {
-//                                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//                                                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-//                                                        return v.toString(16);
-//                                                    });
-//                                                }
+
                                                 var firebaseConfig = {
                                                     apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
                                                     authDomain: "upload-image-45245.firebaseapp.com",
@@ -194,7 +189,9 @@
                                                     document.getElementById('messagePhone').innerHTML = '';
                                                 });
                                                 var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
+                                                var dataClinic = JSON.parse(localStorage.getItem("dataClinic"));
                                                 console.log(clinicInf +" dsds");
+                                                console.log(dataClinic +" id");
                                                 
                                                 $("input[name='clinicName']").val(clinicInf.name);
                                                 $("input[name='district']").val(clinicInf.district);
@@ -206,7 +203,7 @@
                                                 var image = clinicInf.image;
                                                 $("#imgPreview").attr('src', image);
                                                 var statusOld = clinicInf.status;
-                                                if (statusOld === "Active") {
+                                                if (statusOld === "enable") {
                                                     $("#clinic_active").prop("checked", true);
                                                 } else {
                                                     $("#clinic_inactive").prop("checked", true);
@@ -234,9 +231,9 @@
                                                     var token = localStorage.getItem("key");
                                                     var selectSta = $('input[id="clinic_active"]:checked').val();
                                                     if (selectSta === "on") {
-                                                        status = "Active";
+                                                        status = "enable";
                                                     } else {
-                                                        status = "Inactive";
+                                                        status = "disbale";
                                                     }
                                                     console.log(status);
                                                     if (clinicName.length === 0) {
@@ -312,7 +309,7 @@
                                                                     Authorization: 'Bearer ' + token},
                                                                 data: JSON.stringify({
                                                                     "address": address,
-                                                                    "clinicGroupId": "1",
+                                                                    "clinicGroupId": 1,
                                                                     "coordinate": "",
                                                                     "name": clinicName,
                                                                     "id": clinicInf.id,

@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -43,7 +43,7 @@
                                         <div class="profile-info-left">
                                             <h3 id="fullname" class="user-name m-t-0 mb-0"></h3>
                                             <!--                                            <small class="text-muted">Gynecologist</small>-->
-                                            <div class="staff-id">Username: <span id="usernameDisplay"></span></div>
+                                            <div class="staff-id">Clinic: <span id="usernameDisplay"></span></div>
                                             <!--<div class="staff-msg"><a href="chat.html" class="btn btn-primary">Send Message</a></div>-->
                                         </div>
                                     </div>
@@ -53,22 +53,25 @@
                                                 <span class="title"><i class="fa fa-phone-square"></i>&nbsp; Phone:</span>
                                                 <span id="phoneNum" class="text"><a href="#"></a></span>
                                             </li>
-                                            <li>
-                                                <span class="title"><i class="fa fa-envelope"></i>&nbsp; Email:</span>
-                                                <span id="emailDisplay" class="text"><a href="#"></a></span>
-                                            </li>
+                                            
+                                            
                                             <li>
                                                 <span class="title"><i class="fa fa-birthday-cake"></i>&nbsp; Birthday:</span>
                                                 <span id="dob" class="text"></span>
                                             </li>
                                             <li>
-                                                <span class="title"><i class="fa fa-map-marker"></i>&nbsp;&nbsp; Address:</span>
-                                                <span id="address" class="text"></span>
-                                            </li>
-                                            <li>
                                                 <span class="title"><i class="fa fa-venus-mars"></i>&nbsp; Gender:</span>
                                                 <span id="gender" class="text"></span>
                                             </li>
+                                            <li>
+                                                <span class="title">&nbsp; </span>
+                                                <span id="emailDisplay" class="text"><a href="#"></a></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">&nbsp;&nbsp; </span>
+                                                <span id="address" class="text"></span>
+                                            </li>
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -86,23 +89,26 @@
             <script  type="text/javascript">
 
                 window.onload = function () {
-                    var userInf = JSON.parse(localStorage.getItem("dataDoctor"));
+                    var data = JSON.parse(localStorage.getItem("dataDoctor"));
+//                    var data2 = JSON.parse(localStorage.getItem("infoDoctor"));
+                    console.log(data);
+//                    console.log(data2);
+                    var userInf = JSON.parse(localStorage.getItem("infoDoctor"));
                     console.log(userInf);
                     $('#avatar').attr('src', userInf.image);
-                    document.getElementById("fullname").innerHTML = userInf.fullname;
-                    document.getElementById("usernameDisplay").innerHTML = userInf.username;
+                    document.getElementById("fullname").innerHTML = userInf.name;
+                    document.getElementById("usernameDisplay").innerHTML = userInf.clinicName;
                     document.getElementById("phoneNum").innerHTML = userInf.phone;
-                    document.getElementById("emailDisplay").innerHTML = userInf.mail;
                     document.getElementById("dob").innerHTML = userInf.dob;
-                    if (userInf.address === "") {
-                        document.getElementById("address").innerHTML = "...";
-                    } else {
-                        document.getElementById("address").innerHTML = userInf.address;
-                    }
+//                    if (userInf.address === "") {
+//                        document.getElementById("address").innerHTML = "...";
+//                    } else {
+//                        document.getElementById("address").innerHTML = userInf.address;
+//                    }
                     document.getElementById("gender").innerHTML = userInf.gender;
-                    if (userInf.gender === 1) {
+                    if (userInf.gender === "Female") {
                         document.getElementById("gender").innerHTML = "Female";
-                    } else if (userInf.gender === 0) {
+                    } else if (userInf.gender === "Male") {
                         document.getElementById("gender").innerHTML = "Male";
                     }
                 }

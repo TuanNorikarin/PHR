@@ -63,10 +63,10 @@
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>
-                                    <th id='description' style="width: 30%; display: block !important;">Description</th>
+                                    <th id='description' style="width: 20%; display: block !important;">Description</th>
                                     <th style="width: 20%">Male Value</th>
-                                    <th style="width: 20%">FeMale Value</th>
-                                    <th style="width: 10%">Children Value</th>
+                                    <th style="width: 20%">Female Value</th>
+                                    <th style="width: 20%">Children Value</th>
                                     <!--<th style="width: 5%" class="text-right">Action</th>-->
                                 </tr>
                             </thead>
@@ -133,6 +133,8 @@
                                             dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
                                         } else if (e.type === 'Child' || e.type === 'child') {
                                             dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        }else if (e.indexValueMin === "-9999" || e.indexValueMax === "-9999"){
+                                            datashow.maleIndex === "Âm tính";
                                         }
                                     });
                                     mainData.push(dataShow);
@@ -147,6 +149,7 @@
                                         },
                                         {
                                             data: 'maleIndex',
+                                           
                                         },
                                         {
                                             data: 'femaleindex',
@@ -157,6 +160,7 @@
                                     ],
                                     "bDestroy": true,
                                     "bFilter": true,
+                                   
 
                                 });
 

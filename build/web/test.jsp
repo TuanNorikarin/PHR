@@ -33,6 +33,10 @@
             #description{
                 display: none;    
             }
+            div.table-responsive{
+             table-layout: fixed;   
+    width: 100% !important;
+            }
             
         </style>
     </head>
@@ -50,22 +54,10 @@
                     <a href="add-testPackage.jsp" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Test Package</a>
                 </div>
             </div>
-            <!--            <form role="form" id="form-buscar">
-                            <div class="form-group">
-                                <div class="input-group ">
-                                    <input id="1" class="custom-seach " type="text" name="search" placeholder="Search..." required/>
-                                    <span class="input-group-btn">
-                                        &nbsp;
-                                        <button class="btn btn-success custom-btn " type="submit">
-                                            <i class="fa fa-search"></i> Search
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>-->
+            
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
                         <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
                             <thead>
                                 <tr>
@@ -167,6 +159,9 @@
                             ],
                             "bDestroy": true,
                             "bFilter": true,
+                            "aaSorting": [],
+                            "bSort": false
+                            
 //                             "createdRow": function (row, data, dataIndex) {
 //                                $('td:eq(1)', row).css('display', 'none');
 //                            }

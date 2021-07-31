@@ -158,12 +158,7 @@
                                             }
 //                =====================================Insert===============================================
                                             $(document).ready(function () {
-                                                function uuidv4() {
-                                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                                                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                                                        return v.toString(16);
-                                                    });
-                                                }
+
                                                 var firebaseConfig = {
                                                     apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
                                                     authDomain: "upload-image-45245.firebaseapp.com",
@@ -219,7 +214,6 @@
                                                     
                                                     console.log(clinicName + " clinicName");
                                                     console.log(phone + " phone");
-                                                    console.log(uuidv4() + " id");
                                                     console.log(description + " description");
                                                     console.log(imgClinic + " imgClinic");
                                                     console.log(address + " address");
@@ -228,9 +222,9 @@
                                                     console.log(district + " district");
                                                     
                                                     if (selectSta === "on") {
-                                                        status = "Active";
+                                                        status = "enable";
                                                     } else {
-                                                        status = "Inactive";
+                                                        status = "disable";
                                                     }
                                                     if (clinicName.length === 0) {
                                                         $('#inputClinicname').addClass('error');
@@ -306,13 +300,12 @@
                                                                 data: JSON.stringify({
                                                                     "address": address,
                                                                     "name": clinicName,
-//                                                                    "id": "2",
-                                                                    "coordinate": "HCM",
+                                                                    "coordinate": "",
                                                                     "image": url,
                                                                     "phone": phone,
                                                                     "status": status,
                                                                     "district": district,
-                                                                    "clinicGroupId": "1",
+                                                                    "clinicGroupId": 1,
                                                                     "description": description
                                                                 }),
                                                                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic",

@@ -118,13 +118,14 @@
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
         window.onload = function () {
-            var token = localStorage.getItem("key");
-            
+            var token = sessionStorage.getItem("key");
+            console.log(token);
             $.ajax({
                 type: "GET",
                 dataType: "text",
                 contentType: "application/json; charset=utf-8",
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
                     Authorization: 'Bearer ' + token},
 
                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role",

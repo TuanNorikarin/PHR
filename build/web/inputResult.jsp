@@ -8,12 +8,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
         <link rel="stylesheet" type="text/css" href="assets/css/customStyle.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
         <style>
@@ -81,29 +81,23 @@
 
     <div class="page-wrapper">
         <div class="content">
-            <!--            <div class="row">
-            
-            
-            
-                            <div class="col-sm-8 col-9 text-right m-b-20 addButton">
-                                <a href="add-TestToPackage.jsp" class="btn btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Add Text Indexes to Package</a>
-                            </div>
-                        </div>-->
+
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-8 testPackage">
 
-                        <table id="testPackageTable" class="table table-border table-striped custom-table datatable mb-0">
-                            <caption id="namePackage" style="caption-side:top"></caption>
+                        <table id="testPackageTable" name="requesttable" class="table table-border table-striped custom-table datatable mb-0">
+                            <caption id="namePackage" style="caption-side:top">Result</caption>
 
                             <thead>
 
                                 <tr>
                                     <th style="width: 20%">Name</th>
-                                    <th style="width: 15%">Male</th>
-                                    <th style="width: 15%">Female</th>
+                                    <th style="width: 15%">Min</th>
+                                    <th style="width: 15%">Max</th>
                                     <th style="width: 15%">Result</th>
+                                    <th style="width: 15%">Diagnose</th>
 
 
                                 </tr>
@@ -115,7 +109,8 @@
                                     <td id="name"></td>
                                     <td id="male"></td>
                                     <td id="female"></td>
-                                    <td id="result"></td>
+                                    <td id="result" name="result"></td>
+                                    <td id="diagnose" name="diagnose"></td>
 
 
 
@@ -129,7 +124,7 @@
                         </table>
                     </div>
                     <div class="form-group col-8 doctorComment">
-                        <label>Doctor's Diagnose:</label>
+                        <label>Summary Diagnose:</label>
                         <textarea id="textArea" rows="7" cols="5" class="form-control" style="resize: none;" placeholder=""></textarea>
                     </div>
                     <div class="form-group col-8 doctorComment">
@@ -161,106 +156,126 @@
         <script type="text/javascript">
             //==============================Loading Page=========================================
             $(document).ajaxStart(function () {
-                $("div").addClass("loading");
+            $("div").addClass("loading");
             });
             $(document).ajaxStop(function () {
-                $("div").removeClass("loading");
+            $("div").removeClass("loading");
             });
+            var listExamiationDetailsResult = [];
+            var listResult = [];
+            var listDiagnose = []
 
-            window.onload = function () {
-                function uuidv4() {
-                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                        return v.toString(16);
-                    });
-                }
-                ;
-                var token = localStorage.getItem("key");
-                var namePackage = localStorage.getItem("namePackage");
-                var valueArray = [];
-                var arrayTotal = [];
-                var idExamination = localStorage.getItem("idExamination");
-                var testRequest = [];
-                var todayRating = moment().format("YYYY-MM-DDTHH:mm:ss");
-                var today = moment().format("YYYY-MM-DDTHH:mm:ss");
-                var dayExpire = moment().add(2, 'd').format("YYYY-MM-DD");
-                var uuidRating = uuidv4();
-                $.ajax({
+
+                    window.onload = function () {
+
+
+                    var dataTestRequestId = JSON.parse(localStorage.getItem("dataTestRequestId"));
+//                console.log(dataTestRequestId[3].testId +" TestID");
+                    console.log(dataTestRequestId);
+                    var dataTestRequest = JSON.parse(localStorage.getItem("dataTestRequestId"));
+                    var patientGender = localStorage.getItem("patientGender");
+                    console.log(patientGender);
+                    var token = localStorage.getItem("key");
+                    var namePackage = localStorage.getItem("namePackage");
+                    var valueArray = [];
+                    var arrayTotal = [];
+                    var idExamination = dataTestRequestId[0].examinationId;
+//                var idExamination = localStorage.getItem("idExamination");
+                    console.log(idExamination + " examinationID");
+                    var testRequest = [];
+                    var todayRating = moment().format("YYYY-MM-DDTHH:mm:ss");
+                    var today = moment().format("YYYY-MM-DDTHH:mm:ss");
+                    var dayExpire = moment().add(2, 'd').format("YYYY-MM-DD");
+//                var uuidRating = uuidv4();
+                    $.ajax({
                     type: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=UTF-8",
-                    headers: {
-                        Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/testtestrequest/findbyexamination/" + idExamination,
-                    success: function (data) {
-                        testRequest = data;
-                        for (var j = 0; j < data.length; j++) {
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                contentType: "application/json; charset=UTF-8",
-                                headers: {
-                                    Authorization: 'Bearer ' + token},
-                                url: "https://bt-application.herokuapp.com/api/testresultsample/findbytestid/" + data[j].testId.id,
-                                success: function (values) {
+                            dataType: "json",
+                            contentType: "application/json; charset=UTF-8",
+                            headers: {
+                            Authorization: 'Bearer ' + token},
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examination-details/examination-detail/examination/" + idExamination + "?typeGender=" + patientGender,
+                            success: function (data) {
+//                        var examA = JSON.stringify(data);
+//                        
+//                        var examB = JSON.parse(examA);
+//                        console.log(examB)
+                            console.log(data)
 
-                                    valueArray.push(values[0].testId.name);
-                                    for (var i = 0; i < values.length; i++) {
-                                        if (values[i].type === 'Male') {
-                                            valueArray.splice(1, 0, values[i].indexValueMin + " - " + values[i].indexValueMax);
-                                        }
-                                        if (values[i].type === 'Female') {
-                                            valueArray.splice(2, 0, values[i].indexValueMin + " - " + values[i].indexValueMax);
-                                        }
-//                                    
-                                    }
-                                    arrayTotal.push(valueArray);
-                                    valueArray = [];
-                                    if (arrayTotal.length === data.length) {
-                                        $('#testPackageTable').append('<caption style="caption-side: top">' + namePackage + '</caption>');
-                                        $('#testPackageTable').DataTable({
-                                            data: arrayTotal,
-                                            columns: [
-                                                {data: '0'},
-                                                {data: '1'},
-                                                {data: '2'},
-                                                {
-                                                    defaultContent: '<input id="inputResult" class="inputResult" type="number"></input>'
-                                                }
-                                            ],
-                                            "bDestroy": true,
-                                            "bFilter": false,
-                                            "bPaginate": false,
-                                            "bInfo": false,
-                                            "aaSorting": [],
-                                            "bSort": false
-                                        });
-                                    }
+//                      $('#testPackageTable').append('<caption style="caption-side: top">' + namePackage + '</caption>');
+                                    $('#testPackageTable').DataTable({
+                            data: data,
+                                    columns: [
+                                    {data: 'test_name'},
+                                    {data: 'indexValueMin'},
+                                    {data: 'indexValueMax'},
+                                    {
+                                    data: 'testId',
+                                            render: function (data, type, row, meta) {
+                                            return '<input id="inputResult' + data + '" onChange="createResult(' + data + ')" class="inputResult" type="number"></input>'
+                                            }
+                                    },
+                                    {
+                                    data: 'testId',
+                                            render: function (data, type, row, meta) {
+                                            return '<input id="inputDignose' + data + '" onChange="createDiagnose(' + data + ')" class="inputDiagnose" type="text"></input>'
+                                            }
+                                    },
+                                    ],
+                                    "bDestroy": true,
+                                    "bFilter": false,
+                                    "bPaginate": false,
+                                    "bInfo": false,
+                                    "aaSorting": [],
+                                    "bSort": false
+                            });
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(' Error in processing! ' + textStatus);
+                            }
 
-
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    console.log(' Error in processing! ' + textStatus);
-                                }
-
-                            })
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(' Error in processing! ' + textStatus);
-                    }
-
-                })
-                $(document).on('click', '[id^="inputResult"]', function () {
+                    });
+                    $(document).on('click', '[id^="inputResult"]', function () {
                     $('.inputResult').removeClass('error');
-                });
-                $(document).on('click', '[id^="textArea"]', function () {
+                    });
+                    $(document).on('click', '[id^="textArea"]', function () {
                     $('#textArea').removeClass('error');
-                });
-                $(document).on('click', '[id^="textArea1"]', function () {
+                    });
+                    $(document).on('click', '[id^="textArea1"]', function () {
                     $('#textArea1').removeClass('error');
-                });
-                $(document).on('click', '[id^="finishResult"]', function () {
+                    });
+                    $(document).on('click', '[id^="finishResult"]', function () {
+                    if(listResult.length >=  listDiagnose.length){
+                        for (var i = 0; i < listResult.length; i++) {
+                            if(listDiagnose.length === 0){
+                               listResult[i].examinationId = idExamination;
+                               listExamiationDetailsResult.push(listResult[i]); 
+                            }
+                            for (var j = 0; j < listDiagnose.length; j++) {
+                                listResult[i].examinationId = idExamination;
+                                if ((listResult[i].testId + '') === (listDiagnose[j].testId + '')){
+                                    listResult[i].diagnose = listDiagnose[j].dia;
+                                 }
+                                 listExamiationDetailsResult.push(listResult[i]);
+
+                             }
+                        }
+                    }else{
+                       for (var i = 0; i < listDiagnose.length; i++) {
+                            for (var j = 0; j < listResult.length; j++) {
+                                   listResult[i].examinationId = idExamination;
+
+                                if ((listDiagnose[i].testId + '') === (listResult[j].testId + '')){
+                                    listResult[i].diagnose = listDiagnose[j].dia;
+                                 }
+                                    listExamiationDetailsResult.push(listResult[i]);
+
+                             }
+                        } 
+                    }
+                    
+                    console.log('----------------------');
+                    console.log(listExamiationDetailsResult);
+                    //===============================tuan
                     var a = $('.inputResult');
                     $('.inputResult').removeClass('error');
                     $('#textArea').removeClass('error');
@@ -270,33 +285,31 @@
                     var result = [];
                     var regexp = /^-?\d{1,4}(\.\d{1})?$/;
                     for (var i = 0; i < b; i++) {
-                        if (regexp.test(a.eq(i).val())) {
-                            result.push(a.eq(i).val());
-                        } else {
-                            $('.inputResult').addClass('error');
-                        }
+                    if (regexp.test(a.eq(i).val())) {
+                    result.push(a.eq(i).val());
+                    } else {
+                    $('.inputResult').addClass('error');
+                    }
 
                     }
-                    console.log(result);
-                    var c = document.getElementById("textArea").value;
-                    var d = document.getElementById("textArea1").value;
-                    if (c.length === 0 || c.length > 255) {
-                        $('#textArea').addClass('error');
-                        if (d.length === 0 || d.length > 255) {
-                            $('#textArea1').addClass('error');
-                        }
-                    } else if (d.length === 0 || d.length > 255) {
-                        $('#textArea1').addClass('error');
+                    var sumDiagnose = document.getElementById("textArea").value;
+                    var advise = document.getElementById("textArea1").value;
+
+
+
+
+
+                    console.log(sumDiagnose);
+                    console.log(advise);
+                    console.log(idExamination);
+                    if (sumDiagnose.length === 0 || sumDiagnose.length > 255) {
+                    $('#textArea').addClass('error');
+                    if (advise.length === 0 || advise.length > 255) {
+                    $('#textArea1').addClass('error');
+                    }
+                    } else if (advise.length === 0 || advise.length > 255) {
+                    $('#textArea1').addClass('error');
                     } else {
-                        if (result.length === b) {
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                contentType: "application/json; charset=UTF-8",
-                                headers: {
-                                    Authorization: 'Bearer ' + token},
-                                url: "https://bt-application.herokuapp.com/api/examination/" + idExamination,
-                                success: function (data) {
 
                                     $.ajax({
                                         type: "PUT",
@@ -305,23 +318,17 @@
                                         headers: {
                                             Authorization: 'Bearer ' + token},
                                         data: JSON.stringify({
-                                            "id": idExamination,
-                                            "timeStart": data.timeStart,
-                                            "timeFinish": today + 'Z',
-                                            "type": data.type,
-                                            "diagnose": c,
-                                            "advise": d,
-                                            "doctorId": data.doctorId,
-                                            "userId": {
-                                                "id": data.userId.id
-                                            },
-                                            "clinicId": {
-                                                "id": data.clinicId.id
-                                            }
+                                            "advise": advise,
+                                            "diagnose": sumDiagnose,
+                                            "examinationDetailRequests": listExamiationDetailsResult,
+                                            "examinationId": idExamination
+
+
                                         }),
-                                        url: "https://bt-application.herokuapp.com/api/examination/edit",
+                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
                                         complete: function (jqXHR) {
-                                        }})
+                                            
+                                        }});
                                     $.ajax({
                                         type: "POST",
                                         dataType: "json",
@@ -329,79 +336,40 @@
                                         headers: {
                                             Authorization: 'Bearer ' + token},
                                         data: JSON.stringify({
-                                            "id": uuidRating,
-                                            "time": todayRating,
-                                            "timeExpire": dayExpire,
-                                            "status": "waiting rate",
-                                            "userId": {
-                                                "id": data.userId.id
-                                            },
-                                            "examinationId": {
-                                                "id": idExamination
-                                            }}),
-                                        url: "https://bt-application.herokuapp.com/api/rating/insert",
+                                            "rate": 0,
+                                            "comment": "",
+                                            "examinationId": idExamination
+                                        }),
+                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/rating",
                                         complete: function (jqXHR) {
-                                        }})
-                                }, error: function (jqXHR, textStatus, errorThrown) {
-
-                                }, })
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                contentType: "application/json; charset=UTF-8",
-                                headers: {
-                                    Authorization: 'Bearer ' + token},
-                                url: "https://bt-application.herokuapp.com/api/testresult/findbytestrequestid/" + testRequest[0].testRequestId.id,
-                                success: function (data) {
-                                    for (var k = 0; k < arrayTotal.length; k++) {
-                                        var uuidTestResultDetail = uuidv4();
-//                                console.log(arrayTotal[k][0]);
-//                                console.log(result[k]);
-                                        var count = 0;
-                                        for (var j = 0; j < testRequest.length; j++) {
-                                            console.log(arrayTotal[k][0]);
-                                            console.log(result[k]);
-                                            if (testRequest[j].testId.name === arrayTotal[k][0]) {
-
-                                                $.ajax({
-                                                    type: "POST",
-                                                    dataType: "json",
-                                                    contentType: "application/json; charset=utf-8",
-                                                    headers: {
-                                                        Authorization: 'Bearer ' + token},
-                                                    data: JSON.stringify({
-                                                        "id": uuidTestResultDetail,
-                                                        "indexValueResult": result[k],
-                                                        "testResultId": {
-                                                            "id": data.id
-                                                        },
-                                                        "testId": {
-                                                            "id": testRequest[j].testId.id
-                                                        }
-                                                    }),
-                                                    url: "https://bt-application.herokuapp.com/api/testresultdetail/insert",
-                                                    complete: function (jqXHR) {
-                                                        if (jqXHR.status === 201) {
-                                                            count++;
-                                                            if (count === testRequest.length) {
-                                                                window.location.href = "doctorCheckRequest.jsp";
-                                                            }
+                                                        if (jqXHR.status === 201 || jqXHR.status === 200) {
+                                                            alert("COMPLETE!!!")
+                                                            window.location.href = "doctorCheckRequest.jsp";
                                                         }
                                                     }
-                                                });
-                                            }
-                                        }
-                                    }
-
-                                }, error: function (jqXHR, textStatus, errorThrown) {
-
-                                }});
-                        }
+                                    });
+//                               
+                       
                     }
-                });
-            };
+                    });
+                    };
+            function createResult(id) {
+            let result = new Object();
+            let temp = parseInt($('#inputResult' + id + '').val(), 10);
+            result.testId = id;
+            result.result = temp;
+            listResult.push(result);
+            console.log(listResult);
+            }
 
-
+            function createDiagnose(id) {
+            let diagnose = new Object();
+            let temp = $('#inputDignose' + id + '').val();
+            diagnose.testId = id;
+            diagnose.dia = temp;
+            listDiagnose.push(diagnose)
+                    console.log(listDiagnose);
+            }
 
 
         </script>

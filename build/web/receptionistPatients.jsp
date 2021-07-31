@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Health Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -53,7 +53,7 @@
             <button id="buttonPatient">Search</button>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
 
                         <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
 
@@ -116,7 +116,7 @@
             window.onload = function () {
                 var token = localStorage.getItem("key");
                 var clinicId = localStorage.getItem("clinicId");
-                clinicId = 1;
+                clinicId = 9;
                 $('#buttonPatient').on('click', function () {
                     console.log('button clicked');
                     var searchPatientValue = $('#searchPatient').val();
@@ -125,7 +125,7 @@
                         dataType: "json",
                         contentType: "application/json; charset=UTF-8",
                         headers: {
-                            'Access-Control-Allow-Origin': '*'},
+                            Authorization: 'Bearer ' + token},
                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/account/" + searchPatientValue,
                         statusCode: {
                             200: function (data) {
@@ -156,8 +156,23 @@
                     statusCode: {
                         200: function (data) {
                             console.log('data khi load: ', data);
+                            var listPatient = [];
+                            data.forEach(element => {
+                                var dataShow = new Object();
+                                dataShow.id = element.id;
+                                dataShow.image = element.image;
+                                dataShow.name = element.name;
+                                dataShow.dob = element.dob;
+                                dataShow.address = element.address;
+                                dataShow.phone = element.phone;
+                                dataShow.gender = element.gender;
+                                dataShow.status = element.status;
+
+                                listPatient.push(dataShow);
+                            });
+                            console.log(listPatient);
                             dataTable = $('#patientTable').DataTable({
-                                data: data,
+                                data: listPatient,
                                 columns: [
                                     {data: "image",
                                         "render": function (data, type, row, meta) {
@@ -172,13 +187,24 @@
                                     {
                                         data: 'id',
                                         "render": function (data, type, row, meta) {
-                                            return '<td  class="text-right"><button onclick="getPatientId('+data+')" type="button" class="btn btn-primary">Select patient</button></td>'
+                                            return '<td  class="text-right"><button onclick="getPatientId(' + data + ')" type="button" class="btn btn-primary">Select patient</button></td>'
                                         }
 
                                     }
                                 ],
                                 "bDestroy": true,
                                 "bFilter": false,
+                                "createdRow": function (row, data, dataIndex) {
+                                if (data.status === "disable") {
+                                    console.log(row);
+                                    $('td', row).css('color', '#b5b5b5');
+                                    $('td', row).css('font-style', 'italic');
+                                }
+                                if (data.status === "enable") {
+                                    $('td:eq(6)', row).css('color', '#2a9c31');
+                                    $('td:eq(6)', row).css('font-weight', 'bolder');
+                                }
+                            }
                             });
                         },
                         400: function (jqXHR, textStatus, errorThrown) {

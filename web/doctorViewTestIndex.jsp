@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -63,11 +63,10 @@
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>
-                                    <th id='description' style="width: 30%">Description</th>
-                                    <th style="width: 15%">Male Value</th>
-                                    <th style="width: 15%">FeMale Value</th>
-                                    <th style="width: 15%">Children Value</th>
-                                    <th style="width: 5%">Action</th>
+                                    <th id='description' style="width: 20%; display: block !important;">Description</th>
+                                    <th style="width: 20%">Male Value</th>
+                                    <th style="width: 20%">Female Value</th>
+                                    <th style="width: 20%">Children Value</th>
                                     <!--<th style="width: 5%" class="text-right">Action</th>-->
                                 </tr>
                             </thead>
@@ -81,16 +80,6 @@
                                     <td id="maleVal"></td>
                                     <td id="femaleVal"></td>
                                     <td id="childVal"></td>
-                                    <td id="action"></td>
-<!--                                    <td  class="text-right">
-                                        <div class="dropdown dropdown-action">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                            <div id="d" class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="edit-testIndex.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>-->
                                 </tr>
 
 
@@ -123,142 +112,76 @@
 
 
 
-            window.onload = function () {
-                var token = localStorage.getItem("key");
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=UTF-8",
-                    headers: {
-                        Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/testresultsample/getall",
-                    success: function (data) {
-                        var valueArray = [];
-                        var valueArrayTotal = [];
-                        var valueId = [];
-                        var valueIdTotal = [];
-                        var idData = "";
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i] !== undefined) {
-                                valueArray.push(data[i].testId.name);
-                                valueArray.push(data[i].testId.description);
-                                valueId.push(data[i].testId.name);
-                                valueId.push(data[i].testId.id);
-                                if (data[i].type === 'Male') {
-                                    valueArray.splice(2, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.splice(2, 0, data[i].id);
-
-                                }
-                                if (data[i].type === 'Female') {
-                                    valueArray.splice(3, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.splice(3, 0, data[i].id);
-
-                                }
-                                if (data[i].type === 'Children') {
-                                    valueArray.splice(4, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.splice(4, 0, data[i].id);
-
-                                }
-                                idData = data[i].testId.id;
-                                delete data[i];
-                                for (var k = 0; k < data.length; k++) {
-                                    if (data[k] !== undefined) {
-                                        if (data[k].testId.id === idData) {
-                                            if (data[k].type === 'Male') {
-                                                valueArray.splice(2, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.splice(2, 0, data[k].id);
-
-                                            }
-                                            if (data[k].type === 'Female') {
-                                                valueArray.splice(3, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.splice(3, 0, data[k].id);
-
-                                            }
-                                            if (data[k].type === 'Children') {
-                                                valueArray.splice(4, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.splice(4, 0, data[k].id);
-
-                                            }
-                                            delete data[k];
-
-                                        }
-
-                                    }
-                                }
-                                if (valueArray.length === 5) {
-                                    valueArrayTotal.push(valueArray);
-                                    valueArray = [];
-                                } else if (valueArray.length === 4) {
-                                    valueArrayTotal.push(valueArray);
-                                    valueArray = [];
-                                }
-                                if (valueId.length === 5) {
-                                    valueIdTotal.push(valueId);
-                                    valueId = [];
-                                }
-
-                            }
-                        }
-                        var a = JSON.stringify(data);
-                        var b = JSON.parse(a);
-                        $('#indexTable tbody').on('click', 'td', function ()
-                        {
-                            var tr = $(this).closest("tr");
-                            var rowindex = tr.index();
-                            table = document.getElementById("indexTable");
-                            tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-                            txtValue = td.textContent;
-
-                            $.each(valueArrayTotal, function (index, value) {
-                                console.log(value[0]);
-                                if (value[0] === txtValue) {
-                                    localStorage.setItem("dataTest", value);
-                                }
-                            });
-                            $.each(valueIdTotal, function (index, value) {
-                                console.log(value[0]);
-                                if (value[0] === txtValue) {
-                                    localStorage.setItem("dataTestId", value);
-                                    localStorage.setItem("dataTestIdJSON", JSON.stringify(value));
-                                }
-                            });
-                        }
-                        );
-//                                   
-
-
-//
-                        $('#indexTable').DataTable({
-                            data: valueArrayTotal,
-                            columns: [
-                                {data: '0'},
-                                {data: '1'},
-                                {data: '2'},
-                                {data: '3'},
-                                {data: '4'},
-                                {
-                                    defaultContent: '<td><td><button class="selectTestIndex"> <a href = "doctorSearchTestResult.jsp"> Select</a> </button></td></td>'
-//
-                                }
-                            ],
-                            "bDestroy": true,
-                            "bFilter": true,
-                            language: {
-                                search: 'Search:',
-                                searchPlaceholder: ""
+              window.onload = function () {
+                        var token = localStorage.getItem("key");
+                        var testName = localStorage.getItem("testName");
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            contentType: "application/json; charset=UTF-8",
+                            headers: {
+                                // Authorization: 'Bearer ' + token
+                                'Access-Control-Allow-Origin': '*'
                             },
-                            "createdRow": function (row, data, dataIndex) {
-                                $('td:eq(1)', row).css('display', 'none');
-                            }
-                        });
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(' Error in processing! ' + textStatus);
-                    }
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
+                            success: function (data) {
+                                var mainData = [];
+                                console.log(data);
+                                data.forEach(element => {
+                                    var dataShow = new Object();
+                                    dataShow.name = element.name;
+                                    dataShow.description = element.description;
 
-                })
+                                    dataShow.maleIndex = '-';
+                                    dataShow.femaleindex = '-';
+                                    dataShow.childIndex = '-'
+                                    
+                                    element.samplelst.forEach(e => {
+                                        if (e.type === 'Male' || e.type === 'male') {
+                                            dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        } else if (e.type === 'Female' || e.type === 'female') {
+                                            dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                        } else if (e.type === 'Child' || e.type === 'child') {
+                                            dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        }else if (e.indexValueMin === "-9999" || e.indexValueMax === "-9999"){
+                                            datashow.maleIndex === "Âm tính";
+                                        }
+                                    });
+                                    mainData.push(dataShow);
+                                });
+                                console.log(mainData);
+                                table = $('#indexTable').DataTable({
+                                    data: mainData,
+                                    columns: [
+                                        { data: 'name' },
+                                        {
+                                            data: 'description',
+                                        },
+                                        {
+                                            data: 'maleIndex',
+                                           
+                                        },
+                                        {
+                                            data: 'femaleindex',
+                                        },
+                                        {
+                                            data: 'childIndex',
+                                        },
+                                    ],
+                                    "bDestroy": true,
+                                    "bFilter": true,
+                                   
+
+                                });
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(' Error in processing! ' + textStatus);
+                            }
+
+                        })
             };
+
 
         </script>
 

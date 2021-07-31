@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -75,7 +75,7 @@
 
 
                 <div class="col-sm-8 col-9 text-right m-b-20 addButton">
-                    <a href="add-TestToPackage.jsp" id="buttonAdd" class="btn btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Add Text Indexes to Package</a>
+                    <a id="buttonAdd" class="btn btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Add Text Indexes to Package</a>
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
                     <div class="col-8 testPackage">
 
                         <table id="testPackageTable" class="table table-border table-striped custom-table datatable mb-0">
-                            <caption id="namePackage" style="caption-side:top"></caption>
+                            <!--<caption id="namePackage" style="caption-side:top"></caption>-->
 
                             <thead>
 
@@ -153,31 +153,6 @@
                 }
                 console.log(testId);
 
-//                    (function (i) {
-                        var xmlhttp = new XMLHttpRequest();
-                        xmlhttp.open("GET", "https://bt-application.herokuapp.com/api/testtestrequest/findTestRequestIdByCount/" + testId.length, true);
-                        xmlhttp.setRequestHeader("Authorization", "Bearer " + token);
-                        xmlhttp.responseType = 'json';
-                        xmlhttp.send();
-                        xmlhttp.onreadystatechange = function () {
-                            if (xmlhttp.readyState === XMLHttpRequest.DONE) {
-                                // XMLHttpRequest.DONE == 4
-
-                                if (xmlhttp.status === 200) {
-
-                                    console.log(xmlhttp.response);
-                                    if (xmlhttp.response.length !== 0) {
-                                      $("#buttonAdd").hide();
-                                        $("button[id='buttonX']").attr('disabled', 'disabled');
-                                    }
-//                                    
-
-                                }
-
-                            }
-                        };
-
-//                    })(i)
 
 
 
@@ -192,16 +167,19 @@
                 var valueArray = [];
                 var arrayTotal = [];
                 var testName = [];
-
+                console.log(dataPackage.name);
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/packagetest/findbyname/" + dataPackage.name,
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + dataPackage.id,
                     success: function (data) {
-//                        var a = JSON.stringify(data);
+                        var a = JSON.stringify(data);
+                        var b = JSON.parse(a);
+                        console.log(b);
+                        console.log(a);
                         for (var i = 0; i < data.length; i++) {
 
            
@@ -211,47 +189,61 @@
                                 contentType: "application/json; charset=UTF-8",
                                 headers: {
                                     Authorization: 'Bearer ' + token},
-                                url: "https://bt-application.herokuapp.com/api/testresultsample/findbytestid/" + data[i].testId.id,
-                                success: function (values) {
-                                    testName.push(values[0].testId.name);
-                                    testId.push(values[0].testId.id);
-                                    valueArray.push(values[0].testId.name);
-                                    for (var i = 0; i < values.length; i++) {
-                                        if (values[i].type === 'Male') {
-                                            valueArray.splice(1, 0, values[i].indexValueMin + " - " + values[i].indexValueMax);
-                                        }
-                                        if (values[i].type === 'Female') {
-                                            valueArray.splice(2, 0, values[i].indexValueMin + " - " + values[i].indexValueMax);
-                                        }
-                                        if (values[i].type === 'Children') {
-                                            valueArray.splice(3, 0, values[i].indexValueMin + " - " + values[i].indexValueMax);
-                                        }
-                                    }
-//                                    valueArray.push(" ");
-                                    arrayTotal.push(valueArray);
-                                    checkPackage = arrayTotal;
-                                    valueArray = [];
-                                    if (arrayTotal.length === data.length) {
-                                        localStorage.setItem("testName", testName);
-                                        $('#testPackageTable').append('<caption style="caption-side: top">' + dataPackage.name + '</caption>');
+                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" +dataPackage.id,
+                                success: function (data) {
 
-                                        $('#testPackageTable').DataTable({
-                                            data: arrayTotal,
-                                            columns: [
-                                                {data: '0'},
-                                                {data: '1'},
-                                                {data: '2'},
-                                                {data: '3'},
-                                                {
-                                                    defaultContent: '<td id="actionIcon" class="close"><button id="buttonX" type="button" class="close" aria-label="Close"><span class="deleteButton" aria-hidden="true">&times;</span></button></td>'
-                                                }
-                                            ],
-                                            "bDestroy": true,
-                                            "bFilter": false,
-                                            "bPaginate": false,
-                                            "bInfo": false,
-                                        });
-                                    }
+
+                                var mainData = [];
+                                console.log(data);
+                                data.forEach(element => {
+                                    var dataShow = new Object();
+                                    dataShow.name = element.name;
+                                    dataShow.description = element.description;
+
+                                    dataShow.maleIndex = '-';
+                                    dataShow.femaleindex = '-';
+                                    dataShow.childIndex = '-'
+                                    
+                                    element.samplelst.forEach(e => {
+                                        if (e.type === 'Male' || e.type === 'male') {
+                                            dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        } else if (e.type === 'Female' || e.type === 'female') {
+                                            dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                        } else if (e.type === 'Child' || e.type === 'child') {
+                                            dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        }
+                                    });
+                                    mainData.push(dataShow);
+                                });
+                                
+                                localStorage.setItem("testName", testName);
+//                                $('#testPackageTable').append('<caption style="caption-side: top">' + dataPackage.name + '</caption>');
+                                $('#testPackageTable').DataTable({
+                            data: mainData,
+                            columns: [
+                                        { data: 'name' },
+                                        
+                                        {
+                                            data: 'maleIndex',
+                                        },
+                                        {
+                                            data: 'femaleindex',
+                                        },
+                                        {
+                                            data: 'childIndex',
+                                        },
+                                        {
+                                            defaultContent: '<td id="actionIcon" class="close"><button id="buttonX" type="button" class="close" aria-label="Close"><span class="deleteButton" aria-hidden="true">&times;</span></button></td>'
+
+                                        }
+                            ],
+                                    "bDestroy": true,
+                                    "bFilter": false,
+                                    "bPaginate": false,
+                                    "bInfo": false,
+
+                                });
+
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.log(' Error in processing! ' + textStatus);
@@ -276,12 +268,13 @@
                                         contentType: "application/json; charset=utf-8",
                                         headers: {
                                             Authorization: 'Bearer ' + token},
-                                        url: "https://bt-application.herokuapp.com/api/packagetest/" + data[i].id,
+                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test/" + data[i].id,
                                         complete: function (jqXHR) {
                                             if (jqXHR.status === 200) {
                                                 for (var k = 0; k < testName.length; k++) {
                                                     if (txtValue === testName[k]) {
                                                         testName.splice(k, 1);
+                                                        
                                                         localStorage.setItem("testName", testName);
                                                         window.location.href = "test-detail.jsp";
 
@@ -301,9 +294,65 @@
                         console.log(' Error in processing! ' + textStatus);
                     },
                 })
+                $('#buttonAdd').click(function (event) {
+
+                var ids = dataPackage.id;
+//                if (ids !== null) {
+//                    var listTestId = ids.split(",");
+//                }
+//                console.log(listTestId);
+                var listTestDouple = [];
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    headers: {
+                        // Authorization: 'Bearer ' + token
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + dataPackage.id,
+                    success: function (data) {
+                        console.log(data);
+                        for (var i = 0; i < data.length; i++) {
+                            let id = data[i].id.toString();
+                            console.log(typeof (id));
+                            for (var j = 0; j < listTestId.length; j++) {
+                                console.log(listTestId[j]);
+                                if (id === listTestId[j]) {
+                                    listTestDouple.push(j);
+
+                                }
+                            }
+                        }
+                        if (listTestDouple.length !== 0) {
+                            let flag = true;
+
+                            while (flag) {
+                                if (confirm('Some test you choice have been in package, do you want to remove them?')) {
+                                    flag = false;
+                                } else {
+                                }
+                            }
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(' Error in processing! ' + textStatus);
+                    }
+                });
+                sessionStorage.setItem('packageId', dataPackage.id);
+//                if (confirm('Do you want to choose some other testing services?')) {
+                    window.location.href = "add-TestToPackage.jsp";
+//                } else {
+//                    window.location.href = "createExamination.jsp";
+//                }
+
+            });
 
             };
-
+            
+            
+            
 
 
 

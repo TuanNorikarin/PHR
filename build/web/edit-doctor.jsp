@@ -71,20 +71,7 @@
                                     <span id='messageLastname'></span>
                                 </div>
                             </div>
-<!--                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Username <span class="text-danger">*</span></label>
-                                    <input id='inputUsername' class="form-control" name="username" type="text">
-                                    <span id='messageUsername'></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Email <span class="text-danger">*</span></label>
-                                    <input id='inputEmail' class="form-control" name="email" type="email">
-                                    <span id='messageEmail'></span>
-                                </div>
-                            </div>-->
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Password</label>
@@ -99,17 +86,17 @@
                                     <span id='message'></span>
                                 </div>
                             </div>
-<!--                            <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date of Birth</label>
                                     <div class="cal-icon">
-                                        <input id="datepicker" type="text" name="dob" class="form-control datetimepicker">
+                                        <input id="datepicker" type="text" name="dob" class="form-control datetimepicker" data-date-format="YYYY/MM/DD">
 
 
                                     </div>
                                 </div>
-                            </div>-->
-<!--                            <div class="col-sm-6">
+                            </div>
+                            <div class="col-sm-6">
                                 <div class="form-group gender-select">
                                     <label class="gen-label">Gender:</label>
                                     <div class="form-check-inline">
@@ -124,17 +111,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Address</label>
-                                            <input type="text" id="address" name="address" class="form-control ">
-                                        </div>
-                                    </div>
 
-                                </div>
-                            </div>-->
+                            
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone </label>
@@ -142,14 +120,15 @@
                                     <span id='messagePhone'/></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+<!--                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Clinic</label><br/>
                                     <select id="clinicID" name="clinicID" class="select">
 
                                     </select>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Avatar</label>
@@ -214,7 +193,9 @@
 //                =====================================Update===============================================
 
                                                 var data = JSON.parse(localStorage.getItem("dataDoctor"));
+                                                var data2 = JSON.parse(localStorage.getItem("infoDoctor"));
                                                 console.log(data);
+                                                console.log(data2);
                                                 function validateFileType() {
                                                     var fileName = document.getElementById("avatar").value;
                                                     var idxDot = fileName.lastIndexOf(".") + 1;
@@ -242,23 +223,6 @@
                                                 window.onload = function () {
                                                     var id = data;
                                                     console.log("this is id " + id);
-//                                                    var name = data.name;
-//                                                    var firstName = name.split(" ");
-//                                                    var lastName = name.replace(firstName[firstName.length - 1], "");
-//                                                    lastName = lastName.trim();
-//                                                    $("#inputFirstname").val(firstName[firstName.length - 1]);
-//                                                    $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
-////                                                    var username = data.username;
-////                                                    $("#inputUsername").val(username);
-////                                                    var mail = data.mail;
-////                                                    $("#inputEmail").val(mail);
-//                                                    var password = data.password;
-//                                                    $("#inputPassword").val(password);
-//                                                    var confirmPass = data.password;
-//                                                    $("#confirmPass").val(confirmPass);
-//                                                    var dob = data.dob;
-//                                                    $("#datepicker").val(dob);
-//                                                    var gender = data.gender;
 
 
                                                     $.ajax({
@@ -269,23 +233,31 @@
                                                             'Access-Control-Allow-Origin': '*'},
                                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
 //                                                        
-                                                        success: function (data) {
+                                                        success: function (data2) {
                                                             
-                                                            var name = data.name;
+                                                            var name = data2.name;
                                                             var firstName = name.split(" ");
                                                             var lastName = name.replace(firstName[firstName.length - 1], "");
                                                             lastName = lastName.trim();
                                                             $("#inputFirstname").val(firstName[firstName.length - 1]);
                                                             $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
-                                                            var password = data.password;
+                                                            var password = data2.password;
                                                             $("#inputPassword").val(password);
-                                                            var confirmPass = data.password;
+                                                            var confirmPass = data2.password;
                                                             $("#confirmPass").val(confirmPass);
-                                                            var phone = data.phone;
-                                                            var image = data.image;
+                                                            var phone = data2.phone;
+                                                            var image = data2.image;
                                                             $('#img').attr('src', image);
                                                             $("#inputPhone").val(phone);
-                                                            var status = data.status;
+                                                            var status = data2.status;
+                                                            var dob = data2.dob;
+                                                            $("#datepicker").val(dob);
+                                                            var gender = data2.gender;
+                                                            if (gender === "Male") {
+                                                                $("#male").prop("checked", true);
+                                                            } else {
+                                                                $("#female").prop("checked", true);
+                                                            }
                                                             $(document).ready(function () {
 //                                                    
 //                                                    function validateEmail(email)
@@ -326,10 +298,7 @@
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
                                                     });
-//                                                    $("#inputUsername").click(function () {
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
-//                                                    });
+
                                                     $("#inputPassword").click(function () {
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
@@ -338,10 +307,7 @@
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
                                                     });
-//                                                    $("#inputEmail").click(function () {
-//                                                        $('#inputEmail').removeClass('error');
-//                                                        document.getElementById('messageEmail').innerHTML = '';
-//                                                    });
+//                                                    
 
 
                                                     var firebaseConfig = {
@@ -375,53 +341,33 @@
 //                                                        document.getElementById('messageEmail').innerHTML = '';
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
-                                                        for (var i = 0; i < alluser.length; i++) {
-//                                                            if (alluser[i].username === document.getElementById('inputUsername').value && document.getElementById('inputUsername').value !== data.username) {
-//                                                                $('#inputUsername').addClass('error');
-//                                                                document.getElementById('messageUsername').style.color = 'red';
-//                                                                document.getElementById('messageUsername').innerHTML = 'Username already exists ✘';
-//                                                                count = 1;
-//                                                            }
-                                                            if (alluser[i].phone === document.getElementById('inputPhone').value && document.getElementById('inputPhone').value !== data.phone) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Phone already exists ✘';
-                                                                count = 1;
-                                                            }
-//                                                            if (alluser[i].mail === document.getElementById('inputEmail').value && document.getElementById('inputEmail').value !== data.mail) {
-//                                                                $('#inputEmail').addClass('error');
-//                                                                document.getElementById('messageEmail').style.color = 'red';
-//                                                                document.getElementById('messageEmail').innerHTML = 'Email already exists ✘';
-//                                                                count = 1;
-//                                                            }
-                                                        }
-                                                        var imageOld = data.image;
-                                                        var idUpdate = data.id;
+//                                                        
+                                                        var imageOld = data2.image;
+                                                        var idUpdate = data2.id;
                                                         var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
                                                         var lastName = $("input[name='lastName']").val();
-//                                                        var username = $("input[name='username']").val();
-//                                                        var email = $("input[name='email']").val();
                                                         var password = $("input[name='password']").val();
-//                                                        var dob = $("input[name='dob']").val();
-//                                                        var gender = $("input[name='gender']").val();
+                                                        var dob = $("input[name='dob']").val();
+                                                        var gender = $("input[name='gender']").val();
 //                                                        var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
 //                                                        var clinicID = $("select[id='clinicID']").val();
 //                                                        var status = $("input[name='status']").val();
                                                         var token = localStorage.getItem("key");
-//                                                        var selectGen = $('input[id="male"]:checked').val();
-//                                                        if (selectGen === "on") {
-//                                                            gender = 0;
-//                                                        } else {
-//                                                            gender = 1;
-//                                                        }
+                                                        var selectGen = $('input[id="male"]:checked').val();
+                                                        if (selectGen === "on") {
+                                                            gender = "Male";
+                                                        } else {
+                                                            gender = "Female";
+                                                        }
 
-                                                        var selectSta = $('input[id="patient_active"]:checked').val();
+//                                                        var selectSta = $('input[id="patient_active"]:checked').val();
                                                         
                                                         console.log(idUpdate +" idUp");
                                                         console.log(phone +" phone");
                                                         console.log(password +" password");
                                                         console.log(imageOld +" avatar");
+                                                        console.log(selectGen +" gender");
                                                         
 //                                                        if (selectSta === "on") {
 //                                                            status = "Active";
@@ -437,100 +383,43 @@
                                                                 document.getElementById('messageLastname').style.color = 'red';
                                                                 document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
                                                             }
-//                                                            if (username.length > 30 || username.length < 6) {
-//                                                                $('#inputUsername').addClass('error');
-//                                                                document.getElementById('messageUsername').style.color = 'red';
-//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-//                                                            }
-//                                                            if (validateEmail(email) === false && email !== "") {
-//                                                                $('#inputEmail').addClass('error');
-//                                                                document.getElementById('messageEmail').style.color = 'red';
-//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-//                                                            }
+
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
                                                                 document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
                                                             }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
 
                                                         } else if (lastName.length === 0 || !validateName(removeAscent(lastName)) || lastName.length > 35) {
                                                             $('#inputLastname').addClass('error');
                                                             document.getElementById('messageLastname').style.color = 'red';
                                                             document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
-//                                                            if (username.length > 30 || username.length < 6) {
-//                                                                $('#inputUsername').addClass('error');
-//                                                                document.getElementById('messageUsername').style.color = 'red';
-//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-//                                                            }
-//                                                            if (validateEmail(email) === false && email !== "") {
-//                                                                $('#inputEmail').addClass('error');
-//                                                                document.getElementById('messageEmail').style.color = 'red';
-//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-//                                                            }
+
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
                                                                 document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
                                                             }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
                                                         }
-//                                                        else if (username.length > 30 || username.length < 6) {
-//                                                            $('#inputUsername').addClass('error');
-//                                                            document.getElementById('messageUsername').style.color = 'red';
-//                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-//                                                            if (validateEmail(email) === false && email !== "") {
-//                                                                $('#inputEmail').addClass('error');
-//                                                                document.getElementById('messageEmail').style.color = 'red';
-//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-//                                                            }
-//                                                            if (password.length > 30 || password.length < 6) {
-//                                                                $('#inputPassword').addClass('error');
-//                                                                document.getElementById('messagePassword').style.color = 'red';
-//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-//                                                            }
-//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-//                                                                $('#inputPhone').addClass('error');
-//                                                                document.getElementById('messagePhone').style.color = 'red';
-//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-//                                                            }
-//                                                        } else if (validateEmail(email) === false && email !== "") {
-//                                                            $('#inputEmail').addClass('error');
-//                                                            document.getElementById('messageEmail').style.color = 'red';
-//                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-//                                                            if (password.length > 30 || password.length < 6) {
-//                                                                $('#inputPassword').addClass('error');
-//                                                                document.getElementById('messagePassword').style.color = 'red';
-//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-//                                                            }
-//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-//                                                                $('#inputPhone').addClass('error');
-//                                                                document.getElementById('messagePhone').style.color = 'red';
-//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-//                                                            }
-//                                                        }
+
                                                         else if (password.length > 30 || password.length < 6) {
                                                             $('#inputPassword').addClass('error');
                                                             document.getElementById('messagePassword').style.color = 'red';
                                                             document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (phone.length !== 10 || !validatePhone(phone)) {
-                                                            $('#inputPhone').addClass('error');
-                                                            document.getElementById('messagePhone').style.color = 'red';
-                                                            document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                        } else if (count === 1) {
+
+                                                        } 
+
+                                                        else if (count === 1) {
 
                                                         } else {
                                                             toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
@@ -559,12 +448,12 @@
                                                                         Authorization: 'Bearer ' + token},
                                                                     data: JSON.stringify({
 //                                                                        "address": address,
-//                                                                        "gender": gender,
-//                                                                        "dob": dob,
+                                                                        "gender": gender,
+                                                                        "dob": dob,
                                                                         "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
                                                                         "password": password,
-                                                                        "phone": phone,
+//                                                                        "phone": phone,
 //                                                                        "status": status,
                                                                         "image": url,
                                                                         "token": data.token,
@@ -573,8 +462,8 @@
                                                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor",
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
-                                                                        if (jqXHR.status === 200) {
-//                                                                            window.location.href = "doctors.jsp";
+                                                                        if (jqXHR.status === 200 || jqXHR.status === 201) {
+                                                                            window.location.href = "doctors.jsp";
                                                                         }
                                                                     }
                                                                 });
@@ -608,21 +497,7 @@
                                                         }
                                                     });
 
-//                                                    if (gender === 0) {
-//                                                        $("#male").prop("checked", true);
-//                                                    } else {
-//                                                        $("#female").prop("checked", true);
-//                                                    }
-//                                                    var address = data.address;
-//                                                    $("#address").val(address);
-                                                    
-//                                                  var avatar = $("input[name='avatar']").val();
-                                                    
-//                                                    if (status === "enable") {
-//                                                        $("#patient_active").prop("checked", true);
-//                                                    } else {
-//                                                        $("#patient_inactive").prop("checked", true);
-//                                                    }
+
 
 
                                                 };

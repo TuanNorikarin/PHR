@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -86,24 +86,7 @@
                             </thead>
 
                             <tbody>
-                                <!--
-                                                                <tr> 
-                                
-                                                                    <td id="name"></td>
-                                                                    <td id="description"></td>
-                                                                    <td id="maleVal"></td>
-                                                                    <td id="femaleVal"></td>
-                                                                    <td id="childVal"></td>
-                                                                    <td  class="text-right">
-                                                                        <div class="form-check">
-                                                                            <input type="checkbox" class="form-check-input" id="exampleCheck">
-                                
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>-->
-
-
-
+                               
                             </tbody>
                         </table>
                     </div>
@@ -128,241 +111,230 @@
             window.onload = function () {
                 var token = localStorage.getItem("key");
                 var testName = localStorage.getItem("testName");
+                var packageId = sessionStorage.getItem('packageId');
+                console.log('PackageID '  + packageId);
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/testresultsample/getall",
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
                     success: function (data) {
-                        var valueArray = [];
-                        var valueArrayTotal = [];
-                        var valueId = [];
-                        var valueIdTotal = [];
-                        var idData = null;
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i] !== undefined) {
-                                valueArray.push(data[i].testId.name);
-                                valueArray.push(data[i].testId.description);
-                                valueId.push(data[i].testId.name);
-                                valueId.push(data[i].testId.id);
-                                if (data[i].type === 'Male') {
-                                    valueArray.splice(2, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.splice(2, 0, data[i].id);
+ 
 
-                                }
-                                if (data[i].type === 'Female') {
-                                    valueArray.splice(3, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.splice(3, 0, data[i].id);
+                        jQuery.makeArray(packageId);
+                        var listResult = data;
+                        var mainData = [];
 
-                                }
-                                if (data[i].type === 'Children') {
-                                    valueArray.splice(4, 0, data[i].indexValueMin + " - " + data[i].indexValueMax);
-                                    valueId.splice(4, 0, data[i].id);
-
-                                }
-                                idData = data[i].testId.id;
-                                delete data[i];
-                                for (var k = 0; k < data.length; k++) {
-                                    if (data[k] !== undefined) {
-                                        if (data[k].testId.id === idData) {
-                                            if (data[k].type === 'Male') {
-                                                valueArray.splice(2, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.splice(2, 0, data[k].id);
-
-                                            }
-                                            if (data[k].type === 'Female') {
-                                                valueArray.splice(3, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.splice(3, 0, data[k].id);
-
-                                            }
-                                            if (data[k].type === 'Children') {
-                                                valueArray.splice(4, 0, data[k].indexValueMin + " - " + data[k].indexValueMax);
-                                                valueId.splice(4, 0, data[k].id);
-                                            }
-                                            delete data[k];
-
-                                        }
-
-                                    }
-                                }
-                                if (valueArray.length === 5) {
-                                    valueArrayTotal.push(valueArray);
-                                    valueArray = [];
-                                } else if (valueArray.length === 4) {
-                                    valueArrayTotal.push(valueArray);
-                                    valueArray = [];
-                                }
-                                if (valueId.length === 5) {
-                                    valueIdTotal.push(valueId);
-                                    valueId = [];
-                                }
-
-                            }
-                        }
-
-                        var listId = [];
-                        var arrayResult = [];
-                        var containName = [];
-                        var tmp = "";
-                        var check = null;
-                        var table = $('#indexTable').DataTable({
-                            data: valueArrayTotal,
-                            columns: [
-                                {data: '0'},
-                                {data: '1'},
-                                {data: '2'},
-                                {data: '3'},
-                                {data: '4'},
-                                {
-                                    data: '0',
-                                    render: function (data, type, row)
-                                    {
-                                        return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input" value="' + data + '"id="exampleCheck1"></div></td>'
-                                    }
-                                }
-                            ],
-                            "bDestroy": true,
-                            "bFilter": true,
-                            "createdRow": function (row, data, dataIndex) {
-                                $('td:eq(1)', row).css('display', 'none');
-                            }
-                        });
-                        var tableTMP = table;
-//                        var page = 1;
-                        var getData = "";
-                        $('#indexTable').on('page.dt', function () {
-                            var info = tableTMP.page.info();
-//                            page = info.page + 1;
-                            check = listId;
-
-                        }).on('mouseenter', 'input', function () {
-                            var resultTMP = "";
-                            var checkboxTMP = document.getElementsByName('checkBox');
-                            for (var i = 0; i < checkboxTMP.length; i++) {
-                                if (checkboxTMP[i].checked === true) {
-                                    resultTMP += checkboxTMP[i].value + ',';
-
-                                }
-
-                            }
-                            getData = resultTMP;
-                        });
-
-                        $('#indexTable tbody').on('click', 'input', function ()
-                        {
-                            var tr = $(this).closest("tr");
-                            var rowindex = tr.index();
-                            table = document.getElementById("indexTable");
-                            tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-                            txtValue = td.textContent;
-                            containName = testName.toString().split(",");
-                            var result = "";
-                            var checkbox = document.getElementsByName('checkBox');
-                            for (var i = 0; i < checkbox.length; i++) {
-                                if (checkbox[i].checked === true) {
-                                    result += checkbox[i].value + ',';
-                                }
-
-                            }
-                            if (check) {
-
-                                if (getData.length > result.length) {
-                                    var split = result.split(",");
-                                    for (var j = 0; j < split.length; j++) {
-                                        getData = getData.replace(split[j], "");
-                                        getData = getData.replace(",", "");
-                                    }
-                                    tmp = result;
-                                    listId = tmp + check;
-                                    for (var i = 0; i < 10; i++) {
-                                        listId = listId.replace(getData, "");
-                                    }
-                                    check = listId;
-                                } else {
-                                    tmp += result;
-                                    listId = tmp + check;
-
-                                }
-
-                            } else {
-                                tmp = result;
-                                listId = result;
-                            }
-
-                            arrayResult = listId.split(",");
-                            Array.prototype.clean = function (deleteValue) {
-                                for (var i = 0; i < this.length; i++) {
-                                    if (this[i] === deleteValue) {
-                                        this.splice(i, 1);
-                                        i--;
-                                    }
-                                }
-                                return this;
-                            };
-                            arrayResult.clean("");
-                        }
-                        );
-                        function unique(arr) {
-                            var newArr = []
-                            for (var i = 0; i < arr.length; i++) {
-                                if (newArr.indexOf(arr[i]) === -1) {
-                                    newArr.push(arr[i])
-                                }
-                            }
-                            return newArr;
-                        }
-                        $('#addTest').click(function (event) {
-                            var dataArrayId = [];
-                            var checkArray = unique(arrayResult);
-                            for (var i = 0; i < checkArray.length; i++) {
-                                for (var j = 0; j < valueIdTotal.length; j++) {
-                                    var arrayId = valueIdTotal[j];
-                                    if (arrayId[0] === checkArray[i] && !containName.includes(arrayId[0])) {
-                                        dataArrayId.push(arrayId[1]);
-                                    }
-                                }
-                            }
-//                            console.log(dataArrayId);
-                            var dataPackage = JSON.parse(localStorage.getItem("dataPackage"));
-                            var x = 0;
-                            for (var k = 0; k < dataArrayId.length; k++) {
-                                var tmpTestId = dataArrayId[k];
+                        //get all test of package test to check douple
+                        if (packageId !== null) {
+                            for (var i = 0, max = packageId.length; i < max; i++) {
                                 $.ajax({
-                                    type: "POST",
+                                    type: "GET",
                                     dataType: "json",
-                                    contentType: "application/json; charset=utf-8",
+                                    contentType: "application/json; charset=UTF-8",
                                     headers: {
-                                        Authorization: 'Bearer ' + token},
-                                    data: JSON.stringify({
-                                        "testId": {
-                                            "id": tmpTestId
-                                        },
-                                        "packageId": {
-                                            "id": dataPackage.id
+                                         Authorization: 'Bearer ' + token
+                                        
+                                    },
+                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + packageId[i],
+                                    success: function (data) {
+                                        for (var j = 0; j < data.length; j++) {
+                                            let id = data[j].id;
+                                            var a = listResult.findIndex(test => test.id === id);
+                                            listResult.splice(a, 1);
                                         }
-                                    }),
-                                    url: "https://bt-application.herokuapp.com/api/packagetest/insert",
-                                    complete: function (jqXHR) {
-                                        x = x + 1;
-                                        if (jqXHR.status === 201 && x === dataArrayId.length) {
-                                            window.location.href = "test-detail.jsp";
-                                        }
+
+                                        console.log(listResult);
+                                        listResult.forEach(element => {
+                                            var dataShow = new Object();
+                                            dataShow.id = element.id;
+                                            dataShow.name = element.name;
+                                            dataShow.description = element.description;
+
+                                            dataShow.maleIndex = '-';
+                                            dataShow.femaleindex = '-';
+                                            dataShow.childIndex = '-'
+
+                                            element.samplelst.forEach(e => {
+                                                if (e.type === 'Male') {
+                                                    dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                                } else if (e.type === 'Female') {
+                                                    dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                                } else if (e.type === 'Child') {
+                                                    dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                                }
+                                            });
+                                            mainData.push(dataShow);
+                                        });
+
+                                        console.log(mainData);
+                                        table = $('#indexTable').DataTable({
+                                            data: mainData,
+                                            columns: [
+                                                {data: 'name'},
+                                                {
+                                                    data: 'description',
+                                                },
+                                                {
+                                                    data: 'maleIndex',
+                                                },
+                                                {
+                                                    data: 'femaleindex',
+                                                },
+                                                {
+                                                    data: 'childIndex',
+                                                },
+                                                {
+                                                    data: 'id',
+                                                    render: function (data, type, row, meta) {
+                                                        return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input" value="' + data + '"id="exampleCheck1"></div></td>'
+                                                    }
+                                                },
+                                            ],
+                                            "bDestroy": true,
+                                            "bFilter": true,
+
+                                        });
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        console.log(' Error in processing! ' + textStatus);
                                     }
                                 });
                             }
+                        } else {
+                            data.forEach(element => {
+                                var dataShow = new Object();
+                                dataShow.id = element.id;
+                                dataShow.name = element.name;
+                                dataShow.description = element.description;
+
+                                dataShow.maleIndex = '-';
+                                dataShow.femaleindex = '-';
+                                dataShow.childIndex = '-'
+
+                                element.samplelst.forEach(e => {
+                                    if (e.type === 'Male') {
+                                        dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } else if (e.type === 'Female') {
+                                        dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } else if (e.type === 'Child') {
+                                        dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                    }
+                                });
+                                mainData.push(dataShow);
+                            });
+
+                            console.log('xxx' + mainData);
+                            table = $('#indexTable').DataTable({
+                                data: mainData,
+                                columns: [
+                                    {data: 'name'},
+//                                    {
+//                                        data: 'description',
+//                                    },
+                                    {
+                                        data: 'maleIndex',
+                                    },
+                                    {
+                                        data: 'femaleindex',
+                                    },
+                                    {
+                                        data: 'childIndex',
+                                    },
+                                    {
+                                        data: 'id',
+                                        render: function (data, type, row, meta) {
+                                            return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input" value="' + data + '"id="exampleCheck1"></div></td>'
+                                        }
+                                    },
+                                ],
+                                "bDestroy": true,
+                                "bFilter": true,
+
+                            });
+                        }
 
 
-                        });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(' Error in processing! ' + textStatus);
                     }
 
                 })
+                
+                
+                $('#addTest').click(function (event) {
+
+//                sessionStorage.clear();
+//                localStorage.clear();
+                var listId = sessionStorage.getItem('listTestId');
+                var array = jQuery.makeArray(listId);
+                var packageIDUpdate = packageId;
+                console.log('luc dau ' + array);
+//                console.log('listId '  + listId);
+                console.log('packageId New '  + packageIDUpdate);
+                
+                var checkArray = [];
+                if (array.length !== 0) {
+                    checkArray = array[0].toString().split(",");
+                    console.log('......' + checkArray);
+                }
+                var checkboxTMP = document.getElementsByName('checkBox');
+                for (var i = 0; i < checkboxTMP.length; i++) {
+                    console.log('bat dau lay du lieu ');
+                    if (checkboxTMP[i].checked === true) {
+                        console.log('du lieu dc select ' + checkboxTMP[i].value);
+                        let flag = false;
+//                        var x = 0;
+                        for (var j = 0; j < checkArray.length; j++) {
+                            console.log('check douple ' + checkArray[j]);
+                            if (checkArray[j] === checkboxTMP[i].value) {
+                                flag = true;
+                                console.log("douple ");
+                                break;
+                            }
+                            $.ajax({
+                                    type: "POST",
+                                    dataType: "json",
+                                    contentType: "application/json; charset=utf-8",
+                                    headers: {
+                                        Authorization: 'Bearer ' + token},
+                                    data: JSON.stringify({
+                                        "testId": checkboxTMP[i].value,
+                                        "packageId": packageIDUpdate
+                                    }),
+                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-testsd",
+                                    complete: function (jqXHR) {
+//                                        x = x + 1;
+                                        if (jqXHR.status === 200) {
+                                            window.location.href = "test-detail.jsp";
+                                        }
+                                    }
+                                });
+                            
+                        }
+                        if (!flag) {
+                            array.push(checkboxTMP[i].value);
+                        }
+                    }
+                }
+                console.log('sau khi su li ' + array);
+
+                sessionStorage.removeItem('listTestId');
+                sessionStorage.setItem('listTestId', array);
+
+
+
+            });
+                
             };
+
+
+
+
+            
 
         </script>
 

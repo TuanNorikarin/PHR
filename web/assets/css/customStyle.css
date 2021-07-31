@@ -209,7 +209,16 @@ img#img{
     color: #078f2b;
 }
 
+
+
 /*====================Table Reponsive=============================*/
 #patientTable{
     width: 100% !important;
+}
+
+
+
+/*====================Profile Page=============================*/
+div.card-box.profile-header{
+    height: 210px;
 }

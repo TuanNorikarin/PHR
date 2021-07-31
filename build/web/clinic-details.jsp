@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -169,6 +169,9 @@
             window.onload = function () {
                 var userInf = JSON.parse(localStorage.getItem("userInformation"));
                 var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
+                var dataClinic = JSON.parse(localStorage.getItem("dataClinic"));
+                console.log(clinicInf +" dsds");
+                console.log(dataClinic +" id");
                 var rating = JSON.parse(localStorage.getItem("rating"));
                 console.log(rating);
                 var x = "";
@@ -220,7 +223,7 @@
                 $("#icomments").html(rating.length);
                 $("#listComment").html(y);
                 $('#clinicImg').attr('src', clinicInf.image);
-                document.getElementById("userAdd").innerHTML = userInf.username;
+//                document.getElementById("userAdd").innerHTML = userInf.username;
                 document.getElementById("clinicTitle").innerHTML = clinicInf.name;
                 document.getElementById("clinicAddress").innerHTML = clinicInf.address;
                 document.getElementById("clinicDistrict").innerHTML = clinicInf.district;

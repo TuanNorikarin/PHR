@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -134,7 +134,7 @@
         <script type="text/javascript">
             var table;
             window.onload = function () {
-//                var token = localStorage.getItem("key");
+                var token = localStorage.getItem("key");
 //                var testName = localStorage.getItem("testName");
 
                 var packageId = sessionStorage.getItem('packageId');
@@ -143,8 +143,8 @@
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
-                        // Authorization: 'Bearer ' + token
-                        'Access-Control-Allow-Origin': '*'
+                         Authorization: 'Bearer ' + token
+//                        'Access-Control-Allow-Origin': '*'
                     },
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
                     success: function (data) {
@@ -196,7 +196,7 @@
                                             mainData.push(dataShow);
                                         });
 
-                                        console.log('xxx' + mainData);
+                                        console.log(mainData);
                                         table = $('#indexTable').DataTable({
                                             data: mainData,
                                             columns: [
@@ -293,9 +293,6 @@
             };
 
 
-            function checkDouple(listTest, listPakageId) {
-
-            }
 
 
             $('#addTest').click(function (event) {
