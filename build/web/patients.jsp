@@ -105,7 +105,7 @@
             </div>
         </div>
         <div class="overlay"></div>
-        <%@include file="components/footer.html" %>
+        <%--<%@include file="components/footer.html" %>--%>
         <script src="assets/js/jquery-3.2.1.min.js"></script>
         <script src="assets/js/popper.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>

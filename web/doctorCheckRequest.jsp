@@ -119,7 +119,11 @@
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
+<<<<<<< Updated upstream
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination/doctor/7",
+=======
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination/7",
+>>>>>>> Stashed changes
                     success: function (data) {
                         var string = [];
                         var array = "";

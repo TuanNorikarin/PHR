@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< Updated upstream
         <group>
             <file>file:/D:/FPT/SWP490/PHR/web/add-TestToPackage.jsp</file>
             <file>file:/D:/FPT/SWP490/PHR/web/clinics.jsp</file>
@@ -17,5 +18,8 @@
             <file>file:/D:/FPT/SWP490/PHR/web/edit-clinic.jsp</file>
             <file>file:/D:/FPT/SWP490/PHR/web/testIndex.jsp</file>
         </group>
+=======
+        <group/>
+>>>>>>> Stashed changes
     </open-files>
 </project-private>

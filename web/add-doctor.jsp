@@ -357,10 +357,24 @@
 //                                                        var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
                                                         var status = $("input[name='status']").val();
+<<<<<<< Updated upstream
                                                         var token = sessionStorage.getItem("key");
                                                         var selectGen = $('input[id="male"]:checked').val();
                                                         if (selectGen === "on") {
                                                             gender = "Male";
+=======
+                                                        var token = localStorage.getItem("key");
+                                                        var selectGen = $('input[id="male"]:checked').val();
+                                                        if (selectGen === "on") {
+                                                            gender = "Male";
+                                                        } else {
+                                                            gender = "Female";
+                                                        }
+
+                                                        var selectSta = $('input[id="patient_active"]:checked').val();
+                                                        if (selectSta === "on") {
+                                                            status = "Active";
+>>>>>>> Stashed changes
                                                         } else {
                                                             gender = "Female";
                                                         }
