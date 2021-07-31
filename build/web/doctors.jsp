@@ -190,6 +190,10 @@
                             
                             window.onload = function () {
                                 var token = sessionStorage.getItem("key");
+                                
+                                
+                                
+                                
                                 $.ajax({
                                     type: "GET",
                                     dataType: "json",

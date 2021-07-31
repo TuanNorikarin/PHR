@@ -108,15 +108,25 @@
                 </div>
             </div>
             <script>
-            var url = localStorage.getItem("image");
+            var url = sessionStorage.getItem("image");
+            
             $('.rounded-circle').attr({
                 'src': url,
             });
             $(".Logout").click(function (event) {
-                localStorage.setItem("key", "");
+                sessionStorage.removeItem('key');
+                sessionStorage.removeItem('name');
+                sessionStorage.removeItem('image');
             });
-            var token = localStorage.getItem("key");
+            var token = sessionStorage.getItem("key");
+            console.log(token);
+                                                       //redirect to login when user not login
             if (token === "") {
                 document.location.href = "login.html";
             }
+            var user = sessionStorage.getItem("name");
+            
+            var firstName = user.split(" ");
+            var name = firstName[firstName.length - 1];
+            $("#welcomeUser").text(name);
         </script>

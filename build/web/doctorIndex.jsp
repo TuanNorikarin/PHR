@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -120,11 +120,33 @@
     <script src="assets/js/jquery.slimscroll.js"></script>
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
-             window.onload = function () {
-            var clinicId = localStorage.getItem("clinicId");
-            clinicId = 9;
+             
             var token = sessionStorage.getItem("key");
+            var phone = sessionStorage.getItem("user");
+            console.log(phone);
+            
+            window.onload = function () {
+            
+            
+            
+            
             $.ajax({
+                type: "GET",
+                dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: 'Bearer ' + token},
+
+                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/phone-account",
+                success: function (data) {
+                    var infor = jQuery.parseJSON(data);
+                    console.log(infor);
+                    var name = sessionStorage.setItem("name", infor.name);
+                    var image = sessionStorage.setItem("image", infor.image);
+                    var clinicId = infor.clinicId;
+                    
+                    $.ajax({
                 type: "GET",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
@@ -143,6 +165,16 @@
 
                 }
             });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+
+                }
+                
+            });
+            
+            
+            
             
 
         };

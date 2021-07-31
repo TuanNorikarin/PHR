@@ -232,7 +232,9 @@
                                                 
                                                 var data = JSON.parse(localStorage.getItem("dataPat"));
                                                 console.log(data);
+                                                var newImg = data.image;
                                                 window.onload = function () {
+                                                    var idNew = data.id
                                                     var name = data.name;
                                                     var firstName = name.split(" ");
                                                     var lastName = name.replace(firstName[firstName.length - 1], "");
@@ -270,6 +272,40 @@
                                                     } else {
                                                         $("#patient_inactive").prop("checked", true);
                                                     }
+                                                    
+                                                    $("#avatar").change(function () {
+                                                     var formData = new FormData();
+                                                     var files = $("#avatar").get(0).files;
+                                                     if (files.length > 0) {
+                                                            formData.append("image", files[0]);
+                                                            formData.append("role", "patient");
+                                                        }
+                                                      
+    
+                                                      
+                                                        $.ajax({
+                                                            headers: {
+                                                                Authorization: 'Bearer ' + token,
+                                                            },
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idNew,
+                                                            type:"POST",
+                                                            processData: false,
+                                                            contentType: false,
+                                                            data: formData,
+                                                            success: function (response) {
+                                                                alert("OK rồi");
+                                                                newImg = response;
+                                                            },
+                                                            error: function (er) {
+                                                                alert("Lỗiiiiiiiiiiiiii");
+                                                            }
+
+                                                        });
+                                                        });
+                                                    
+                                                    
+                                                    
+                                                    
 
                                                     var firebaseConfig = {
                                                         apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
@@ -418,11 +454,11 @@
                                                                 document.getElementById('messagePassword').style.color = 'red';
                                                                 document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
                                                             }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
 
                                                         } else if (lastName.length === 0 || !validateName(removeAscent(lastName)) || lastName.length > 35) {
                                                             $('#inputLastname').addClass('error');
@@ -434,27 +470,29 @@
                                                                 document.getElementById('messagePassword').style.color = 'red';
                                                                 document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
                                                             }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
                                                         }
 
                                                         else if (password.length > 30 || password.length < 6) {
                                                             $('#inputPassword').addClass('error');
                                                             document.getElementById('messagePassword').style.color = 'red';
                                                             document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (phone.length !== 10 || !validatePhone(phone)) {
-                                                            $('#inputPhone').addClass('error');
-                                                            document.getElementById('messagePhone').style.color = 'red';
-                                                            document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                        } else if (count === 1) {
+//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                                $('#inputPhone').addClass('error');
+//                                                                document.getElementById('messagePhone').style.color = 'red';
+//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                            }
+                                                        } 
+//                                                        else if (phone.length !== 10 || !validatePhone(phone)) {
+//                                                            $('#inputPhone').addClass('error');
+//                                                            document.getElementById('messagePhone').style.color = 'red';
+//                                                            document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+//                                                        }
+                                                        else if (count === 1) {
 
                                                         } else {
                                                             toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
@@ -487,14 +525,14 @@
                                                                         "dob": dob,
                                                                         "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
-                                                                        "image": url,
+                                                                        "image": newImg,
                                                                         "password": password,
                                                                         "medicalNote": "",
                                                                         "accountId": idAccountUpdate,
                                                                         "bloodType": "",
-                                                                        "eyesight": "",
-                                                                        "height": "",
-                                                                        "weight": "",
+                                                                        "eyesight": 0,
+                                                                        "height": 0,
+                                                                        "weight": 0,
                                                                         
 //                                                                        "token": ""
                                                                     }),

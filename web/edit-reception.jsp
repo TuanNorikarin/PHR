@@ -316,11 +316,11 @@
                                                             contentType: false,
                                                             data: formData,
                                                             success: function (response) {
-                                                                alert("OK rồi");
+//                                                                alert("OK rồi");
                                                                 newImg = response;
                                                             },
                                                             error: function (er) {
-                                                                alert("Lỗiiiiiiiiiiiiii");
+//                                                                alert("Lỗiiiiiiiiiiiiii");
                                                             }
 
                                                         });
@@ -502,8 +502,8 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
-                                                                                            window.location.href = "receptionist.jsp";
-                                                                                        }
+                                                                            window.location.href = "receptionist.jsp";
+                                                                            }
                                                                         }
                                                                 });
                                                      

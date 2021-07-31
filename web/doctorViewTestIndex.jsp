@@ -56,7 +56,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
 
                         <table id="indexTable" class="table table-border table-striped custom-table datatable mb-0">
 
@@ -120,8 +120,8 @@
                             dataType: "json",
                             contentType: "application/json; charset=UTF-8",
                             headers: {
-                                // Authorization: 'Bearer ' + token
-                                'Access-Control-Allow-Origin': '*'
+                                 Authorization: 'Bearer ' + token
+//                                'Access-Control-Allow-Origin': '*'
                             },
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
                             success: function (data) {

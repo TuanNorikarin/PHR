@@ -117,11 +117,12 @@
     <script src="assets/js/jquery.slimscroll.js"></script>
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
-        window.onload = function () {
             var token = sessionStorage.getItem("key");
             console.log(token);
             var phone = sessionStorage.getItem("user");
             console.log(phone);
+            window.onload = function () {
+            
             
             $.ajax({
                 type: "GET",

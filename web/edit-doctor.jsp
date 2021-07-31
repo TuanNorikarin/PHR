@@ -194,8 +194,10 @@
 
                                                 var data = JSON.parse(localStorage.getItem("dataDoctor"));
                                                 var data2 = JSON.parse(localStorage.getItem("infoDoctor"));
+                                                
+                                                var newImg;
                                                 console.log(data);
-                                                console.log(data2);
+//                                                console.log(data2);
                                                 function validateFileType() {
                                                     var fileName = document.getElementById("avatar").value;
                                                     var idxDot = fileName.lastIndexOf(".") + 1;
@@ -224,7 +226,36 @@
                                                     var token = sessionStorage.getItem("key");
                                                     var id = data;
                                                     console.log("this is id " + id);
+                                                    
+                                                    $("#avatar").change(function () {
+                                                     var formData = new FormData();
+                                                     var files = $("#avatar").get(0).files;
+                                                     if (files.length > 0) {
+                                                            formData.append("image", files[0]);
+                                                            formData.append("role", "doctor");
+                                                        }
+                                                      
+    
+                                                      
+                                                        $.ajax({
+                                                            headers: {
+                                                                Authorization: 'Bearer ' + token,
+                                                            },
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + data,
+                                                            type:"POST",
+                                                            processData: false,
+                                                            contentType: false,
+                                                            data: formData,
+                                                            success: function (response) {
+                                                                alert("OK rồi");
+                                                                newImg = response;
+                                                            },
+                                                            error: function (er) {
+                                                                alert("Lỗiiiiiiiiiiiiii");
+                                                            }
 
+                                                        });
+                                                        });
 
                                                     $.ajax({
                                                         type: "GET",
@@ -234,26 +265,26 @@
                                                             Authorization: 'Bearer ' + token},
                                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
 //                                                        
-                                                        success: function (data2) {
+                                                        success: function (data) {
                                                             
-                                                            var name = data2.name;
+                                                            var name = data.name;
                                                             var firstName = name.split(" ");
                                                             var lastName = name.replace(firstName[firstName.length - 1], "");
                                                             lastName = lastName.trim();
                                                             $("#inputFirstname").val(firstName[firstName.length - 1]);
                                                             $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
-                                                            var password = data2.password;
+                                                            var password = data.password;
                                                             $("#inputPassword").val(password);
-                                                            var confirmPass = data2.password;
+                                                            var confirmPass = data.password;
                                                             $("#confirmPass").val(confirmPass);
-                                                            var phone = data2.phone;
-                                                            var image = data2.image;
-                                                            $('#img').attr('src', image);
+                                                            var phone = data.phone;
+                                                            var newImg = data.image;
+                                                            $('#img').attr('src', newImg);
                                                             $("#inputPhone").val(phone);
-                                                            var status = data2.status;
-                                                            var dob = data2.dob;
+                                                            var status = data.status;
+                                                            var dob = data.dob;
                                                             $("#datepicker").val(dob);
-                                                            var gender = data2.gender;
+                                                            var gender = data.gender;
                                                             if (gender === "Male") {
                                                                 $("#male").prop("checked", true);
                                                             } else {
@@ -343,8 +374,8 @@
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
 //                                                        
-                                                        var imageOld = data2.image;
-                                                        var idUpdate = data2.id;
+                                                        var imageOld = data.image;
+                                                        var idUpdate = data.id;
                                                         var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
                                                         var lastName = $("input[name='lastName']").val();
                                                         var password = $("input[name='password']").val();
@@ -352,8 +383,7 @@
                                                         var gender = $("input[name='gender']").val();
 //                                                        var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
-//                                                        var clinicID = $("select[id='clinicID']").val();
-//                                                        var status = $("input[name='status']").val();
+//                                                        
                                                         
                                                         var selectGen = $('input[id="male"]:checked').val();
                                                         if (selectGen === "on") {
@@ -424,23 +454,7 @@
 
                                                         } else {
                                                             toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                                            function uploadImage() {
-                                                                const ref = firebase.storage().ref();
-                                                                const file = document.querySelector("#avatar").files[0];
-                                                                if (file) {
-                                                                    const name = +new Date() + "-" + file.name;
-                                                                    const metadata = {
-                                                                        contentType: file.type
-                                                                    };
-                                                                    const task = ref.child(name).put(file, metadata);
-                                                                    task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                                                        ajax(url);
-                                                                    });
-                                                                } else {
-                                                                    ajax(imageOld);
-                                                                }
-                                                            }
-                                                            function ajax(url) {
+                                                            
                                                                 return   $.ajax({
                                                                     type: "PUT",
                                                                     dataType: "json",
@@ -454,11 +468,9 @@
                                                                         "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
                                                                         "password": password,
-//                                                                        "phone": phone,
-//                                                                        "status": status,
-                                                                        "image": url,
+//                                                                        
+                                                                        "image": newImg,
                                                                         "token": data.token,
-//                                                                        "clinicId": {"id": clinicID},
                                                                     }),
                                                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor",
                                                                     complete: function (jqXHR) {
@@ -468,8 +480,8 @@
                                                                         }
                                                                     }
                                                                 });
-                                                            }
-                                                            uploadImage();
+//                                                            }
+//                                                            uploadImage();
                                                         }
                                                     });
                                                 });

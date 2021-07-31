@@ -82,7 +82,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-8 testPackage">
-
+                        <h3 id="packageName" class="blog-title"></h3>
                         <table id="testPackageTable" class="table table-border table-striped custom-table datatable mb-0">
                             <!--<caption id="namePackage" style="caption-side:top"></caption>-->
 
@@ -159,6 +159,8 @@
             });
 
             window.onload = function () {
+                var packageName = sessionStorage.getItem("packageName");
+                document.getElementById("packageName").innerHTML = packageName;
                 $("#buttonAdd").show();
                 $("button[id='buttonX']").removeAttr('disabled');
                 localStorage.setItem("testName", "");

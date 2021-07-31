@@ -140,7 +140,7 @@
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/accounts",
                     success: function (data) {
                         localStorage.setItem("alluser", JSON.stringify(data));
-                        var token = localStorage.getItem("key");
+                        
                         
                 $.ajax({
                     type: "GET",
@@ -238,7 +238,7 @@
                             },
                             "createdRow": function (row, data, dataIndex) {
                                 if (data.status === "disable") {
-                                    console.log(row);
+//                                    console.log(row);
                                     $('td', row).css('color', '#b5b5b5');
                                     $('td', row).css('font-style', 'italic');
                                 }

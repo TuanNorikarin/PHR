@@ -97,54 +97,31 @@
                                     
                                     sessionStorage.setItem("key", data);                                   
                                     console.log(data);
-                                    
+                                        
                                     var rs = parseJwt(data); 
                                     var roleID = rs.authorities + "";
                                     var user = rs.username + "";
                                     console.log(parseJwt(data));
+                                    
                                     if(roleID === "ADMIN"){
+                                        sessionStorage.setItem("user", user);
                                         window.location.href = "adminIndex.jsp";
-//                                        sessionStorage.setItem("key", data);    
-                                        sessionStorage.setItem("user", user);    
+//                                       
+                                        
                                     }
                                     else if( roleID = "DOCTOR"){
+                                        sessionStorage.setItem("user", user)
                                         window.location.href = "doctorIndex.jsp";
+                                        
                                     }
                                     else if( roleID = "RECEPTIONIST")
                                     {
+                                        sessionStorage.setItem("user", user)
                                         window.location.href = "receptionistIndex.jsp";
+                                        
                                     }
                                     
-////                                    
-                                   
-                                    
-                                    
-                                    
-                                    
-//                                    
-//                                    
-//                                    
-//                                }
-//                                else if (data.roleId === "receptionist") {
-//                                    localStorage.setItem("key", data.token);
-//                                    localStorage.setItem("image", data.image);
-//                                    localStorage.setItem("clinicId", data.clinicId.id);
-//                                    localStorage.setItem("userId", data.id);
-//                                    window.location.href = "receptionistIndex.jsp";
-//                                } else if (data.roleId.name === "doctor") {
-//                                    localStorage.setItem("key", data.token);
-//                                    localStorage.setItem("image", data.image);
-//                                    localStorage.setItem("clinicId", data.clinicId.id);
-//                                    localStorage.setItem("userId", data.id);
-//                                    window.location.href = "doctorIndex.jsp";
-//                                } else if (data.roleId.name === "user") {
-//                                    localStorage.setItem("key", data.token);
-//                                    localStorage.setItem("image", data.image);
-//                                    localStorage.setItem("user", JSON.stringify(data));
-//                                    localStorage.setItem("userId", data.id);
-//                                    localStorage.setItem("phone", data.phone);
-//                                    window.location.href = "userIndex.jsp";
-//                                }
+
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
 //                                console.log(data);

@@ -130,6 +130,7 @@
                             txtValue = td.textContent;
                             $.each(data, function (index, value) {
                                 if (value.name === txtValue) {
+                                    sessionStorage.setItem("packageName", value.name);
                                     localStorage.setItem("dataPackage", JSON.stringify(value));
                                 }
                             });
@@ -153,7 +154,7 @@
                                 {data: 'name'},
                                 {data: 'description'},
                                 {
-                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "test-detail.jsp"> <i class="fa fa-plus"></i> Add Test Index</a><a class = "dropdown-item" href = "edit-testpackage.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
+                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "test-detail.jsp"> <i class="fa fa-plus"></i> View Package Detail</a><a class = "dropdown-item" href = "edit-testpackage.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
 
                                 }
                             ],
