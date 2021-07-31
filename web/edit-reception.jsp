@@ -239,6 +239,7 @@
                                                 
                                                 window.onload = function () {
 //                                                    
+                                                    
                                                     function removeAscent(str) {
                                                         if (str === null || str === undefined) {
                                                             return str;
@@ -306,6 +307,9 @@
     
                                                       
                                                         $.ajax({
+                                                            headers: {
+                                                                Authorization: 'Bearer ' + token,
+                                                            },
                                                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idNew,
                                                             type:"POST",
                                                             processData: false,
@@ -403,7 +407,7 @@
 //                                                        var clinicID = $("select[id='clinicID']").val();
                                                         var avatar = $("input[id='avatar']").val();
                                                         var status = $("input[name='status']").val();
-                                                        var token = localStorage.getItem("key");
+                                                        
                                                         var selectGen = $('input[id="male"]:checked').val();
                                                         if (selectGen === "on") {
                                                             gender = "Male";

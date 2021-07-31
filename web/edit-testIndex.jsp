@@ -157,14 +157,10 @@
             $(document).ready(function () {
                 var data = localStorage.getItem("dataTest").split(',');
                 var dataId = localStorage.getItem("dataTestId").split(',');
-//                function uuidv4() {
-//                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-//                        return v.toString(16);
-//                    });
-//                }
-                console.log(dataId);
 
+                console.log(dataId + "sdas");
+                var token = sessionStorage.getItem("key");
+                
                 var name = data[0];
                 console.log(name);
                 $("#updateTestIndex").attr('disabled','disabled');
@@ -174,7 +170,7 @@
                     contentType: "application/json; charset=utf-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/testresultdetail/findbytestidcheck/" + dataId[1],
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index" + dataId[1],
                     success: function (data, textStatus, jqXHR) {
                         if(data.length === 0){
                             $("#updateTestIndex").removeAttr('disabled');
@@ -263,7 +259,7 @@
                     var childMax = $("input[name='childMax']").val();
 
 
-                    var token = localStorage.getItem("key");
+                    
                     var count = 0;
                     console.log(regexp.test(maleMax));
                     var allTestIndex = JSON.parse(localStorage.getItem("allTestIndex"));

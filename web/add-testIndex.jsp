@@ -219,7 +219,7 @@
                     var femaleMax = $("input[name='femaleMax']").val();
                     var childMin = $("input[name='childMin']").val();
                     var childMax = $("input[name='childMax']").val();
-                    var token = localStorage.getItem("key");
+                    var token = sessionStorage.getItem("key");
                     var count = 0;
                     
                     var allTestIndex = JSON.parse(localStorage.getItem("allTestIndex"));

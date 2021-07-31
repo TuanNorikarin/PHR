@@ -228,7 +228,7 @@
                                                     var phone = $("input[name='phone']").val();
                                                     var avatar = $("input[name='avatar']").val();
                                                     var status;
-                                                    var token = localStorage.getItem("key");
+                                                    var token = sessionStorage.getItem("key");
                                                     var selectSta = $('input[id="clinic_active"]:checked').val();
                                                     if (selectSta === "on") {
                                                         status = "enable";

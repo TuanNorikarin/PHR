@@ -120,6 +120,31 @@
         window.onload = function () {
             var token = sessionStorage.getItem("key");
             console.log(token);
+            var phone = sessionStorage.getItem("user");
+            console.log(phone);
+            
+            $.ajax({
+                type: "GET",
+                dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: 'Bearer ' + token},
+
+                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin/phone-account",
+                success: function (data) {
+                    var infor = jQuery.parseJSON(data);
+                    console.log(infor.image);
+                    var name = sessionStorage.setItem("name", infor.name);
+                    var image = sessionStorage.setItem("image", infor.image);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+
+                }
+                
+            });
+            
             $.ajax({
                 type: "GET",
                 dataType: "text",

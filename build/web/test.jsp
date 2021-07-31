@@ -105,7 +105,7 @@
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 $.ajax({
                     type: "GET",
                     dataType: "json",

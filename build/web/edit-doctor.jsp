@@ -353,7 +353,7 @@
                                                         var phone = $("input[name='phone']").val();
 //                                                        var clinicID = $("select[id='clinicID']").val();
 //                                                        var status = $("input[name='status']").val();
-                                                        var token = localStorage.getItem("key");
+                                                        var token = sessionStorage.getItem("key");
                                                         var selectGen = $('input[id="male"]:checked').val();
                                                         if (selectGen === "on") {
                                                             gender = "Male";

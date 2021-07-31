@@ -118,7 +118,7 @@
             
             
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 $.ajax({
                     type: "GET",
                     dataType: "json",

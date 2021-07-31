@@ -125,7 +125,7 @@
 
 
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 var clinicId = localStorage.getItem("clinicId");
                 clinicId = 9;
                 $.ajax({

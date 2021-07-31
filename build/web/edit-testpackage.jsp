@@ -98,13 +98,8 @@
 // ======================================================Insert===============================================
 
             $(document).ready(function () {
-                function uuidv4() {
-                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                        return v.toString(16);
-                    });
-                }
-                var token = localStorage.getItem("key");
+
+                var token = sessionStorage.getItem("key");
                 var testName = localStorage.getItem("testName");
                 var allDataPackage = JSON.parse(localStorage.getItem("allDataPackage"));
                 var dataPackage = JSON.parse(localStorage.getItem("dataPackage"));
@@ -179,9 +174,9 @@
                                 "id": dataPackage.id,
                                 "name": name,
                                 "description": description,
-                                "status": "active"
+                                "status": "enable"
                             }),
-                            url: "https://bt-application.herokuapp.com/api/package",
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/packages/package",
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 200) {

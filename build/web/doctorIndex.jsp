@@ -123,7 +123,7 @@
              window.onload = function () {
             var clinicId = localStorage.getItem("clinicId");
             clinicId = 9;
-            var token = localStorage.getItem("key");
+            var token = sessionStorage.getItem("key");
             $.ajax({
                 type: "GET",
                 dataType: "json",

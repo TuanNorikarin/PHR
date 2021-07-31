@@ -112,7 +112,7 @@
         <script type="text/javascript">
 
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -145,32 +145,30 @@
                                 });
                                 
                                 
-//                        
-//                        localStorage.setItem("allTestIndex", JSON.stringify(mainData));
-//                        var a = JSON.stringify(data);
-//                        var b = JSON.parse(a);
-//                        $('#indexTable tbody').on('click', 'td', function ()
-//                        {
-//                            var tr = $(this).closest("tr");
-//                            var rowindex = tr.index();
-//                            table = document.getElementById("indexTable");
-//                            tr = table.getElementsByTagName("tr");
-//                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-//                            txtValue = td.textContent;
-//
-//                            $.each(mainData, function (index, value) {
-//                                if (value[0] === txtValue) {
-//                                    localStorage.setItem("dataTest", value);
-//                                }
-//                            });
-//                            $.each(valueIdTotal, function (index, value) {
-//                                console.log(value);
-//                                if (value[0] === txtValue) {
-//                                    localStorage.setItem("dataTestId", value);
-//                                }
-//                            });
-//                        }
-//                        );
+                        
+                        localStorage.setItem("allTestIndex", JSON.stringify(mainData));
+                        var a = JSON.stringify(data);
+                        var b = JSON.parse(a);
+                        $('#indexTable tbody').on('click', 'td', function ()
+                        {
+                            var tr = $(this).closest("tr");
+                            var rowindex = tr.index();
+                            table = document.getElementById("indexTable");
+                            tr = table.getElementsByTagName("tr");
+                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
+                            txtValue = td.textContent;
+                            $.each(data, function (index, value) {
+                                if (value.name === txtValue) {
+                                    localStorage.setItem("dataTestId", value);
+                                }
+                            });
+
+                        }
+                        );
+                        $('td').click(function () {
+                            var row_index = $(this).parent().index();
+
+                        });
 ////                                   
 
 

@@ -62,19 +62,21 @@
         </div>
         <script>
             var url = sessionStorage.getItem("image");
+            
             $('.rounded-circle').attr({
                 'src': url,
             });
             $(".Logout").click(function (event) {
-                localStorage.setItem("key", "");
+                sessionStorage.setItem("key", "");
             });
-            var token = localStorage.getItem("key");
+            var token = sessionStorage.getItem("key");
             console.log(token);
                                                        //redirect to login when user not login
             if (token === "") {
                 document.location.href = "login.html";
             }
-            var user = localStorage.getItem("name");
+            var user = sessionStorage.getItem("name");
+            
             var firstName = user.split(" ");
             var name = firstName[firstName.length - 1];
             $("#welcomeUser").text(name);

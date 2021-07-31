@@ -109,7 +109,7 @@
         <script type="text/javascript">
 
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 var testName = localStorage.getItem("testName");
                 var packageId = sessionStorage.getItem('packageId');
                 console.log('PackageID '  + packageId);

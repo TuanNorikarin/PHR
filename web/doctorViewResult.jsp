@@ -168,7 +168,7 @@
             });
             window.onload = function () {
 
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 var namePackage = localStorage.getItem("namePackage");
                 var valueArray = [];
                 var arrayTotal = [];

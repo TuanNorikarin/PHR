@@ -30,7 +30,7 @@
     
                 
                                 function parseJwt (token) {
-                                        var token = localStorage.getItem("key");
+//                                        var token = localStorage.getItem("key");
                                         
                                         var base64Url = token.split('.')[1];
                                         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -40,7 +40,7 @@
 
                                         var a = JSON.parse(jsonPayload);
                                         console.log(a.user.username);
-                                        return a.user.authorities + "";
+                                        return a.user;
                                         
                                     };
 //                var token = localStorage.getItem("key");
@@ -95,14 +95,17 @@
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/authentications/login",
                             success: function (data) {
                                     
-                                    localStorage.setItem("key", data);                                   
+                                    sessionStorage.setItem("key", data);                                   
                                     console.log(data);
                                     
-                                    var roleID = parseJwt(data); 
+                                    var rs = parseJwt(data); 
+                                    var roleID = rs.authorities + "";
+                                    var user = rs.username + "";
                                     console.log(parseJwt(data));
                                     if(roleID === "ADMIN"){
                                         window.location.href = "adminIndex.jsp";
-                                        localStorage.setItem("key", data);    
+//                                        sessionStorage.setItem("key", data);    
+                                        sessionStorage.setItem("user", user);    
                                     }
                                     else if( roleID = "DOCTOR"){
                                         window.location.href = "doctorIndex.jsp";

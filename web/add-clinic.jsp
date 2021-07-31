@@ -159,19 +159,7 @@
 //                =====================================Insert===============================================
                                             $(document).ready(function () {
 
-                                                var firebaseConfig = {
-                                                    apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                    authDomain: "upload-image-45245.firebaseapp.com",
-                                                    databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                    projectId: "upload-image-45245",
-                                                    storageBucket: "upload-image-45245.appspot.com",
-                                                    messagingSenderId: "758652365413",
-                                                    appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                    measurementId: "G-S5ECRSMKRB"
-                                                };
-
-                                                // Initialize Firebase
-                                                firebase.initializeApp(firebaseConfig);
+                                               
                                                 $("#inputClinicname").click(function () {
                                                     $('#inputClinicname').removeClass('error');
                                                     document.getElementById('messageClinicname').innerHTML = '';
@@ -209,7 +197,7 @@
                                                     var phone = $("input[name='phone']").val();
                                                     var avatar = $("input[name='avatar']").val();
                                                     var status;
-                                                    var token = localStorage.getItem("key");
+                                                    var token = sessionStorage.getItem("key");
                                                     var selectSta = $('input[id="clinic_active"]:checked').val();
                                                     
                                                     console.log(clinicName + " clinicName");
