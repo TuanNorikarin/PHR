@@ -519,7 +519,7 @@
                             headers: {
                                 Authorization: 'Bearer ' + token},
                             data: JSON.stringify({
-                                "id": idGroup;
+                                "id": idGroup,
                                 "name": name,
                                 "description": description,
                                 "samplelst": [
