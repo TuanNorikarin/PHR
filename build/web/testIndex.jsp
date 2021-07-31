@@ -158,8 +158,15 @@
                             tr = table.getElementsByTagName("tr");
                             td = tr[rowindex + 1].getElementsByTagName("td")[0];
                             txtValue = td.textContent;
-                            $.each(data, function (index, value) {
-                                if (value.name === txtValue) {
+                            
+                            $.each(mainData, function (index, value) {
+                                if (value[0] === txtValue) {
+                                    localStorage.setItem("dataTest", value);
+                                }
+                            });
+                            $.each(mainData, function (index, value) {
+                                console.log(value);
+                                if (value[0] === txtValue) {
                                     localStorage.setItem("dataTestId", value);
                                 }
                             });

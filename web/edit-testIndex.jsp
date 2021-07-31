@@ -155,13 +155,14 @@
 // ======================================================Insert===============================================
 
             $(document).ready(function () {
-                var data = localStorage.getItem("dataTest").split(',');
-                var dataId = localStorage.getItem("dataTestId").split(',');
-
-                console.log(dataId + "sdas");
+//                var data = localStorage.getItem("dataTest");
+                var dataId = JSON.parse(localStorage.getItem("dataTestId"));
+                var a = JSON.stringify(dataId);
+                var b = JSON.parse(a);
+                console.log(b);
                 var token = sessionStorage.getItem("key");
                 
-                var name = data[0];
+                var name = data[0].name;
                 console.log(name);
                 $("#updateTestIndex").attr('disabled','disabled');
                 $.ajax({
