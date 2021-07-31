@@ -159,7 +159,7 @@
 // ======================================================Insert===============================================
 
             $(document).ready(function () {
-                
+                var token = sessionStorage.getItem("key");
                 $("#inputName").click(function () {
                     $('#inputName').removeClass('error');
                     document.getElementById('messageName').innerHTML = '';
@@ -219,7 +219,7 @@
                     var femaleMax = $("input[name='femaleMax']").val();
                     var childMin = $("input[name='childMin']").val();
                     var childMax = $("input[name='childMax']").val();
-                    var token = sessionStorage.getItem("key");
+                    
                     var count = 0;
                     
                     var allTestIndex = JSON.parse(localStorage.getItem("allTestIndex"));
@@ -507,9 +507,8 @@
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index",
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
-                                if (jqXHR.status === 201) {
-                                    
-
+                                if (jqXHR.status === 201 || jqXHR.status === 200) {
+                                    window.location.href = "testIndex.jsp";
 
                                 }
 
