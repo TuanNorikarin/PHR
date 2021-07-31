@@ -194,6 +194,8 @@
                                     type: "GET",
                                     dataType: "json",
                                     contentType: "application/json",
+                                     headers: {
+                                        Authorization: 'Bearer ' + token},
                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctors",
                                     success: function (data) {
                                         localStorage.setItem("alluser", JSON.stringify(data));

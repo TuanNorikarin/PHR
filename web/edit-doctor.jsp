@@ -221,6 +221,7 @@
                                                 }
 
                                                 window.onload = function () {
+                                                    var token = sessionStorage.getItem("key");
                                                     var id = data;
                                                     console.log("this is id " + id);
 
@@ -229,8 +230,8 @@
                                                         type: "GET",
                                                         dataType: "json",
                                                         contentType: "application/json",
-                                                        headers: {
-                                                            'Access-Control-Allow-Origin': '*'},
+                                                         headers: {
+                                                            Authorization: 'Bearer ' + token},
                                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
 //                                                        
                                                         success: function (data2) {
@@ -353,7 +354,7 @@
                                                         var phone = $("input[name='phone']").val();
 //                                                        var clinicID = $("select[id='clinicID']").val();
 //                                                        var status = $("input[name='status']").val();
-                                                        var token = sessionStorage.getItem("key");
+                                                        
                                                         var selectGen = $('input[id="male"]:checked').val();
                                                         if (selectGen === "on") {
                                                             gender = "Male";

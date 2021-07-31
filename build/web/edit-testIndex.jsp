@@ -181,7 +181,7 @@
                 var idMale =  data.samplelst[0].id;
                 var idTest =  data.samplelst[0].testId;
                 var idFemale = data.samplelst[1].id;
-                var idChild = data.samplelst[2].id;
+//                var idChild = data.samplelst[2].id;
                 
                 
                 
@@ -541,7 +541,7 @@
                                         },
                                       {
                                           "description": "",
-                                          "id": idChild,
+//                                          "id": idChild,
                                           "indexValueMax": childMax,
                                           "indexValueMin": childMin,
                                           "testId": idTest,
