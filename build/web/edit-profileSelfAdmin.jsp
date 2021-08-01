@@ -152,43 +152,14 @@
                                         });
 //                =====================================Update===============================================
 
-                                                window.onload = function () {
+                                                      window.onload = function () {
 //                                                    
                                                     
-                                                    function removeAscent(str) {
-                                                        if (str === null || str === undefined) {
-                                                            return str;
-                                                        }
-                                                        str = str.toLowerCase();
-                                                        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-                                                        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-                                                        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-                                                        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-                                                        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-                                                        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-                                                        str = str.replace(/đ/g, "d");
-                                                        return str;
-                                                    }
-                                                    function validateName(name)
-                                                    {
-                                                        var re = /^[a-zA-Z ]+$/;
-                                                        return re.test(name);
-                                                    }
                                                     
-                                                    var firebaseConfig = {
-                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                        authDomain: "upload-image-45245.firebaseapp.com",
-                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                        projectId: "upload-image-45245",
-                                                        storageBucket: "upload-image-45245.appspot.com",
-                                                        messagingSenderId: "758652365413",
-                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                        measurementId: "G-S5ECRSMKRB"
-                                                    };
-                                                    // Initialize Firebase
-                                                    firebase.initializeApp(firebaseConfig);
                                                     
-                                                    var idNew = data.id;
+                                                    
+                                                    
+                                                   
                                                     
                                                     var name = data.name;
                                                     var firstName = name.split(" ");
@@ -212,7 +183,7 @@
                                                      var files = $("#avatar").get(0).files;
                                                      if (files.length > 0) {
                                                             formData.append("image", files[0]);
-                                                            formData.append("role", "admin");
+                                                            formData.append("role", "idUp");
                                                         }
                                                       
     
@@ -221,43 +192,81 @@
                                                             headers: {
                                                                 Authorization: 'Bearer ' + token,
                                                             },
-                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idUp +"/admin",
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idNew +"/admin",
                                                             type:"POST",
                                                             processData: false,
                                                             contentType: false,
                                                             data: formData,
                                                             success: function (response) {
-//                                                                alert("OK rồi");
+                                                                alert("OK rồi");
                                                                 newImg = response;
                                                             },
                                                             error: function (er) {
-//                                                                alert("Lỗiiiiiiiiiiiiii");
+                                                                alert("Lỗiiiiiiiiiiiiii");
                                                             }
 
                                                         });
                                                         });
 
                                                         
+                                           $.ajax({
+                                            type: "GET",
+                                            dataType: "text",
+                                            contentType: "application/json; charset=utf-8",
+                                            headers: {
+                                                'Access-Control-Allow-Origin': '*',
+                                                Authorization: 'Bearer ' + token},
 
-
-
-
-                                                    var gender = data.gender;
-                                                    if (gender === "Male") {
-                                                        $("#male").prop("checked", true);
-                                                    } else {
-                                                        $("#female").prop("checked", true);
+                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin/phone-account",
+                                            success: function (data) {
+                                                    function removeAscent(str) {
+                                                        if (str === null || str === undefined) {
+                                                            return str;
+                                                        }
+                                                        str = str.toLowerCase();
+                                                        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                                                        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                                                        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                                                        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                                                        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                                                        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                                                        str = str.replace(/đ/g, "d");
+                                                        return str;
                                                     }
-//                                                    
-                                                    var phone = data.phone;
-                                                    $("#inputPhone").val(phone);
-//                                                  var avatar = $("input[name='avatar']").val();
-                                                    var status = data.status;
-                                                    if (status === "enable") {
-                                                        $("#patient_active").prop("checked", true);
-                                                    } else {
-                                                        $("#patient_inactive").prop("checked", true);
+                                                    function validateName(name)
+                                                    {
+                                                        var re = /^[a-zA-Z ]+$/;
+                                                        return re.test(name);
                                                     }
+                                                    var firebaseConfig = {
+                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
+                                                        authDomain: "upload-image-45245.firebaseapp.com",
+                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
+                                                        projectId: "upload-image-45245",
+                                                        storageBucket: "upload-image-45245.appspot.com",
+                                                        messagingSenderId: "758652365413",
+                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
+                                                        measurementId: "G-S5ECRSMKRB"
+                                                    };
+                                                    // Initialize Firebase
+                                                    firebase.initializeApp(firebaseConfig);
+                                                    var infor = jQuery.parseJSON(data);
+                                                    console.log(infor);
+                                                    var newImg = infor.image;
+                                                    var name = infor.name;
+                                                    var firstName = name.split(" ");
+                                                    var lastName = name.replace(firstName[firstName.length - 1], "");
+                                                    lastName = lastName.trim();
+                                                    $("#firstName").val(firstName[firstName.length - 1]);
+                                                    $("#lastName").val(lastName);                 //đổi thứ tự last name vs firstname
+
+                                                    var phone = phoneNum;
+                                                    $("#phone").val(phone);
+                                                    var image = infor.image;
+                                                    $('#img').attr('src', image);                                  
+                                                    
+                                                   
+//                                                  
                                                     $("#inputFirstname").click(function () {
                                                         $('#inputFirstname').removeClass('error');
                                                         document.getElementById('messageFirstname').innerHTML = '';
@@ -266,47 +275,17 @@
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
                                                     });
-
-                                                    $("#inputPassword").click(function () {
-                                                        $('#inputPassword').removeClass('error');
-                                                        document.getElementById('messagePassword').innerHTML = '';
-                                                    });
-                                                    $("#inputPhone").click(function () {
-                                                        $('#inputPhone').removeClass('error');
-                                                        document.getElementById('messagePhone').innerHTML = '';
-                                                    });
-
+                                            
+                                                    
                                                     $("#createPatient").click(function (event) {
                                                         event.preventDefault();
                                                         $('#inputFirstname').removeClass('error');
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
-                                                        $('#inputPassword').removeClass('error');
-                                                        document.getElementById('messagePassword').innerHTML = '';
-                                                        $('#inputPhone').removeClass('error');
-                                                        document.getElementById('messagePhone').innerHTML = '';
-//                                                        $('#inputEmail').removeClass('error');
-//                                                        document.getElementById('messageEmail').innerHTML = '';
                                                         var count = 0;
-                                                        var alluser = JSON.parse(localStorage.getItem("alluser"));
-                                                        for (var i = 0; i < alluser.length; i++) {
-//                                                            
-                                                            if (alluser[i].phone === document.getElementById('inputPhone').value && document.getElementById('inputPhone').value !== data.phone) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Phone already exists ✘';
-                                                                count = 1;
-                                                            }
-//                                                            
-                                                        }
 
 
-                                                        var idUpdate = data.id;
-                                                        
-                                                        
                                                         var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
                                                         var lastName = $("input[name='lastName']").val();
 //                                                        
@@ -326,13 +305,7 @@
                                                             gender = "Female";
                                                         }
 
-//                                                        
-                                                        console.log(idUpdate +" idUp");
-                                                        console.log(lastName +" lastName");
-                                                        console.log(firstName +" firstName");
-                                                        console.log(phone +" phone");
-                                                        console.log(password +" password");
-                                                        console.log(gender +" gender");
+//                                                     
                                                         
                                                         
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
@@ -389,7 +362,7 @@
                                                         } else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                            toastr["success"]("Update Successfully Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             
                                                                 return  $.ajax({
                                                                     type: "PUT",
@@ -413,8 +386,8 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
-                                                                            alert(Update Successfully);
-                                                                            window.location.href = "profileAdmin.jsp";
+                                                                           
+                                                                            window.location.href = "receptionist.jsp";
                                                                             }
                                                                         }
                                                                 });
@@ -423,8 +396,24 @@
 //                                                            uploadImage();
                                                         }
                                                     });
-                                                }
-                                                ;
+
+
+                                                },
+                                            error: function (jqXHR, textStatus, errorThrown) {
+
+
+                                            }
+
+                                        });
+
+
+//                                                    
+
+
+                                                   
+
+                                                };
+                                                
 
         </script>
     </body>
