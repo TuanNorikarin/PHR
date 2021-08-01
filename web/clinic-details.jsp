@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -91,11 +91,11 @@
                             <h3 id="clinicTitle" class="blog-title"></h3>
                             <div class="blog-info clearfix">
                                 <div class="post-left">
-                                    <ul>
+<!--                                    <ul>
                                         <li><a href="#."><i class="fa fa-user-o"></i> By <span id="userAdd"></span></a></li>
-                                    </ul>
+                                    </ul>-->
                                 </div>
-                                <div class="post-right"><a href="#."><i  class="fa fa-comment-o"></i><span id="icomments"></span></a></div>
+<!--                                <div class="post-right"><a href="#."><i  class="fa fa-comment-o"></i><span id="icomments"></span></a></div>-->
                             </div>
                             <div class="blog-image">
                                 <a href="#."><img id="clinicImg" alt="" src="" class="img-fluid"></a>
@@ -167,10 +167,23 @@
         <script  type="text/javascript">
 
             window.onload = function () {
-                var userInf = JSON.parse(localStorage.getItem("userInformation"));
-                var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
+                
+                var clinicID = JSON.parse(localStorage.getItem("clinicID"));
+                console.log(clinicID +" id");
+               
                 var rating = JSON.parse(localStorage.getItem("rating"));
                 console.log(rating);
+                
+                $.ajax({
+                   type: "GET",
+                   dataType: "json",
+                   contentType: "application/json",
+                       headers: {
+                       Authorization: 'Bearer ' + token},
+                   url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" +clinicID,
+//                                                        
+                 success: function (data) { 
+                     
                 var x = "";
                 var y = "";
                 var count = 0
@@ -219,18 +232,20 @@
                 $("#comments").html(rating.length);
                 $("#icomments").html(rating.length);
                 $("#listComment").html(y);
-                $('#clinicImg').attr('src', clinicInf.image);
-                document.getElementById("userAdd").innerHTML = userInf.username;
-                document.getElementById("clinicTitle").innerHTML = clinicInf.name;
-                document.getElementById("clinicAddress").innerHTML = clinicInf.address;
-                document.getElementById("clinicDistrict").innerHTML = clinicInf.district;
-                document.getElementById("clinicPhone").innerHTML = clinicInf.phone;
-                if (!clinicInf.description) {
+                $('#clinicImg').attr('src', data.image);
+//                document.getElementById("userAdd").innerHTML = data.username;
+                document.getElementById("clinicTitle").innerHTML = data.name;
+                document.getElementById("clinicAddress").innerHTML = data.address;
+                document.getElementById("clinicDistrict").innerHTML = data.district;
+                document.getElementById("clinicPhone").innerHTML = data.phone;
+                if (!data.description) {
                     document.getElementById("clinicDescription").innerHTML = "..."
 
                 } else {
-                    document.getElementById("clinicDescription").innerHTML = clinicInf.description;
+                    document.getElementById("clinicDescription").innerHTML = data.description;
                 }
+                
+                }});
             }
         </script>
 

@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -58,26 +58,20 @@
                         </form>-->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
                         <table id="checkRequestTable" class="table table-border table-striped custom-table datatable mb-0">
                             <thead>
                                 <tr>
-                                    <th style="width: 25%">Patient</th>
-
-                                    <th style="width: 30%">Type</th>
-                                    <th style="width: 30%">Time</th>
+                                    <th style="width: 30%">Patient</th>
+                                    <th style="width: 60%">Description</th>
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td id="name"></td>
-
                                     <td id="description"></td>
-                                    <td id="date"></td>
-
                                     <td class="text-right">
-
                                     </td>
                                 </tr>
 
@@ -108,9 +102,16 @@
             $(document).ajaxStop(function () {
                 $("div").removeClass("loading");
             });
+
+//============================================================================================    
+
+
+
 //            =========================================   =====================================
-            window.onload = function () {
-                var token = localStorage.getItem("key");
+                var doctorID = sessionStorage.getItem("doctorID");
+                console.log(doctorID + " doctorID");
+                window.onload = function () {
+                var token = sessionStorage.getItem("key");
                 var id = localStorage.getItem("userId");
                 var arrayTestRequest = [];
                 var arrayTestRequestTotal = [];
@@ -120,116 +121,54 @@
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/examination/findbydoctorid/" + id,
+
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination/doctor/" + doctorID,
+
                     success: function (data) {
                         var string = [];
                         var array = "";
                         var arrayTime = [];
-                        for (var i = 0; i < data.length; i++) {
-                            data[i].timeStart = data[i].timeStart.replace("T", " ");
-                            data[i].timeStart = data[i].timeStart.replace("Z", "");
-                            string = data[i].timeStart.split("-");
-                            arrayTime = string[2].split(" ");
-                            array = array + arrayTime[0] + "/";
-                            array = array + string[1] + "/";
-                            array = array + string[0] + " ";
-                            array = array + arrayTime[1];
-                            arrayTestRequest.push(data[i].userId.fullname);
-                            arrayTestRequest.push(data[i].type);
-                            arrayTestRequest.push(array);
-                            arrayTestRequestTotal.push(arrayTestRequest);
-                            arrayTestRequest = [];
-                            array = "";
-                        }
+                        var a = JSON.stringify(data);
 
-//                        var a = JSON.stringify(data);
-                        $('#checkRequestTable tbody').on('click', 'button', function ()
-                        {
-                            var getStringClick = [];
-                            var arrayClick = "";
-                            arrayTimeClick = [];
-                            var tr = $(this).closest("tr");
-                            var rowindex = tr.index();
-                            table = document.getElementById("checkRequestTable");
-                            tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[2];
-                            txtValue = td.textContent;
-                            getStringClick = txtValue.split("/");
-                            arrayTimeClick = getStringClick[2].split(" ");
-                            arrayClick += arrayTimeClick[0] + "-";
-                            arrayClick += getStringClick[1] + "-";
-                            arrayClick += getStringClick[0] + " ";
-                            arrayClick += arrayTimeClick[1];
-                            for (var i = 0; i < data.length; i++) {
-//                                console.log(data[i].timeStart);
-//                                console.log(arrayClick);
-                                if (data[i].timeStart === arrayClick) {
-                                    localStorage.setItem("idExamination", data[i].id);
-                                    $.ajax({
-                                        type: "GET",
-                                        dataType: "json",
-                                        contentType: "application/json; charset=UTF-8",
-                                        headers: {
-                                            Authorization: 'Bearer ' + token},
-                                        url: "https://bt-application.herokuapp.com/api/testrequest/findbyexaminationid/" + data[i].id,
-                                        success: function (data) {
-                                            localStorage.setItem("dataTestRequestId", JSON.stringify(data));
-                                            window.location.href = "checkMorePackage.jsp";
-                                        }, error: function (jqXHR, textStatus, errorThrown) {
 
-                                        }})
+                        var b = JSON.parse(a);
+                        console.log(b);
+                        var listPatient = [];
+                        if (b !== null) {
+                            for (var i = 0; i < b.length; i++) {
+                                var patient = new Object();
+                                patient.name = b[i].patientName;
+                                patient.description = b[i].description;
+                                var gender;
+                                if(b[i].gender === "Male"){
+                                    gender = 1;
+                                }else{
+                                    gender = 2;
                                 }
+                                patient.dataPatient = b[i].examinationId + "." + gender;
+                                listPatient.push(patient);
                             }
-
                         }
-                        );
-//                        $('td').click(function () {
-//                            var row_index = $(this).parent().index();
-//
-//                        });
-////                                   
-//
-//
-//
-//                        var b = JSON.parse(a);
-                        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-                            "date-euro-pre": function (a) {
-                                var x;
-                                if (a.trim() !== '') {
-                                    var frDatea = a.trim().split(' ');
-                                    var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00, 00, 00];
-                                    var frDatea2 = frDatea[0].split('/');
-                                    x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined != frTimea[2]) ? frTimea[2] : 0)) * 1;
-                                } else {
-                                    x = Infinity;
-                                }
+                        
 
-                                return x;
-                            },
-                            "date-euro-asc": function (a, b) {
-                                return a - b;
-                            },
-                            "date-euro-desc": function (a, b) {
-                                return b - a;
-                            }
-                        });
                         $('#checkRequestTable').DataTable({
-                            data: arrayTestRequestTotal.sort(),
+                            data: listPatient,
                             columns: [
-                                {data: '0'},
-                                {data: '1'},
-                                {data: '2'},
+                                {data: 'name'},
+                                {data: 'description'},
                                 {
-                                    defaultContent: '<td><button class="inputResult"> <a> Select</a> </button></td>'
+                                    data: 'dataPatient',
+                                    render: function (data, type, row, meta) {
+                                        return '<td><button class="inputResult" onClick="selectPatientToInputResult('+data+')"> <a> Select</a> </button></td>'
+                                    }
 
                                 }
                             ],
                             "bDestroy": true,
                             "bFilter": true,
-                            columnDefs: [
-                                {type: 'date-euro', targets: 2}
-                            ],
-                            order: [2, 'asc']
+//                             "createdRow": function (row, data, dataIndex) {
+//                                $('td:eq(1)', row).css('display', 'none');
+//                            }
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -238,7 +177,29 @@
 
                 })
             };
-
+            function selectPatientToInputResult(dataPatient) {
+                console.log(dataPatient);
+                var patientData = (dataPatient+"").split(".");
+                var examId = patientData[0];
+                var gender = (patientData[1] === "1") ? "Male" : "Female";
+                console.log(examId+"......"+gender);
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    headers: {
+                    Authorization: 'Bearer ' + token
+                    },
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examination-details/examination-detail/examination/" + examId + "?typeGender=" + gender,
+                    success: function (data) {
+                        localStorage.setItem("dataTestRequestId", JSON.stringify(data));
+//                                            window.location.href = "checkMorePackage.jsp";
+                        sessionStorage.setItem("patientGender", gender);
+                        window.location.href = "inputResult.jsp";
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown)
+                    }})
+            }
 
         </script>
     </body>

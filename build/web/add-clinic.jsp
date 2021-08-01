@@ -158,25 +158,8 @@
                                             }
 //                =====================================Insert===============================================
                                             $(document).ready(function () {
-                                                function uuidv4() {
-                                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                                                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                                                        return v.toString(16);
-                                                    });
-                                                }
-                                                var firebaseConfig = {
-                                                    apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                    authDomain: "upload-image-45245.firebaseapp.com",
-                                                    databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                    projectId: "upload-image-45245",
-                                                    storageBucket: "upload-image-45245.appspot.com",
-                                                    messagingSenderId: "758652365413",
-                                                    appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                    measurementId: "G-S5ECRSMKRB"
-                                                };
 
-                                                // Initialize Firebase
-                                                firebase.initializeApp(firebaseConfig);
+                                               
                                                 $("#inputClinicname").click(function () {
                                                     $('#inputClinicname').removeClass('error');
                                                     document.getElementById('messageClinicname').innerHTML = '';
@@ -214,12 +197,11 @@
                                                     var phone = $("input[name='phone']").val();
                                                     var avatar = $("input[name='avatar']").val();
                                                     var status;
-                                                    var token = localStorage.getItem("key");
+                                                    var token = sessionStorage.getItem("key");
                                                     var selectSta = $('input[id="clinic_active"]:checked').val();
                                                     
                                                     console.log(clinicName + " clinicName");
                                                     console.log(phone + " phone");
-                                                    console.log(uuidv4() + " id");
                                                     console.log(description + " description");
                                                     console.log(imgClinic + " imgClinic");
                                                     console.log(address + " address");
@@ -228,9 +210,9 @@
                                                     console.log(district + " district");
                                                     
                                                     if (selectSta === "on") {
-                                                        status = "Active";
+                                                        status = "enable";
                                                     } else {
-                                                        status = "Inactive";
+                                                        status = "disable";
                                                     }
                                                     if (clinicName.length === 0) {
                                                         $('#inputClinicname').addClass('error');
@@ -306,13 +288,12 @@
                                                                 data: JSON.stringify({
                                                                     "address": address,
                                                                     "name": clinicName,
-//                                                                    "id": "2",
-                                                                    "coordinate": "HCM",
+                                                                    "coordinate": "",
                                                                     "image": url,
                                                                     "phone": phone,
                                                                     "status": status,
                                                                     "district": district,
-                                                                    "clinicGroupId": "1",
+                                                                    "clinicGroupId": 1,
                                                                     "description": description
                                                                 }),
                                                                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic",

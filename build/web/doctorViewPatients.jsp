@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -64,7 +64,7 @@
                                     <th style="width: 10%">Phone</th>
                                     <th style="width: 5%">Email</th>
                                     <th style="width: 10%">Status</th>
-                                    <th style="width: 3%" class="text-right">Action</th>
+                                    <!--<th style="width: 3%" class="text-right">Action</th>-->
                                 </tr>
                             </thead>
 
@@ -82,14 +82,14 @@
                                     <td id="status"></td>
 
 
-                                    <td  class="text-right">
+<!--                                    <td  class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                             <div id="d" class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item" href="view-patientDoctor.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                             </div>
                                         </div>
-                                    </td>
+                                    </td>-->
                                 </tr>
 
 
@@ -122,18 +122,20 @@
                 $("div").removeClass("loading");
             });
 
-
-
+                var token = sessionStorage.getItem("key");
+                var clinicId = sessionStorage.getItem("clinicID");
+                console.log(clinicId);
+                
             window.onload = function () {
-                var token = localStorage.getItem("key");
-                var clinicId = localStorage.getItem("clinicId");
+                
+                
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/examination/findbyclinicid/" + clinicId,
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/clinic/" + clinicId,
                     success: function (data) {
                         var a = JSON.stringify(data);
                         $('#patientTable tbody').on('click', 'td', function ()
@@ -162,30 +164,30 @@
 
 
                         var b = JSON.parse(a);
-                        var uniqueArray = b
-                                .map(v => v['userId'])
-                                .map(v => v['id'])
-                                .map((v, i, array) => array.indexOf(v) === i && i)
-                                .filter(v => b[v])
-                                .map(v => b[v]);
+//                        var uniqueArray = b
+//                                .map(v => v['userId'])
+//                                .map(v => v['id'])
+//                                .map((v, i, array) => array.indexOf(v) === i && i)
+//                                .filter(v => b[v])
+//                                .map(v => b[v]);
 
                         $('#patientTable').DataTable({
-                            data: uniqueArray,
+                            data: b,
                             columns: [
-                                {data: "userId.image",
+                                {data: "image",
                                     "render": function (data, type, row, meta) {
                                         return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
                                     }},
-                                {data: 'userId.fullname'},
-                                {data: 'userId.dob'},
-                                {data: 'userId.address'},
-                                {data: 'userId.phone'},
-                                {data: 'userId.mail'},
-                                {data: 'userId.status'},
-                                {
-                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "view-patientDoctor.jsp"> <i class = "fa fa-pencil m-r-5" > </i> View Detail</a></div></div></td>'
-
-                                },
+                                {data: 'name'},
+                                {data: 'dob'},
+                                {data: 'address'},
+                                {data: 'phone'},
+                                {data: 'gender'},
+                                {data: 'status'},
+//                                {
+//                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "view-patientDoctor.jsp"> <i class = "fa fa-pencil m-r-5" > </i> View Detail</a></div></div></td>'
+//
+//                                },
                             ],
                             "bDestroy": true,
                             "bFilter": true,
@@ -194,12 +196,12 @@
                                 searchPlaceholder: ""
                             },
                             "createdRow": function (row, data, dataIndex) {
-                                if (data.userId.status === "Inactive") {
+                                if (data.status === "disable") {
                                     console.log(row);
                                     $('td', row).css('color', '#b5b5b5');
                                     $('td', row).css('font-style', 'italic');
                                 }
-                                if (data.userId.status === "Active") {
+                                if (data.status === "enable") {
                                     $('td:eq(6)', row).css('color', '#2a9c31');
                                     $('td:eq(6)', row).css('font-weight', 'bolder');
                                 }

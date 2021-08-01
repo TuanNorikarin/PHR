@@ -12,10 +12,9 @@ public final class patients_jsp extends org.apache.jasper.runtime.HttpJspBase
   private static java.util.List<String> _jspx_dependants;
 
   static {
-    _jspx_dependants = new java.util.ArrayList<String>(3);
+    _jspx_dependants = new java.util.ArrayList<String>(2);
     _jspx_dependants.add("/components/header.html");
     _jspx_dependants.add("/components/sidebar.html");
-    _jspx_dependants.add("/components/footer.html");
   }
 
   private org.glassfish.jsp.api.ResourceInjector _jspx_resourceInjector;
@@ -407,6 +406,7 @@ public final class patients_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        </div>\r\n");
       out.write("        <div class=\"overlay\"></div>\r\n");
       out.write("        ");
+<<<<<<< HEAD
 <<<<<<< HEAD
       out.write("<!--<div class=\"notification-box\">\r\n");
       out.write("    <div class=\"msg-sidebar notifications msg-noti\">\r\n");
@@ -850,6 +850,8 @@ public final class patients_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("</script>\n");
       out.write("-->\n");
 >>>>>>> 37d0ead8f210066d90766c8df68f55d010034e2e
+=======
+>>>>>>> b186e222fad71e308a3dfafb7132cfd23bdb0e27
       out.write("\r\n");
       out.write("        <script src=\"assets/js/jquery-3.2.1.min.js\"></script>\r\n");
       out.write("        <script src=\"assets/js/popper.min.js\"></script>\r\n");
@@ -947,13 +949,10 @@ public final class patients_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                \"mail\": value.mail,\r\n");
       out.write("                                                \"password\": value.password,\r\n");
       out.write("                                                \"phone\": value.phone,\r\n");
-      out.write("                                                \"roleId\": {\r\n");
-      out.write("                                                    \"id\": 1\r\n");
-      out.write("                                                },\r\n");
-      out.write("                                                \"status\": \"Inactive\",\r\n");
+      out.write("                                                \r\n");
+      out.write("                                                \"status\": \"disable\",\r\n");
       out.write("                                                \"image\": value.image,\r\n");
       out.write("                                                \"token\": value.token,\r\n");
-      out.write("                                                \"username\": value.username\r\n");
       out.write("                                            }),\r\n");
 <<<<<<< HEAD
       out.write("//                                            url: \"https://bt-application.herokuapp.com/api/userinfor/edit\",\r\n");
@@ -1017,12 +1016,12 @@ public final class patients_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                searchPlaceholder: \"\"\r\n");
       out.write("                            },\r\n");
       out.write("                            \"createdRow\": function (row, data, dataIndex) {\r\n");
-      out.write("                                if (data.status === \"Inactive\") {\r\n");
+      out.write("                                if (data.status === \"disable\") {\r\n");
       out.write("                                    console.log(row);\r\n");
       out.write("                                    $('td', row).css('color', '#b5b5b5');\r\n");
       out.write("                                    $('td', row).css('font-style', 'italic');\r\n");
       out.write("                                }\r\n");
-      out.write("                                if (data.status === \"Active\") {\r\n");
+      out.write("                                if (data.status === \"enable\") {\r\n");
       out.write("                                    $('td:eq(6)', row).css('color', '#2a9c31');\r\n");
       out.write("                                    $('td:eq(6)', row).css('font-weight', 'bolder');\r\n");
       out.write("                                }\r\n");

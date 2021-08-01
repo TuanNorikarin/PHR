@@ -82,6 +82,11 @@
             .EditClinic {
                 float: right;
             }
+            div.post-right{
+                position: relative;
+                right: -50px;
+            }
+            
             #pagination-1{}
 
         </style>
@@ -107,26 +112,7 @@
                 </div>
             </form>
             <div id="pagination-1" class="row grid-blog">
-<!--                                <div class="col-sm-6 col-md-6 col-lg-4 pagination__item">
-                                    <div class="blog grid-blog">
-                                        <div class="blog-image">
-                                            <a href="clinic-details.jsp"><img class="img-fluid" src="assets/img/clinic/clinic-01.jpg" alt=""></a>
-                                        </div>
-                                        <div class="blog-content">
-                                            <h3 class="blog-title"><a href="clinic-details.jsp">PHÒNG KHÁM ĐA KHOA THÀNH CÔNG</a></h3>
-                                            <p>Địa chỉ: 36 Tây Thạnh ( đường CN4 KCN Tân Bình), P. Tây Thạnh, Q. Tân Phú, TP. HCM</p>
-                                            <a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a>
-                                            <div class="blog-info clearfix">
-                                                <div class="post-left">
-                                                    <ul>
-                                                        <li><a href="#."><i class="fa fa-calendar"></i> <span>December 6, 2019</span></a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="post-right"><a href="#."><i class="fa fa-heart-o"></i>21</a> <a href="#."><i class="fa fa-eye"></i>8</a> <a href="#."><i class="fa fa-comment-o"></i>17</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
+
 
             </div>
         </div>
@@ -182,7 +168,7 @@
                                 $("div").removeClass("loading");
                             });
                             window.onload = function () {
-                                var token = localStorage.getItem("key");
+                                var token = sessionStorage.getItem("key");
 
                                 $.ajax({
                                     type: "GET",
@@ -195,23 +181,30 @@
 
 
                                         $.each(data, function (index, item) {
+                                            localStorage.setItem("clinicInf", JSON.stringify(item));
+                                            console.log(item);
                                             $.ajax({
                                                 type: "GET",
                                                 dataType: "json",
                                                 contentType: "application/json; charset=utf-8",
                                                 headers: {
                                                     Authorization: 'Bearer ' + token},
-                                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" + item.id,
+                                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" + item.id, // cần api tìm phòng khám theo clinic
                                                 success: function (value) {
+                                                            
+                                                            localStorage.setItem("rating", JSON.stringify(value));
+                                                            
                                                     if (value.length !== 0) {
                                                         var count = 0;
                                                         for (var i = 0; i < value.length; i++) {
                                                             count += value[i].rate;
                                                         }
-                                                        x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a href="clinic-details.jsp"><img class="img-fluid" src=" '
+                                                        x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a onclick="getClinic('+data[index].id+')" href="clinic-details.jsp"><img class="img-fluid" src=" '
                                                                     + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
                                                                     + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getClinic('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+                                                                    + data[index].address + '</p> '
+                                                                    + 'Quận ' + data[index].district
+                                                                    + '<a onclick="getClinic('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
                                                                     + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
                                                         
                                                         
@@ -306,17 +299,16 @@
 //                                                    }
                                                     console.log(data);
                                                     
-                                                    $(document).on('click', '[id^="clinicClick"]', function () {
-
-                                                        var values = $(this).context.textContent.split(" ");
-
-                                                        var id = values[values.length - 1];
-                                                        if (item.id === id) {
-                                                            localStorage.setItem("clinicInf", JSON.stringify(item));
-                                                            localStorage.setItem("rating", JSON.stringify(value));
-                                                            
-                                                        }
-                                                    });
+//                                                    $(document).on('click', '[id^="clinicClick"]', function () {
+//
+//                                                        var values = $(this).context.textContent.split(" ");
+//
+//                                                        var id = values[values.length - 1];
+//                                                        if (item.id === id) {
+//                                                            
+//                                                            
+//                                                        }
+//                                                    });
                                                 }})
 
 
@@ -335,9 +327,9 @@
                             }
                             
                             function getClinic(data){
-                                alert(data);
-                                localStorage.setItem("dataClinic", JSON.stringify(data));
-                                console.log(dataDoc);
+//                                alert(data);
+                                localStorage.setItem("clinicID", JSON.stringify(data));
+                                
                             }
 
 //  ===============================================Loading Screen==================================================                          

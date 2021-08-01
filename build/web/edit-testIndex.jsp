@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
@@ -155,51 +155,57 @@
 // ======================================================Insert===============================================
 
             $(document).ready(function () {
-                var data = localStorage.getItem("dataTest").split(',');
-                var dataId = localStorage.getItem("dataTestId").split(',');
-//                function uuidv4() {
-//                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-//                        return v.toString(16);
-//                    });
-//                }
-                console.log(dataId);
-
-                var name = data[0];
+//                var data = localStorage.getItem("dataTest");
+                var dataId = JSON.parse(localStorage.getItem("dataTestId"));
+                var a = JSON.stringify(dataId);
+                var data = JSON.parse(a);
+                console.log(data);
+                var token = sessionStorage.getItem("key");
+                
+                var name = data.name;
                 console.log(name);
-                $("#updateTestIndex").attr('disabled','disabled');
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    headers: {
-                        Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/testresultdetail/findbytestidcheck/" + dataId[1],
-                    success: function (data, textStatus, jqXHR) {
-                        if(data.length === 0){
-                            $("#updateTestIndex").removeAttr('disabled');
-                        }
-                    }});
+//                $("#updateTestIndex").attr('disabled','disabled');
+//                $.ajax({
+//                    type: "GET",
+//                    dataType: "json",
+//                    contentType: "application/json; charset=utf-8",
+//                    headers: {
+//                        Authorization: 'Bearer ' + token},
+//                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index" + dataId[1],
+//                    success: function (data, textStatus, jqXHR) {
+//                        if(data.length === 0){
+//                            $("#updateTestIndex").removeAttr('disabled');
+//                        }
+//                    }});
+                var idGroup = data.id;
+                var idMale =  data.samplelst[0].id;
+                var idTest =  data.samplelst[0].testId;
+                var idFemale = data.samplelst[1].id;
+//                var idChild = data.samplelst[2].id;
+                
+                
+                
                 $("#inputName").val(name);
-                var description = data[1];
+                var description = data.description;
                 console.log(description);
                 $("#description").val(description);
-                var male = data[2].split('-');
-                var maleMin = parseFloat(male[0]);
+//                var male = data[2].split('-');
+//                var maleMin = parseFloat(male[0]);
+                var maleMin = data.samplelst[0].indexValueMin;
                 $("#maleMin").val(maleMin);
-                var maleMax = parseFloat(male[1]);
+                var maleMax = data.samplelst[0].indexValueMax;
                 $("#maleMax").val(maleMax);
 
-                var feMale = data[3].split('-');
-                var femaleMin = parseFloat(feMale[0]);
+//                var feMale = data[3].split('-');
+                var femaleMin = data.samplelst[1].indexValueMin;
                 $("#femaleMin").val(femaleMin);
-                var femaleMax = parseFloat(feMale[1]);
+                var femaleMax = data.samplelst[1].indexValueMax;
                 $("#femaleMax").val(femaleMax);
 
-                var child = data[4].split('-');
-                var childMin = parseFloat(child[0]);
+//                var child = data[4].split('-');
+                var childMin = data.samplelst[2].indexValueMin;
                 $("#childMin").val(childMin);
-                var childMax = parseFloat(child[1]);
+                var childMax = data.samplelst[2].indexValueMax;
                 $("#childMax").val(childMax);
                 $("#inputName").click(function () {
                     $('#inputName').removeClass('error');
@@ -263,7 +269,7 @@
                     var childMax = $("input[name='childMax']").val();
 
 
-                    var token = localStorage.getItem("key");
+                    
                     var count = 0;
                     console.log(regexp.test(maleMax));
                     var allTestIndex = JSON.parse(localStorage.getItem("allTestIndex"));
@@ -507,113 +513,56 @@
                     } else {
                          toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                     $.ajax({
-                        type: "PUT",
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        headers: {
-                            Authorization: 'Bearer ' + token},
-                        data: JSON.stringify({
-                            "id": dataId[1],
-                            "name": name,
-                            "description": description,
-                            "status": "Active"
+                            type: "PUT",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            headers: {
+                                Authorization: 'Bearer ' + token},
+                            data: JSON.stringify({
+                                "id": idGroup,
+                                "name": name,
+                                "description": description,
+                                "samplelst": [
+                                        {
+                                          "description": "",
+                                          "id": idMale,
+                                          "indexValueMax": maleMax,
+                                          "indexValueMin": maleMin,
+                                          "testId": idTest,
+                                          "type": "Male"
+                                        },
+                                     {
+                                          "description": "",
+                                          "id": idFemale,
+                                          "indexValueMax": femaleMax,
+                                          "indexValueMin": femaleMin,
+                                          "testId": idTest,
+                                          "type": "Female"
+                                        },
+                                      {
+                                          "description": "",
+//                                          "id": idChild,
+                                          "indexValueMax": childMax,
+                                          "indexValueMin": childMin,
+                                          "testId": idTest,
+                                          "type": "Child"
+                                        }  
+                                      ],
+                                "status": "enable"
 
-                        }),
-                        url: "https://bt-application.herokuapp.com/api/test/edit",
-                        complete: function (jqXHR) {
-                            console.log(jqXHR.status);
-                            if (jqXHR.status === 200) {
-                                if (maleMax !== null || maleMin !== null) {
-                                    $.ajax({
-                                        type: "PUT",
-                                        dataType: "json",
-                                        contentType: "application/json; charset=utf-8",
-                                        headers: {
-                                            Authorization: 'Bearer ' + token},
-                                        data: JSON.stringify({
-                                            "id": dataId[2],
-                                            "indexesName": name,
-                                            "description": description,
-                                            "indexValueMax": maleMax,
-                                            "indexValueMin": maleMin,
-                                            "type": "Male",
-                                            "testId": {
-                                                "id": dataId[1]
-                                            }
-                                        }),
-                                        url: "https://bt-application.herokuapp.com/api/testresultsample/edit",
-                                        complete: function (jqXHR) {
-                                            console.log(jqXHR.status);
-                                            if (jqXHR.status === 200) {
-                                                if (femaleMin !== null || femaleMax !== null) {
-                                                    $.ajax({
-                                                        type: "PUT",
-                                                        dataType: "json",
-                                                        contentType: "application/json; charset=utf-8",
-                                                        headers: {
-                                                            Authorization: 'Bearer ' + token},
-                                                        data: JSON.stringify({
-                                                            "id": dataId[3],
-                                                            "indexesName": name,
-                                                            "description": description,
-                                                            "indexValueMax": femaleMax,
-                                                            "indexValueMin": femaleMin,
-                                                            "type": "Female",
-                                                            "testId": {
-                                                                "id": dataId[1]
-                                                            }
-                                                        }),
-                                                        url: "https://bt-application.herokuapp.com/api/testresultsample/edit",
-                                                        complete: function (jqXHR) {
-                                                            console.log(jqXHR.status);
-                                                            if (jqXHR.status === 200) {
-                                                                if (childMin !== null || childMax !== null) {
-                                                                    $.ajax({
-                                                                        type: "PUT",
-                                                                        dataType: "json",
-                                                                        contentType: "application/json; charset=utf-8",
-                                                                        headers: {
-                                                                            Authorization: 'Bearer ' + token},
-                                                                        data: JSON.stringify({
-                                                                            "id": dataId[4],
-                                                                            "indexesName": name,
-                                                                            "description": description,
-                                                                            "indexValueMax": childMax,
-                                                                            "indexValueMin": childMin,
-                                                                            "type": "Children",
-                                                                            "testId": {
-                                                                                "id": dataId[1]
-                                                                            }
-                                                                        }),
-                                                                        url: "https://bt-application.herokuapp.com/api/testresultsample/edit",
-                                                                        complete: function (jqXHR) {
-                                                                            console.log(jqXHR.status);
-                                                                            if (jqXHR.status === 200) {
-                                                                                window.location.href = "testIndex.jsp";
+                            }),
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index",
+                            complete: function (jqXHR) {
+                                console.log(jqXHR.status);
+                                if (jqXHR.status === 201 || jqXHR.status === 200) {
+                                    window.location.href = "testIndex.jsp";
 
-                                                                            }
-                                                                        }
-
-                                                                    });
-                                                                }
-                                                            }
-                                                        }
-
-                                                    });
-                                                }
-                                            }
-                                        }
-
-                                    });
                                 }
 
 
+
                             }
-
-
-
-                        }
-                    });
+                        });
                     }
 
                 });

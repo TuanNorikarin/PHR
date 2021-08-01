@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -63,10 +63,10 @@
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>
-                                    <th id='description' style="width: 30%; display: block !important;">Description</th>
+                                    <th id='description' style="width: 20%; display: block !important;">Description</th>
                                     <th style="width: 20%">Male Value</th>
-                                    <th style="width: 20%">FeMale Value</th>
-                                    <th style="width: 10%">Children Value</th>
+                                    <th style="width: 20%">Female Value</th>
+                                    <th style="width: 20%">Children Value</th>
                                     <!--<th style="width: 5%" class="text-right">Action</th>-->
                                 </tr>
                             </thead>
@@ -102,16 +102,16 @@
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
 
-            window.onload = function () {
-                var token = localStorage.getItem("key");
+                window.onload = function () {
+                        var token = sessionStorage.getItem("key");
                         var testName = localStorage.getItem("testName");
                         $.ajax({
                             type: "GET",
                             dataType: "json",
                             contentType: "application/json; charset=UTF-8",
                             headers: {
-                                // Authorization: 'Bearer ' + token
-                                'Access-Control-Allow-Origin': '*'
+                                 Authorization: 'Bearer ' + token
+//                                'Access-Control-Allow-Origin': '*'
                             },
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
                             success: function (data) {
@@ -127,12 +127,14 @@
                                     dataShow.childIndex = '-'
                                     
                                     element.samplelst.forEach(e => {
-                                        if (e.type === 'Male') {
+                                        if (e.type === 'Male' || e.type === 'male') {
                                             dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                        } else if (e.type === 'Female') {
+                                        } else if (e.type === 'Female' || e.type === 'female') {
                                             dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                        } else if (e.type === 'Child') {
+                                        } else if (e.type === 'Child' || e.type === 'child') {
                                             dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        }else if (e.indexValueMin === "-9999" || e.indexValueMax === "-9999"){
+                                            datashow.maleIndex === "Âm tính";
                                         }
                                     });
                                     mainData.push(dataShow);
@@ -147,6 +149,7 @@
                                         },
                                         {
                                             data: 'maleIndex',
+                                           
                                         },
                                         {
                                             data: 'femaleindex',
@@ -157,6 +160,7 @@
                                     ],
                                     "bDestroy": true,
                                     "bFilter": true,
+                                   
 
                                 });
 

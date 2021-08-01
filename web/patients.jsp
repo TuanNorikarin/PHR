@@ -105,7 +105,7 @@
             </div>
         </div>
         <div class="overlay"></div>
-        <%@include file="components/footer.html" %>
+        <%--<%@include file="components/footer.html" %>--%>
         <script src="assets/js/jquery-3.2.1.min.js"></script>
         <script src="assets/js/popper.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
@@ -119,29 +119,7 @@
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
-//            function searchFunction() {
-//                var input, filter, table, tr, nameSearch, i, txtValue, phoneSearch;
-//                input = document.getElementById("searchPatient");
-//                filter = input.value.toUpperCase();
-//                table = document.getElementById("patientTable");
-//                tr = table.getElementsByTagName("tr");
-//                for (i = 0; i < tr.length; i++) {
-//                    nameSearch = tr[i].getElementsByTagName("td")[0];
-//                    phoneSearch = tr[i].getElementsByTagName("td")[3];
-//                    if (nameSearch || phoneSearch) {
-//                        txtValueName = nameSearch.textContent || nameSearch.innerText;
-//                        txtValuePhone = phoneSearch.textContent || phoneSearch.innerText;
-//                        if (txtValueName.toUpperCase().indexOf(filter) > -1) {
-//                            tr[i].style.display = "";
-//                        } else if (txtValuePhone.toUpperCase().indexOf(filter) > -1) {
-//                            tr[i].style.display = "";
-//                        } else {
-//                            tr[i].style.display = "none";
-//                        }
-//                    }
-//                }
-//            }
-//            ;
+
 
 //==============================Loading Page=========================================
             $(document).ajaxStart(function () {
@@ -157,23 +135,26 @@
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json",
-                    
+                    headers: {
+                    Authorization: 'Bearer ' + token},
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/accounts",
                     success: function (data) {
                         localStorage.setItem("alluser", JSON.stringify(data));
-                        var token = localStorage.getItem("key");
+                        
                         
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
-//                    headers: {
-//                        Authorization: 'Bearer ' + token},
                     headers: {
-                    'Access-Control-Allow-Origin': '*'},
+                    Authorization: 'Bearer ' + token},
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patients",
                     success: function (data) {
                         var a = JSON.stringify(data);
+                        console.log(data);
+                        
+                        
+                        
                         $('#patientTable tbody').on('click', 'td', function ()
                         {
                             var tr = $(this).closest("tr");
@@ -202,13 +183,10 @@
                                                 "mail": value.mail,
                                                 "password": value.password,
                                                 "phone": value.phone,
-                                                "roleId": {
-                                                    "id": 1
-                                                },
-                                                "status": "Inactive",
+                                                
+                                                "status": "disable",
                                                 "image": value.image,
                                                 "token": value.token,
-                                                "username": value.username
                                             }),
                                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patients",
                                             complete: function (jqXHR) {
@@ -233,7 +211,7 @@
 
                         var b = JSON.parse(a);
                         console.log(b);
-                        console.log(a);
+                        
                         $('#patientTable').DataTable({
                             data: b,
                             columns: [
@@ -259,12 +237,12 @@
                                 searchPlaceholder: ""
                             },
                             "createdRow": function (row, data, dataIndex) {
-                                if (data.status === "Inactive") {
-                                    console.log(row);
+                                if (data.status === "disable") {
+//                                    console.log(row);
                                     $('td', row).css('color', '#b5b5b5');
                                     $('td', row).css('font-style', 'italic');
                                 }
-                                if (data.status === "Active") {
+                                if (data.status === "enable") {
                                     $('td:eq(6)', row).css('color', '#2a9c31');
                                     $('td:eq(6)', row).css('font-weight', 'bolder');
                                 }

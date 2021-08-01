@@ -129,7 +129,7 @@
                         <script type="text/javascript">
                             var x = "";
 
-                            var token = localStorage.getItem("key");
+                            var token = sessionStorage.getItem("key");
                             var request = JSON.parse(localStorage.getItem("request"));
                             $(document).ready(function () {
                                 var count = 0;

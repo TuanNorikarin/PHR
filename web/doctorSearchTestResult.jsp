@@ -111,7 +111,7 @@
                 $("div").addClass("loading");
             });
             var dataTestIdJSON = JSON.parse(localStorage.getItem("dataTestIdJSON"));
-            var token = localStorage.getItem("key");
+            var token = sessionStorage.getItem("key");
             var id = localStorage.getItem("userId");
             document.getElementById('testSearchName').innerHTML = dataTestIdJSON[0];
             $(".table-responsive").hide();

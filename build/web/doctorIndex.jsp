@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -120,64 +120,45 @@
     <script src="assets/js/jquery.slimscroll.js"></script>
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
-        window.onload = function () {
-            var clinicId = localStorage.getItem("clinicId");
-            var token = localStorage.getItem("key");
+             
+            var token = sessionStorage.getItem("key");
+            var phone = sessionStorage.getItem("user");
+            console.log(phone);
+            
+            window.onload = function () {
+            
+            
             $.ajax({
                 type: "GET",
                 dataType: "text",
                 contentType: "application/json; charset=utf-8",
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
                     Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/userinfor/count/2/" + clinicId,
+
+                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/phone-account",
                 success: function (data) {
-                    document.getElementById("doctorCount").innerHTML = data;
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-            });
-            $.ajax({
-                type: "GET",
-                dataType: "text",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/userinfor/count/4/" + clinicId,
-                success: function (data) {
-                    document.getElementById("receptionistCount").innerHTML = data;
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-            });
-
-
-
-            $.ajax({
+                    var infor = jQuery.parseJSON(data);
+                    console.log(infor);
+                    var name = sessionStorage.setItem("name", infor.name);
+                    var image = sessionStorage.setItem("avatar", infor.image);
+                    var clinicId = infor.clinicId;
+                    sessionStorage.setItem("clinicID", clinicId);
+                    var docID = infor.id;
+                    sessionStorage.setItem("doctorID", docID);
+                    
+                    $.ajax({
                 type: "GET",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     Authorization: 'Bearer ' + token},
-                url: "https://bt-application.herokuapp.com/api/examination/findbyclinicid/" + clinicId,
+                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
                 success: function (data) {
-                    var list = [];
-                    var length = data.length.toString();
-                    document.getElementById("examCount").innerHTML = length;
-                    for (var i = 0; i < data.length; i++) {
-                        if (!list.includes(data[i].userId.id)) {
-                            list.push(data[i].userId.id);
-                        }
-                    }
-                    document.getElementById("patientCount").innerHTML = list.length;
-
+                    document.getElementById("doctorCount").innerHTML = data.totalDoctor;
+                    document.getElementById("patientCount").innerHTML = data.totalPatient;
+                    document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
+                    document.getElementById("examCount").innerHTML = data.totalExamination;
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -185,6 +166,18 @@
 
                 }
             });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+
+                }
+                
+            });
+            
+            
+            
+            
+
         };
         $(document).ajaxStart(function () {
             $("div").addClass("loading");

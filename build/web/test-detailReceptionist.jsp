@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -82,7 +82,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-8 testPackage">
-
+                        <h3 id="packageName" class="blog-title"></h3>
                         <table id="testPackageTable" class="table table-border table-striped custom-table datatable mb-0">
                             <caption id="namePackage" style="caption-side:top"></caption>
 
@@ -92,7 +92,7 @@
                                     <th style="width: 20%">Name</th>
                                     <th style="width: 15%">Male</th>
                                     <th style="width: 15%">Female</th>
-                                    <th style="width: 15%">Result</th>
+                                    <th style="width: 15%">Children</th>
                                     <!--<th style="width: 10%">Delete</th>-->
 
 
@@ -105,11 +105,7 @@
                                     <td id="name"></td>
                                     <td id="male"></td>
                                     <td id="female"></td>
-                                    <td id="result"></td>
-                                    <!--<td id="delete"></td>-->
-
-
-
+                                    <td id="child"></td>
 
 
                                 </tr>
@@ -122,6 +118,7 @@
                 </div>
             </div>
         </div>
+        <div class="overlay"></div>
         <%@include file="components/recepFooter.html" %>
         <script src="assets/js/jquery-3.2.1.min.js"></script>
         <script src="assets/js/popper.min.js"></script>
@@ -136,9 +133,20 @@
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
-
+//==============================Loading Page=========================================
+           $(document).ajaxStart(function () {
+            $("div").addClass("loading");
+        });
+        $(document).ajaxStop(function () {
+            $("div").removeClass("loading");
+        });
+            
+            
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
+                var packageName = sessionStorage.getItem("packageName");
+                document.getElementById("packageName").innerHTML = packageName;
+                console.log(packageName);
                 var dataPackage = JSON.parse(localStorage.getItem("dataPackage"));
                 var valueArray = [];
                 var arrayTotal = [];
@@ -149,78 +157,73 @@
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/packagetest/findbyname/" + dataPackage.name,
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + dataPackage.id,
                     success: function (data) {
-//                        var a = JSON.stringify(data);
+                        var a = JSON.stringify(data);
+                        var b = JSON.parse(a);
+                        console.log(b);
+                        console.log(a);
                         for (var i = 0; i < data.length; i++) {
 
-//                        $('#testPackageTable tbody').on('click', 'td', function ()
-//                        {
-//                            var tr = $(this).closest("tr");
-//                            var rowindex = tr.index();
-//                            table = document.getElementById("testPackageTable");
-//                            tr = table.getElementsByTagName("tr");
-//                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-//                            txtValue = td.textContent;
-//                            $.each(data, function (index, value) {
-//                                if (value.name === txtValue) {
-//                                    console.log(txtValue);
-//                                    localStorage.setItem("data", JSON.stringify(value));
-//                                }
-//                            });
-//
-//                        }
-//                        );
-//                        $('td').click(function () {
-//                            var row_index = $(this).parent().index();
-//
-//                        });
-//                                   
+           
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",
                                 contentType: "application/json; charset=UTF-8",
                                 headers: {
                                     Authorization: 'Bearer ' + token},
-                                url: "https://bt-application.herokuapp.com/api/testresultsample/findbytestid/" + data[i].testId.id,
-                                success: function (values) {
-                                    testName.push(values[0].testId.name);
-                                    valueArray.push(values[0].testId.name);
-                                    for (var i = 0; i < values.length; i++) {
-                                        if (values[i].type === 'Male') {
-                                            valueArray.splice(1, 0, values[i].indexValueMin + " - " + values[i].indexValueMax);
-                                        }
-                                        if (values[i].type === 'Female') {
-                                            valueArray.splice(2, 0, values[i].indexValueMin + " - " + values[i].indexValueMax);
-                                        }
-//                                        if (values[i].type === 'Children') {
-//                                            valueArray.splice(3, 0, values[i].indexValueMin + " - " + values[i].indexValueMax);
-//                                        }
-                                    }
-                                    valueArray.push(" ");
-                                    arrayTotal.push(valueArray);
-                                    valueArray = [];
-                                    if (arrayTotal.length === data.length) {
-                                        localStorage.setItem("testName", testName);
-                                        $('#testPackageTable').append('<caption style="caption-side: top">' + dataPackage.name + '</caption>');
+                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" +dataPackage.id,
+                                success: function (data) {
 
-                                        $('#testPackageTable').DataTable({
-                                            data: arrayTotal,
-                                            columns: [
-                                                {data: '0'},
-                                                {data: '1'},
-                                                {data: '2'},
-                                                {data: '3'},
-//                                                {
-//                                                    defaultContent: '<td id="actionIcon" class="close"><button type="button" class="close" aria-label="Close"><span class="deleteButton" aria-hidden="true">&times;</span></button></td>'
-//                                                }
-                                            ],
-                                            "bDestroy": true,
-                                            "bFilter": false,
-                                            "bPaginate": false,
-                                            "bInfo": false,
-                                        });
-                                    }
+
+                                var mainData = [];
+                                console.log(data);
+                                data.forEach(element => {
+                                    var dataShow = new Object();
+                                    dataShow.name = element.name;
+                                    dataShow.description = element.description;
+
+                                    dataShow.maleIndex = '-';
+                                    dataShow.femaleindex = '-';
+                                    dataShow.childIndex = '-'
+                                    
+                                    element.samplelst.forEach(e => {
+                                        if (e.type === 'Male' || e.type === 'male') {
+                                            dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        } else if (e.type === 'Female' || e.type === 'female') {
+                                            dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                        } else if (e.type === 'Child' || e.type === 'child') {
+                                            dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                        }
+                                    });
+                                    mainData.push(dataShow);
+                                });
+                                
+                                localStorage.setItem("testName", testName);
+//                                $('#testPackageTable').append('<caption style="caption-side: top">' + packageName + '</caption>');
+                                $('#testPackageTable').DataTable({
+                            data: mainData,
+                            columns: [
+                                        { data: 'name' },
+                                        
+                                        {
+                                            data: 'maleIndex',
+                                        },
+                                        {
+                                            data: 'femaleindex',
+                                        },
+                                        {
+                                            data: 'childIndex',
+                                        },
+                                        
+                            ],
+                                    "bDestroy": true,
+                                    "bFilter": false,
+                                    "bPaginate": false,
+                                    "bInfo": false,
+
+                                });
+
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.log(' Error in processing! ' + textStatus);
@@ -229,41 +232,7 @@
                             })
 
                         }
-//                        $('#testPackageTable tbody').on('click', 'button', function () {
-//
-//                            var tr = $(this).closest("tr");
-//                            var rowindex = tr.index();
-//                            table = document.getElementById("testPackageTable");
-//                            tr = table.getElementsByTagName("tr");
-//                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-//                            txtValue = td.textContent;
-//                            for (var i = 0; i < data.length; i++) {
-//                                if (data[i].testId.name === txtValue) {
-//                                    $.ajax({
-//                                        type: "DELETE",
-//                                        dataType: "json",
-//                                        contentType: "application/json; charset=utf-8",
-//                                        headers: {
-//                                            Authorization: 'Bearer ' + token},
-//                                        url: "https://bt-application.herokuapp.com/api/packagetest/" + data[i].id,
-//                                        complete: function (jqXHR) {
-//                                            if (jqXHR.status === 200) {
-//                                                for (var k = 0; k < testName.length; k++) {
-//                                                    if (txtValue === testName[k]) {
-//                                                        testName.splice(k, 1);
-//                                                        localStorage.setItem("testName", testName);
-//                                                        window.location.href = "test-detail.jsp";
-//
-//                                                    }
-//                                                }
-//
-//                                            }
-//                                        }
-//                                    });
-//                                }
-//                            }
-//                        });
-//                        var b = JSON.parse(a);
+
 
                     },
                     error: function (jqXHR, textStatus, errorThrown) {

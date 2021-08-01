@@ -4,7 +4,7 @@
             <div class="header">
                 <div class="header-left">
                     <a href="receptionistIndex.jsp" class="logo">
-                        <img src="assets/img/logo.png" width="35" height="35" alt=""> <span>MPMR</span>
+                        <img src="assets/img/logo.png" width="35" height="35" alt=""> <span>PHR</span>
                     </a>
                 </div>
                 <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
@@ -108,15 +108,30 @@
                 </div>
             </div>
             <script>
-            var url = localStorage.getItem("image");
+            var url = sessionStorage.getItem("avatar");
             $('.rounded-circle').attr({
                 'src': url,
             });
+            
             $(".Logout").click(function (event) {
-                localStorage.setItem("key", "");
+                sessionStorage.removeItem('key');
+                sessionStorage.removeItem('name');
+                sessionStorage.removeItem('image');
+                sessionStorage.removeItem('recepID');
+                sessionStorage.removeItem('clinicID');
+//                sessionStorage.setItem("key", "");
             });
-            var token = localStorage.getItem("key");
-            if (token === "") {
+            var token = sessionStorage.getItem("key");
+            console.log(token);
+                                                       //redirect to login when user not login
+            if (token == null) {
                 document.location.href = "login.html";
             }
+            var doctorID = sessionStorage.getItem("recepID");
+            var cliID = sessionStorage.getItem("clinicID");
+            var user = sessionStorage.getItem("name");
+            
+            var firstName = user.split(" ");
+            var name = firstName[firstName.length - 1];
+            $("#welcomeUser").text(name);
         </script>

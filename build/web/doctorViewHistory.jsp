@@ -107,7 +107,7 @@
 
 
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 var id = localStorage.getItem("userId");
                 var arrayTestRequest = [];
                 var arrayTestRequestTotal = [];

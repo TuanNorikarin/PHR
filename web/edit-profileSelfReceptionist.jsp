@@ -278,7 +278,7 @@
                                         var phone = $("input[id='phone']").val();
                                         var avatar = $("input[id='avatar']").val();
                                         var status = $("input[name='status']").val();
-                                        var token = localStorage.getItem("key");
+                                        var token = sessionStorage.getItem("key");
                                         var selectGen = $('input[id="male"]:checked').val();
                                         if (selectGen === "on") {
                                         gender = 0;

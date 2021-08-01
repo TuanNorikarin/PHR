@@ -117,14 +117,44 @@
     <script src="assets/js/jquery.slimscroll.js"></script>
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
-        window.onload = function () {
-            var token = localStorage.getItem("key");
+            var token = sessionStorage.getItem("key");
+            var phone = sessionStorage.getItem("user");
+            sessionStorage.getItem("name");
+            
+//            console.log(phone);
+            window.onload = function () {
+            
             
             $.ajax({
                 type: "GET",
                 dataType: "text",
                 contentType: "application/json; charset=utf-8",
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: 'Bearer ' + token},
+
+                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin/phone-account",
+                success: function (data) {
+                    var infor = jQuery.parseJSON(data);
+                    console.log(infor);
+//                    var name = sessionStorage.setItem("name", infor.name);
+//                    var image = sessionStorage.setItem("avatar", infor.image);
+//                    sessionStorage.setItem("id", infor.id);
+                    
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+
+                }
+                
+            });
+            
+            $.ajax({
+                type: "GET",
+                dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
                     Authorization: 'Bearer ' + token},
 
                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role",

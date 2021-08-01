@@ -118,13 +118,36 @@
     <script src="assets/js/jquery.slimscroll.js"></script>
     <script src="assets/js/app.js"></script>
     <script type="text/javascript">
-        window.onload = function () {
+        
+            var token = sessionStorage.getItem("key");
+            console.log(token);
+            var phone = sessionStorage.getItem("user");
+            console.log(phone);
+            
+            window.onload = function () {
 //            localStorage.clear();
-            var clinicId = localStorage.getItem("clinicId");
-            clinicId = 1;
-            var token = localStorage.getItem("key");
+            
 
             $.ajax({
+                type: "GET",
+                dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: 'Bearer ' + token},
+
+                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionist/phone-account",
+                success: function (data) {
+                    var infor = jQuery.parseJSON(data);
+                    console.log(infor);
+                    var name = sessionStorage.setItem("name", infor.name);
+                    var image = sessionStorage.setItem("avatar", infor.image);
+                    var clinicId = infor.clinicId;
+                    sessionStorage.setItem("clinicID", clinicId);
+                    var recepID = infor.id;
+                    sessionStorage.setItem("recepID", recepID);
+                    
+                    $.ajax({
                 type: "GET",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
@@ -143,15 +166,25 @@
 
                 }
             });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+
+                }
+                
+            });
+            
+            
+            
+            
+
         };
         $(document).ajaxStart(function () {
             $("div").addClass("loading");
         });
         $(document).ajaxStop(function () {
             $("div").removeClass("loading");
-        });
-        
-       
+        });       
 
     </script>
 

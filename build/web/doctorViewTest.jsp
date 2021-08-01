@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -64,16 +64,16 @@
                         </form>-->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
                         <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
                             <thead>
                                 <tr>
-                                    <th style="width: 25%">Name</th>
+                                    <th style="width: 30%">Name</th>
 
-                                    <th id='description' style="width: 30%">Description</th>
+                                    <th style="width: 30%">Description</th>
 
 
-                                    <th style="width: 5%" class="text-right">Action</th>
+                                    <th style="width: 10%" class="text-right">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,7 +84,11 @@
 
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
-                                            
+                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="edit-patient.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -118,14 +122,14 @@
             
             
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/package/getall",
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/packages/packages",
                     success: function (data) {
                         var a = JSON.stringify(data);
                         $('#patientTable tbody').on('click', 'td', function ()
@@ -139,6 +143,8 @@
                             $.each(data, function (index, value) {
                                 console.log(value.name);
                                 if (value.name === txtValue) {
+                                    console.log(value.name);
+                                    sessionStorage.setItem("packageName", value.name);
                                     localStorage.setItem("dataPackage", JSON.stringify(value));
                                 }
                             });
@@ -167,9 +173,9 @@
                             ],
                             "bDestroy": true,
                             "bFilter": true,
-                            "createdRow": function (row, data, dataIndex) {
-                                $('td:eq(1)', row).css('display', 'none');
-                            }
+//                            "createdRow": function (row, data, dataIndex) {
+//                                $('td:eq(1)', row).css('display', 'none');
+//                            }
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {

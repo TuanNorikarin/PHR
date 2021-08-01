@@ -98,13 +98,13 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="clinic_active" value="on" checked>
                                 <label class="form-check-label" for="clinic_active">
-                                    Active
+                                    Enable
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="clinic_inactive" value="on">
                                 <label class="form-check-label" for="clinic_inactive">
-                                    Inactive
+                                    Disable
                                 </label>
                             </div>
                         </div>
@@ -156,15 +156,55 @@
                                                     $('#imgPreview').attr('src', "assets/img/user.jpg");
                                                 }
                                             }
-//                =====================================Insert===============================================
-                                            $(document).ready(function () {
-//                                                function uuidv4() {
-//                                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//                                                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-//                                                        return v.toString(16);
-//                                                    });
-//                                                }
-                                                var firebaseConfig = {
+//                =====================================Update===============================================
+//                                            var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
+                                                var clinicID = JSON.parse(localStorage.getItem("clinicID"));
+                                                console.log(clinicID +" id");
+                                                var newImg;
+                                            window.onload = function () {
+                                                
+                                                
+                                                $("#imgClinic").change(function () {
+                                                     var formData = new FormData();
+                                                     var files = $("#imgClinic").get(0).files;
+                                                     if (files.length > 0) {
+                                                            formData.append("image", files[0]);
+                                                            formData.append("role", "clinic");
+                                                        }
+                                                      
+    
+                                                      
+                                                        $.ajax({
+                                                            headers: {
+                                                                Authorization: 'Bearer ' + token,
+                                                            },
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + clinicID +"/clinic",
+                                                            type:"POST",
+                                                            processData: false,
+                                                            contentType: false,
+                                                            data: formData,
+                                                            success: function (response) {
+//                                                                alert("OK rồi");
+                                                                newImg = response;
+                                                            },
+                                                            error: function (er) {
+//                                                                alert("Lỗiiiiiiiiiiiiii");
+                                                            }
+
+                                                        });
+                                                        });
+                                                        
+                                                        
+                                                $.ajax({
+                                                        type: "GET",
+                                                        dataType: "json",
+                                                        contentType: "application/json",
+                                                         headers: {
+                                                            Authorization: 'Bearer ' + token},
+                                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" +clinicID,
+//                                                        
+                                                        success: function (data) { 
+                                                    var firebaseConfig = {
                                                     apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
                                                     authDomain: "upload-image-45245.firebaseapp.com",
                                                     databaseURL: "https://upload-image-45245.firebaseio.com",
@@ -173,10 +213,14 @@
                                                     messagingSenderId: "758652365413",
                                                     appId: "1:758652365413:web:f009f179396e4af4de748c",
                                                     measurementId: "G-S5ECRSMKRB"
-                                                };
+                                                        };
 
                                                 // Initialize Firebase
                                                 firebase.initializeApp(firebaseConfig);
+                                                
+                                                var newImg = data.image;
+                                                var idUpdate = data.id;
+                                                
                                                 $("#inputClinicname").click(function () {
                                                     $('#inputClinicname').removeClass('error');
                                                     document.getElementById('messageClinicname').innerHTML = '';
@@ -193,20 +237,19 @@
                                                     $('#inputPhone').removeClass('error');
                                                     document.getElementById('messagePhone').innerHTML = '';
                                                 });
-                                                var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
-                                                console.log(clinicInf +" dsds");
                                                 
-                                                $("input[name='clinicName']").val(clinicInf.name);
-                                                $("input[name='district']").val(clinicInf.district);
+                                                
+                                                $("input[name='clinicName']").val(data.name);
+                                                $("input[name='district']").val(data.district);
 //                                                
-                                                $("textarea[name='description']").val(clinicInf.description);
-                                                $("input[name='address']").val(clinicInf.address);
-                                                $("input[name='phone']").val(clinicInf.phone);
-//                                                $("#clinic_active").val(clinicInf.status);
-                                                var image = clinicInf.image;
+                                                $("textarea[name='description']").val(data.description);
+                                                $("input[name='address']").val(data.address);
+                                                $("input[name='phone']").val(data.phone);
+//                                                $("#clinic_active").val(data.status);
+                                                var image = data.image;
                                                 $("#imgPreview").attr('src', image);
-                                                var statusOld = clinicInf.status;
-                                                if (statusOld === "Active") {
+                                                var statusOld = data.status;
+                                                if (statusOld === "enable") {
                                                     $("#clinic_active").prop("checked", true);
                                                 } else {
                                                     $("#clinic_inactive").prop("checked", true);
@@ -221,7 +264,7 @@
                                                     document.getElementById('messageDistrict').innerHTML = '';
                                                      $('#inputPhone').removeClass('error');
                                                     document.getElementById('messagePhone').innerHTML = '';
-                                                    var imageOld = clinicInf.image;
+                                                    var imageOld = data.image;
                                                     var clinicName = $("input[name='clinicName']").val(); //lấy giá trị trong input user
 
                                                     var district = $("input[name='district']").val();
@@ -231,12 +274,12 @@
                                                     var phone = $("input[name='phone']").val();
                                                     var avatar = $("input[name='avatar']").val();
                                                     var status;
-                                                    var token = localStorage.getItem("key");
+                                                    var token = sessionStorage.getItem("key");
                                                     var selectSta = $('input[id="clinic_active"]:checked').val();
                                                     if (selectSta === "on") {
-                                                        status = "Active";
+                                                        status = "enable";
                                                     } else {
-                                                        status = "Inactive";
+                                                        status = "disbale";
                                                     }
                                                     console.log(status);
                                                     if (clinicName.length === 0) {
@@ -286,24 +329,8 @@
                                                         document.getElementById('messagePhone').style.color = 'red';
                                                         document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                     } else {
-                                                        toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                                        function uploadImage() {
-                                                            const ref = firebase.storage().ref();
-                                                            const file = document.querySelector("#imgClinic").files[0];
-                                                            if (file) {
-                                                                const name = +new Date() + "-" + file.name;
-                                                                const metadata = {
-                                                                    contentType: file.type
-                                                                };
-                                                                const task = ref.child(name).put(file, metadata);
-                                                                task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                                                    ajax(url);
-                                                                });
-                                                            } else {
-                                                                ajax(imageOld);
-                                                            }
-                                                        }
-                                                        function ajax(url) {
+                                                        toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                        
                                                             return  $.ajax({
                                                                 type: "PUT",
                                                                 dataType: "json",
@@ -312,11 +339,11 @@
                                                                     Authorization: 'Bearer ' + token},
                                                                 data: JSON.stringify({
                                                                     "address": address,
-                                                                    "clinicGroupId": "1",
+                                                                    "clinicGroupId": 1,
                                                                     "coordinate": "",
                                                                     "name": clinicName,
-                                                                    "id": clinicInf.id,
-                                                                    "image": url,
+                                                                    "id": idUpdate,
+                                                                    "image": newImg,
                                                                     "phone": phone,
                                                                     "status": status,
                                                                     "district": district,
@@ -326,15 +353,20 @@
                                                                 complete: function (jqXHR) {
                                                                     console.log(jqXHR.status);
                                                                     if (jqXHR.status === 200) {
+                                                                        alert("Update Successfully");
                                                                         window.location.href = "clinics.jsp";
                                                                     }
                                                                 }
                                                             });
-                                                        }
-                                                        uploadImage();
+//                                                        }
+//                                                        uploadImage();
                                                     }
-                                                });
-                                            });
+                                                });                 
+                                                            
+                                                       }});      
+
+                                                
+                                            };
         </script>
     </body>
 

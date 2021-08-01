@@ -95,11 +95,11 @@
                                     <span id='message'></span>
                                 </div>
                             </div>
-<!--                            <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date of Birth</label>
                                     <div class="cal-icon">
-                                        <input type="text" name="dob" class="form-control datetimepicker">
+                                        <input type="text" name="dob" class="form-control datetimepicker" data-date-format="YYYY/MM/DD">
                                     </div>
                                 </div>
                             </div>
@@ -118,6 +118,7 @@
                                     </div>
                                 </div>
                             </div>
+<!--
                             <div class="col-sm-12">
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -158,7 +159,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <label class="display-block">Status</label>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="patient_active" value="on" checked>
@@ -172,7 +173,7 @@
                                     Inactive
                                 </label>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="m-t-20 text-center">
                             <button id="createPatient" class="btn btn-primary submit-btn">Create Receptionist</button>
                         </div>
@@ -244,13 +245,7 @@
                                                             }
                                                         }
                                                     });
-//                                                    function uuidv4() {
-//                                                        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//                                                            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-//                                                            return v.toString(16);
-//                                                        });
-//                                                    }
-//                                                    ;
+
 
                                                     function validateEmail(email)
                                                     {
@@ -359,19 +354,19 @@
 //                                                        var username = $("input[name='username']").val();
                                                         var password = $("input[name='password']").val();
                                                         var clinicID = $("select[id='clinicID']").val();
-//                                                        var dob = $("input[name='dob']").val();
-//                                                        var gender = $("input[name='gender']").val();
+                                                        var dob = $("input[name='dob']").val();
+                                                        var gender = $("input[name='gender']").val();
 //                                                        var mail = $("input[name='email']").val();
 //                                                        var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
                                                         var status = $("input[name='status']").val();
-                                                        var token = localStorage.getItem("key");
-//                                                        var selectGen = $('input[id="male"]:checked').val();
-//                                                        if (selectGen === "on") {
-//                                                            gender = 1;
-//                                                        } else {
-//                                                            gender = 0;
-//                                                        }
+                                                        var token = sessionStorage.getItem("key");
+                                                        var selectGen = $('input[id="male"]:checked').val();
+                                                        if (selectGen === "on") {
+                                                            gender = "Female";
+                                                        } else {
+                                                            gender = "Male";
+                                                        }
 
                                                         var selectSta = $('input[id="patient_active"]:checked').val();
                                                         if (selectSta === "on") {
@@ -392,16 +387,7 @@
                                                                 document.getElementById('messageLastname').style.color = 'red';
                                                                 document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
                                                             }
-//                                                            if (username.length > 30 || username.length < 6) {
-//                                                                $('#inputUsername').addClass('error');
-//                                                                document.getElementById('messageUsername').style.color = 'red';
-//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-//                                                            }
-//                                                            if (validateEmail(mail) === false && mail !== "") {
-//                                                                $('#inputEmail').addClass('error');
-//                                                                document.getElementById('messageEmail').style.color = 'red';
-//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-//                                                            }
+
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -417,16 +403,7 @@
                                                             $('#inputLastname').addClass('error');
                                                             document.getElementById('messageLastname').style.color = 'red';
                                                             document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
-//                                                            if (username.length > 30 || username.length < 6) {
-//                                                                $('#inputUsername').addClass('error');
-//                                                                document.getElementById('messageUsername').style.color = 'red';
-//                                                                document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-//                                                            }
-//                                                            if (validateEmail(mail) === false && mail !== "") {
-//                                                                $('#inputEmail').addClass('error');
-//                                                                document.getElementById('messageEmail').style.color = 'red';
-//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-//                                                            }
+
                                                             if (password.length > 30 || password.length < 6) {
                                                                 $('#inputPassword').addClass('error');
                                                                 document.getElementById('messagePassword').style.color = 'red';
@@ -438,41 +415,7 @@
                                                                 document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                             }
                                                         }
-//                                                        else if (username.length > 30 || username.length < 6) {
-//                                                            $('#inputUsername').addClass('error');
-//                                                            document.getElementById('messageUsername').style.color = 'red';
-//                                                            document.getElementById('messageUsername').innerHTML = 'Username must be between 6-30 charcters';
-//                                                            if (validateEmail(mail) === false && mail !== "") {
-//                                                                $('#inputEmail').addClass('error');
-//                                                                document.getElementById('messageEmail').style.color = 'red';
-//                                                                document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-//                                                            }
-//                                                            if (password.length > 30 || password.length < 6) {
-//                                                                $('#inputPassword').addClass('error');
-//                                                                document.getElementById('messagePassword').style.color = 'red';
-//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-//                                                            }
-//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-//                                                                $('#inputPhone').addClass('error');
-//                                                                document.getElementById('messagePhone').style.color = 'red';
-//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-//                                                            }
-//                                                        }
-//                                                        else if (validateEmail(mail) === false && mail !== "") {
-//                                                            $('#inputEmail').addClass('error');
-//                                                            document.getElementById('messageEmail').style.color = 'red';
-//                                                            document.getElementById('messageEmail').innerHTML = 'Incorrect email format ✘';
-//                                                            if (password.length > 30 || password.length < 6) {
-//                                                                $('#inputPassword').addClass('error');
-//                                                                document.getElementById('messagePassword').style.color = 'red';
-//                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-//                                                            }
-//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-//                                                                $('#inputPhone').addClass('error');
-//                                                                document.getElementById('messagePhone').style.color = 'red';
-//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-//                                                            }
-//                                                        }
+
                                                         else if (password.length > 30 || password.length < 6) {
                                                             $('#inputPassword').addClass('error');
                                                             document.getElementById('messagePassword').style.color = 'red';
@@ -515,20 +458,14 @@
                                                                         Authorization: 'Bearer ' + token},
                                                                     data: JSON.stringify({
 //                                                                        "address": address,
-//                                                                        "gender": gender,
-//                                                                        "dob": dob,
-//                                                                        "mail": email,
+                                                                        "gender": gender,
+                                                                        "dob": dob,
                                                                         "name": lastName + " " + firstName,
-//                                                                        "id": uuidv4(),
                                                                         "image": url,
                                                                         "password": password,
                                                                         "phone": phone,
-//                                                                        "roleId": {
-//                                                                            "id": 2
-//
-//                                                                        },
-                                                                        "status": status,
-//                                                                        "clinicId": {"id": clinicID},
+
+//                                                                        "status": status,
                                                                         "clinicId": clinicID,
                                                                         "token": ""
 

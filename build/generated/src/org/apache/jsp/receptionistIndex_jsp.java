@@ -61,7 +61,7 @@ public final class receptionistIndex_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("        \r\n");
       out.write("        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=0\">\r\n");
       out.write("        <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"assets/img/logo-dark.png\">\r\n");
-      out.write("        <title>MPMR - Manage Personal Medical Record</title>\r\n");
+      out.write("        <title>PHR - Manage Personal Health Record</title>\r\n");
       out.write("        <link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/bootstrap.min.css\">\r\n");
       out.write("        <link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/font-awesome.min.css\">\r\n");
       out.write("        <link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/style.css\">\r\n");
@@ -772,10 +772,7 @@ public final class receptionistIndex_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("                                            <div class=\"media\">\n");
       out.write("                                                <span class=\"avatar\">G</span>\n");
       out.write("                                                <div class=\"media-body\">\n");
-      out.write("                                                    <p class=\"noti-details\"><span class=\"noti-title\">Rolland Webber</span> completed task <span class=\"noti-title\">Patient and Doctor video conferencing</span></p>\n");
-      out.write("                                                    <p class=\"noti-time\"><span class=\"notification-time\">12 mins ago</span></p>\n");
-      out.write("                                                </div>\n");
-      out.write("                                            </div>\n");
+     out.write("                                            </div>\n");
       out.write("                                        </a>\n");
       out.write("                                    </li>\n");
       out.write("                                    <li class=\"notification-message\">\n");
@@ -995,7 +992,7 @@ public final class receptionistIndex_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("                </div>\r\n");
       out.write("            </div>\r\n");
       out.write("        </div>\r\n");
-      out.write("         <div class=\"overlay\"></div>\r\n");
+      out.write("        <div class=\"overlay\"></div>\r\n");
       out.write("    </div>\r\n");
       out.write("    ");
       out.write("<!--<div class=\"notification-box\">\n");
@@ -1317,44 +1314,11 @@ public final class receptionistIndex_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("    <script src=\"assets/js/app.js\"></script>\r\n");
       out.write("    <script type=\"text/javascript\">\r\n");
       out.write("        window.onload = function () {\r\n");
+      out.write("            sessionStorage.clear();\r\n");
+      out.write("//            localStorage.clear();\r\n");
       out.write("            var clinicId = localStorage.getItem(\"clinicId\");\r\n");
+      out.write("            clinicId = 9;\r\n");
       out.write("            var token = localStorage.getItem(\"key\");\r\n");
-      out.write("            $.ajax({\r\n");
-      out.write("                type: \"GET\",\r\n");
-      out.write("                dataType: \"text\",\r\n");
-      out.write("                contentType: \"application/json; charset=utf-8\",\r\n");
-      out.write("                headers: {\r\n");
-      out.write("                    Authorization: 'Bearer ' + token},\r\n");
-      out.write("                url: \"https://bt-application.herokuapp.com/api/userinfor/count/2/\" + clinicId,\r\n");
-      out.write("                success: function (data) {\r\n");
-      out.write("                    document.getElementById(\"doctorCount\").innerHTML = data;\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("                },\r\n");
-      out.write("                error: function (jqXHR, textStatus, errorThrown) {\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("                }\r\n");
-      out.write("            });\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("            $.ajax({\r\n");
-      out.write("                type: \"GET\",\r\n");
-      out.write("                dataType: \"text\",\r\n");
-      out.write("                contentType: \"application/json; charset=utf-8\",\r\n");
-      out.write("                headers: {\r\n");
-      out.write("                    Authorization: 'Bearer ' + token},\r\n");
-      out.write("                url: \"https://bt-application.herokuapp.com/api/userinfor/count/4/\" + clinicId,\r\n");
-      out.write("                success: function (data) {\r\n");
-      out.write("                    document.getElementById(\"receptionistCount\").innerHTML = data;\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("                },\r\n");
-      out.write("                error: function (jqXHR, textStatus, errorThrown) {\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
-      out.write("                }\r\n");
-      out.write("            });\r\n");
       out.write("\r\n");
       out.write("            $.ajax({\r\n");
       out.write("                type: \"GET\",\r\n");
@@ -1362,18 +1326,12 @@ public final class receptionistIndex_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("                contentType: \"application/json; charset=utf-8\",\r\n");
       out.write("                headers: {\r\n");
       out.write("                    Authorization: 'Bearer ' + token},\r\n");
-      out.write("                url: \"https://bt-application.herokuapp.com/api/examination/findbyclinicid/\" + clinicId,\r\n");
+      out.write("                url: \"http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/\" + clinicId,\r\n");
       out.write("                success: function (data) {\r\n");
-      out.write("                    var list = [];\r\n");
-      out.write("                    var length = data.length.toString();\r\n");
-      out.write("                    document.getElementById(\"examCount\").innerHTML = length;\r\n");
-      out.write("                    for (var i = 0; i < data.length; i++) {\r\n");
-      out.write("                        if (!list.includes(data[i].userId.id)) {\r\n");
-      out.write("                            list.push(data[i].userId.id);\r\n");
-      out.write("                        }\r\n");
-      out.write("                    }\r\n");
-      out.write("                    document.getElementById(\"patientCount\").innerHTML = list.length;\r\n");
-      out.write("\r\n");
+      out.write("                    document.getElementById(\"doctorCount\").innerHTML = data.totalDoctor;\r\n");
+      out.write("                    document.getElementById(\"patientCount\").innerHTML = data.totalPatient;\r\n");
+      out.write("                    document.getElementById(\"receptionistCount\").innerHTML = data.totalReceptionist;\r\n");
+      out.write("                    document.getElementById(\"examCount\").innerHTML = data.totalExamination;\r\n");
       out.write("\r\n");
       out.write("                },\r\n");
       out.write("                error: function (jqXHR, textStatus, errorThrown) {\r\n");
@@ -1388,6 +1346,8 @@ public final class receptionistIndex_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("        $(document).ajaxStop(function () {\r\n");
       out.write("            $(\"div\").removeClass(\"loading\");\r\n");
       out.write("        });\r\n");
+      out.write("        \r\n");
+      out.write("       \r\n");
       out.write("\r\n");
       out.write("    </script>\r\n");
       out.write("\r\n");
@@ -1395,7 +1355,14 @@ public final class receptionistIndex_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("</body>\r\n");
       out.write("\r\n");
 >>>>>>> 37d0ead8f210066d90766c8df68f55d010034e2e
+<<<<<<< HEAD
       out.write("</html>");
+=======
+      out.write("</html>");      out.write("                                                    <p class=\"noti-details\"><span class=\"noti-title\">Rolland Webber</span> completed task <span class=\"noti-title\">Patient and Doctor video conferencing</span></p>\n");
+      out.write("                                                    <p class=\"noti-time\"><span class=\"notification-time\">12 mins ago</span></p>\n");
+      out.write("                                                </div>\n");
+ 
+>>>>>>> b186e222fad71e308a3dfafb7132cfd23bdb0e27
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
         out = _jspx_out;

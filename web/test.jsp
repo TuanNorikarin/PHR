@@ -33,6 +33,10 @@
             #description{
                 display: none;    
             }
+            div.table-responsive{
+             table-layout: fixed;   
+    width: 100% !important;
+            }
             
         </style>
     </head>
@@ -50,28 +54,16 @@
                     <a href="add-testPackage.jsp" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Test Package</a>
                 </div>
             </div>
-            <!--            <form role="form" id="form-buscar">
-                            <div class="form-group">
-                                <div class="input-group ">
-                                    <input id="1" class="custom-seach " type="text" name="search" placeholder="Search..." required/>
-                                    <span class="input-group-btn">
-                                        &nbsp;
-                                        <button class="btn btn-success custom-btn " type="submit">
-                                            <i class="fa fa-search"></i> Search
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>-->
+            
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
                         <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
                             <thead>
                                 <tr>
                                     <th style="width: 30%">Name</th>
 
-                                    <th id='description' style="width: 30%">Description</th>
+                                    <th style="width: 30%">Description</th>
 
 
                                     <th style="width: 10%" class="text-right">Action</th>
@@ -113,18 +105,22 @@
         <script src="assets/js/app.js"></script>
         <script type="text/javascript">
             window.onload = function () {
-                var token = localStorage.getItem("key");
+                var token = sessionStorage.getItem("key");
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
                         Authorization: 'Bearer ' + token},
-                    url: "https://bt-application.herokuapp.com/api/package/getall",
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/packages/packages",
                     success: function (data) {
                         var a = JSON.stringify(data);
                         localStorage.setItem("allDataPackage", JSON.stringify(data));
-                        $('#patientTable tbody').on('click', 'td', function ()
+                        
+        
+        
+//        ============================= Select to Update========================================
+                         $('#patientTable tbody').on('click', 'td', function ()
                         {
                             var tr = $(this).closest("tr");
                             var rowindex = tr.index();
@@ -134,6 +130,7 @@
                             txtValue = td.textContent;
                             $.each(data, function (index, value) {
                                 if (value.name === txtValue) {
+                                    sessionStorage.setItem("packageName", value.name);
                                     localStorage.setItem("dataPackage", JSON.stringify(value));
                                 }
                             });
@@ -144,27 +141,31 @@
                             var row_index = $(this).parent().index();
 
                         });
-//                                   
+//=================================================================================================
 
 
 
                         var b = JSON.parse(a);
-
+                        console.log(b);
+                        console.log(a);
                         $('#patientTable').DataTable({
                             data: b,
                             columns: [
                                 {data: 'name'},
                                 {data: 'description'},
                                 {
-                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "test-detail.jsp"> <i class="fa fa-plus"></i> Add Test Index</a><a class = "dropdown-item" href = "edit-testpackage.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
+                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "test-detail.jsp"> <i class="fa fa-plus"></i> View Package Detail</a><a class = "dropdown-item" href = "edit-testpackage.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a></div></div></td>'
 
                                 }
                             ],
                             "bDestroy": true,
                             "bFilter": true,
-                             "createdRow": function (row, data, dataIndex) {
-                                $('td:eq(1)', row).css('display', 'none');
-                            }
+                            "aaSorting": [],
+                            "bSort": false
+                            
+//                             "createdRow": function (row, data, dataIndex) {
+//                                $('td:eq(1)', row).css('display', 'none');
+//                            }
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
