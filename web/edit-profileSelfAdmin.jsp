@@ -125,8 +125,6 @@
 //                =====================================Update===============================================
 
                                                       window.onload = function () {
-//           
-
 
                                                      $("#avatar").change(function () {
                                                      var formData = new FormData();

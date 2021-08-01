@@ -32,7 +32,7 @@
                 margin-left: 200px;
             }
             button#changePass{
-                margin-left: -31%;
+                margin-left: -5%;
 
             }
         </style>
@@ -52,17 +52,17 @@
                     <form class="changePassForm">
                         <div class="col-sm-8">
                             <label>Current Password <span class="text-danger">*</span></label>
-                            <input name="curPass" id="curPass" class="form-control" type="password" onkeyup='check()' required>
-                            <span id='message2'></span>
+                            <input name="curPass" id="curPass" class="form-control" type="password" onkeyup='check()' maxlength="30" minlength="6">
+                            <span id='message2'></span><span id='messagePasswordOld'/></span>
                         </div>
                         <div class="col-sm-8">
                             <label>New Password <span class="text-danger">*</span></label>
-                            <input name="newPass" id="newPass" class="form-control" type="password" onkeyup='check()' required>
-                            <span id='message3'></span>
+                            <input name="newPass" id="newPass" class="form-control" type="password" onkeyup='check()' maxlength="30" minlength="6">
+                            <span id='message3'></span><span id='messagePassword'/></span>
                         </div>
                         <div class="col-sm-8">
                             <label>Confirm Password <span class="text-danger">*</span></label>
-                            <input name="confirm" id="confirm" class="form-control" type="password" onkeyup='check()' required>
+                            <input name="confirm" id="confirm" class="form-control" type="password" onkeyup='check()'maxlength="30" minlength="6">
                             <span id='message'></span>
                         </div>
                         <!--                        <div class="col-sm-6">
@@ -89,7 +89,7 @@
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script type="text/javascript">
-                                var token = sessionStorage.getItem("key");
+                      var token = sessionStorage.getItem("key");
                                 var password = sessionStorage.getItem("password");
 //                                console.log("current Pass: "+password);
                                 var check = function () {
@@ -115,24 +115,49 @@
                                         document.getElementById('message').innerHTML = 'not matching ✘';
                                         $("#changePass").attr("disabled", "disabled");
                                     }
-                                    if(document.getElementById('newPass').value === document.getElementById('curPass').value)
-                                    {
-                                        document.getElementById('message3').style.color = 'red';
-                                        document.getElementById('message3').innerHTML = 'Can not use old password ✘';
-                                        $("#changePass").attr("disabled", "disabled");
-                                    }
-                                    else if(document.getElementById('newPass').value !== document.getElementById('curPass').value && document.getElementById('newPass').value ===
-                                            document.getElementById('confirm').value){
-                                        document.getElementById('message3').style.color = 'green';
-                                        document.getElementById('message3').innerHTML = 'OK ✔';
-                                        $("#changePass").removeAttr("disabled");
-                                    }
+
+                                    
                                     
                                     
                                 };
+                                $("#newPass").click(function () {
+                                    $('#newPass').removeClass('error');
+                                    document.getElementById('messagePassword').innerHTML = '';
+                                });
+                                $("#curPass").click(function () {
+                                    $('#curPass').removeClass('error');
+                                    document.getElementById('messagePasswordOld').innerHTML = '';
+                                });
                                 $("#changePass").click(function (event) {
                                     event.preventDefault();
+                                    var count = 0;
+                                    $('#newPass').removeClass('error');
+                                    document.getElementById('messagePassword').innerHTML = '';
+                                    $('#newPass').removeClass('error');
+                                    document.getElementById('messagePassword').innerHTML = '';
+                                    var curPass = $("input[name='curPass']").val();
+                                    var password = $("input[name='newPass']").val();
+                                    if(curPass.length === 0){
+                                        $('#curPass').addClass('error');
+                                        document.getElementById('messagePasswordOld').style.color = 'red';
+                                        document.getElementById('messagePasswordOld').innerHTML = 'Please input current password';
+                                    }
                                     
+                                    
+                                    else if (password.length > 30 || password.length < 6) {
+                                        $('#newPass').addClass('error');
+                                        document.getElementById('messagePassword').style.color = 'red';
+                                        document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+                                    }
+                                    else if(password === curPass){
+                                        $('#curPass').addClass('error');
+                                        document.getElementById('messagePassword').style.color = 'red';
+                                        document.getElementById('messagePassword').innerHTML = 'Can not use same current password';
+                                    }
+                                    else if (count === 1)
+                                    {
+
+                                    } else {
                                     var newPass = document.getElementById('newPass').value;
                                     $.ajax({
                                         type: "PUT",
@@ -151,6 +176,7 @@
                                             alert("Change Password Successfully");
                                             window.location.href = "profileAdmin.jsp";
                                         }})
+                                    }
                                 })
 
 

@@ -172,6 +172,8 @@
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
+                        
+                        alert("NO AVAILABLE REQUEST AT THIS TIME");
                         console.log(' Error in processing! ' + textStatus);
                     }
 
@@ -197,6 +199,7 @@
                         sessionStorage.setItem("patientGender", gender);
                         window.location.href = "inputResult.jsp";
                     }, error: function (jqXHR, textStatus, errorThrown) {
+                        
                         console.log(errorThrown)
                     }})
             }

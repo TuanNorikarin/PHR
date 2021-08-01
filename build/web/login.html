@@ -126,6 +126,7 @@
                                             sessionStorage.setItem("name", infor.name);
                                             sessionStorage.setItem("avatar", infor.image);
                                             sessionStorage.setItem("accountId", infor.accountId);
+                                            sessionStorage.setItem("id", infor.id);
                                             sessionStorage.setItem("roleID", roleID);
                                             window.location.href = "adminIndex.jsp";
                                         },
@@ -154,8 +155,11 @@
                                                 var infor = jQuery.parseJSON(data);
                                                 console.log(infor);
                                                 var name = sessionStorage.setItem("name", infor.name);
-                                                var image = sessionStorage.setItem("image", infor.image);
+                                                var image = sessionStorage.setItem("avatar", infor.image);
                                                 sessionStorage.setItem("accountId", infor.accountId);
+                                                sessionStorage.setItem("id", infor.id);
+                                                sessionStorage.setItem("clinicID", infor.clinicId);
+                                                sessionStorage.setItem("roleID", roleID);
                                                 window.location.href = "doctorIndex.jsp";
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {
@@ -163,7 +167,6 @@
 
                                             }
                                         });
-//                                        window.location.href = "doctorIndex.jsp";
                                         
                                     }
                                     else if( roleID === "RECEPTIONIST")
@@ -184,8 +187,11 @@
                                                 var infor = jQuery.parseJSON(data);
                                                 console.log(infor);
                                                 sessionStorage.setItem("name", infor.name);
-                                                sessionStorage.setItem("image", infor.image);
+                                                sessionStorage.setItem("avatar", infor.image);
                                                 sessionStorage.setItem("accountId", infor.accountId);
+                                                sessionStorage.setItem("id", infor.id);
+                                                sessionStorage.setItem("clinicID", infor.clinicId);
+                                                sessionStorage.setItem("roleID", roleID);
                                                 window.location.href = "receptionistIndex.jsp";
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {

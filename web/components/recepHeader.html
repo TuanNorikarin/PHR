@@ -116,9 +116,12 @@
             $(".Logout").click(function (event) {
                 sessionStorage.removeItem('key');
                 sessionStorage.removeItem('name');
-                sessionStorage.removeItem('image');
+                sessionStorage.removeItem('avatar');
+                sessionStorage.removeItem('roleID');
+                sessionStorage.removeItem('password');
                 sessionStorage.removeItem('recepID');
                 sessionStorage.removeItem('clinicID');
+                sessionStorage.removeItem('id');
 //                sessionStorage.setItem("key", "");
             });
             var token = sessionStorage.getItem("key");

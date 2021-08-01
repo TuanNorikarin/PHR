@@ -2,6 +2,7 @@ $(document).ready(function () {
     // Bar Chart
     var token = sessionStorage.getItem("key");
     var roleID = sessionStorage.getItem("roleID");
+    var ids = sessionStorage.getItem("id");
     if (roleID === "ADMIN") {
         var q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, td, tb, bth, pn, gv, tp;
             $.ajax({
@@ -129,182 +130,29 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             headers: {
                 Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-01-01 00:00:00.000/2020-01-31 00:00:00.000/" + roleId.clinicId.id,
+            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination/report/" +ids+"/2021",
             success: function (data) {
-                t1 = data;
+                var json = jQuery.parseJSON(data);
+                console.log(json);
+                t1 = json[0];
+                t2 = json[1];
+                t3 = json[2];
+                t4 = json[3];
+                t5 = json[4];
+                t6 = json[5];
+                t7 = json[6];
+                t8 = json[7];
+                t9 = json[8];
+                t10 = json[9];
+                t11 = json[10];
+                t12 = json[11];
             },
             error: function (jqXHR, textStatus, errorThrown) {
 
 
             }
         });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-02-01 00:00:00.000/2020-02-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t2 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-03-01 00:00:00.000/2020-03-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t3 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-04-01 00:00:00.000/2020-04-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t4 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-05-01 00:00:00.000/2020-05-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t5 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-06-01 00:00:00.000/2020-06-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t6 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-07-01 00:00:00.000/2020-07-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t7 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-08-01 00:00:00.000/2020-08-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t8 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-09-01 00:00:00.000/2020-09-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t9 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-10-01 00:00:00.000/2020-10-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t10 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-11-01 00:00:00.000/2020-11-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t11 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/examination/month/2020-12-01 00:00:00.000/2020-12-31 00:00:00.000/" + roleId.clinicId.id,
-            success: function (data) {
-                t12 = data;
-                console.log("a");
-                console.log(t12);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
+        
         $(document).ajaxStop(function () {
             var barChartData = {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

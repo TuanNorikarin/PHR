@@ -99,7 +99,6 @@
 //                console.log(userInf);
                 $('#avatar').attr('src', image);
                 document.getElementById("usernameDisplay").innerHTML = name;
-//                document.getElementById("").innerHTML = userInf.username;
                 document.getElementById("phoneNum").innerHTML = phone;
 
             }

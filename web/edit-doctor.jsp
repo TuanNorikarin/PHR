@@ -121,14 +121,7 @@
                                 </div>
                             </div>
 
-<!--                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Clinic</label><br/>
-                                    <select id="clinicID" name="clinicID" class="select">
 
-                                    </select>
-                                </div>
-                            </div>-->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Avatar</label>
@@ -144,21 +137,7 @@
                                 </div>
                             </div>
                         </div>
-<!--                        <div class="form-group">
-                            <label class="display-block">Status</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="patient_active" value="on" checked>
-                                <label class="form-check-label" for="patient_active">
-                                    Active
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="patient_inactive" value="off">
-                                <label class="form-check-label" for="patient_inactive">
-                                    Inactive
-                                </label>
-                            </div>
-                        </div>-->
+
                         <div class="m-t-20 text-center">
                             <button id="createPatient" class="btn btn-primary submit-btn">Update Doctor</button>
 
@@ -340,28 +319,12 @@
                                                     });
 //                                                    
 
-
-                                                    var firebaseConfig = {
-                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                        authDomain: "upload-image-45245.firebaseapp.com",
-                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                        projectId: "upload-image-45245",
-                                                        storageBucket: "upload-image-45245.appspot.com",
-                                                        messagingSenderId: "758652365413",
-                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                        measurementId: "G-S5ECRSMKRB"
-                                                    };
-
-                                                    // Initialize Firebase
-                                                    firebase.initializeApp(firebaseConfig);
                                                     $("#createPatient").click(function (event) {
                                                         event.preventDefault();
                                                         $('#inputFirstname').removeClass('error');
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
@@ -380,7 +343,6 @@
                                                         var password = $("input[name='password']").val();
                                                         var dob = $("input[name='dob']").val();
                                                         var gender = $("input[name='gender']").val();
-//                                                        var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
 //                                                        
                                                         
@@ -390,20 +352,13 @@
                                                         } else {
                                                             gender = "Female";
                                                         }
-
-//                                                        var selectSta = $('input[id="patient_active"]:checked').val();
-                                                        
+             
                                                         console.log(idUpdate +" idUp");
                                                         console.log(phone +" phone");
                                                         console.log(password +" password");
                                                         console.log(imageOld +" avatar");
                                                         console.log(selectGen +" gender");
                                                         
-//                                                        if (selectSta === "on") {
-//                                                            status = "Active";
-//                                                        } else {
-//                                                            status = "Inactive";
-//                                                        }
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
                                                             $('#inputFirstname').addClass('error');
                                                             document.getElementById('messageFirstname').style.color = 'red';
@@ -452,7 +407,7 @@
                                                         else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                            toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             
                                                                 return   $.ajax({
                                                                     type: "PUT",
@@ -467,14 +422,13 @@
                                                                         "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
                                                                         "password": password,
-//                                                                        
                                                                         "image": newImg,
-                                                                        "token": data.token,
                                                                     }),
                                                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor",
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200 || jqXHR.status === 201) {
+                                                                            
                                                                             window.location.href = "doctors.jsp";
                                                                         }
                                                                     }
