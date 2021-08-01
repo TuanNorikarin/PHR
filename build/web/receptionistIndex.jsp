@@ -143,6 +143,7 @@
                     var name = sessionStorage.setItem("name", infor.name);
                     var image = sessionStorage.setItem("image", infor.image);
                     var clinicId = infor.clinicId;
+                    sessionStorage.setItem("clinicID", clinicId);
                     
                     $.ajax({
                 type: "GET",

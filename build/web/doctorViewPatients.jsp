@@ -122,12 +122,13 @@
                 $("div").removeClass("loading");
             });
 
-
-
-            window.onload = function () {
                 var token = sessionStorage.getItem("key");
-                var clinicId = localStorage.getItem("clinicId");
-                clinicId = 9;
+                var clinicId = sessionStorage.getItem("clinicID");
+                console.log(clinicId);
+                
+            window.onload = function () {
+                
+                
                 $.ajax({
                     type: "GET",
                     dataType: "json",

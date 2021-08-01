@@ -115,8 +115,9 @@
 //========================================== TÌm theo số điện thoại====================================================
             window.onload = function () {
                 var token = sessionStorage.getItem("key");
-                var clinicId = localStorage.getItem("clinicId");
-                clinicId = 9;
+                var clinicId = sessionStorage.getItem("clinicID");
+                console.log(clinicId);
+                
                 $('#buttonPatient').on('click', function () {
                     console.log('button clicked');
                     var searchPatientValue = $('#searchPatient').val();

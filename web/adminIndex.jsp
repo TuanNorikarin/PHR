@@ -119,6 +119,8 @@
     <script type="text/javascript">
             var token = sessionStorage.getItem("key");
             var phone = sessionStorage.getItem("user");
+            sessionStorage.getItem("name");
+            
 //            console.log(phone);
             window.onload = function () {
             

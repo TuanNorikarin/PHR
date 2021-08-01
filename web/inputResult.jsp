@@ -296,10 +296,6 @@
                     var sumDiagnose = document.getElementById("textArea").value;
                     var advise = document.getElementById("textArea1").value;
 
-
-
-
-
                     console.log(sumDiagnose);
                     console.log(advise);
                     console.log(idExamination);

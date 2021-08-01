@@ -82,6 +82,11 @@
             .EditClinic {
                 float: right;
             }
+            div.post-right{
+                position: relative;
+                right: -50px;
+            }
+            
             #pagination-1{}
 
         </style>
@@ -197,7 +202,9 @@
                                                         x = x + '<div id="clinicClick" class="col-sm-6 col-md-6 col-lg-4 pagination__item"><div class="blog grid-blog"><div class="blog-image"><a onclick="getClinic('+data[index].id+')" href="clinic-details.jsp"><img class="img-fluid" src=" '
                                                                     + data[index].image + '" alt=""></a></div><div class="blog-content"><h3 class="blog-title"><a href="clinic-details.jsp">\n\ '
                                                                     + data[index].name + '</a></h3><p>\n\ '
-                                                                    + data[index].address + ', ' + 'Quận ' + data[index].district + '</p><a href="clinic-details.jsp" class="read-more"><i class="fa fa-long-arrow-right"></i> Read More</a><a onclick="getClinic('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
+                                                                    + data[index].address + '</p> '
+                                                                    + 'Quận ' + data[index].district
+                                                                    + '<a onclick="getClinic('+data[index].id+')" href="edit-clinic.jsp" class="read-more EditClinic"><i class="fa fa-long-arrow-right"></i> Edit</a><div class="blog-info clearfix"><div class="post-left"><ul><li><i class="fa fa-check-circle"></i> <span class=' + index + '>'
                                                                     + data[index].status + '</span><span class="clinicId">' + ' ' + data[index].id + '</span></li></ul></div><div class="post-right"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div></div></div></div></div>';
                                                         
                                                         

@@ -92,7 +92,7 @@
                                     <th style="width: 20%">Name</th>
                                     <th style="width: 15%">Male</th>
                                     <th style="width: 15%">Female</th>
-                                    <th style="width: 15%">Result</th>
+                                    <th style="width: 15%">Children</th>
                                     <!--<th style="width: 10%">Delete</th>-->
 
 
@@ -105,11 +105,7 @@
                                     <td id="name"></td>
                                     <td id="male"></td>
                                     <td id="female"></td>
-                                    <td id="result"></td>
-                                    <!--<td id="delete"></td>-->
-
-
-
+                                    <td id="child"></td>
 
 
                                 </tr>
