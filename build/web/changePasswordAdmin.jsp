@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
@@ -52,16 +52,17 @@
                     <form class="changePassForm">
                         <div class="col-sm-8">
                             <label>Current Password <span class="text-danger">*</span></label>
-                            <input name="curPass" id="curPass" class="form-control" type="password" onkeyup='check()'>
+                            <input name="curPass" id="curPass" class="form-control" type="password" onkeyup='check()' required>
                             <span id='message2'></span>
                         </div>
                         <div class="col-sm-8">
                             <label>New Password <span class="text-danger">*</span></label>
-                            <input name="newPass" id="newPass" class="form-control" type="password" onkeyup='check()'>
+                            <input name="newPass" id="newPass" class="form-control" type="password" onkeyup='check()' required>
+                            <span id='message3'></span>
                         </div>
                         <div class="col-sm-8">
                             <label>Confirm Password <span class="text-danger">*</span></label>
-                            <input name="confirm" id="confirm" class="form-control" type="password" onkeyup='check()'>
+                            <input name="confirm" id="confirm" class="form-control" type="password" onkeyup='check()' required>
                             <span id='message'></span>
                         </div>
                         <!--                        <div class="col-sm-6">
@@ -88,8 +89,9 @@
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script type="text/javascript">
-
-                                var password = localStorage.getItem("password");
+                                var token = sessionStorage.getItem("key");
+                                var password = sessionStorage.getItem("password");
+//                                console.log("current Pass: "+password);
                                 var check = function () {
                                     if (document.getElementById('curPass').value ===
                                             password) {
@@ -102,7 +104,8 @@
                                         $("#changePass").attr("disabled", "disabled");
                                     }
                                     if (document.getElementById('newPass').value ===
-                                            document.getElementById('confirm').value && document.getElementById('newPass').value !== "" && document.getElementById('confirm').value !== "") {
+                                            document.getElementById('confirm').value && document.getElementById('newPass').value !== "" && document.getElementById('confirm').value !== "")
+                                    {
                                         document.getElementById('message').style.color = 'green';
                                         document.getElementById('message').innerHTML = 'OK ✔';
                                         $("#changePass").removeAttr("disabled");
@@ -112,12 +115,25 @@
                                         document.getElementById('message').innerHTML = 'not matching ✘';
                                         $("#changePass").attr("disabled", "disabled");
                                     }
+                                    if(document.getElementById('newPass').value === document.getElementById('curPass').value)
+                                    {
+                                        document.getElementById('message3').style.color = 'red';
+                                        document.getElementById('message3').innerHTML = 'Can not use old password ✘';
+                                        $("#changePass").attr("disabled", "disabled");
+                                    }
+                                    else if(document.getElementById('newPass').value !== document.getElementById('curPass').value && document.getElementById('newPass').value ===
+                                            document.getElementById('confirm').value){
+                                        document.getElementById('message3').style.color = 'green';
+                                        document.getElementById('message3').innerHTML = 'OK ✔';
+                                        $("#changePass").removeAttr("disabled");
+                                    }
+                                    
+                                    
                                 };
                                 $("#changePass").click(function (event) {
                                     event.preventDefault();
-                                    var userInf = JSON.parse(localStorage.getItem("userInformation"));
+                                    
                                     var newPass = document.getElementById('newPass').value;
-                                    console.log(userInf);
                                     $.ajax({
                                         type: "PUT",
                                         dataType: "json",
@@ -125,28 +141,15 @@
                                         headers: {
                                             Authorization: 'Bearer ' + token},
                                         data: JSON.stringify({
-                                            "address": userInf.address,
-                                            "gender": userInf.gender,
-                                            "dob": userInf.dob,
-                                            "fullname": userInf.fullname,
-                                            "mail": userInf.mail,
-                                            "id": userInf.id,
-                                            "image": userInf.image,
+                                            
                                             "password": newPass,
-                                            "phone": userInf.phone,
-                                            "roleId": {
-                                                "id": userInf.roleId.id
-
-                                            },
-                                            "status": userInf.status,
-                                            "token": userInf.token,
-                                            "username": userInf.username
+                                            
                                         }),
-                                        url: "https://bt-application.herokuapp.com/api/userinfor/edit",
+                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/account/pw/" +newPass,
                                         complete: function (jqXHR, textStatus) {
-                                            password = localStorage.setItem("password",newPass);
+                                            password = sessionStorage.setItem("password",newPass);
                                             alert("Change Password Successfully");
-                                            window.location.href = "profileDoctor.jsp";
+                                            window.location.href = "profileAdmin.jsp";
                                         }})
                                 })
 

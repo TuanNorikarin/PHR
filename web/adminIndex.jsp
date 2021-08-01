@@ -119,9 +119,11 @@
     <script type="text/javascript">
             var token = sessionStorage.getItem("key");
             var phone = sessionStorage.getItem("user");
+            var pass = sessionStorage.getItem("password");
+            
             sessionStorage.getItem("name");
             
-//            console.log(phone);
+            console.log(pass);
             window.onload = function () {
             
             
@@ -159,6 +161,7 @@
 
                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role",
                 success: function (data) {
+                    
                     var json = jQuery.parseJSON(data);
                     
                     document.getElementById("doctorCount").innerHTML = json.totalDoctor;
@@ -181,6 +184,42 @@
                 }
                 
             });
+//            var q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, td, tb, bth, pn, gv, tp;
+//            $.ajax({
+//            type: "GET",
+//            dataType: "text",
+//            contentType: "application/json; charset=utf-8",
+//            headers: {
+//                Authorization: 'Bearer ' + token},
+//            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinics/total-district",
+//            success: function (data) {
+//                var json = jQuery.parseJSON(data);
+//                q1 = json.q1;
+//                q2 = json.q2;
+//                q3 = json.q3;
+//                q4 = json.q4;
+//                q5 = json.q5;
+//                q6 = json.q6;
+//                q7 = json.q7;
+//                q8 = json.q8
+//                q9 = json.q9;
+//                q10 = json.q10;
+//                q11 = json.q11;
+//                q12 = json.q12;
+//                bt = json.binh_tan;
+//                td = json.thu_duc;
+//                tb = json.tan_binh;
+//                bth = json.binh_thanh;
+//                pn = json.phu_nhuan;
+//                gv = json.go_vap;
+//                tp = json.tan_phu;
+//
+//            },
+//            error: function (jqXHR, textStatus, errorThrown) {
+//
+//
+//            }
+//        });
             
         };
         $(document).ajaxStart(function () {

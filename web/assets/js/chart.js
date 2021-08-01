@@ -1,294 +1,45 @@
 $(document).ready(function () {
     // Bar Chart
-    var token = localStorage.getItem("key");
-    var roleId = JSON.parse(localStorage.getItem("userInformation"));
-    if (roleId.roleId.id === 1) {
+    var token = sessionStorage.getItem("key");
+    var roleID = sessionStorage.getItem("roleID");
+    if (roleID === "ADMIN") {
         var q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, td, tb, bth, pn, gv, tp;
-        $.ajax({
+            $.ajax({
             type: "GET",
             dataType: "text",
             contentType: "application/json; charset=utf-8",
             headers: {
                 Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/1",
+            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinics/total-district",
             success: function (data) {
-                q1 = data;
+                var json = jQuery.parseJSON(data);
+                q1 = json.q1;
+                q2 = json.q2;
+                q3 = json.q3;
+                q4 = json.q4;
+                q5 = json.q5;
+                q6 = json.q6;
+                q7 = json.q7;
+                q8 = json.q8
+                q9 = json.q9;
+                q10 = json.q10;
+                q11 = json.q11;
+                q12 = json.q12;
+                bt = json.binh_tan;
+                td = json.thu_duc;
+                tb = json.tan_binh;
+                bth = json.binh_thanh;
+                pn = json.phu_nhuan;
+                gv = json.go_vap;
+                tp = json.tan_phu;
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
 
 
             }
         });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/2",
-            success: function (data) {
-                q2 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/3",
-            success: function (data) {
-                q3 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/4",
-            success: function (data) {
-                q4 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/5",
-            success: function (data) {
-                q5 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/6",
-            success: function (data) {
-                q6 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/7",
-            success: function (data) {
-                q7 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/8",
-            success: function (data) {
-                q8 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/9",
-            success: function (data) {
-                q9 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/10",
-            success: function (data) {
-                q10 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/11",
-            success: function (data) {
-                q11 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/12",
-            success: function (data) {
-                q12 = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/Bình Thạnh",
-            success: function (data) {
-                bth = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/Bình Tân",
-            success: function (data) {
-                bt = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/Phú Nhuận",
-            success: function (data) {
-                pn = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/Tân Bình",
-            success: function (data) {
-                tb = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/Thủ Đức",
-            success: function (data) {
-                td = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/Gò Vấp",
-            success: function (data) {
-                gv = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
-        $.ajax({
-            type: "GET",
-            dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                Authorization: 'Bearer ' + token},
-            url: "https://bt-application.herokuapp.com/api/clinic/countdistrict/Tân Phú",
-            success: function (data) {
-                tp = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-
-            }
-        });
+        
         $(document).ajaxStop(function () {
             var barChartData = {
                 labels: ['Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10', 'Quận 11', 'Quận 12', 'Gò Vấp', 'Bình Thạnh', 'Thủ Đức', 'Bình Tân', 'Tân Bình', 'Phú Nhuận', 'Tân Phú'],
@@ -370,7 +121,7 @@ $(document).ready(function () {
 //            itemProgress.css('width', itemProgressWidth);
 //        });
 //    };
-    } else if (roleId.roleId.id === 2 || roleId.roleId.id === 4) {
+    } else if (roleID === "DOCTOR") {
         var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12;
         $.ajax({
             type: "GET",

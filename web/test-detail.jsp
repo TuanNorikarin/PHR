@@ -283,7 +283,7 @@
                                            
                                             
                                             localStorage.setItem("testName", testName);
-//                                            window.location.href = "test-detail.jsp";
+                                            window.location.href = "test-detail.jsp";
 //                                            
 //                                            if (jqXHR.status === 200) {
 //                                                for (var k = 0; k < testName.length; k++) {

@@ -70,6 +70,9 @@
                     var user = $("input[name='user']").val(); //lấy giá trị trong input user
                     var password = $("input[name='password']").val();
                     
+                    var pass =  password;
+                    
+                    
                     console.log(user);
                     console.log(password);
                     
@@ -95,8 +98,11 @@
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/authentications/login",
                             success: function (data) {
                                     
-                                    sessionStorage.setItem("key", data);                                   
+                                    sessionStorage.setItem("key", data);
+                                    sessionStorage.setItem("password", password);
+                                    console.log("pass22 " + pass);
                                     console.log(data);
+                                    
                                         
                                     var rs = parseJwt(data); 
                                     var roleID = rs.authorities + "";
@@ -120,6 +126,7 @@
                                             sessionStorage.setItem("name", infor.name);
                                             sessionStorage.setItem("avatar", infor.image);
                                             sessionStorage.setItem("accountId", infor.accountId);
+                                            sessionStorage.setItem("roleID", roleID);
                                             window.location.href = "adminIndex.jsp";
                                         },
                                         error: function (jqXHR, textStatus, errorThrown) {
