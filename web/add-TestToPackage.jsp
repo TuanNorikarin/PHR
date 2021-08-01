@@ -70,14 +70,14 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
 
                         <table id="indexTable" class="table table-border table-striped custom-table datatable mb-0">
 
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>
-                                    <th id='description' style="width: 30%">Description</th>
+                                    <!--<th id='description' style="width: 30%">Description</th>-->
                                     <th style="width: 15%">Male Value</th>
                                     <th style="width: 15%">FeMale Value</th>
                                     <th style="width: 15%">Children Value</th>
@@ -86,7 +86,17 @@
                             </thead>
 
                             <tbody>
-                               
+                               <tr> 
+
+                                    <td id="name"></td>
+                                    <!--<td id="description"></td>-->
+                                    <td id="maleVal"></td>
+                                    <td id="femaleVal"></td>
+                                    <td id="childVal"></td>
+                                    <td  class="text-right">
+                                        
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -158,11 +168,11 @@
                                             dataShow.childIndex = '-'
 
                                             element.samplelst.forEach(e => {
-                                                if (e.type === 'Male') {
+                                                if (e.type === 'Male' || e.type === 'male') {
                                                     dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                                } else if (e.type === 'Female') {
+                                                } else if (e.type === 'Female' || e.type === 'female') {
                                                     dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                                } else if (e.type === 'Child') {
+                                                } else if (e.type === 'Child' || e.type === 'child') {
                                                     dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
                                                 }
                                             });
@@ -174,9 +184,9 @@
                                             data: mainData,
                                             columns: [
                                                 {data: 'name'},
-                                                {
-                                                    data: 'description',
-                                                },
+//                                                {
+//                                                    data: 'description',
+//                                                },
                                                 {
                                                     data: 'maleIndex',
                                                 },
@@ -215,11 +225,11 @@
                                 dataShow.childIndex = '-'
 
                                 element.samplelst.forEach(e => {
-                                    if (e.type === 'Male') {
+                                    if (e.type === 'Male' || e.type === 'male') {
                                         dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                    } else if (e.type === 'Female') {
+                                    } else if (e.type === 'Female' || e.type === 'female') {
                                         dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                    } else if (e.type === 'Child') {
+                                    } else if (e.type === 'Child' || e.type === 'child') {
                                         dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
                                     }
                                 });
