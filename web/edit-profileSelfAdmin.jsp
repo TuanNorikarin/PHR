@@ -115,6 +115,7 @@
                 var token = sessionStorage.getItem("key");
                 var idUp = sessionStorage.getItem("id");
                 var phoneNum = sessionStorage.getItem("user");
+                var accId = sessionStorage.getItem("accountId");
 //                var phone = sessionStorage.getItem("user");
 //                sessionStorage.getItem("name");
                 
@@ -151,17 +152,62 @@
                                         });
 //                =====================================Update===============================================
 
-                                        
-                                        window.onload = function () {
-//                                            var name = sessionStorage.getItem("name");
-//                                            var avatar = sessionStorage.getItem("avatar");
-                                              
-//                                            
-//                                            var accId = sessionStorage.getItem("accountId");
-//                                            var newImg = avatar;
+                                                window.onload = function () {
+//                                                    
+                                                    
+                                                    function removeAscent(str) {
+                                                        if (str === null || str === undefined) {
+                                                            return str;
+                                                        }
+                                                        str = str.toLowerCase();
+                                                        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                                                        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                                                        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                                                        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                                                        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                                                        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                                                        str = str.replace(/đ/g, "d");
+                                                        return str;
+                                                    }
+                                                    function validateName(name)
+                                                    {
+                                                        var re = /^[a-zA-Z ]+$/;
+                                                        return re.test(name);
+                                                    }
+                                                    
+                                                    var firebaseConfig = {
+                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
+                                                        authDomain: "upload-image-45245.firebaseapp.com",
+                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
+                                                        projectId: "upload-image-45245",
+                                                        storageBucket: "upload-image-45245.appspot.com",
+                                                        messagingSenderId: "758652365413",
+                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
+                                                        measurementId: "G-S5ECRSMKRB"
+                                                    };
+                                                    // Initialize Firebase
+                                                    firebase.initializeApp(firebaseConfig);
+                                                    
+                                                    var idNew = data.id;
+                                                    
+                                                    var name = data.name;
+                                                    var firstName = name.split(" ");
+                                                    var lastName = name.replace(firstName[firstName.length - 1], "").trim();
+                                                    $("#inputFirstname").val(firstName[firstName.length - 1]);
+                                                    $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
 
-                                            
-                                            $("#avatar").change(function () {
+                                                    var password = data.password;
+                                                    $("#inputPassword").val(password);
+                                                    var confirmPass = data.password;
+                                                    $("#confirmPass").val(confirmPass);
+                                                    var dob = data.dob;
+                                                    $("#datepicker").val(dob);
+                                                    var image = data.image;
+                                                    $('#img').attr('src', image);
+//                                                    
+
+
+                                                     $("#avatar").change(function () {
                                                      var formData = new FormData();
                                                      var files = $("#avatar").get(0).files;
                                                      if (files.length > 0) {
@@ -181,8 +227,8 @@
                                                             contentType: false,
                                                             data: formData,
                                                             success: function (response) {
-                                                                alert("OK rồi");
-//                                                                newImg = response;
+//                                                                alert("OK rồi");
+                                                                newImg = response;
                                                             },
                                                             error: function (er) {
 //                                                                alert("Lỗiiiiiiiiiiiiii");
@@ -190,82 +236,195 @@
 
                                                         });
                                                         });
-                                            
-                                                        $.ajax({
-                                            type: "GET",
-                                            dataType: "text",
-                                            contentType: "application/json; charset=utf-8",
-                                            headers: {
-                                                'Access-Control-Allow-Origin': '*',
-                                                Authorization: 'Bearer ' + token},
 
-                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin/phone-account",
-                                            success: function (data) {
-                                                var infor = jQuery.parseJSON(data);
-                                                console.log(infor);
-                                                var name = infor.name;
-                                                var firstName = name.split(" ");
-                                                var lastName = name.replace(firstName[firstName.length - 1], "");
-                                                lastName = lastName.trim();
-                                                $("#firstName").val(firstName[firstName.length - 1]);
-                                                $("#lastName").val(lastName);                 //đổi thứ tự last name vs firstname
-                                                
-                                                var phone = phoneNum;
-                                                $("#phone").val(phone);
-                                                var image = infor.image;
-                                                $('#img').attr('src', image);
-                                                
-                                                
-                                          },
-                                            error: function (jqXHR, textStatus, errorThrown) {
+                                                        
 
 
-                                            }
 
-                                        });
-                                            
-//                                        
-//
-//                                        
-//                                        
-////                                            var avatar = $("input[name='avatar']").val();
-//                                        
-//                                        
-//                                        $("#createPatient").click(function (event) {
-//                                        event.preventDefault();
-//                                        
-//                                        var firstName = $("input[id='firstName']").val(); //lấy giá trị trong input user
-//                                        var lastName = $("input[id='lastName']").val();
-//                                        var avatar = $("input[id='avatar']").val();
-//                                        
-//                                        
-//                                        
-//                                        return  $.ajax({
-//                                        type: "PUT",
-//                                                dataType: "json",
-//                                                contentType: "application/json; charset=UTF-8",
-//                                                headers: {
-//                                                Authorization: 'Bearer ' + token},
-//                                                data: JSON.stringify({
+
+                                                    var gender = data.gender;
+                                                    if (gender === "Male") {
+                                                        $("#male").prop("checked", true);
+                                                    } else {
+                                                        $("#female").prop("checked", true);
+                                                    }
 //                                                    
-//                                                        "accountId": accId,
-//                                                        "id": idUp,
-//                                                        "image": newImg,
-//                                                        "name": lastName + " " + firstName
-//                                                }),
-//                                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin",
-//                                                complete: function (jqXHR) {
-//                                                if (jqXHR.status === 200) {
-//                                                    alert("Update Successfully");
-//                                                    window.location.href = "profileAdmin.jsp";
-//                                                }
-//                                                }
-//                                        });
-//                                        
-//                                        })
-                                        
-                                        };
-                                       
+                                                    var phone = data.phone;
+                                                    $("#inputPhone").val(phone);
+//                                                  var avatar = $("input[name='avatar']").val();
+                                                    var status = data.status;
+                                                    if (status === "enable") {
+                                                        $("#patient_active").prop("checked", true);
+                                                    } else {
+                                                        $("#patient_inactive").prop("checked", true);
+                                                    }
+                                                    $("#inputFirstname").click(function () {
+                                                        $('#inputFirstname').removeClass('error');
+                                                        document.getElementById('messageFirstname').innerHTML = '';
+                                                    });
+                                                    $("#inputLastname").click(function () {
+                                                        $('#inputLastname').removeClass('error');
+                                                        document.getElementById('messageLastname').innerHTML = '';
+                                                    });
+
+                                                    $("#inputPassword").click(function () {
+                                                        $('#inputPassword').removeClass('error');
+                                                        document.getElementById('messagePassword').innerHTML = '';
+                                                    });
+                                                    $("#inputPhone").click(function () {
+                                                        $('#inputPhone').removeClass('error');
+                                                        document.getElementById('messagePhone').innerHTML = '';
+                                                    });
+
+                                                    $("#createPatient").click(function (event) {
+                                                        event.preventDefault();
+                                                        $('#inputFirstname').removeClass('error');
+                                                        document.getElementById('messageFirstname').innerHTML = '';
+                                                        $('#inputLastname').removeClass('error');
+                                                        document.getElementById('messageLastname').innerHTML = '';
+//                                                        $('#inputUsername').removeClass('error');
+//                                                        document.getElementById('messageUsername').innerHTML = '';
+                                                        $('#inputPassword').removeClass('error');
+                                                        document.getElementById('messagePassword').innerHTML = '';
+                                                        $('#inputPhone').removeClass('error');
+                                                        document.getElementById('messagePhone').innerHTML = '';
+//                                                        $('#inputEmail').removeClass('error');
+//                                                        document.getElementById('messageEmail').innerHTML = '';
+                                                        var count = 0;
+                                                        var alluser = JSON.parse(localStorage.getItem("alluser"));
+                                                        for (var i = 0; i < alluser.length; i++) {
+//                                                            
+                                                            if (alluser[i].phone === document.getElementById('inputPhone').value && document.getElementById('inputPhone').value !== data.phone) {
+                                                                $('#inputPhone').addClass('error');
+                                                                document.getElementById('messagePhone').style.color = 'red';
+                                                                document.getElementById('messagePhone').innerHTML = 'Phone already exists ✘';
+                                                                count = 1;
+                                                            }
+//                                                            
+                                                        }
+
+
+                                                        var idUpdate = data.id;
+                                                        
+                                                        
+                                                        var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
+                                                        var lastName = $("input[name='lastName']").val();
+//                                                        
+                                                        var password = $("input[name='password']").val();
+                                                        var dob = $("input[name='dob']").val();
+                                                        var gender = $("input[name='gender']").val();
+//                                                        var address = $("input[name='address']").val();
+                                                        var phone = $("input[name='phone']").val();
+//                                                        var clinicID = $("select[id='clinicID']").val();
+                                                        var avatar = $("input[id='avatar']").val();
+                                                        var status = $("input[name='status']").val();
+                                                        
+                                                        var selectGen = $('input[id="male"]:checked').val();
+                                                        if (selectGen === "on") {
+                                                            gender = "Male";
+                                                        } else {
+                                                            gender = "Female";
+                                                        }
+
+//                                                        
+                                                        console.log(idUpdate +" idUp");
+                                                        console.log(lastName +" lastName");
+                                                        console.log(firstName +" firstName");
+                                                        console.log(phone +" phone");
+                                                        console.log(password +" password");
+                                                        console.log(gender +" gender");
+                                                        
+                                                        
+                                                        if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
+                                                            $('#inputFirstname').addClass('error');
+                                                            document.getElementById('messageFirstname').style.color = 'red';
+                                                            document.getElementById('messageFirstname').innerHTML = 'First Name invalid ✘';
+                                                            if (lastName.length === 0 || !validateName(removeAscent(lastName)) || lastName.length > 35) {
+                                                                $('#inputLastname').addClass('error');
+                                                                document.getElementById('messageLastname').style.color = 'red';
+                                                                document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
+                                                            }
+
+                                                            if (password.length > 30 || password.length < 6) {
+                                                                $('#inputPassword').addClass('error');
+                                                                document.getElementById('messagePassword').style.color = 'red';
+                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+                                                            }
+                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+                                                                $('#inputPhone').addClass('error');
+                                                                document.getElementById('messagePhone').style.color = 'red';
+                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+                                                            }
+
+                                                        } else if (lastName.length === 0 || !validateName(removeAscent(lastName)) || lastName.length > 35) {
+                                                            $('#inputLastname').addClass('error');
+                                                            document.getElementById('messageLastname').style.color = 'red';
+                                                            document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
+
+                                                            if (password.length > 30 || password.length < 6) {
+                                                                $('#inputPassword').addClass('error');
+                                                                document.getElementById('messagePassword').style.color = 'red';
+                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+                                                            }
+                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+                                                                $('#inputPhone').addClass('error');
+                                                                document.getElementById('messagePhone').style.color = 'red';
+                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+                                                            }
+                                                        }
+
+                                                        else if (password.length > 30 || password.length < 6) {
+                                                            $('#inputPassword').addClass('error');
+                                                            document.getElementById('messagePassword').style.color = 'red';
+                                                            document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+                                                            if (phone.length !== 10 || !validatePhone(phone)) {
+                                                                $('#inputPhone').addClass('error');
+                                                                document.getElementById('messagePhone').style.color = 'red';
+                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+                                                            }
+                                                        } else if (phone.length !== 10 || !validatePhone(phone)) {
+                                                            $('#inputPhone').addClass('error');
+                                                            document.getElementById('messagePhone').style.color = 'red';
+                                                            document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
+                                                        } else if (count === 1) {
+
+                                                        } else {
+                                                            toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                            
+                                                                return  $.ajax({
+                                                                    type: "PUT",
+                                                                    dataType: "json",
+                                                                    contentType: "application/json; charset=UTF-8",
+                                                                    headers: {
+                                                                        Authorization: 'Bearer ' + token,
+                                                                        },
+                                                                    data: JSON.stringify({
+//                                                                        
+                                                                        "name": lastName + " " + firstName,
+                                                                        "id": idUpdate,
+                                                                        "image": newImg,
+                                                                        "dob": dob,
+                                                                        "gender": gender,
+                                                                        "password": password,
+                                                                        "token": "",
+                                                                        
+                                                                    }),
+                                                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionist",
+                                                                    complete: function (jqXHR) {
+                                                                        console.log(jqXHR.status);
+                                                                        if (jqXHR.status === 200) {
+                                                                            alert(Update Successfully);
+                                                                            window.location.href = "profileAdmin.jsp";
+                                                                            }
+                                                                        }
+                                                                });
+                                                     
+//                                                            }
+//                                                            uploadImage();
+                                                        }
+                                                    });
+                                                }
+                                                ;
 
         </script>
     </body>

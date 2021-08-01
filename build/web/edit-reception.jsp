@@ -478,7 +478,7 @@
                                                         } else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                            toastr["success"]("Update Successfully Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             
                                                                 return  $.ajax({
                                                                     type: "PUT",
@@ -502,6 +502,7 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
+                                                                            alert(Update Successfully);
                                                                             window.location.href = "receptionist.jsp";
                                                                             }
                                                                         }
