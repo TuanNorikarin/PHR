@@ -67,7 +67,7 @@
         </div>
         <script src="assets/js/moment.min.js"></script>
         <script>
-            var url = sessionStorage.getItem("image");
+            var url = sessionStorage.getItem("avatar");
             
             $('.rounded-circle').attr({
                 'src': url,
@@ -76,6 +76,8 @@
                 sessionStorage.removeItem('key');
                 sessionStorage.removeItem('name');
                 sessionStorage.removeItem('image');
+                sessionStorage.removeItem('doctorID');
+                sessionStorage.removeItem('clinicID');
 //                sessionStorage.setItem("key", "");
             });
             var token = sessionStorage.getItem("key");

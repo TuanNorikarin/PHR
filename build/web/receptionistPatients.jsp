@@ -114,113 +114,113 @@
             var dataTable;
 //========================================== TÌm theo số điện thoại====================================================
             window.onload = function () {
-                var token = sessionStorage.getItem("key");
-                var clinicId = sessionStorage.getItem("clinicID");
-                console.log(clinicId);
-                
-                $('#buttonPatient').on('click', function () {
-                    console.log('button clicked');
-                    var searchPatientValue = $('#searchPatient').val();
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        contentType: "application/json; charset=UTF-8",
-                        headers: {
-                            Authorization: 'Bearer ' + token},
-                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/account/" + searchPatientValue,
-                        statusCode: {
-                            200: function (data) {
-                                console.log('data khi click:  ', data);
-                                dataTable.clear();
-                                dataTable.rows.add([data]);
-                                dataTable.draw();
-                            },
-                            404: function () {
-                                alert("Patient is not found!");
-                            },
-                            400: function () {
-                                alert("Patient's phone can not null");
-                            },
-                        }
-                    });
-                });
-//====================================================Load List Patient==========================================
-                $.ajax({
-                    type: "GET",
+            sessionStorage.removeItem('patientId');
+            sessionStorage.removeItem('packageId');
+            sessionStorage.removeItem('listTestId');
+            
+            var token = sessionStorage.getItem("key");
+            var clinicId = sessionStorage.getItem("clinicID");
+            console.log(clinicId);
+            $('#buttonPatient').on('click', function () {
+            console.log('button clicked');
+            var searchPatientValue = $('#searchPatient').val();
+            $.ajax({
+            type: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     headers: {
-                        Authorization: 'Bearer ' + token},
-                    
+                    Authorization: 'Bearer ' + token},
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/account/" + searchPatientValue,
+                    statusCode: {
+                    200: function (data) {
+                    console.log('data khi click:  ', data);
+                    dataTable.clear();
+                    dataTable.rows.add([data]);
+                    dataTable.draw();
+                    },
+                            404: function () {
+                            alert("Patient is not found!");
+                            },
+                            400: function () {
+                            alert("Patient's phone can not null");
+                            },
+                    }
+            });
+            });
+//====================================================Load List Patient==========================================
+            $.ajax({
+            type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    headers: {
+                    Authorization: 'Bearer ' + token},
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient/clinic/" + clinicId,
                     statusCode: {
-                        200: function (data) {
-                            console.log('data khi load: ', data);
-                            var listPatient = [];
-                            data.forEach(element => {
-                                var dataShow = new Object();
-                                dataShow.id = element.id;
-                                dataShow.image = element.image;
-                                dataShow.avartar = element.image;
-
-                                dataShow.name = element.name;
-                                dataShow.dob = element.dob;
-                                dataShow.address = element.address;
-                                dataShow.phone = element.phone;
-                                dataShow.gender = element.gender;
-                                dataShow.status = element.status;
-
-                                listPatient.push(dataShow);
-                            });
-                            console.log(listPatient);
-                            dataTable = $('#patientTable').DataTable({
-                                data: listPatient,
-                                columns: [
-                                    {data: "image",
-                                        "render": function (data, type, row, meta) {
-                                            return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
-                                        }},
-                                    {data: 'name'},
-                                    {data: 'dob'},
-                                    {data: 'address'},
-                                    {data: 'phone'},
-                                    {data: 'gender'},
-                                    {data: 'status'},
-                                    {
-                                        data: 'id',
-                                        "render": function (data, type, row, meta) {
-                                            return '<td  class="text-right"><button onclick="getPatientId(' + data + ')" type="button" class="btn btn-primary">Select patient</button></td>'
-                                        }
-
+                    200: function (data) {
+                    console.log('data khi load: ', data);
+                    var listPatient = [];
+                    data.forEach(element => {
+                    var dataShow = new Object();
+                    dataShow.id = element.id;
+                    dataShow.image = element.image;
+                    dataShow.avartar = element.image;
+                    dataShow.name = element.name;
+                    dataShow.dob = element.dob;
+                    dataShow.address = element.address;
+                    dataShow.phone = element.phone;
+                    dataShow.gender = element.gender;
+                    dataShow.status = element.status;
+                    listPatient.push(dataShow);
+                    });
+                    console.log(listPatient);
+                    dataTable = $('#patientTable').DataTable({
+                    data: listPatient,
+                            columns: [
+                            {data: "image",
+                                    "render": function (data, type, row, meta) {
+                                    return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
+                                    }},
+                            {data: 'name'},
+                            {data: 'dob'},
+                            {data: 'address'},
+                            {data: 'phone'},
+                            {data: 'gender'},
+                            {data: 'status'},
+                            {
+                            data: 'id',
+                                    "render": function (data, type, row, meta) {
+                                    return '<td  class="text-right"><button onclick="getPatientId(' + data + ')" type="button" class="btn btn-primary">Select patient</button></td>'
                                     }
-                                ],
-                                "bDestroy": true,
-                                "bFilter": false,
-                                "createdRow": function (row, data, dataIndex) {
-                                if (data.status === "disable") {
-                                    console.log(row);
-                                    $('td', row).css('color', '#b5b5b5');
-                                    $('td', row).css('font-style', 'italic');
-                                }
-                                if (data.status === "enable") {
-                                    $('td:eq(6)', row).css('color', '#2a9c31');
-                                    $('td:eq(6)', row).css('font-weight', 'bolder');
-                                }
+
                             }
-                            });
-                        },
-                        400: function (jqXHR, textStatus, errorThrown) {
+                            ],
+                            "bDestroy": true,
+                            "bFilter": false,
+                            "createdRow": function (row, data, dataIndex) {
+                            if (data.status === "disable") {
+                            console.log(row);
+                            $('td', row).css('color', '#b5b5b5');
+                            $('td', row).css('font-style', 'italic');
+                            }
+                            if (data.status === "enable") {
+                            $('td:eq(6)', row).css('color', '#2a9c31');
+                            $('td:eq(6)', row).css('font-weight', 'bolder');
+                            }
+                            }
+                    });
+                    },
+                            400: function (jqXHR, textStatus, errorThrown) {
                             console.log(' Error in processing! ' + textStatus);
-                        }
+                            }
                     }
 
-                });
-            };//end load
+            });
+            }; //end load
 
             function getPatientId(id) {
-                console.log(id);
-                sessionStorage.setItem('patientId', id);
-                window.location.href = "selectService.jsp";
+            console.log(id);
+            sessionStorage.setItem('patientId', id);
+            window.location.href = "selectService.jsp";
             }
 
 

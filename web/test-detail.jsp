@@ -159,6 +159,12 @@
             });
 
             window.onload = function () {
+                
+//                $('#testPackageTable').dataTable( {
+//                    "oLanguage": {
+//                        "sEmptyTable":     "My Custom Message On Empty Table"
+//                    }
+//                } );
                 var packageName = sessionStorage.getItem("packageName");
                 document.getElementById("packageName").innerHTML = packageName;
                 $("#buttonAdd").show();
@@ -221,6 +227,7 @@
                                 localStorage.setItem("testName", testName);
 //                                $('#testPackageTable').append('<caption style="caption-side: top">' + dataPackage.name + '</caption>');
                                 $('#testPackageTable').DataTable({
+                                    
                             data: mainData,
                             columns: [
                                         { data: 'name' },
@@ -243,7 +250,8 @@
                                     "bFilter": false,
                                     "bPaginate": false,
                                     "bInfo": false,
-
+                                     
+                                   
                                 });
 
                                 },
@@ -272,9 +280,11 @@
                                             Authorization: 'Bearer ' + token},
                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test/" + dataPackage.id + "/" + data[i].id,
                                         complete: function (jqXHR) {
-//                                            alert(jqXHR.status);
+                                           
+                                            
                                             localStorage.setItem("testName", testName);
-                                            window.location.href = "test-detail.jsp";
+//                                            window.location.href = "test-detail.jsp";
+//                                            
 //                                            if (jqXHR.status === 200) {
 //                                                for (var k = 0; k < testName.length; k++) {
 //                                                    if (txtValue === testName[k]) {

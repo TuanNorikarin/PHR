@@ -119,6 +119,7 @@
                                             console.log(infor);
                                             sessionStorage.setItem("name", infor.name);
                                             sessionStorage.setItem("avatar", infor.image);
+                                            sessionStorage.setItem("accountId", infor.accountId);
                                             window.location.href = "adminIndex.jsp";
                                         },
                                         error: function (jqXHR, textStatus, errorThrown) {
@@ -147,7 +148,7 @@
                                                 console.log(infor);
                                                 var name = sessionStorage.setItem("name", infor.name);
                                                 var image = sessionStorage.setItem("image", infor.image);
-                                                
+                                                sessionStorage.setItem("accountId", infor.accountId);
                                                 window.location.href = "doctorIndex.jsp";
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {
@@ -177,7 +178,7 @@
                                                 console.log(infor);
                                                 sessionStorage.setItem("name", infor.name);
                                                 sessionStorage.setItem("image", infor.image);
-                                                
+                                                sessionStorage.setItem("accountId", infor.accountId);
                                                 window.location.href = "receptionistIndex.jsp";
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {

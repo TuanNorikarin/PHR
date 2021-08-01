@@ -247,10 +247,6 @@
                                                     var confirmPass = data.password;
                                                     $("#confirmPass").val(confirmPass);
                                                     
-//                                                     $('#datepicker').datetimepicker({
-//                                                        format: "yyyy/mm/dd"
-//                                                    });
-                                                    
                                                     var dob = data.dob;
                                                     $("#datepicker").val(dob);
                                                     var gender = data.gender;
@@ -287,7 +283,7 @@
                                                             headers: {
                                                                 Authorization: 'Bearer ' + token,
                                                             },
-                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idNew,
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idNew +"/patient",
                                                             type:"POST",
                                                             processData: false,
                                                             contentType: false,

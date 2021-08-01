@@ -108,15 +108,17 @@
                 </div>
             </div>
             <script>
-            var url = sessionStorage.getItem("image");
-            
+            var url = sessionStorage.getItem("avatar");
             $('.rounded-circle').attr({
                 'src': url,
             });
+            
             $(".Logout").click(function (event) {
                 sessionStorage.removeItem('key');
                 sessionStorage.removeItem('name');
                 sessionStorage.removeItem('image');
+                sessionStorage.removeItem('recepID');
+                sessionStorage.removeItem('clinicID');
 //                sessionStorage.setItem("key", "");
             });
             var token = sessionStorage.getItem("key");
@@ -125,6 +127,8 @@
             if (token == null) {
                 document.location.href = "login.html";
             }
+            var doctorID = sessionStorage.getItem("recepID");
+            var cliID = sessionStorage.getItem("clinicID");
             var user = sessionStorage.getItem("name");
             
             var firstName = user.split(" ");

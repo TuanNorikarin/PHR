@@ -137,8 +137,10 @@
                 success: function (data) {
                     var infor = jQuery.parseJSON(data);
                     console.log(infor);
-                    var name = sessionStorage.setItem("name", infor.name);
-                    var image = sessionStorage.setItem("avatar", infor.image);
+//                    var name = sessionStorage.setItem("name", infor.name);
+//                    var image = sessionStorage.setItem("avatar", infor.image);
+//                    sessionStorage.setItem("id", infor.id);
+                    
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
 

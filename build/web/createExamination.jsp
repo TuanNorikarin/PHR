@@ -122,8 +122,8 @@
                 }
 
                 $(document).ready(function () {
-                    var clinicId = localStorage.getItem("clinicId");
-                    clinicId = 9;
+                    var cliId = sessionStorage.getItem("clinicID");
+                    console.log(cliId);
                     $.ajax({
                         type: "GET",
                         dataType: "json",
@@ -133,7 +133,7 @@
                              Authorization: 'Bearer ' + token
 
                         },
-                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/clinic/" + clinicId,
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/clinic/" + cliId,
                         success: function (data) {
                             for (var i in data) {
                                 $('#doctorName').append('<option value=' + data[i].id + '>' + data[i].name + ' - ' + data[i].phone + '</option>');
@@ -153,22 +153,12 @@
                     var listTest = parseStringToInt(sessionStorage.getItem('listTestId'));
                     console.log(sessionStorage.getItem('listTestId'))
                     console.log(typeof(listTest));
-                    console.log(listTest)
-                    console.log("//////////")
+                    console.log(listTest);
+                    console.log("//////////");
 
                     
                     console.log(typeof(listPackageTest));
                     console.log(listPackageTest)
-//=======
-//                    var date = "";
-//                    var type = checkNull($('#inputType').val());
-//                    var description = checkNull($('#description').val());
-//                    var patientId = checkNull(sessionStorage.getItem('patientId'));
-//                    var doctorId = checkNull($('option:selected').val());
-//                    var listPackageTest = jQuery.makeArray(sessionStorage.getItem('packageId')).map(i => Number(i));
-//                    var listTest = jQuery.makeArray(sessionStorage.getItem('listTestId')).map(i => Number(i));
-//                    console.log(listTest);
-//>>>>>>> Stashed changes
                     $.ajax({
                         type: "POST",
                         dataType: "json",
@@ -187,7 +177,7 @@
                             "testId": listTest,
 
                         }),
-                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT//examinations/examination",
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
                         complete: function (jqXHR) {
                             if (jqXHR.status === 200) {
                                 alert("Create Request Successfully");

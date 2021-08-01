@@ -71,7 +71,7 @@
                 sessionStorage.removeItem('key');
                 sessionStorage.removeItem('name');
                 sessionStorage.removeItem('image');
-//                sessionStorage.setItem("key", "");
+//              sessionStorage.setItem("key", "");
             });
             var token = sessionStorage.getItem("key");
             console.log(token);
@@ -84,5 +84,8 @@
             var firstName = user.split(" ");
             var name = firstName[firstName.length - 1];
             $("#welcomeUser").text(name);
+            
+            
+            //=======================================Notification Below=================================
 
         </script>

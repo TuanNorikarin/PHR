@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <meta charset="UTF-8" />
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
@@ -60,59 +60,15 @@
                                     <span id='valiLast'></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Username <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="username" name="username" type="text" required>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Email <span class="text-danger">*</span></label>
-                                    <input id="email" class="form-control" name="email" type="email" required>
-                                </div>
-                            </div>
+                            
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Date of Birth</label>
-                                    <div class="cal-icon">
-                                        <input id="datepicker" type="text" name="dob" class="form-control datetimepicker">
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group gender-select">
-                                    <label class="gen-label">Gender: <span class="text-danger">*</span></label>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input id="male" type="radio" name="gender" class="form-check-input">Male
-                                        </label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input id="female" type="radio" name="gender" class="form-check-input">Female
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Address</label>
-                                            <input type="text" id="address" name="address" class="form-control ">
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                            
+                            
+                            
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone <span class="text-danger">*</span></label>
-                                    <input class="form-control" id ="phone" name="phone" type="text">
+                                    <input class="form-control" id ="phone" name="phone" type="text" readonly>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -129,21 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="display-block">Status</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="patient_active" value="on" checked>
-                                <label class="form-check-label" for="patient_active">
-                                    Active
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="patient_inactive" value="off">
-                                <label class="form-check-label" for="patient_inactive">
-                                    Inactive
-                                </label>
-                            </div>
-                        </div>
+                        
                         <div class="m-t-20 text-center">
                             <button id="createPatient" class="btn btn-primary submit-btn">Update Profile</button>
 
@@ -170,40 +112,28 @@
         <script src="assets/js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script type="text/javascript">
-
+                var token = sessionStorage.getItem("key");
+                var idUp = sessionStorage.getItem("id");
+                var phoneNum = sessionStorage.getItem("user");
+//                var phone = sessionStorage.getItem("user");
+//                sessionStorage.getItem("name");
+                
                                         $("#myForm").validate({
                                         rules: {
-                                        "lastName": {
-                                        required: true
-                                        },
+                                                "lastName": {
+                                                required: true
+                                                },
                                                 "firstName": {
                                                 required: true
-                                                },
-                                                "datepicker": {
-                                                required: true
-                                                },
-                                                "password": {
-                                                required: true
-                                                },
-                                                "confirmPass": {
-                                                required: true
                                                 }
+                                               
                                         },
                                                 messages: {
-                                                "lastName": {
-                                                required: "Không được để trống"
-                                                },
+                                                        "lastName": {
+                                                        required: "Must not empty"
+                                                        },
                                                         "firstName": {
-                                                        required: "Không được để trống"
-                                                        },
-                                                        "datepicker": {
-                                                        required: "Không được để trống"
-                                                        },
-                                                        "password": {
-                                                        required: "Không được để trống"
-                                                        },
-                                                        "confirmPass": {
-                                                        required: "Không được để trống"
+                                                        required: "Must not empty"
                                                         }
                                                 },
                                                 errorPlacement: function (label, element) {
@@ -221,202 +151,122 @@
                                         });
 //                =====================================Update===============================================
 
-                                        var data = JSON.parse(localStorage.getItem("userInformation"));
+                                        
                                         window.onload = function () {
-                                        var fullName = data.fullname;
-                                        var firstName = fullName.split(" ");
-                                        var lastName = fullName.replace(firstName[firstName.length - 1], "");
-                                        lastName = lastName.trim();
-                                        $("#firstName").val(firstName[firstName.length - 1]);
-                                        $("#lastName").val(lastName); //đổi thứ tự last name vs firstname
-                                        var username = data.username;
-                                        $("#username").val(username);
-                                        var mail = data.mail;
-                                        $("#email").val(mail);
-                                        var password = data.password;
-                                        $("#password").val(password);
-                                        var confirmPass = data.password;
-                                        $("#confirmPass").val(confirmPass);
-                                        var dob = data.dob;
-                                        $("#datepicker").val(dob);
-                                        var gender = data.gender;
-                                        if (gender === 0) {
-                                        $("#male").prop("checked", true);
-                                        } else {
-                                        $("#female").prop("checked", true);
-                                        }
-                                        var address = data.address;
-                                        $("#address").val(address);
-                                        var phone = data.phone;
-                                        $("#phone").val(phone);
-                                        var image = data.image;
-                                        $('#img').attr('src', image);
-//                                            var avatar = $("input[name='avatar']").val();
-                                        var status = data.status;
-                                        if (status === "Active") {
-                                        $("#patient_active").prop("checked", true);
-                                        } else {
-                                        $("#patient_inactive").prop("checked", true);
-                                        }
+//                                            var name = sessionStorage.getItem("name");
+//                                            var avatar = sessionStorage.getItem("avatar");
+                                              
+//                                            
+//                                            var accId = sessionStorage.getItem("accountId");
+//                                            var newImg = avatar;
 
+                                            
+                                            $("#avatar").change(function () {
+                                                     var formData = new FormData();
+                                                     var files = $("#avatar").get(0).files;
+                                                     if (files.length > 0) {
+                                                            formData.append("image", files[0]);
+                                                            formData.append("role", "admin");
+                                                        }
+                                                      
+    
+                                                      
+                                                        $.ajax({
+                                                            headers: {
+                                                                Authorization: 'Bearer ' + token,
+                                                            },
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idUp +"/admin",
+                                                            type:"POST",
+                                                            processData: false,
+                                                            contentType: false,
+                                                            data: formData,
+                                                            success: function (response) {
+                                                                alert("OK rồi");
+//                                                                newImg = response;
+                                                            },
+                                                            error: function (er) {
+//                                                                alert("Lỗiiiiiiiiiiiiii");
+                                                            }
 
-                                        };
-                                        $(document).ready(function () {
-                                        function readURL(input) {
-                                        if (input.files && input.files[0]) {
-                                        var reader = new FileReader();
-                                        reader.onload = function (e) {
-                                        $('#img').attr('src', e.target.result);
-                                        }
-
-                                        reader.readAsDataURL(input.files[0]); // convert to base64 string
-                                        }
-                                        }
-                                        $('#avatar').change(function () {
-                                        readURL(this);
-                                        });
-                                        $("#createPatient").click(function (event) {
-                                        event.preventDefault();
-                                        var imageOld = data.image;
-                                        var firebaseConfig = {
-                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                authDomain: "upload-image-45245.firebaseapp.com",
-                                                databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                projectId: "upload-image-45245",
-                                                storageBucket: "upload-image-45245.appspot.com",
-                                                messagingSenderId: "758652365413",
-                                                appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                measurementId: "G-S5ECRSMKRB"
-                                        };
-                                        function uploadImage() {
-                                        const ref = firebase.storage().ref();
-                                        const file = document.querySelector("#avatar").files[0];
-                                        if (file){
-                                        const name = + new Date() + "-" + file.name;
-                                        const metadata = {
-                                        contentType: file.type
-                                        };
-                                        const task = ref.child(name).put(file, metadata);
-                                        task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                        ajax(url);
-                                        });
-                                        } else {
-                                        ajax(imageOld);
-                                        }
-                                        }
-                                        // Initialize Firebase
-                                        firebase.initializeApp(firebaseConfig);
-                                        var idUpdate = data.id;
-                                        var firstName = $("input[id='firstName']").val(); //lấy giá trị trong input user
-                                        var lastName = $("input[id='lastName']").val();
-                                        var username = $("input[id='username']").val();
-                                        var email = $("input[id='email']").val();
-                   
-                                        var dob = $("input[id='datepicker']").val();
-                                        var gender = $("input[name='gender']").val();
-                                        var address = $("input[id='address']").val();
-                                        var phone = $("input[id='phone']").val();
-                                        var avatar = $("input[id='avatar']").val();
-                                        var status = $("input[name='status']").val();
-                                        var token = sessionStorage.getItem("key");
-                                        var selectGen = $('input[id="male"]:checked').val();
-                                        if (selectGen === "on") {
-                                        gender = 0;
-                                        } else {
-                                        gender = 1;
-                                        }
-
-                                        var selectSta = $('input[id="patient_active"]:checked').val();
-                                        if (selectSta === "on") {
-                                        status = "Active";
-                                        } else {
-                                        status = "Inactive";
-                                        }
-                                        function ajax(url) {
-                                        return  $.ajax({
-                                        type: "PUT",
-                                                dataType: "json",
-                                                contentType: "application/json; charset=UTF-8",
-                                                headers: {
+                                                        });
+                                                        });
+                                            
+                                                        $.ajax({
+                                            type: "GET",
+                                            dataType: "text",
+                                            contentType: "application/json; charset=utf-8",
+                                            headers: {
+                                                'Access-Control-Allow-Origin': '*',
                                                 Authorization: 'Bearer ' + token},
-                                                data: JSON.stringify({
-                                                "address": address,
-                                                        "gender": gender,
-                                                        "dob": dob,
-                                                        "fullname": lastName + " " + firstName,
-                                                        "id": idUpdate,
-                                                        "mail": email,
-                                                        "image": url,
-                                                        "password": data.password,
-                                                        "phone": phone,
-                                                        "roleId": {
-                                                        "id": data.roleId.id
-                                                        },
-                                                        "status": status,
-                                                        "token": data.token,
-                                                        "username": username
-                                                }),
-                                                url: "https://bt-application.herokuapp.com/api/userinfor/edit",
-                                                complete: function (jqXHR) {
-                                                if (jqXHR.status === 200) {
-                                                $.ajax({
-                                                type: "POST",
-                                                        dataType: "json",
-                                                        contentType: "application/json",
-                                                        data: JSON.stringify({
-                                                        username: username,
-                                                        password: data.password
-                                                        }),
-                                                        url: "https://bt-application.herokuapp.com/api/userinfor/login",
-                                                        success: function (data) {
-                                                        localStorage.setItem("name", data.fullname);
-                                                        localStorage.setItem("userInformation", JSON.stringify(data));
-                                                        localStorage.setItem("password", data.password);
-                                                        if (data.roleId.name === "admin") {
-                                                        localStorage.setItem("key", data.token);
-                                                        localStorage.setItem("image", data.image);
-                                                        window.location.href = "profileAdmin.jsp";
-                                                        } else if (data.roleId.name === "receptionist") {
-                                                        localStorage.setItem("key", data.token);
-                                                        localStorage.setItem("image", data.image);
-                                                        localStorage.setItem("clinicId", data.clinicId.id);
-                                                        window.location.href = "profileReceptionist.jsp";
-                                                        } else if (data.roleId.name === "doctor") {
-                                                        localStorage.setItem("key", data.token);
-                                                        localStorage.setItem("image", data.image);
-                                                        localStorage.setItem("userId", data.id);
-                                                        window.location.href = "profileDoctor.jsp";
-                                                        } else if (data.roleId.name === "user") {
-                                                        localStorage.setItem("key", data.token);
-                                                        localStorage.setItem("userId", data.id);
-                                                        localStorage.setItem("image", data.image);
-                                                        window.location.href = "profileUser.jsp";
-                                                        }
-                                                        },
-                                                        error: function (jqXHR, textStatus, errorThrown) {
-                                                        console.log(' Error in processing! ' + textStatus);
-                                                        }
-                                                });
-                                                }
-                                                }
+
+                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin/phone-account",
+                                            success: function (data) {
+                                                var infor = jQuery.parseJSON(data);
+                                                console.log(infor);
+                                                var name = infor.name;
+                                                var firstName = name.split(" ");
+                                                var lastName = name.replace(firstName[firstName.length - 1], "");
+                                                lastName = lastName.trim();
+                                                $("#firstName").val(firstName[firstName.length - 1]);
+                                                $("#lastName").val(lastName);                 //đổi thứ tự last name vs firstname
+                                                
+                                                var phone = phoneNum;
+                                                $("#phone").val(phone);
+                                                var image = infor.image;
+                                                $('#img').attr('src', image);
+                                                
+                                                
+                                          },
+                                            error: function (jqXHR, textStatus, errorThrown) {
+
+
+                                            }
+
                                         });
-                                        }
-                                        uploadImage();
-                                        })
-                                        });
-//              ==================================Check Password==========================================
-                                        var check = function () {
-                                        if (document.getElementById('password').value ==
-                                                document.getElementById('confirmPass').value) {
-                                        document.getElementById('message').style.color = 'green';
-                                        document.getElementById('message').innerHTML = 'OK ✔';
-                                        $("#createPatient").removeAttr("disabled");
-                                        } else {
-                                        document.getElementById('message').style.color = 'red';
-                                        document.getElementById('message').innerHTML = 'not matching ✘';
-                                        $("#createPatient").attr("disabled", "disabled");
-                                        }
+                                            
+//                                        
+//
+//                                        
+//                                        
+////                                            var avatar = $("input[name='avatar']").val();
+//                                        
+//                                        
+//                                        $("#createPatient").click(function (event) {
+//                                        event.preventDefault();
+//                                        
+//                                        var firstName = $("input[id='firstName']").val(); //lấy giá trị trong input user
+//                                        var lastName = $("input[id='lastName']").val();
+//                                        var avatar = $("input[id='avatar']").val();
+//                                        
+//                                        
+//                                        
+//                                        return  $.ajax({
+//                                        type: "PUT",
+//                                                dataType: "json",
+//                                                contentType: "application/json; charset=UTF-8",
+//                                                headers: {
+//                                                Authorization: 'Bearer ' + token},
+//                                                data: JSON.stringify({
+//                                                    
+//                                                        "accountId": accId,
+//                                                        "id": idUp,
+//                                                        "image": newImg,
+//                                                        "name": lastName + " " + firstName
+//                                                }),
+//                                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin",
+//                                                complete: function (jqXHR) {
+//                                                if (jqXHR.status === 200) {
+//                                                    alert("Update Successfully");
+//                                                    window.location.href = "profileAdmin.jsp";
+//                                                }
+//                                                }
+//                                        });
+//                                        
+//                                        })
+                                        
                                         };
+                                       
+
         </script>
     </body>
 

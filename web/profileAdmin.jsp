@@ -7,7 +7,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -48,17 +48,19 @@
                                         <div class="profile-info-left">
                                             <h3 id="fullname" class="user-name m-t-0 mb-0"></h3>
                                             <!--                                            <small class="text-muted">Gynecologist</small>-->
-                                            <div class="staff-id">Username: <span id="usernameDisplay"></span></div>
+                                            <div class="staff-id"> <span id="usernameDisplay"></span></div>
+                                            <div class="staff-id">Admin <span></span></div>
                                             <!--<div class="staff-msg"><a href="chat.html" class="btn btn-primary">Send Message</a></div>-->
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-7">
                                         <ul class="personal-info">
                                             <li>
                                                 <span class="title"><i class="fa fa-phone-square"></i>&nbsp; Phone:</span>
                                                 <span id="phoneNum" class="text"><a href="#"></a></span>
                                             </li>
-                                            <li>
+<!--                                            <li>
                                                 <span class="title"><i class="fa fa-envelope"></i>&nbsp; Email:</span>
                                                 <span id="emailDisplay" class="text"><a href="#"></a></span>
                                             </li>
@@ -73,7 +75,7 @@
                                             <li>
                                                 <span class="title"><i class="fa fa-venus-mars"></i>&nbsp; Gender:</span>
                                                 <span id="gender" class="text"></span>
-                                            </li>
+                                            </li>-->
                                         </ul>
                                     </div>
                                 </div>
@@ -91,21 +93,15 @@
         <script  type="text/javascript">
 
             window.onload = function () {
-                var userInf = JSON.parse(localStorage.getItem("userInformation"));
-                console.log(userInf);
-                $('#avatar').attr('src', userInf.image);
-                document.getElementById("fullname").innerHTML = userInf.fullname;
-                document.getElementById("usernameDisplay").innerHTML = userInf.username;
-                document.getElementById("phoneNum").innerHTML = userInf.phone;
-                document.getElementById("emailDisplay").innerHTML = userInf.mail;
-                document.getElementById("dob").innerHTML = userInf.dob;
-                document.getElementById("address").innerHTML = userInf.address;
-                document.getElementById("gender").innerHTML = userInf.gender;
-                if(userInf.gender === 1){
-                    document.getElementById("gender").innerHTML = "Female";
-                }else if(userInf.gender === 0){
-                    document.getElementById("gender").innerHTML = "Male";
-                }
+                var name = sessionStorage.getItem("name");
+                var phone = sessionStorage.getItem("user");
+                var image = sessionStorage.getItem("avatar");
+//                console.log(userInf);
+                $('#avatar').attr('src', image);
+                document.getElementById("usernameDisplay").innerHTML = name;
+//                document.getElementById("").innerHTML = userInf.username;
+                document.getElementById("phoneNum").innerHTML = phone;
+
             }
         </script>
     </body>

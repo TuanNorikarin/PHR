@@ -235,13 +235,11 @@
                                                             formData.append("role", "doctor");
                                                         }
                                                       
-    
-                                                      
                                                         $.ajax({
                                                             headers: {
                                                                 Authorization: 'Bearer ' + token,
                                                             },
-                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + data,
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + data +"/doctor",
                                                             type:"POST",
                                                             processData: false,
                                                             contentType: false,

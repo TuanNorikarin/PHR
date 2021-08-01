@@ -305,7 +305,7 @@
                                         "testId": checkboxTMP[i].value,
                                         "packageId": packageIDUpdate
                                     }),
-                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-testsd",
+                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test",
                                     complete: function (jqXHR) {
 //                                        x = x + 1;
                                         if (jqXHR.status === 200) {

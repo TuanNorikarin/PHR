@@ -128,8 +128,6 @@
             window.onload = function () {
             
             
-            
-            
             $.ajax({
                 type: "GET",
                 dataType: "text",
@@ -143,7 +141,7 @@
                     var infor = jQuery.parseJSON(data);
                     console.log(infor);
                     var name = sessionStorage.setItem("name", infor.name);
-                    var image = sessionStorage.setItem("image", infor.image);
+                    var image = sessionStorage.setItem("avatar", infor.image);
                     var clinicId = infor.clinicId;
                     sessionStorage.setItem("clinicID", clinicId);
                     var docID = infor.id;

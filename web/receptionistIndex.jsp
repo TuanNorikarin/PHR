@@ -141,9 +141,11 @@
                     var infor = jQuery.parseJSON(data);
                     console.log(infor);
                     var name = sessionStorage.setItem("name", infor.name);
-                    var image = sessionStorage.setItem("image", infor.image);
+                    var image = sessionStorage.setItem("avatar", infor.image);
                     var clinicId = infor.clinicId;
                     sessionStorage.setItem("clinicID", clinicId);
+                    var recepID = infor.id;
+                    sessionStorage.setItem("recepID", recepID);
                     
                     $.ajax({
                 type: "GET",
