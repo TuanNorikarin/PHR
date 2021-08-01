@@ -154,7 +154,7 @@
                     console.log(sessionStorage.getItem('listTestId'))
                     console.log(typeof(listTest));
                     console.log(listTest)
-                                        console.log("//////////")
+                    console.log("//////////")
 
                     
                     console.log(typeof(listPackageTest));
@@ -217,11 +217,6 @@
             </script>
             <i onclick="editDoctor()"></i>
 
-<!--=======
-            </script>
-            <i onclick="editDoctor()"></i>
-            
->>>>>>> Stashed changes-->
             </body>
 
 

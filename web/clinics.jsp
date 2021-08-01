@@ -189,7 +189,7 @@
                                                 contentType: "application/json; charset=utf-8",
                                                 headers: {
                                                     Authorization: 'Bearer ' + token},
-                                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" + item.id,
+                                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" + item.id, // cần api tìm phòng khám theo clinic
                                                 success: function (value) {
                                                             
                                                             localStorage.setItem("rating", JSON.stringify(value));

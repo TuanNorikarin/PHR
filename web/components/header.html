@@ -61,17 +61,22 @@
             </div>
         </div>
         <script>
+            
             var url = sessionStorage.getItem("avatar");
             $('.rounded-circle').attr({
                 'src': url,
             });
             $(".Logout").click(function (event) {
-                sessionStorage.setItem("key", "");
+                
+                sessionStorage.removeItem('key');
+                sessionStorage.removeItem('name');
+                sessionStorage.removeItem('image');
+//                sessionStorage.setItem("key", "");
             });
             var token = sessionStorage.getItem("key");
             console.log(token);
                                                        //redirect to login when user not login
-            if (token === "") {
+            if (token == null) {
                 document.location.href = "login.html";
             }
             var user = sessionStorage.getItem("name");
@@ -79,58 +84,5 @@
             var firstName = user.split(" ");
             var name = firstName[firstName.length - 1];
             $("#welcomeUser").text(name);
-//            $(document).ready(realTime);
-//            function realTime() {
-//                var xmlhttp = new XMLHttpRequest();
-//                xmlhttp.onreadystatechange = function () {
-//                    if (xmlhttp.readyState === XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
-//                        if (xmlhttp.status === 200) {
-//                            var x = "";
-//                            var today = new Date().getTime();
-//                            function parseDMYhm(s) {
-//                                var b = s.split(/\D/);
-//                                return new Date(b[0], b[1], b[2], b[3], b[4]).getTime();
-//                            }
-//                            var valueSort = xmlhttp.response.sort(function (a, b) {
-//                                return parseDMYhm(b.time) - parseDMYhm(a.time);
-//                            });
-//                            for (var i = 0; i < valueSort.length; i++) {
-//                                var split = valueSort[i].time.split("Z");
-//                                var time = new Date(split[0]).getTime();
-//
-//                                var change = (today - time) / 1000;
-//                                if (change < 60) {
-//                                    x += '<ul id="noti" class="notification-list"><li class="notification-message"><a href="#"><div class="media"><span class="avatar"><img alt="John Doe" src="' + valueSort[i].userId.image + '" class="img-fluid rounded-circle"></span><div class="media-body"><p class="noti-details"><span class="noti-title">' + valueSort[i].userId.fullname + '</span> review <span class="noti-title">' + valueSort[i].examinationId.clinicId.name + '</span></p><p class="noti-time"><span class="notification-time">' + parseInt(change) + ' second ago</span></p></div></div></a></li></ul>'
-//
-//                                } else if (change > 60 && change < 3600) {
-//                                    x += '<ul id="noti" class="notification-list"><li class="notification-message"><a href="#"><div class="media"><span class="avatar"><img alt="John Doe" src="' + valueSort[i].userId.image + '" class="img-fluid rounded-circle"></span><div class="media-body"><p class="noti-details"><span class="noti-title">' + valueSort[i].userId.fullname + '</span> review <span class="noti-title">' + valueSort[i].examinationId.clinicId.name + '</span></p><p class="noti-time"><span class="notification-time">' + parseInt(change / 60) + ' minute ago</span></p></div></div></a></li></ul>'
-//                                } else if (change > 3600 && change < 86400) {
-//                                    x += '<ul id="noti" class="notification-list"><li class="notification-message"><a href="#"><div class="media"><span class="avatar"><img alt="John Doe" src="' + valueSort[i].userId.image + '" class="img-fluid rounded-circle"></span><div class="media-body"><p class="noti-details"><span class="noti-title">' + valueSort[i].userId.fullname + '</span> review <span class="noti-title">' + valueSort[i].examinationId.clinicId.name + '</span></p><p class="noti-time"><span class="notification-time">' + parseInt(change / 3600) + ' hour ago</span></p></div></div></a></li></ul>'
-//
-//                                } else if (change > 86400 && change < 604800) {
-//                                    x += '<ul id="noti" class="notification-list"><li class="notification-message"><a href="#"><div class="media"><span class="avatar"><img alt="John Doe" src="' + valueSort[i].userId.image + '" class="img-fluid rounded-circle"></span><div class="media-body"><p class="noti-details"><span class="noti-title">' + valueSort[i].userId.fullname + '</span> review <span class="noti-title">' + valueSort[i].examinationId.clinicId.name + '</span></p><p class="noti-time"><span class="notification-time">' + parseInt(change / 86400) + ' day ago</span></p></div></div></a></li></ul>'
-//
-//                                } else if (change > 604800 && change < (604800 * 4)) {
-//                                    x += '<ul id="noti" class="notification-list"><li class="notification-message"><a href="#"><div class="media"><span class="avatar"><img alt="John Doe" src="' + valueSort[i].userId.image + '" class="img-fluid rounded-circle"></span><div class="media-body"><p class="noti-details"><span class="noti-title">' + valueSort[i].userId.fullname + '</span> review <span class="noti-title">' + valueSort[i].examinationId.clinicId.name + '</span></p><p class="noti-time"><span class="notification-time">' + parseInt(change / 604800) + ' week ago</span></p></div></div></a></li></ul>'
-//
-//                                }
-//                                localStorage.setItem("request", JSON.stringify(valueSort[i]));
-//                                $(document).on('click', '[id^="noti"]', function () {
-//                                    window.location.href = "acceptRatingClinic.jsp";
-//                                });
-//                            }
-//
-//                            $("#number").html(xmlhttp.response.length);
-//                            $("#show").html(x);
-//                            setTimeout(realTime, 15000);
-//                        }
-//
-//                    }
-//                };
-//
-////                xmlhttp.open("GET", "https://bt-application.herokuapp.com/api/rating/findbystatus/waiting accept", true);
-////                xmlhttp.setRequestHeader("Authorization", "Bearer " + token);
-////                xmlhttp.responseType = 'json';
-////                xmlhttp.send();
-//            }
+
         </script>
