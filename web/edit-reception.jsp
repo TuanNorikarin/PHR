@@ -502,7 +502,7 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
-                                                                            alert(Update Successfully);
+                                                                            alert("Update Successfully")
                                                                             window.location.href = "receptionist.jsp";
                                                                             }
                                                                         }
