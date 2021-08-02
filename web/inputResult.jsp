@@ -33,6 +33,12 @@
             }
             thead{
                 text-align: center;
+                color: #009efb;
+                font-weight: bolder;
+            }
+            .testName{
+                
+                font-weight: bolder;
             }
             .close{
                 margin-right: 40%;
@@ -56,7 +62,7 @@
 
             }
             .testPackage{
-                left: 12%;
+                left: 10%;
             }
             .doctorComment{
                 left: 12%;
@@ -73,6 +79,10 @@
             #inputResult{
                 text-align: right;
             }
+            .inputResult{
+                width: 150px;
+            }
+            
         </style>
     </head>
 
@@ -85,7 +95,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-8 testPackage">
+                    <div class="col-9 testPackage">
 
                         <table id="testPackageTable" name="requesttable" class="table table-border table-striped custom-table datatable mb-0">
                             <caption id="namePackage" style="caption-side:top">Result</caption>
@@ -106,14 +116,11 @@
                             <tbody>
                                 <tr>
 
-                                    <td id="name"></td>
+                                    <td id="testName"></td>
                                     <td id="male"></td>
                                     <td id="female"></td>
                                     <td id="result" name="result"></td>
                                     <td id="diagnose" name="diagnose"></td>
-
-
-
 
 
                                 </tr>
@@ -125,11 +132,11 @@
                     </div>
                     <div class="form-group col-8 doctorComment">
                         <label>Summary Diagnose:</label>
-                        <textarea id="textArea" rows="7" cols="5" class="form-control" style="resize: none;" placeholder=""></textarea>
+                        <textarea id="textArea" rows="7" cols="5" class="form-control" style="resize: none;" placeholder="" required="required"></textarea>
                     </div>
                     <div class="form-group col-8 doctorComment">
                         <label>Doctor's Advise:</label>
-                        <textarea id="textArea1" rows="7" cols="5" class="form-control" style="resize: none;" placeholder=""></textarea>
+                        <textarea id="textArea1" rows="7" cols="5" class="form-control" style="resize: none;" placeholder="" required="required"></textarea>
                     </div>
                     <div class="form-group text-center">
                         <button id="finishResult" type="submit" class="btn btn-primary account-btn finishResult">Submit</button>
@@ -170,7 +177,6 @@
 
 
                     var dataTestRequestId = JSON.parse(localStorage.getItem("dataTestRequestId"));
-//                  console.log(dataTestRequestId[3].testId +" TestID");
                     console.log(dataTestRequestId);
                     var dataTestRequest = JSON.parse(localStorage.getItem("dataTestRequestId"));
                     
@@ -181,13 +187,11 @@
                     var valueArray = [];
                     var arrayTotal = [];
                     var idExamination = dataTestRequestId[0].examinationId;
-//                var idExamination = localStorage.getItem("idExamination");
                     console.log(idExamination + " examinationID");
                     var testRequest = [];
                     var todayRating = moment().format("YYYY-MM-DDTHH:mm:ss");
                     var today = moment().format("YYYY-MM-DDTHH:mm:ss");
                     var dayExpire = moment().add(2, 'd').format("YYYY-MM-DD");
-//                var uuidRating = uuidv4();
                     $.ajax({
                     type: "GET",
                             dataType: "json",
@@ -202,17 +206,33 @@
 //                        console.log(examB)
                             console.log(data)
 
-//                      $('#testPackageTable').append('<caption style="caption-side: top">' + namePackage + '</caption>');
                                     $('#testPackageTable').DataTable({
                             data: data,
                                     columns: [
-                                    {data: 'test_name'},
-                                    {data: 'indexValueMin'},
-                                    {data: 'indexValueMax'},
+                                    {data: 'test_name', "width": "15%", "className": "testName",
+                                    },
+                                    {data: 'indexValueMin', "width": "15%",
+                                        render: function (data, type, row, meta) {
+                                                if ( row.indexValueMin === -9999) {
+                                                    return "Âm tính";
+                                                }else{
+                                                    return row.indexValueMin;
+                                                }
+                                            }
+                                    },
+                                    {data: 'indexValueMax', "width": "15%",
+                                        render: function (data, type, row, meta) {
+                                                if ( row.indexValueMax === -9999) {
+                                                    return "Âm tính";
+                                                }else{
+                                                    return row.indexValueMax;
+                                                }
+                                            }
+                                    },
                                     {
                                     data: 'testId',
                                             render: function (data, type, row, meta) {
-                                            return '<input id="inputResult' + data + '" onChange="createResult(' + data + ')" class="inputResult" type="number"></input>'
+                                            return '<input id="inputResult' + data + '" onChange="createResult(' + data + ')" class="inputResult" type="number" min="-9999" max="9999" required="required"></input>'
                                             }
                                     },
                                     {
@@ -306,7 +326,11 @@
                     }
                     } else if (advise.length === 0 || advise.length > 255) {
                     $('#textArea1').addClass('error');
-                    } else {
+                    }else if('.inputResult'){
+                        
+                    }
+                    
+                    else {
 
                                     $.ajax({
                                         type: "PUT",

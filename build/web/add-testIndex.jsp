@@ -72,7 +72,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Male Value Min. </label>
-                                    <input class="form-control inputValue" id='maleMin' name="maleMin" type="number">
+                                    <input class="form-control inputValue" id='maleMin' name="maleMin" type="number" step=".01" value="0">
                                     <span id='messageMaleMin'></span>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Male Value Max. </label>
-                                    <input class="form-control inputValue" id='maleMax' name="maleMax" type="number">
+                                    <input class="form-control inputValue" id='maleMax' name="maleMax" type="number" step=".01" value="0">
                                     <span id='messageMaleMax'></span>
                                 </div>
 
@@ -89,7 +89,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Female Value Min. </label>
-                                    <input class="form-control inputValue" id='femaleMin' name="femaleMin" type="number" >
+                                    <input class="form-control inputValue" id='femaleMin' name="femaleMin" type="number" step=".01" value="0">
                                     <span id='messageFemaleMin'></span>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Female Value Max. </label>
-                                    <input class="form-control inputValue" id='femaleMax' name="femaleMax" type="number">
+                                    <input class="form-control inputValue" id='femaleMax' name="femaleMax" type="number" step=".01" value="0">
                                     <span id='messageFemaleMax'></span>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Child Min. </label>
-                                    <input class="form-control inputValue" id='childMin' name="childMin" type="number">
+                                    <input class="form-control inputValue" id='childMin' name="childMin" type="number" step=".01" value="0">
                                     <span id='messageChildMin'></span>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Child Max. </label>
-                                    <input class="form-control inputValue" id='childMax' name="childMax" type="number">
+                                    <input class="form-control inputValue" id='childMax' name="childMax" type="number" step=".01" value="0">
                                     <span id='messageChildMax'></span>
                                 </div>
                             </div>
@@ -210,7 +210,7 @@
                     document.getElementById('messageChildMin').innerHTML = '';
                     $('#childMax').removeClass('error');
                     document.getElementById('messageChildMax').innerHTML = '';
-                    var regexp = /^-?\d{1,4}(\.\d{1})?$/;
+                    var regexp = /^-?\d{1,4}(\.\d{0,2})?$/;
                     var name = $("input[name='name']").val(); //lấy giá trị trong input user
                     var description = $("textarea[name='description']").val();
                     var maleMin = $("input[name='maleMin']").val();
@@ -238,7 +238,6 @@
                     console.log(femaleMax + " femaleMax");
                     
                     
-//                    var testId = uuidv4();
                     if (name.length === 0 || name.length > 30) {
                         $('#inputName').addClass('error');
                         document.getElementById('messageName').style.color = 'red';
@@ -278,7 +277,8 @@
                             document.getElementById('messageChildMax').style.color = 'red';
                             document.getElementById('messageChildMax').innerHTML = 'Value invalid ✘';
                         }
-                    } else if (count === 1) {
+                    }
+                    else if (count === 1) {
                         $('#inputName').addClass('error');
                         document.getElementById('messageName').style.color = 'red';
                         document.getElementById('messageName').innerHTML = 'Name already exists ✘';
@@ -317,7 +317,8 @@
                             document.getElementById('messageChildMax').style.color = 'red';
                             document.getElementById('messageChildMax').innerHTML = 'Value invalid ✘';
                         }
-                    } else if (description.length > 255) {
+                    } 
+                    else if (description.length > 255) {
                         $('#description').addClass('error');
                         document.getElementById('messageDes').style.color = 'red';
                         document.getElementById('messageDes').innerHTML = 'Descreption must be less than 255 in length ✘';
@@ -470,7 +471,7 @@
                         document.getElementById('messageChildMax').style.color = 'red';
                         document.getElementById('messageChildMax').innerHTML = 'Value max less than value min ✘';
                     } else {
-                        toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                        
                         $.ajax({
                             type: "POST",
                             dataType: "json",
@@ -508,11 +509,17 @@
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 201 || jqXHR.status === 200) {
+                                    toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                    alert("Create Successfully!");
                                     window.location.href = "testIndex.jsp";
 
                                 }
-
-
+                                if (jqXHR.status === 409){
+                                    $('#inputName').addClass('error');
+                                    document.getElementById('messageName').style.color = 'red';
+                                    document.getElementById('messageName').innerHTML = 'Name already exists ✘';
+                                }
+                                
 
                             }
                         });

@@ -154,8 +154,8 @@
                                             success: function (data) {
                                                 var infor = jQuery.parseJSON(data);
                                                 console.log(infor);
-                                                var name = sessionStorage.setItem("name", infor.name);
-                                                var image = sessionStorage.setItem("avatar", infor.image);
+                                                sessionStorage.setItem("name", infor.name);
+                                                sessionStorage.setItem("avatar", infor.image);
                                                 sessionStorage.setItem("accountId", infor.accountId);
                                                 sessionStorage.setItem("id", infor.id);
                                                 sessionStorage.setItem("clinicID", infor.clinicId);

@@ -30,6 +30,13 @@
             #imgClinic{
                 overflow:hidden
             }
+            img#imgPreview{
+                width: 300px;
+                height: 300px;
+            }
+            input#imgClinic.form-control{
+                width: 94px;
+            }
 
         </style>
     </head>
@@ -46,23 +53,34 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <form>
+                        
                         <div class="form-group">
                             <label>Clinic Name <span class="text-danger">*</span></label>
                             <input name="clinicName" id="inputClinicname" class="form-control" type="text">
                             <span id='messageClinicname'></span>
                         </div>
-                        <div class="form-group">
-                            <label>Address <span class="text-danger">*</span></label>
-                            <input name="address" id="inputAddress" class="form-control" type="text">
-                            <span id='messageAddress'></span>
-                        </div>
-                        <div class="col-sm-6">
+                        
+                        <div class="row">
+<!--                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>District <span class="text-danger">*</span></label>
-                                <input name="district" id="inputDistrict" class="form-control" name="phone" type="text">
+                                <input name="district" id="inputDistrict" class="form-control" type="text">
                                 <span id='messageDistrict'></span>
                             </div>
-                        </div>
+                            
+                        </div>-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Clinic</label><br/>
+                                    <select name="district" id="inputDistrict" class="select">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="12">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                    <span id='messageDistrict'></span>
+                                </div>
+                            </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Phone <span class="text-danger">*</span></label>
@@ -70,7 +88,12 @@
                                 <span id='messagePhone'/></span>
                             </div>
                         </div>
-
+                        </div>
+                        <div class="form-group">
+                            <label>Address <span class="text-danger">*</span></label>
+                            <textarea name="address" id="inputAddress" class="form-control" type="text"></textarea>
+                            <span id='messageAddress'></span>
+                        </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Image</label>
@@ -84,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-
+                       
                         <div class="form-group">
                             <label>Clinic Description</label>
                             <textarea cols="30" rows="6" id="description" name="description" class="form-control"></textarea>
@@ -93,6 +116,7 @@
                                                     <label>Tags <small>(separated with a comma)</small></label>
                                                     <input type="text" placeholder="Enter your tags" data-role="tagsinput" class="form-control">
                                                 </div>-->
+                        
                         <div class="form-group">
                             <label class="display-block">Status</label>
                             <div class="form-check form-check-inline">
@@ -129,8 +153,8 @@
         <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
         <script type="text/javascript">
 
-
-
+                                            
+        
                                             function validateFileType() {
                                                 var fileName = document.getElementById("imgClinic").value;
                                                 var idxDot = fileName.lastIndexOf(".") + 1;
@@ -160,9 +184,9 @@
 //                                            var clinicInf = JSON.parse(localStorage.getItem("clinicInf"));
                                                 var clinicID = JSON.parse(localStorage.getItem("clinicID"));
                                                 console.log(clinicID +" id");
-                                                var newImg;
+                                                var newImg = "ok";
                                             window.onload = function () {
-                                                
+                                                var token = sessionStorage.getItem("key");
                                                 
                                                 $("#imgClinic").change(function () {
                                                      var formData = new FormData();
@@ -204,21 +228,10 @@
                                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" +clinicID,
 //                                                        
                                                         success: function (data) { 
-                                                    var firebaseConfig = {
-                                                    apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                    authDomain: "upload-image-45245.firebaseapp.com",
-                                                    databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                    projectId: "upload-image-45245",
-                                                    storageBucket: "upload-image-45245.appspot.com",
-                                                    messagingSenderId: "758652365413",
-                                                    appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                    measurementId: "G-S5ECRSMKRB"
-                                                        };
-
-                                                // Initialize Firebase
-                                                firebase.initializeApp(firebaseConfig);
+                                                            
+                                                    
                                                 
-                                                var newImg = data.image;
+                                                
                                                 var idUpdate = data.id;
                                                 
                                                 $("#inputClinicname").click(function () {
@@ -243,11 +256,13 @@
                                                 $("input[name='district']").val(data.district);
 //                                                
                                                 $("textarea[name='description']").val(data.description);
-                                                $("input[name='address']").val(data.address);
+                                                $("textarea[name='address']").val(data.address);
                                                 $("input[name='phone']").val(data.phone);
 //                                                $("#clinic_active").val(data.status);
-                                                var image = data.image;
-                                                $("#imgPreview").attr('src', image);
+                                                if(newImg === "ok"){
+                                                    newImg = data.image;
+                                                            }
+                                                $("#imgPreview").attr('src', newImg);
                                                 var statusOld = data.status;
                                                 if (statusOld === "enable") {
                                                     $("#clinic_active").prop("checked", true);
@@ -270,11 +285,11 @@
                                                     var district = $("input[name='district']").val();
                                                     var imgClinic = $("input[name='imgClinic']").val();
                                                     var description = $("textarea[name='description']").val();
-                                                    var address = $("input[name='address']").val();
+                                                    var address = $("textarea[name='address']").val();
                                                     var phone = $("input[name='phone']").val();
                                                     var avatar = $("input[name='avatar']").val();
                                                     var status;
-                                                    var token = sessionStorage.getItem("key");
+                                                    
                                                     var selectSta = $('input[id="clinic_active"]:checked').val();
                                                     if (selectSta === "on") {
                                                         status = "enable";
@@ -360,8 +375,8 @@
                                                             });
 //                                                        }
 //                                                        uploadImage();
-                                                    }
-                                                });                 
+                                                            }
+                                                        });                 
                                                             
                                                        }});      
 

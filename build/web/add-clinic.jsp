@@ -46,23 +46,34 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <form>
+                        
                         <div class="form-group">
                             <label>Clinic Name <span class="text-danger">*</span></label>
                             <input name="clinicName" id="inputClinicname" class="form-control" type="text">
                             <span id='messageClinicname'></span>
                         </div>
-                        <div class="form-group">
-                            <label>Address <span class="text-danger">*</span></label>
-                            <input name="address" id="inputAddress" class="form-control" type="text">
-                            <span id='messageAddress'></span>
-                        </div>
-                        <div class="col-sm-6">
+                        
+                        <div class="row">
+<!--                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>District <span class="text-danger">*</span></label>
-                                <input name="district" id="inputDistrict" class="form-control" name="phone" type="text">
+                                <input name="district" id="inputDistrict" class="form-control" type="text">
                                 <span id='messageDistrict'></span>
                             </div>
-                        </div>
+                            
+                        </div>-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Clinic</label><br/>
+                                    <select name="district" id="inputDistrict" class="form-control">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                    <span id='messageDistrict'></span>
+                                </div>
+                            </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Phone <span class="text-danger">*</span></label>
@@ -70,8 +81,13 @@
                                 <span id='messagePhone'/></span>
                             </div>
                         </div>
-
-                        <div class="col-sm-6">
+                        </div>
+                        <div class="form-group">
+                            <label>Address <span class="text-danger">*</span></label>
+                            <textarea name="address" id="inputAddress" class="form-control" type="text"></textarea>
+                            <span id='messageAddress'></span>
+                        </div>
+                        <div class="col-sm-6" hidden>
                             <div class="form-group">
                                 <label>Image</label>
                                 <div class="profile-upload">
@@ -93,18 +109,19 @@
                                                     <label>Tags <small>(separated with a comma)</small></label>
                                                     <input type="text" placeholder="Enter your tags" data-role="tagsinput" class="form-control">
                                                 </div>-->
+                        
                         <div class="form-group">
                             <label class="display-block">Status</label>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="clinic_active" value="on" checked>
                                 <label class="form-check-label" for="clinic_active">
-                                    Active
+                                    Enable
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="clinic_inactive" value="on">
                                 <label class="form-check-label" for="clinic_inactive">
-                                    Inactive
+                                    Disable
                                 </label>
                             </div>
                         </div>
@@ -159,7 +176,7 @@
 //                =====================================Insert===============================================
                                             $(document).ready(function () {
 
-                                               
+                                               var token = sessionStorage.getItem("key");
                                                 $("#inputClinicname").click(function () {
                                                     $('#inputClinicname').removeClass('error');
                                                     document.getElementById('messageClinicname').innerHTML = '';
@@ -190,14 +207,14 @@
                                                     
                                                     var clinicName = $("input[name='clinicName']").val(); //lấy giá trị trong input clinic
 
-                                                    var district = $("input[name='district']").val();
+                                                    var district = $("select[name='district']").val();
                                                     var imgClinic = $("input[name='imgClinic']").val();
                                                     var description = $("textarea[name='description']").val();
-                                                    var address = $("input[name='address']").val();
+                                                    var address = $("textarea[name='address']").val();
                                                     var phone = $("input[name='phone']").val();
                                                     var avatar = $("input[name='avatar']").val();
                                                     var status;
-                                                    var token = sessionStorage.getItem("key");
+                                                    
                                                     var selectSta = $('input[id="clinic_active"]:checked').val();
                                                     
                                                     console.log(clinicName + " clinicName");
@@ -263,19 +280,8 @@
                                                     } else {
                                                         toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                         function uploadImage() {
-                                                            const ref = firebase.storage().ref();
-                                                            const file = document.querySelector("#imgClinic").files[0];
-                                                            if (file) {
-                                                                const name = +new Date() + "-" + file.name;
-                                                                const metadata = {
-                                                                    contentType: file.type
-                                                                };
-                                                                const task = ref.child(name).put(file, metadata);
-                                                                task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                                                    ajax(url);
-                                                                });
-                                                            } else {
-                                                                ajax("assets/img/user.jpg");
+                                                             {
+                                                                ajax("https://firebasestorage.googleapis.com/v0/b/upload-image-45245.appspot.com/o/1627884556038-user.jpg?alt=media&token=22b2529d-120e-4625-a7d1-fc680918acf5");
                                                             }
                                                         }
                                                         function ajax(url) {
@@ -299,8 +305,9 @@
                                                                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic",
                                                                 complete: function (jqXHR) {
                                                                     if (jqXHR.status === 200) {
+                                                                        alert("Create Successfully!");
                                                                         window.location.href = "clinics.jsp";
-                                                                        console.log(data);
+                                                                        
                                                                     }
                                                                 }
                                                             });

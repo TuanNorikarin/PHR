@@ -194,16 +194,16 @@
                                 
                                 
                                 
-                                $.ajax({
-                                    type: "GET",
-                                    dataType: "json",
-                                    contentType: "application/json",
-                                     headers: {
-                                        Authorization: 'Bearer ' + token},
-                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctors",
-                                    success: function (data) {
-                                        localStorage.setItem("alluser", JSON.stringify(data));
-                                    }});
+//                                $.ajax({
+//                                    type: "GET",
+//                                    dataType: "json",
+//                                    contentType: "application/json",
+//                                     headers: {
+//                                        Authorization: 'Bearer ' + token},
+//                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctors",
+//                                    success: function (data) {
+//                                        
+//                                    }});
 
                                 $.ajax({
                                     type: "GET",
@@ -213,34 +213,37 @@
                                         Authorization: 'Bearer ' + token},
                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctors",
                                     success: function (data) {
+                                          localStorage.setItem("alluser", JSON.stringify(data));
 //                                        localStorage.setItem("dataDoctor", JSON.stringify(data));
                                         var x = "";
                                         $.each(data, function (index, item) {
                                             localStorage.setItem("infoDoctor", JSON.stringify(item));
+                                            
+                                            
+                                            $(document).on('click', '[id^="testClick"]', function () {
+                                                var values = $(this).context.textContent.split(" ");
+                                                var id = values[values.length - 1];
+                                                if (item.id === id) {
+                                                    localStorage.setItem("dataDoctor", JSON.stringify(item));
+                                                }
 
+                                            });
+                                            
                                             $(document).on('click', '[id^="delete"]', function () {
                                                 var values = $(this).context.getAttribute("value");
+//                                                console.log(item.accountId);
                                                 if (item.id === values) {
+                                                    alert(item.id);
                                                     $.ajax({
-                                                        type: "PUT",
+                                                        type: "DELETE",
                                                         dataType: "json",
-                                                        contentType: "application/json; charset=UTF-8",
+                                                        contentType: "application/json; charset=utf-8",
                                                         headers: {
-                                                            Authorization: 'Bearer ' + token},
-                                                        data: JSON.stringify({
-//                                                            "address": item.address,
-                                                            "gender": item.gender,
-                                                            "dob": item.dob,
-                                                            "name": item.name,
-                                                            "id": item.id,
-                                                            "password": item.password,
-                                                            "status": "disable",
-                                                            "image": item.image,
-                                                            "token": item.token,
-                                                            
-                                                            
-                                                        }),
-                                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor",
+                                                        Authorization: 'Bearer ' + token},
+                                                        beforeSend:function(){
+                                                            return confirm("Are you sure?");
+                                                         },
+                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/account/" + item.accountId,
                                                         complete: function (jqXHR) {
                                                             if (jqXHR.status === 200 || jqXHR.status === 201) {
                                                                 window.location.href = "doctors.jsp";
@@ -249,13 +252,14 @@
                                                     });
                                                 }
                                             });
-                                            x = x + '<div id="testClick" class="col-md-4 col-sm-4 col-lg-3 pagination__item"><div class="profile-widget"><div class="doctor-img"><a id="avaDoctor" class="avatar" onclick="getDoctor('+data[index].id+')" href="profileDoctorForAdmin.jsp"><img alt="" src="'
+                                            x = x + '<div id="testClick" class="col-md-4 col-sm-4 col-lg-3 pagination__item"><div class="profile-widget"><div class="doctor-img"><a id="avaDoctor" class="avatar" onclick="getDoctor('+data[index].id+')" href="profileDoctorForAdmin.jsp"><img id="avatar" alt="" src="'
                                                     + data[index].image + '"></a></div><div class="dropdown profile-action"><a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" onclick="getDoctor('+data[index].id+')" href="edit-doctor.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a><a id="delete" value="' + data[index].id + '" class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a></div></div><h4 class="doctor-name text-ellipsis"><a class="fullName" href="">'
                                                     + data[index].name + '</a></h4><div class="' + index + '">'
                                                     + data[index].status + '</div><div class="user-country"><i id="colorIcon" class="fa fa-hospital-o"></i>  '
                                                     + data[index].clinicName + '</div><div class="doctorId">' + ' ' + data[index].id + '</div></div></div>'
                                             inActive = data;
-                                            console.log( data);
+//                                            console.log( data);
+                                                
                                         }
                                         )
                                         $("div.row.doctor-grid").html(x);
@@ -277,6 +281,8 @@
 //                                localStorage.setItem("infoDoctor", JSON.stringify(item));
                                 localStorage.setItem("dataDoctor", JSON.stringify(data));
                             }
+                            
+                            
                            
 
         </script>

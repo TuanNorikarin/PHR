@@ -49,6 +49,8 @@ $(document).ready(function () {
                         backgroundColor: 'rgba(0, 158, 251, 0.5)',
                         borderColor: 'rgba(0, 158, 251, 1)',
                         borderWidth: 1,
+                        barPercentage: 100,
+                        barThickness: 6,
                         data: [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, gv, bth, td, bt, tb, pn, tp]
                     }]
             };

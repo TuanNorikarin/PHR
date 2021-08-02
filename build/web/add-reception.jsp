@@ -118,18 +118,7 @@
                                     </div>
                                 </div>
                             </div>
-<!--
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Address</label>
-                                            <input type="text" name="address" class="form-control ">
-                                        </div>
-                                    </div>
 
-                                </div>
-                            </div>-->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone <span class="text-danger">*</span> </label>
@@ -145,7 +134,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" hidden>
                                 <div class="form-group">
                                     <label>Avatar</label>
                                     <div class="profile-upload">
@@ -276,19 +265,7 @@
                                                         var re = /((09|03|07|08|05)+([0-9]{8})\b)/g;
                                                         return re.test(phone);
                                                     }
-                                                    var firebaseConfig = {
-                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                        authDomain: "upload-image-45245.firebaseapp.com",
-                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                        projectId: "upload-image-45245",
-                                                        storageBucket: "upload-image-45245.appspot.com",
-                                                        messagingSenderId: "758652365413",
-                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                        measurementId: "G-S5ECRSMKRB"
-                                                    };
 
-                                                    // Initialize Firebase
-                                                    firebase.initializeApp(firebaseConfig);
                                                     $("#inputFirstname").click(function () {
                                                         $('#inputFirstname').removeClass('error');
                                                         document.getElementById('messageFirstname').innerHTML = '';
@@ -297,10 +274,7 @@
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
                                                     });
-//                                                    $("#inputUsername").click(function () {
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
-//                                                    });
+
                                                     $("#inputPassword").click(function () {
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
@@ -309,45 +283,30 @@
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
                                                     });
-//                                                    $("#inputEmail").click(function () {
-//                                                        $('#inputEmail').removeClass('error');
-//                                                        document.getElementById('messageEmail').innerHTML = '';
-//                                                    });
+
                                                     $("#createPatient").click(function (event) {
                                                         event.preventDefault();
                                                         $('#inputFirstname').removeClass('error');
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
+
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
-//                                                        $('#inputEmail').removeClass('error');
-//                                                        document.getElementById('messageEmail').innerHTML = '';
+
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
                                                         for (var i = 0; i < alluser.length; i++) {
-//                                                            if (alluser[i].username === document.getElementById('inputUsername').value) {
-//                                                                $('#inputUsername').addClass('error');
-//                                                                document.getElementById('messageUsername').style.color = 'red';
-//                                                                document.getElementById('messageUsername').innerHTML = 'Username already exists ✘';
-//                                                                count = 1;
-//                                                            }
+
                                                             if (alluser[i].phone === document.getElementById('inputPhone').value) {
                                                                 $('#inputPhone').addClass('error');
                                                                 document.getElementById('messagePhone').style.color = 'red';
                                                                 document.getElementById('messagePhone').innerHTML = 'Phone already exists ✘';
                                                                 count = 1;
                                                             }
-//                                                            if (alluser[i].mail === document.getElementById('inputEmail').value) {
-//                                                                $('#inputEmail').addClass('error');
-//                                                                document.getElementById('messageEmail').style.color = 'red';
-//                                                                document.getElementById('messageEmail').innerHTML = 'Email already exists ✘';
-//                                                                count = 1;
-//                                                            }
+
                                                         }
                                                         var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
                                                         var lastName = $("input[name='lastName']").val();
@@ -356,8 +315,7 @@
                                                         var clinicID = $("select[id='clinicID']").val();
                                                         var dob = $("input[name='dob']").val();
                                                         var gender = $("input[name='gender']").val();
-//                                                        var mail = $("input[name='email']").val();
-//                                                        var address = $("input[name='address']").val();
+
                                                         var phone = $("input[name='phone']").val();
                                                         var status = $("input[name='status']").val();
                                                         var token = sessionStorage.getItem("key");
@@ -434,19 +392,9 @@
                                                         } else {
                                                             toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             function uploadImage() {
-                                                                const ref = firebase.storage().ref();
-                                                                const file = document.querySelector("#avatar").files[0];
-                                                                if (file) {
-                                                                    const name = +new Date() + "-" + file.name;
-                                                                    const metadata = {
-                                                                        contentType: file.type
-                                                                    };
-                                                                    const task = ref.child(name).put(file, metadata);
-                                                                    task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                                                        ajax(url);
-                                                                    });
-                                                                } else {
-                                                                    ajax("assets/img/user.jpg");
+                                                                
+                                                                {
+                                                                    ajax("https://firebasestorage.googleapis.com/v0/b/upload-image-45245.appspot.com/o/1627884556038-user.jpg?alt=media&token=22b2529d-120e-4625-a7d1-fc680918acf5");
                                                                 }
                                                             }
                                                             function ajax(url) {
@@ -457,23 +405,21 @@
                                                                     headers: {
                                                                         Authorization: 'Bearer ' + token},
                                                                     data: JSON.stringify({
-//                                                                        "address": address,
                                                                         "gender": gender,
                                                                         "dob": dob,
                                                                         "name": lastName + " " + firstName,
                                                                         "image": url,
                                                                         "password": password,
                                                                         "phone": phone,
-
-//                                                                        "status": status,
                                                                         "clinicId": clinicID,
-                                                                        "token": ""
 
 
                                                                     }),
                                                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionist",
                                                                     complete: function (jqXHR) {
                                                                         if (jqXHR.status === 200) {
+                                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                                            
                                                                             window.location.href = "receptionist.jsp";
                                                                         }
                                                                     }

@@ -103,7 +103,7 @@
                                 <tr>
 
                                     <td id="name"></td>
-                                    <td id="male"></td>
+                                    <td id="male"><span id='messageName'></span></td>
                                     <td id="female"></td>
                                     <td id="children"></td>
                                     <td id="delete"></td>
@@ -159,12 +159,7 @@
             });
 
             window.onload = function () {
-                
-//                $('#testPackageTable').dataTable( {
-//                    "oLanguage": {
-//                        "sEmptyTable":     "My Custom Message On Empty Table"
-//                    }
-//                } );
+
                 var packageName = sessionStorage.getItem("packageName");
                 document.getElementById("packageName").innerHTML = packageName;
                 $("#buttonAdd").show();
@@ -186,11 +181,9 @@
                     success: function (data) {
                         var a = JSON.stringify(data);
                         var b = JSON.parse(a);
-                        console.log(b);
-                        console.log(a);
+//                        console.log(b);
+//                        console.log(a);
                         for (var i = 0; i < data.length; i++) {
-
-           
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",
@@ -230,16 +223,39 @@
                                     
                             data: mainData,
                             columns: [
-                                        { data: 'name' },
-                                        
+                                        { data: 'name',
+                                            
+                                        },
+                                            
                                         {
                                             data: 'maleIndex',
+                                            render: function (data, type, row, meta) {
+                                                if ( row.maleIndex === '-9999--9999') {
+                                                    return "Âm tính";
+                                                }else{
+                                                    return row.maleIndex;
+                                                }
+                                            }
                                         },
                                         {
                                             data: 'femaleindex',
+                                            render: function (data, type, row, meta) {
+                                                if ( row.femaleindex === '-9999--9999') {
+                                                    return "Âm tính";
+                                                }else{
+                                                    return row.femaleindex;
+                                                }
+                                            }
                                         },
                                         {
                                             data: 'childIndex',
+                                            render: function (data, type, row, meta) {
+                                                if ( row.childIndex === '-9999--9999') {
+                                                    return "Âm tính";
+                                                }else{
+                                                    return row.childIndex;
+                                                }
+                                            }
                                         },
                                         {
                                             defaultContent: '<td id="actionIcon" class="close"><button id="buttonX" type="button" class="close" aria-label="Close"><span class="deleteButton" aria-hidden="true">&times;</span></button></td>'
@@ -253,7 +269,9 @@
                                      
                                    
                                 });
-
+                               
+                                
+                                
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.log(' Error in processing! ' + textStatus);
@@ -272,31 +290,21 @@
                             txtValue = td.textContent;
                             for (var i = 0; i < data.length; i++) {
                                 if (data[i].name === txtValue) {
+                                    
                                     $.ajax({
                                         type: "DELETE",
                                         dataType: "json",
                                         contentType: "application/json; charset=utf-8",
                                         headers: {
                                             Authorization: 'Bearer ' + token},
+                                        beforeSend:function(){
+                                                return confirm("Are you sure?");
+                                             },
                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test/" + dataPackage.id + "/" + data[i].id,
                                         complete: function (jqXHR) {
-                                           
                                             
-                                            localStorage.setItem("testName", testName);
                                             window.location.href = "test-detail.jsp";
-//                                            
-//                                            if (jqXHR.status === 200) {
-//                                                for (var k = 0; k < testName.length; k++) {
-//                                                    if (txtValue === testName[k]) {
-//                                                        testName.splice(k, 1);
-//                                                        
-//                                                        localStorage.setItem("testName", testName);
-//                                                        window.location.href = "test-detail.jsp";
-//
-//                                                    }
-//                                                }
-//
-//                                            }
+
                                         }
                                     });
                                 }
@@ -339,23 +347,23 @@
                                 }
                             }
                         }
-                        if (listTestDouple.length !== 0) {
-                            let flag = true;
-
-                            while (flag) {
-                                if (confirm('Some test you choice have been in package, do you want to remove them?')) {
-                                    flag = false;
-                                } else {
-                                }
-                            }
-                        }
+//                        if (listTestDouple.length !== 0) {
+//                            let flag = true;
+//
+//                            while (flag) {
+//                                if (confirm('Some test you choice have been in package, do you want to remove them?')) {
+//                                    flag = false;
+//                                } else {
+//                                }
+//                            }
+//                        }
 
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(' Error in processing! ' + textStatus);
                     }
                 });
-                sessionStorage.setItem('packageId', dataPackage.id);
+                    sessionStorage.setItem('packageId', dataPackage.id);
 //                if (confirm('Do you want to choose some other testing services?')) {
                     window.location.href = "add-TestToPackage.jsp";
 //                } else {
@@ -367,10 +375,6 @@
             };
             
             
-            
-
-
-
         </script>
 
 

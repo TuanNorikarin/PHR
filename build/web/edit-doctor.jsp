@@ -174,9 +174,8 @@
                                                 var data = JSON.parse(localStorage.getItem("dataDoctor"));
 //                                                var data2 = JSON.parse(localStorage.getItem("infoDoctor"));
                                                 
-                                                var newImg;
+                                                var newImg = "ok";
                                                 console.log(data);
-//                                                console.log(data2);
                                                 function validateFileType() {
                                                     var fileName = document.getElementById("avatar").value;
                                                     var idxDot = fileName.lastIndexOf(".") + 1;
@@ -243,7 +242,7 @@
                                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
 //                                                        
                                                         success: function (data) {
-                                                            var newImg = data.image;
+                                                            
                                                             var name = data.name;
                                                             var firstName = name.split(" ");
                                                             var lastName = name.replace(firstName[firstName.length - 1], "");
@@ -255,11 +254,12 @@
                                                             var confirmPass = data.password;
                                                             $("#confirmPass").val(confirmPass);
                                                             var phone = data.phone;
-                                                            var image = data.image;
-                                                            $('#img').attr('src', image);
+                                                            if(newImg === "ok"){
+                                                               newImg = data.image;
+                                                            }
+                                                            $('#img').attr('src', newImg);
                                                             
                                                             $("#inputPhone").val(phone);
-                                                            var status = data.status;
                                                             var dob = data.dob;
                                                             $("#datepicker").val(dob);
                                                             var gender = data.gender;
@@ -270,11 +270,7 @@
                                                             }
                                                             $(document).ready(function () {
 //                                                    
-//                                                    function validateEmail(email)
-//                                                    {
-//                                                        var re = /\S{3,}@\S+\.\S+/;
-//                                                        return re.test(email);
-//                                                    }
+//                                                    
                                                     function removeAscent(str) {
                                                         if (str === null || str === undefined) {
                                                             return str;
@@ -331,8 +327,6 @@
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
-//                                                        $('#inputEmail').removeClass('error');
-//                                                        document.getElementById('messageEmail').innerHTML = '';
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
 //                                                        
@@ -416,7 +410,6 @@
                                                                     headers: {
                                                                         Authorization: 'Bearer ' + token},
                                                                     data: JSON.stringify({
-//                                                                        "address": address,
                                                                         "gender": gender,
                                                                         "dob": dob,
                                                                         "name": lastName + " " + firstName,
@@ -428,7 +421,7 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200 || jqXHR.status === 201) {
-                                                                            
+                                                                            alert("Update Successfully");
                                                                             window.location.href = "doctors.jsp";
                                                                         }
                                                                     }

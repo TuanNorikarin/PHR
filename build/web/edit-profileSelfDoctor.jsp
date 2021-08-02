@@ -48,7 +48,7 @@
                     <h4 class="page-title">Update Profile</h4>
                 </div>
             </div>
-<div class="row">
+        <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <form id="myForm" >
                         <div class="row">
@@ -180,7 +180,7 @@
                                                 var pass = sessionStorage.getItem("password");
                                                 var phoneNum = sessionStorage.getItem("user");
                                                 var accId = sessionStorage.getItem("accountId");
-                                                
+                                                var newImg = "ok";
                                                 window.onload = function () {
                                                     
                                                     $("#avatar").change(function () {
@@ -224,7 +224,7 @@
                                                             var infor = jQuery.parseJSON(data);
                                                             console.log(infor);
                                                             
-                                                            var newImg = infor.image;
+                                                            
                                                             var name = infor.name;
                                                             var firstName = name.split(" ");
                                                             var lastName = name.replace(firstName[firstName.length - 1], "");
@@ -233,8 +233,10 @@
                                                             $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
                                                            
                                                             var phone = phoneNum;
-                                                            var image = infor.image;
-                                                            $('#img').attr('src', image);
+                                                            if(newImg === "ok"){
+                                                               newImg = infor.image;
+                                                            }
+                                                            $('#img').attr('src', newImg);
                                                             
                                                             $("#inputPhone").val(phone);
                                                             

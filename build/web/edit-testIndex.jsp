@@ -155,37 +155,28 @@
 // ======================================================Insert===============================================
 
             $(document).ready(function () {
-//                var data = localStorage.getItem("dataTest");
-                var dataId = JSON.parse(localStorage.getItem("dataTestId"));
-                var a = JSON.stringify(dataId);
-                var data = JSON.parse(a);
-                console.log(data);
                 var token = sessionStorage.getItem("key");
-                
-                var name = data.name;
-                console.log(name);
-//                $("#updateTestIndex").attr('disabled','disabled');
-//                $.ajax({
-//                    type: "GET",
-//                    dataType: "json",
-//                    contentType: "application/json; charset=utf-8",
-//                    headers: {
-//                        Authorization: 'Bearer ' + token},
-//                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index" + dataId[1],
-//                    success: function (data, textStatus, jqXHR) {
-//                        if(data.length === 0){
-//                            $("#updateTestIndex").removeAttr('disabled');
-//                        }
-//                    }});
-                var idGroup = data.id;
-                var idMale =  data.samplelst[0].id;
-                var idTest =  data.samplelst[0].testId;
-                var idFemale = data.samplelst[1].id;
-//                var idChild = data.samplelst[2].id;
+                var dataId = JSON.parse(localStorage.getItem("dataTestID"));
+                console.log(dataId + " ID");
                 
                 
-                
-                $("#inputName").val(name);
+//                var name = data.name;
+//                console.log(name);
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        contentType: "application/json",
+                        headers: {
+                            Authorization: 'Bearer ' + token},
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index/" +dataId,
+                        success: function (data) { 
+                        var name = data.name;    
+                        var idGroup = data.id;
+                        var idMale =  data.samplelst[0].id;
+                        var idTest =  data.samplelst[0].testId;
+                        var idFemale = data.samplelst[1].id;
+                        var idChild = data.samplelst[2].id;
+               $("#inputName").val(name);
                 var description = data.description;
                 console.log(description);
                 $("#description").val(description);
@@ -239,7 +230,8 @@
                     $('#childMax').removeClass('error');
                     document.getElementById('messageChildMax').innerHTML = '';
                 });
-                $("#updateTestIndex").click(function (event) {
+                
+                    $("#updateTestIndex").click(function (event) {
                     event.preventDefault();
                     $('#inputName').removeClass('error');
                     document.getElementById('messageName').innerHTML = '';
@@ -257,7 +249,7 @@
                     document.getElementById('messageChildMin').innerHTML = '';
                     $('#childMax').removeClass('error');
                     document.getElementById('messageChildMax').innerHTML = '';
-                    var regexp = /^-?\d{1,4}(\.\d{1})?$/;
+                    var regexp = /^-?\d{1,4}(\.\d{0,2})?$/;
                     var name = $("input[name='name']").val(); //lấy giá trị trong input user
                     var description = $("textarea[name='description']").val();
                     var maleMin = $("input[name='maleMin']").val();
@@ -275,7 +267,7 @@
                     var allTestIndex = JSON.parse(localStorage.getItem("allTestIndex"));
                     console.log(allTestIndex);
                     for (var i = 0; i < allTestIndex.length; i++) {
-                        if (allTestIndex[i][0].trim() === name && name !== data[0]) {
+                        if (allTestIndex[i][0] === name && name !== data[0]) {
                             count = 1;
                         }
                     }
@@ -541,7 +533,7 @@
                                         },
                                       {
                                           "description": "",
-//                                          "id": idChild,
+                                          "id": idChild,
                                           "indexValueMax": childMax,
                                           "indexValueMin": childMin,
                                           "testId": idTest,
@@ -555,6 +547,8 @@
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 201 || jqXHR.status === 200) {
+                                    toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                    alert("Update Successfully!");
                                     window.location.href = "testIndex.jsp";
 
                                 }
@@ -566,6 +560,17 @@
                     }
 
                 });
+                
+                
+                
+                    }});
+                
+                
+                
+                
+                
+
+  
 
             });
 

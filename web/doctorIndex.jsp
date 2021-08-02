@@ -151,52 +151,42 @@
                     
                     
                     $.ajax({
-                type: "GET",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    Authorization: 'Bearer ' + token},
-                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
-                success: function (data) {
-                    document.getElementById("doctorCount").innerHTML = data.totalDoctor;
-                    document.getElementById("patientCount").innerHTML = data.totalPatient;
-                    document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
-                    document.getElementById("examCount").innerHTML = data.totalExamination;
+                        type: "GET",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        headers: {
+                            Authorization: 'Bearer ' + token},
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
+                        success: function (data) {
+                            document.getElementById("doctorCount").innerHTML = data.totalDoctor;
+                            document.getElementById("patientCount").innerHTML = data.totalPatient;
+                            document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
+                            document.getElementById("examCount").innerHTML = data.totalExamination;
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
 
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
 
-
-                }
-            });
+                        }
+                    });
             
-               $.ajax({
-                type: "GET",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    Authorization: 'Bearer ' + token},
-                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" + clinicId,
-                success: function (data) {
-                    sessionStorage.setItem("clinicName", data.name);
-                    console.log(data.name);
-                    
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-            });
-            
-            
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-                
-            });
+                          $.ajax({
+                             type: "GET",
+                             dataType: "json",
+                             contentType: "application/json; charset=utf-8",
+                             headers: {
+                                 Authorization: 'Bearer ' + token},
+                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" + clinicId,
+                             success: function (data) {
+                                 sessionStorage.setItem("clinicName", data.name);
+                                 console.log(data.name);
+                             },
+                             error: function (jqXHR, textStatus, errorThrown) {
+                             }
+                             });
+                             },
+                             error: function (jqXHR, textStatus, errorThrown) {
+                             }
+                         });
             
             
             
