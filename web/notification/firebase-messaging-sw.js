@@ -52,6 +52,6 @@ messaging.onBackgroundMessage(function (payload) {
 
 self.addEventListener('notificationclick', function (event) {
     event.notification.close();
-    clients.openWindow('http://localhost:8080/PHR/doctorIndex.jsp');
+    clients.openWindow('http://localhost:8084/PHR/doctorIndex.jsp');
     // Do something as the result of the notification click
 });
