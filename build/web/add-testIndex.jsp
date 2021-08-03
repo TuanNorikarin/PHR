@@ -520,6 +520,8 @@
                                     document.getElementById('messageName').innerHTML = 'Name already exists ✘';
                                 }
                                 
+                                
+                                
 
                             }
                         });

@@ -503,7 +503,7 @@
                         document.getElementById('messageChildMax').style.color = 'red';
                         document.getElementById('messageChildMax').innerHTML = 'Value max less than value min ✘';
                     } else {
-                         toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                         
                     $.ajax({
                             type: "PUT",
                             dataType: "json",
@@ -547,10 +547,16 @@
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 201 || jqXHR.status === 200) {
+                                    
                                     toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                     alert("Update Successfully!");
                                     window.location.href = "testIndex.jsp";
 
+                                }
+                                else if (jqXHR.status === 400){
+                                    $('#inputName').addClass('error');
+                                    document.getElementById('messageName').style.color = 'red';
+                                    document.getElementById('messageName').innerHTML = 'Can not update this test index because it already in used';
                                 }
 
 

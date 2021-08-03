@@ -59,10 +59,21 @@ $(document).ready(function () {
                 type: 'bar',
                 data: barChartData,
                 options: {
+                    xAxes: [{
+                        gridLines: {
+                           display: false
+                        }
+                     }],
+                      yAxes: [{
+                        gridLines: {
+                           display: false
+                        }
+                     }],
                     responsive: true,
                     legend: {
                         display: false,
                     }
+                    
                 }
             });
         });
