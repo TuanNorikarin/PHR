@@ -119,17 +119,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Address </label>
-                                            <input type="text" name="address" class="form-control ">
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone <span class="text-danger">*</span></label>
@@ -137,7 +126,19 @@
                                     <span id='messagePhone'/></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Address </label>
+                                            <textarea type="text" name="address" class="form-control "></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-6" hidden>
                                 <div class="form-group">
                                     <label>Avatar</label>
                                     <div class="profile-upload">
@@ -151,7 +152,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <label class="display-block">Status</label>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="patient_active" value="on" checked>
@@ -165,7 +166,7 @@
                                     Inactive
                                 </label>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="m-t-20 text-center">
                             <button id="createPatient" class="btn btn-primary submit-btn">Create Patient</button>
 
@@ -226,19 +227,6 @@
                                                 $(document).ready(function () {
 
 
-                                                    var firebaseConfig = {
-                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                        authDomain: "upload-image-45245.firebaseapp.com",
-                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                        projectId: "upload-image-45245",
-                                                        storageBucket: "upload-image-45245.appspot.com",
-                                                        messagingSenderId: "758652365413",
-                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                        measurementId: "G-S5ECRSMKRB"
-                                                    };
-
-                                                    // Initialize Firebase
-                                                    firebase.initializeApp(firebaseConfig);
                                                     function validateEmail(email)
                                                     {
                                                         var re = /\S{3,}@\S+\.\S+/;
@@ -293,16 +281,12 @@
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
-//                                                        $('#inputEmail').removeClass('error');
-//                                                        document.getElementById('messageEmail').innerHTML = '';
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
                                                         for (var i = 0; i < alluser.length; i++) {
@@ -318,14 +302,11 @@
                                                         }
                                                         var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
                                                         var lastName = $("input[name='lastName']").val();
-//                                                        var username = $("input[name='username']").val();
                                                         var password = $("input[name='password']").val();
                                                         var dob = $("input[name='dob']").val();
                                                         var gender = $("input[name='gender']").val();
-//                                                        var mail = $("input[name='email']").val();
-                                                        var address = $("input[name='address']").val();
+                                                        var address = $("textarea[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
-                                                        var status = $("input[name='status']").val();
                                                         var token = sessionStorage.getItem("key");
                                                         var selectGen = $('input[id="male"]:checked').val();
                                                         
@@ -335,12 +316,6 @@
                                                             gender = "Female";
                                                         }
 
-                                                        var selectSta = $('input[id="patient_active"]:checked').val();
-                                                        if (selectSta === "on") {
-                                                            status = "Active";
-                                                        } else {
-                                                            status = "Inactive";
-                                                        }
                                                         
                                                         console.log(firstName + " firtname");
                                                         console.log(dob + " dob");
@@ -401,19 +376,8 @@
                                                         } else {
                                                             toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             function uploadImage() {
-                                                                const ref = firebase.storage().ref();
-                                                                const file = document.querySelector("#avatar").files[0];
-                                                                if (file) {
-                                                                    const name = +new Date() + "-" + file.name;
-                                                                    const metadata = {
-                                                                        contentType: file.type
-                                                                    };
-                                                                    const task = ref.child(name).put(file, metadata);
-                                                                    task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                                                        ajax(url);
-                                                                    });
-                                                                } else {
-                                                                    ajax("assets/img/user.jpg");
+                                                                 {
+                                                                    ajax("https://firebasestorage.googleapis.com/v0/b/upload-image-45245.appspot.com/o/1627884556038-user.jpg?alt=media&token=22b2529d-120e-4625-a7d1-fc680918acf5");
                                                                 }
                                                             }
                                                             function ajax(url) {
@@ -431,14 +395,13 @@
                                                                         "image": url,
                                                                         "password": password,
                                                                         "phone": phone,
-                                                                        "token": ""
-
 
                                                                     }),
                                                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient",
                                                                     complete: function (jqXHR) {
-                                                                        if (jqXHR.status === 201) {
-                                                                            window.location.href = "patients.jsp";
+                                                                        if (jqXHR.status === 201 || jqXHR.status === 200) {
+                                                                        toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});    
+                                                                        window.location.href = "patients.jsp";
                                                                         }
                                                                     }
                                                                 });
@@ -451,7 +414,7 @@
 
                                                 var check = function () {
                                                     if (document.getElementById('inputPassword').value ===
-                                                            document.getElementById('confirmPass').value && document.getElementById('inputPassword').value !== "") {
+                                                        document.getElementById('confirmPass').value && document.getElementById('inputPassword').value !== "") {
                                                         document.getElementById('message').style.color = 'green';
                                                         document.getElementById('message').innerHTML = 'OK ✔';
                                                         $("#createPatient").removeAttr("disabled");

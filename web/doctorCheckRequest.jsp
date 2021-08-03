@@ -70,13 +70,14 @@
                             <tbody>
                                 <tr>
                                     <td id="name"></td>
-                                    <td id="description"></td>
+                                    <td id="description"><span id='messageName'></span></td>
                                     <td class="text-right">
                                     </td>
                                 </tr>
 
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </div>
@@ -159,7 +160,7 @@
                                 {
                                     data: 'dataPatient',
                                     render: function (data, type, row, meta) {
-                                        return '<td><button class="inputResult" onClick="selectPatientToInputResult('+data+')"> <a> Select</a> </button></td>'
+                                        return '<td><button class="btn btn-primary inputResult" onClick="selectPatientToInputResult('+data+')"> <a> Select</a> </button></td>'
                                     }
 
                                 }
@@ -172,6 +173,10 @@
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
+                        $('#checkRequestTable').addClass('error');
+                        document.getElementById('messageName').style.color = 'green';
+                        document.getElementById('messageName').innerHTML = 'NO AVAILABLE REQUEST AT THIS TIME ✘';
+//                        alert("NO AVAILABLE REQUEST AT THIS TIME");
                         console.log(' Error in processing! ' + textStatus);
                     }
 
@@ -197,6 +202,7 @@
                         sessionStorage.setItem("patientGender", gender);
                         window.location.href = "inputResult.jsp";
                     }, error: function (jqXHR, textStatus, errorThrown) {
+                        
                         console.log(errorThrown)
                     }})
             }

@@ -159,7 +159,6 @@
                         document.getElementById('messageDes').style.color = 'red';
                         document.getElementById('messageDes').innerHTML = 'Description must be less than 255 letters ✘';
                     } else {
-                        toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                         $.ajax({
                             type: "POST",
                             dataType: "json",
@@ -176,7 +175,8 @@
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/packages/package",
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
-                                if (jqXHR.status === 201 || jqXHR.status === 201) {
+                                if (jqXHR.status === 201 || jqXHR.status === 200) {
+                                    toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                     alert("Create Successfully");
                                     window.location.href = "test.jsp";
                                 }

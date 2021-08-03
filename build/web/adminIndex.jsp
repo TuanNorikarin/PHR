@@ -119,9 +119,11 @@
     <script type="text/javascript">
             var token = sessionStorage.getItem("key");
             var phone = sessionStorage.getItem("user");
+            var pass = sessionStorage.getItem("password");
+            
             sessionStorage.getItem("name");
             
-//            console.log(phone);
+            console.log(pass);
             window.onload = function () {
             
             
@@ -159,6 +161,7 @@
 
                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role",
                 success: function (data) {
+                    
                     var json = jQuery.parseJSON(data);
                     
                     document.getElementById("doctorCount").innerHTML = json.totalDoctor;
@@ -181,6 +184,7 @@
                 }
                 
             });
+
             
         };
         $(document).ajaxStart(function () {

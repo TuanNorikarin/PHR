@@ -6,6 +6,7 @@
                 <a href="doctorIndex.jsp" class="logo">
                     <img src="assets/img/logo.png" width="35" height="35" alt=""> <span>PHR</span>
                 </a>
+                
             </div>
             <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
             <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
@@ -81,9 +82,13 @@
             $(".Logout").click(function (event) {
                 sessionStorage.removeItem('key');
                 sessionStorage.removeItem('name');
-                sessionStorage.removeItem('image');
+                sessionStorage.removeItem('avatar');
+                sessionStorage.removeItem('roleID');
+                sessionStorage.removeItem('password');
                 sessionStorage.removeItem('doctorID');
                 sessionStorage.removeItem('clinicID');
+                sessionStorage.removeItem('gender');
+                sessionStorage.removeItem('id');
 //                sessionStorage.setItem("key", "");
             });
             var token = sessionStorage.getItem("key");

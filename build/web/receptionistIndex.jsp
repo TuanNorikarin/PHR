@@ -120,8 +120,8 @@
     <script type="text/javascript">
         
             var token = sessionStorage.getItem("key");
-            console.log(token);
             var phone = sessionStorage.getItem("user");
+            var pass = sessionStorage.getItem("password");
             console.log(phone);
             
             window.onload = function () {
@@ -140,32 +140,34 @@
                 success: function (data) {
                     var infor = jQuery.parseJSON(data);
                     console.log(infor);
-                    var name = sessionStorage.setItem("name", infor.name);
-                    var image = sessionStorage.setItem("avatar", infor.image);
+                    sessionStorage.setItem("name", infor.name);
                     var clinicId = infor.clinicId;
                     sessionStorage.setItem("clinicID", clinicId);
                     var recepID = infor.id;
                     sessionStorage.setItem("recepID", recepID);
+                    sessionStorage.setItem("dob", infor.dob);
+                    sessionStorage.setItem("genderRe", infor.gender);
+                    console.log(infor.gender);
                     
                     $.ajax({
-                type: "GET",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    Authorization: 'Bearer ' + token},
-                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
-                success: function (data) {
-                    document.getElementById("doctorCount").innerHTML = data.totalDoctor;
-                    document.getElementById("patientCount").innerHTML = data.totalPatient;
-                    document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
-                    document.getElementById("examCount").innerHTML = data.totalExamination;
+                        type: "GET",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        headers: {
+                            Authorization: 'Bearer ' + token},
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
+                        success: function (data) {
+                            document.getElementById("doctorCount").innerHTML = data.totalDoctor;
+                            document.getElementById("patientCount").innerHTML = data.totalPatient;
+                            document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
+                            document.getElementById("examCount").innerHTML = data.totalExamination;
 
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
 
 
-                }
-            });
+                        }
+                    });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
 

@@ -62,15 +62,18 @@
         </div>
         <script>
             
-            var url = sessionStorage.getItem("avatar");
+            var avatarAD = sessionStorage.getItem("avatar");
             $('.rounded-circle').attr({
-                'src': url,
+                'src': avatarAD,
             });
             $(".Logout").click(function (event) {
                 
                 sessionStorage.removeItem('key');
                 sessionStorage.removeItem('name');
-                sessionStorage.removeItem('image');
+                sessionStorage.removeItem('avatar');
+                sessionStorage.removeItem('roleID');
+                sessionStorage.removeItem('password');
+                sessionStorage.removeItem('id');
 //              sessionStorage.setItem("key", "");
             });
             var token = sessionStorage.getItem("key");
@@ -80,6 +83,12 @@
                 document.location.href = "login.html";
             }
             var user = sessionStorage.getItem("name");
+            var user2 = sessionStorage.getItem("avatar");
+            var user3 = sessionStorage.getItem("roleID");
+            var user4 = sessionStorage.getItem("accountId");
+            var user5 = sessionStorage.getItem("id");
+            
+            
             
             var firstName = user.split(" ");
             var name = firstName[firstName.length - 1];

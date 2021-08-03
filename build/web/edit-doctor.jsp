@@ -121,14 +121,7 @@
                                 </div>
                             </div>
 
-<!--                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Clinic</label><br/>
-                                    <select id="clinicID" name="clinicID" class="select">
 
-                                    </select>
-                                </div>
-                            </div>-->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Avatar</label>
@@ -144,21 +137,7 @@
                                 </div>
                             </div>
                         </div>
-<!--                        <div class="form-group">
-                            <label class="display-block">Status</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="patient_active" value="on" checked>
-                                <label class="form-check-label" for="patient_active">
-                                    Active
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="patient_inactive" value="off">
-                                <label class="form-check-label" for="patient_inactive">
-                                    Inactive
-                                </label>
-                            </div>
-                        </div>-->
+
                         <div class="m-t-20 text-center">
                             <button id="createPatient" class="btn btn-primary submit-btn">Update Doctor</button>
 
@@ -195,9 +174,8 @@
                                                 var data = JSON.parse(localStorage.getItem("dataDoctor"));
 //                                                var data2 = JSON.parse(localStorage.getItem("infoDoctor"));
                                                 
-                                                var newImg;
+                                                var newImg = "ok";
                                                 console.log(data);
-//                                                console.log(data2);
                                                 function validateFileType() {
                                                     var fileName = document.getElementById("avatar").value;
                                                     var idxDot = fileName.lastIndexOf(".") + 1;
@@ -246,6 +224,7 @@
                                                             data: formData,
                                                             success: function (response) {
 //                                                                alert("OK rồi");
+                                                                alert(this.files[0].size);
                                                                 newImg = response;
                                                             },
                                                             error: function (er) {
@@ -264,7 +243,7 @@
                                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" +id,
 //                                                        
                                                         success: function (data) {
-                                                            var newImg = data.image;
+                                                            
                                                             var name = data.name;
                                                             var firstName = name.split(" ");
                                                             var lastName = name.replace(firstName[firstName.length - 1], "");
@@ -276,11 +255,12 @@
                                                             var confirmPass = data.password;
                                                             $("#confirmPass").val(confirmPass);
                                                             var phone = data.phone;
-                                                            var image = data.image;
-                                                            $('#img').attr('src', image);
+                                                            if(newImg === "ok"){
+                                                               newImg = data.image;
+                                                            }
+                                                            $('#img').attr('src', newImg);
                                                             
                                                             $("#inputPhone").val(phone);
-                                                            var status = data.status;
                                                             var dob = data.dob;
                                                             $("#datepicker").val(dob);
                                                             var gender = data.gender;
@@ -291,11 +271,7 @@
                                                             }
                                                             $(document).ready(function () {
 //                                                    
-//                                                    function validateEmail(email)
-//                                                    {
-//                                                        var re = /\S{3,}@\S+\.\S+/;
-//                                                        return re.test(email);
-//                                                    }
+//                                                    
                                                     function removeAscent(str) {
                                                         if (str === null || str === undefined) {
                                                             return str;
@@ -340,36 +316,18 @@
                                                     });
 //                                                    
 
-
-                                                    var firebaseConfig = {
-                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                        authDomain: "upload-image-45245.firebaseapp.com",
-                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                        projectId: "upload-image-45245",
-                                                        storageBucket: "upload-image-45245.appspot.com",
-                                                        messagingSenderId: "758652365413",
-                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                        measurementId: "G-S5ECRSMKRB"
-                                                    };
-
-                                                    // Initialize Firebase
-                                                    firebase.initializeApp(firebaseConfig);
                                                     $("#createPatient").click(function (event) {
                                                         event.preventDefault();
                                                         $('#inputFirstname').removeClass('error');
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
-//                                                        $('#inputEmail').removeClass('error');
-//                                                        document.getElementById('messageEmail').innerHTML = '';
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
 //                                                        
@@ -380,7 +338,6 @@
                                                         var password = $("input[name='password']").val();
                                                         var dob = $("input[name='dob']").val();
                                                         var gender = $("input[name='gender']").val();
-//                                                        var address = $("input[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
 //                                                        
                                                         
@@ -390,20 +347,13 @@
                                                         } else {
                                                             gender = "Female";
                                                         }
-
-//                                                        var selectSta = $('input[id="patient_active"]:checked').val();
-                                                        
+             
                                                         console.log(idUpdate +" idUp");
                                                         console.log(phone +" phone");
                                                         console.log(password +" password");
                                                         console.log(imageOld +" avatar");
                                                         console.log(selectGen +" gender");
                                                         
-//                                                        if (selectSta === "on") {
-//                                                            status = "Active";
-//                                                        } else {
-//                                                            status = "Inactive";
-//                                                        }
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
                                                             $('#inputFirstname').addClass('error');
                                                             document.getElementById('messageFirstname').style.color = 'red';
@@ -452,7 +402,7 @@
                                                         else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                            toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             
                                                                 return   $.ajax({
                                                                     type: "PUT",
@@ -461,20 +411,18 @@
                                                                     headers: {
                                                                         Authorization: 'Bearer ' + token},
                                                                     data: JSON.stringify({
-//                                                                        "address": address,
                                                                         "gender": gender,
                                                                         "dob": dob,
                                                                         "name": lastName + " " + firstName,
                                                                         "id": idUpdate,
                                                                         "password": password,
-//                                                                        
                                                                         "image": newImg,
-                                                                        "token": data.token,
                                                                     }),
                                                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor",
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200 || jqXHR.status === 201) {
+                                                                            alert("Update Successfully");
                                                                             window.location.href = "doctors.jsp";
                                                                         }
                                                                     }

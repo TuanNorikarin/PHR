@@ -56,7 +56,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
 
                         <table id="indexTable" class="table table-border table-striped custom-table datatable mb-0">
 
@@ -125,13 +125,17 @@
                                 console.log(data);
                                 data.forEach(element => {
                                     var dataShow = new Object();
+                                    dataShow.id = element.id;
+//                                    dataShow.testId = element.samplelst[0];
                                     dataShow.name = element.name;
                                     dataShow.description = element.description;
-
+                                    
                                     dataShow.maleIndex = '-';
                                     dataShow.femaleindex = '-';
-                                    dataShow.childIndex = '-'
+                                    dataShow.childIndex = '-';
                                     
+                                
+//                                console.log(dataShow.id);
                                     element.samplelst.forEach(e => {
                                         if (e.type === 'Male' || e.type === 'male') {
                                             dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
@@ -144,7 +148,7 @@
                                     mainData.push(dataShow);
                                 });
                                 
-                                
+                           
                         
                         localStorage.setItem("allTestIndex", JSON.stringify(mainData));
                         var a = JSON.stringify(data);
@@ -188,16 +192,39 @@
                                         
                                         {
                                             data: 'maleIndex',
+                                            render: function (data, type, row, meta) {
+                                                if ( row.maleIndex === '-9999--9999') {
+                                                    return "Âm tính";
+                                                }else{
+                                                    return row.maleIndex;
+                                                }
+                                            }
                                         },
                                         {
                                             data: 'femaleindex',
+                                            render: function (data, type, row, meta) {
+                                                if ( row.femaleindex === '-9999--9999') {
+                                                    return "Âm tính";
+                                                }else{
+                                                    return row.femaleindex;
+                                                }
+                                            }
                                         },
                                         {
                                             data: 'childIndex',
+                                            render: function (data, type, row, meta) {
+                                                if ( row.childIndex === '-9999--9999') {
+                                                    return "Âm tính";
+                                                }else{
+                                                    return row.childIndex;
+                                                }
+                                            }
                                         },
-                                        {
-                                            defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "edit-testIndex.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  </div></div></td>'
-
+                                        {   data: 'id',
+                                                    render: function (data, type, row, meta) {
+                                                        return '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" onclick="getTestId('+data+')" href = "edit-testIndex.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  </div></div></td>'
+                                                    }
+                                            
                                         }
                             ],
                                     "bDestroy": true,
@@ -212,6 +239,10 @@
 
                 })
             };
+                        function getTestId(data){
+//                                alert(data);
+                                localStorage.setItem("dataTestID", JSON.stringify(data));
+                            }
 
         </script>
 

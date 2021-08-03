@@ -47,7 +47,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
 
                         <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
 
@@ -152,35 +152,19 @@
                             txtValue = td.textContent;
                             $.each(data, function (index, value) {
                                 if (value.phone === txtValue) {
+                                    
                                     localStorage.setItem("dataRecep", JSON.stringify(value));
                                     $(document).on('click', '[id^="delete"]', function () {
-                                        $.ajax({
-                                            type: "PUT",
+                                         $.ajax({
+                                            type: "DELETE",
                                             dataType: "json",
-                                            contentType: "application/json; charset=UTF-8",
+                                            contentType: "application/json; charset=utf-8",
                                             headers: {
-                                                Authorization: 'Bearer ' + token},
-                                            data: JSON.stringify({
-//                                                "address": value.address,
-//                                                "gender": value.gender,
-//                                                "doB": value.doB,
-                                                "name": value.name,
-                                                "id": value.id,
-//                                                "mail": value.mail,
-                                                "password": value.password,
-                                                "phone": value.phone,
-                                                "roleId": {
-                                                    "id": 4
-                                                },
-                                                "status": "disable",
-                                                "image": value.image,
-                                                "token": value.token,
-                                                "clinicId": {
-                                                    "id": value.clinicId.id
-                                                },
-                                                
-                                            }),
-                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionist",
+                                            Authorization: 'Bearer ' + token},
+                                            beforeSend:function(){
+                                                return confirm("Are you sure?");
+                                             },
+                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/account/" + value.accountId,
                                             complete: function (jqXHR) {
                                                 if (jqXHR.status === 200 || jqXHR.status === 201) {
                                                     window.location.href = "receptionist.jsp";
@@ -208,10 +192,8 @@
                                         return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
                                     }},
                                 {data: 'name'},
-//                                {data: 'doB'},
                                 {data: 'clinicName'},
                                 {data: 'phone'},
-//                                {data: 'gender'},
                                 {data: 'status'},
                                 {
                                     defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "edit-reception.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  <a id ="delete" class = "dropdown-item" href = "#" data - toggle = "modal"> <i class = "fa fa-trash-o m-r-5" > </i> Delete</a > </div></div></td>'
@@ -226,7 +208,7 @@
                             },
                             "createdRow": function (row, data, dataIndex) {
                                 if (data.status === "disable") {
-                                    console.log(row);
+//                                    console.log(row);
                                     $('td', row).css('color', '#b5b5b5');
                                     $('td', row).css('font-style', 'italic');
                                 }

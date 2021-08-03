@@ -201,7 +201,7 @@
         <script src="assets/js/moment.min.js"></script>
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="assets/js/app.js"></script>
-                <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script type="text/javascript">
@@ -327,10 +327,6 @@
                                                         });
 
                                                         
-
-
-
-
                                                     var gender = data.gender;
                                                     if (gender === "Male") {
                                                         $("#male").prop("checked", true);
@@ -478,7 +474,7 @@
                                                         } else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Update Successfully Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                            
                                                             
                                                                 return  $.ajax({
                                                                     type: "PUT",
@@ -502,6 +498,7 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
+                                                                            toastr["success"]("Update Successfully Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                                             alert("Update Successfully")
                                                                             window.location.href = "receptionist.jsp";
                                                                             }

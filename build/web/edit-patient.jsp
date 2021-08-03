@@ -128,7 +128,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Address</label>
-                                            <input type="text" id="address" name="address" class="form-control ">
+                                            <textarea type="text" id="address" name="address" class="form-control "></textarea>
                                         </div>
                                     </div>
 
@@ -303,18 +303,7 @@
                                                     
                                                     
 
-                                                    var firebaseConfig = {
-                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                        authDomain: "upload-image-45245.firebaseapp.com",
-                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                        projectId: "upload-image-45245",
-                                                        storageBucket: "upload-image-45245.appspot.com",
-                                                        messagingSenderId: "758652365413",
-                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                        measurementId: "G-S5ECRSMKRB"
-                                                    };
-                                                    // Initialize Firebase
-                                                    firebase.initializeApp(firebaseConfig);
+
 //                                                    function validateEmail(email)
 //                                                    {
 //                                                        var re = /\S{3,}@\S+\.\S+/;
@@ -352,10 +341,7 @@
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
                                                     });
-//                                                    $("#inputUsername").click(function () {
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
-//                                                    });
+
                                                     $("#inputPassword").click(function () {
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
@@ -374,16 +360,14 @@
                                                         document.getElementById('messageFirstname').innerHTML = '';
                                                         $('#inputLastname').removeClass('error');
                                                         document.getElementById('messageLastname').innerHTML = '';
-//                                                        $('#inputUsername').removeClass('error');
-//                                                        document.getElementById('messageUsername').innerHTML = '';
+
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPassword').removeClass('error');
                                                         document.getElementById('messagePassword').innerHTML = '';
                                                         $('#inputPhone').removeClass('error');
                                                         document.getElementById('messagePhone').innerHTML = '';
-//                                                        $('#inputEmail').removeClass('error');
-//                                                        document.getElementById('messageEmail').innerHTML = '';
+
                                                         var count = 0;
                                                         var alluser = JSON.parse(localStorage.getItem("alluser"));
                                                         for (var i = 0; i < alluser.length; i++) {
@@ -405,7 +389,7 @@
                                                         var password = $("input[name='password']").val();
                                                         var dob = $("input[name='dob']").val();
                                                         var gender = $("input[name='gender']").val();
-                                                        var address = $("input[name='address']").val();
+                                                        var address = $("textarea[name='address']").val();
                                                         var phone = $("input[name='phone']").val();
                                                         var avatar = $("input[id='avatar']").val();
                                                         var status = $("input[name='status']").val();
@@ -450,11 +434,7 @@
                                                                 document.getElementById('messagePassword').style.color = 'red';
                                                                 document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
                                                             }
-//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-//                                                                $('#inputPhone').addClass('error');
-//                                                                document.getElementById('messagePhone').style.color = 'red';
-//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-//                                                            }
+
 
                                                         } else if (lastName.length === 0 || !validateName(removeAscent(lastName)) || lastName.length > 35) {
                                                             $('#inputLastname').addClass('error');
@@ -466,49 +446,20 @@
                                                                 document.getElementById('messagePassword').style.color = 'red';
                                                                 document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
                                                             }
-//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-//                                                                $('#inputPhone').addClass('error');
-//                                                                document.getElementById('messagePhone').style.color = 'red';
-//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-//                                                            }
+
                                                         }
 
                                                         else if (password.length > 30 || password.length < 6) {
                                                             $('#inputPassword').addClass('error');
                                                             document.getElementById('messagePassword').style.color = 'red';
                                                             document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-//                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-//                                                                $('#inputPhone').addClass('error');
-//                                                                document.getElementById('messagePhone').style.color = 'red';
-//                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-//                                                            }
+
                                                         } 
-//                                                        else if (phone.length !== 10 || !validatePhone(phone)) {
-//                                                            $('#inputPhone').addClass('error');
-//                                                            document.getElementById('messagePhone').style.color = 'red';
-//                                                            document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-//                                                        }
+
                                                         else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                                            function uploadImage() {
-                                                                const ref = firebase.storage().ref();
-                                                                const file = document.querySelector("#avatar").files[0];
-                                                                if (file) {
-                                                                    const name = +new Date() + "-" + file.name;
-                                                                    const metadata = {
-                                                                        contentType: file.type
-                                                                    };
-                                                                    const task = ref.child(name).put(file, metadata);
-                                                                    task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
-                                                                        ajax(url);
-                                                                    });
-                                                                } else {
-                                                                    ajax(imageOld);
-                                                                }
-                                                            }
-                                                            function ajax(url) {
+                                                            
                                                                 return  $.ajax({
                                                                     type: "PUT",
                                                                     dataType: "json",
@@ -536,13 +487,14 @@
                                                                     complete: function (jqXHR) {
 
                                                                         if (jqXHR.status === 200) {
-                                                                            alert("Create Successfully");
+                                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                                            alert("Update Successfully");
                                                                             window.location.href = "patients.jsp";
                                                                         }
                                                                     }
                                                                 });
-                                                            }
-                                                            uploadImage();
+//                                                            }
+//                                                            uploadImage();
                                                         }
                                                     });
                                                 };

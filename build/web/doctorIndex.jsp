@@ -129,51 +129,88 @@
 
         window.onload = function () {
 
-            $.ajax({
-                type: "GET",
-                dataType: "text",
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    Authorization: 'Bearer ' + token},
 
-                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/phone-account",
-                success: function (data) {
-                    var infor = jQuery.parseJSON(data);
-                    console.log(infor);
-                    var name = sessionStorage.setItem("name", infor.name);
-                    var image = sessionStorage.setItem("avatar", infor.image);
-                    var clinicId = infor.clinicId;
-                    sessionStorage.setItem("clinicID", clinicId);
-                    var docID = infor.id;
-                    sessionStorage.setItem("doctorID", docID);
+            var token = sessionStorage.getItem("key");
+            var phone = sessionStorage.getItem("user");
+            var pass = sessionStorage.getItem("password");
+            console.log(phone);
 
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        headers: {
-                            Authorization: 'Bearer ' + token},
-                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
-                        success: function (data) {
-                            document.getElementById("doctorCount").innerHTML = data.totalDoctor;
-                            document.getElementById("patientCount").innerHTML = data.totalPatient;
-                            document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
-                            document.getElementById("examCount").innerHTML = data.totalExamination;
-
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
+            window.onload = function () {
 
 
+                $.ajax({
+                    type: "GET",
+                    dataType: "text",
+                    contentType: "application/json; charset=utf-8",
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        Authorization: 'Bearer ' + token},
+
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/phone-account",
+                    success: function (data) {
+                        var infor = jQuery.parseJSON(data);
+                        console.log(infor);
+
+                        var clinicId = infor.clinicId;
+                        sessionStorage.setItem("clinicID", clinicId);
+                        var docID = infor.id;
+                        sessionStorage.setItem("doctorID", docID);
+
+                        sessionStorage.setItem("dob", infor.dob);
+                        sessionStorage.setItem("gender", infor.gender);
+
+
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            headers: {
+                                Authorization: 'Bearer ' + token},
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/total-role/" + clinicId,
+                            success: function (data) {
+                                document.getElementById("doctorCount").innerHTML = data.totalDoctor;
+                                document.getElementById("patientCount").innerHTML = data.totalPatient;
+                                document.getElementById("receptionistCount").innerHTML = data.totalReceptionist;
+                                document.getElementById("examCount").innerHTML = data.totalExamination;
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+
+
+                            }
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+
+                    }
+
+                });
+
+
+
+
+
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    headers: {
+                        Authorization: 'Bearer ' + token},
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" + clinicId,
+                    success: function (data) {
+                        sessionStorage.setItem("clinicName", data.name);
+                        console.log(data.name);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+            }
+            ,
+                    error: function (jqXHR, textStatus, errorThrown) {
                         }
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-
-                }
-
-            });
+            }
+            );
 
 
 

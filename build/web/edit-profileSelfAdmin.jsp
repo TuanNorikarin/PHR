@@ -49,15 +49,15 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>First Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id='firstName' name="firstName" type="text" >
-                                    <span id='valiFirst'></span>
+                                    <input id='inputFirstname' class="form-control" name="firstName" type="text">
+                                    <span id='messageFirstname'></span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Last Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id='lastName' name="lastName" type="text" >
-                                    <span id='valiLast'></span>
+                                    <label>Last Name</label>
+                                    <input id='inputLastname' class="form-control" name="lastName" type="text">
+                                    <span id='messageLastname'></span>
                                 </div>
                             </div>
                             
@@ -111,6 +111,8 @@
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="assets/js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
         <script type="text/javascript">
                 var token = sessionStorage.getItem("key");
                 var idUp = sessionStorage.getItem("id");
@@ -119,64 +121,10 @@
 //                var phone = sessionStorage.getItem("user");
 //                sessionStorage.getItem("name");
                 
-                                        $("#myForm").validate({
-                                        rules: {
-                                                "lastName": {
-                                                required: true
-                                                },
-                                                "firstName": {
-                                                required: true
-                                                }
-                                               
-                                        },
-                                                messages: {
-                                                        "lastName": {
-                                                        required: "Must not empty"
-                                                        },
-                                                        "firstName": {
-                                                        required: "Must not empty"
-                                                        }
-                                                },
-                                                errorPlacement: function (label, element) {
-                                                label.addClass('mt-2 text-danger');
-                                                label.insertAfter(element);
-                                                },
-                                                highlight: function (element, errorClass) {
-                                                $(element).parent().addClass('has-danger');
-                                                $(element).addClass('form-control-danger');
-                                                },
-                                                unhighlight: function (element) {
-                                                $(element).css('background', '#ffffff');
-                                                }
 
-                                        });
 //                =====================================Update===============================================
 
                                                       window.onload = function () {
-//                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                   
-                                                    
-                                                    var name = data.name;
-                                                    var firstName = name.split(" ");
-                                                    var lastName = name.replace(firstName[firstName.length - 1], "").trim();
-                                                    $("#inputFirstname").val(firstName[firstName.length - 1]);
-                                                    $("#inputLastname").val(lastName); //đổi thứ tự last name vs firstname
-
-                                                    var password = data.password;
-                                                    $("#inputPassword").val(password);
-                                                    var confirmPass = data.password;
-                                                    $("#confirmPass").val(confirmPass);
-                                                    var dob = data.dob;
-                                                    $("#datepicker").val(dob);
-                                                    var image = data.image;
-                                                    $('#img').attr('src', image);
-//                                                    
-
 
                                                      $("#avatar").change(function () {
                                                      var formData = new FormData();
@@ -192,17 +140,17 @@
                                                             headers: {
                                                                 Authorization: 'Bearer ' + token,
                                                             },
-                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idNew +"/admin",
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + idUp +"/admin",
                                                             type:"POST",
                                                             processData: false,
                                                             contentType: false,
                                                             data: formData,
                                                             success: function (response) {
-                                                                alert("OK rồi");
+//                                                                alert("OK rồi");
                                                                 newImg = response;
                                                             },
                                                             error: function (er) {
-                                                                alert("Lỗiiiiiiiiiiiiii");
+//                                                                alert("Lỗiiiiiiiiiiiiii");
                                                             }
 
                                                         });
@@ -238,18 +186,7 @@
                                                         var re = /^[a-zA-Z ]+$/;
                                                         return re.test(name);
                                                     }
-                                                    var firebaseConfig = {
-                                                        apiKey: "AIzaSyBf5hSMUpJ-kpx5c87kgll3dXePgK-j9mQ",
-                                                        authDomain: "upload-image-45245.firebaseapp.com",
-                                                        databaseURL: "https://upload-image-45245.firebaseio.com",
-                                                        projectId: "upload-image-45245",
-                                                        storageBucket: "upload-image-45245.appspot.com",
-                                                        messagingSenderId: "758652365413",
-                                                        appId: "1:758652365413:web:f009f179396e4af4de748c",
-                                                        measurementId: "G-S5ECRSMKRB"
-                                                    };
-                                                    // Initialize Firebase
-                                                    firebase.initializeApp(firebaseConfig);
+
                                                     var infor = jQuery.parseJSON(data);
                                                     console.log(infor);
                                                     var newImg = infor.image;
@@ -257,8 +194,8 @@
                                                     var firstName = name.split(" ");
                                                     var lastName = name.replace(firstName[firstName.length - 1], "");
                                                     lastName = lastName.trim();
-                                                    $("#firstName").val(firstName[firstName.length - 1]);
-                                                    $("#lastName").val(lastName);                 //đổi thứ tự last name vs firstname
+                                                    $("#inputFirstname").val(firstName[firstName.length - 1]);
+                                                    $("#inputLastname").val(lastName);                 //đổi thứ tự last name vs firstname
 
                                                     var phone = phoneNum;
                                                     $("#phone").val(phone);
@@ -286,26 +223,9 @@
                                                         var count = 0;
 
 
-                                                        var firstName = $("input[name='firstName']").val(); //lấy giá trị trong input user
-                                                        var lastName = $("input[name='lastName']").val();
-//                                                        
-                                                        var password = $("input[name='password']").val();
-                                                        var dob = $("input[name='dob']").val();
-                                                        var gender = $("input[name='gender']").val();
-//                                                        var address = $("input[name='address']").val();
-                                                        var phone = $("input[name='phone']").val();
-//                                                        var clinicID = $("select[id='clinicID']").val();
+                                                        var firstName = $("input[id='inputFirstname']").val(); //lấy giá trị trong input user
+                                                        var lastName = $("input[id='inputLastname']").val();
                                                         var avatar = $("input[id='avatar']").val();
-                                                        var status = $("input[name='status']").val();
-                                                        
-                                                        var selectGen = $('input[id="male"]:checked').val();
-                                                        if (selectGen === "on") {
-                                                            gender = "Male";
-                                                        } else {
-                                                            gender = "Female";
-                                                        }
-
-//                                                     
                                                         
                                                         
                                                         if (firstName.length === 0 || !validateName(removeAscent(firstName)) || firstName.length > 14) {
@@ -318,27 +238,15 @@
                                                                 document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
                                                             }
 
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
+                                                            
+                                                            
 
                                                         } else if (lastName.length === 0 || !validateName(removeAscent(lastName)) || lastName.length > 35) {
                                                             $('#inputLastname').addClass('error');
                                                             document.getElementById('messageLastname').style.color = 'red';
                                                             document.getElementById('messageLastname').innerHTML = 'Last Name invalid ✘';
 
-                                                            if (password.length > 30 || password.length < 6) {
-                                                                $('#inputPassword').addClass('error');
-                                                                document.getElementById('messagePassword').style.color = 'red';
-                                                                document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            }
+                                                            
                                                             if (phone.length !== 10 || !validatePhone(phone)) {
                                                                 $('#inputPhone').addClass('error');
                                                                 document.getElementById('messagePhone').style.color = 'red';
@@ -346,20 +254,7 @@
                                                             }
                                                         }
 
-                                                        else if (password.length > 30 || password.length < 6) {
-                                                            $('#inputPassword').addClass('error');
-                                                            document.getElementById('messagePassword').style.color = 'red';
-                                                            document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
-                                                            if (phone.length !== 10 || !validatePhone(phone)) {
-                                                                $('#inputPhone').addClass('error');
-                                                                document.getElementById('messagePhone').style.color = 'red';
-                                                                document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                            }
-                                                        } else if (phone.length !== 10 || !validatePhone(phone)) {
-                                                            $('#inputPhone').addClass('error');
-                                                            document.getElementById('messagePhone').style.color = 'red';
-                                                            document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
-                                                        } else if (count === 1) {
+                                                        else if (count === 1) {
 
                                                         } else {
                                                             toastr["success"]("Update Successfully Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
@@ -373,27 +268,23 @@
                                                                         },
                                                                     data: JSON.stringify({
 //                                                                        
-                                                                        "name": lastName + " " + firstName,
-                                                                        "id": idUpdate,
+                                                                        "accountId": accId,
+                                                                        "id": idUp,
                                                                         "image": newImg,
-                                                                        "dob": dob,
-                                                                        "gender": gender,
-                                                                        "password": password,
-                                                                        "token": "",
+                                                                        "name": lastName + " " + firstName
                                                                         
                                                                     }),
-                                                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionist",
+                                                                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/admins/admin",
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
-                                                                           
-                                                                            window.location.href = "receptionist.jsp";
+                                                                            alert("Update Successfully! Login again to view your changed!");
+                                                                            window.location.href = "profileAdmin.jsp";
                                                                             }
                                                                         }
                                                                 });
                                                      
-//                                                            }
-//                                                            uploadImage();
+//                                                            
                                                         }
                                                     });
 

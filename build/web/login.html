@@ -70,6 +70,9 @@
                     var user = $("input[name='user']").val(); //lấy giá trị trong input user
                     var password = $("input[name='password']").val();
                     
+                    var pass =  password;
+                    
+                    
                     console.log(user);
                     console.log(password);
                     
@@ -95,8 +98,11 @@
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/authentications/login",
                             success: function (data) {
                                     
-                                    sessionStorage.setItem("key", data);                                   
+                                    sessionStorage.setItem("key", data);
+                                    sessionStorage.setItem("password", password);
+                                    console.log("pass22 " + pass);
                                     console.log(data);
+                                    
                                         
                                     var rs = parseJwt(data); 
                                     var roleID = rs.authorities + "";
@@ -120,6 +126,8 @@
                                             sessionStorage.setItem("name", infor.name);
                                             sessionStorage.setItem("avatar", infor.image);
                                             sessionStorage.setItem("accountId", infor.accountId);
+                                            sessionStorage.setItem("id", infor.id);
+                                            sessionStorage.setItem("roleID", roleID);
                                             window.location.href = "adminIndex.jsp";
                                         },
                                         error: function (jqXHR, textStatus, errorThrown) {
@@ -146,9 +154,12 @@
                                             success: function (data) {
                                                 var infor = jQuery.parseJSON(data);
                                                 console.log(infor);
-                                                var name = sessionStorage.setItem("name", infor.name);
-                                                var image = sessionStorage.setItem("image", infor.image);
+                                                sessionStorage.setItem("name", infor.name);
+                                                sessionStorage.setItem("avatar", infor.image);
                                                 sessionStorage.setItem("accountId", infor.accountId);
+                                                sessionStorage.setItem("id", infor.id);
+                                                sessionStorage.setItem("clinicID", infor.clinicId);
+                                                sessionStorage.setItem("roleID", roleID);
                                                 window.location.href = "doctorIndex.jsp";
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {
@@ -156,7 +167,6 @@
 
                                             }
                                         });
-//                                        window.location.href = "doctorIndex.jsp";
                                         
                                     }
                                     else if( roleID === "RECEPTIONIST")
@@ -177,8 +187,11 @@
                                                 var infor = jQuery.parseJSON(data);
                                                 console.log(infor);
                                                 sessionStorage.setItem("name", infor.name);
-                                                sessionStorage.setItem("image", infor.image);
+                                                sessionStorage.setItem("avatar", infor.image);
                                                 sessionStorage.setItem("accountId", infor.accountId);
+                                                sessionStorage.setItem("id", infor.id);
+                                                sessionStorage.setItem("clinicID", infor.clinicId);
+                                                sessionStorage.setItem("roleID", roleID);
                                                 window.location.href = "receptionistIndex.jsp";
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {

@@ -13,14 +13,14 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
         <link rel="stylesheet" type="text/css" href="assets/css/customStyle.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <style>
+       <style>
             .sidebar-menu li a {
                 color: black;
                 font-weight: 500;
@@ -38,14 +38,14 @@
                 margin-left: 200px;
             }
             button#changePass{
-                margin-left: -31%;
+                margin-left: -5%;
 
             }
         </style>
     </head>
 
-    <%@include file="components/recepHeader.html" %>
-    <%@include file="components/recepSidebar.html" %>
+    <%@include file="components/doctorHeader.html" %>
+    <%@include file="components/doctorSidebar.html" %>
     <div class="page-wrapper">
         <div class="content">
             <div class="row">
@@ -58,16 +58,17 @@
                     <form class="changePassForm">
                         <div class="col-sm-8">
                             <label>Current Password <span class="text-danger">*</span></label>
-                            <input name="curPass" id="curPass" class="form-control" type="password" onkeyup='check()'>
-                            <span id='message2'></span>
+                            <input name="curPass" id="curPass" class="form-control" type="password" onkeyup='check()' maxlength="30" minlength="6">
+                            <span id='message2'></span><span id='messagePasswordOld'/></span>
                         </div>
                         <div class="col-sm-8">
                             <label>New Password <span class="text-danger">*</span></label>
-                            <input name="newPass" id="newPass" class="form-control" type="password" onkeyup='check()'>
+                            <input name="newPass" id="newPass" class="form-control" type="password" onkeyup='check()' maxlength="30" minlength="6">
+                            <span id='message3'></span><span id='messagePassword'/></span>
                         </div>
                         <div class="col-sm-8">
                             <label>Confirm Password <span class="text-danger">*</span></label>
-                            <input name="confirm" id="confirm" class="form-control" type="password" onkeyup='check()'>
+                            <input name="confirm" id="confirm" class="form-control" type="password" onkeyup='check()'maxlength="30" minlength="6">
                             <span id='message'></span>
                         </div>
                         <!--                        <div class="col-sm-6">
@@ -94,8 +95,9 @@
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script type="text/javascript">
-
-                                var password = localStorage.getItem("password");
+                                var token = sessionStorage.getItem("key");
+                                var password = sessionStorage.getItem("password");
+//                                console.log("current Pass: "+password);
                                 var check = function () {
                                     if (document.getElementById('curPass').value ===
                                             password) {
@@ -108,7 +110,8 @@
                                         $("#changePass").attr("disabled", "disabled");
                                     }
                                     if (document.getElementById('newPass').value ===
-                                            document.getElementById('confirm').value && document.getElementById('newPass').value !== "" && document.getElementById('confirm').value !== "") {
+                                            document.getElementById('confirm').value && document.getElementById('newPass').value !== "" && document.getElementById('confirm').value !== "")
+                                    {
                                         document.getElementById('message').style.color = 'green';
                                         document.getElementById('message').innerHTML = 'OK ✔';
                                         $("#changePass").removeAttr("disabled");
@@ -118,12 +121,50 @@
                                         document.getElementById('message').innerHTML = 'not matching ✘';
                                         $("#changePass").attr("disabled", "disabled");
                                     }
+
+                                    
+                                    
+                                    
                                 };
+                                $("#newPass").click(function () {
+                                    $('#newPass').removeClass('error');
+                                    document.getElementById('messagePassword').innerHTML = '';
+                                });
+                                $("#curPass").click(function () {
+                                    $('#curPass').removeClass('error');
+                                    document.getElementById('messagePasswordOld').innerHTML = '';
+                                });
                                 $("#changePass").click(function (event) {
                                     event.preventDefault();
-                                    var userInf = JSON.parse(localStorage.getItem("userInformation"));
+                                    var count = 0;
+                                    $('#newPass').removeClass('error');
+                                    document.getElementById('messagePassword').innerHTML = '';
+                                    $('#newPass').removeClass('error');
+                                    document.getElementById('messagePassword').innerHTML = '';
+                                    var curPass = $("input[name='curPass']").val();
+                                    var password = $("input[name='newPass']").val();
+                                    if(curPass.length === 0){
+                                        $('#curPass').addClass('error');
+                                        document.getElementById('messagePasswordOld').style.color = 'red';
+                                        document.getElementById('messagePasswordOld').innerHTML = 'Please input current password';
+                                    }
+                                    
+                                    
+                                    else if (password.length > 30 || password.length < 6) {
+                                        $('#newPass').addClass('error');
+                                        document.getElementById('messagePassword').style.color = 'red';
+                                        document.getElementById('messagePassword').innerHTML = 'Password must be between 6-30 charcters';
+                                    }
+                                    else if(password === curPass){
+                                        $('#curPass').addClass('error');
+                                        document.getElementById('messagePassword').style.color = 'red';
+                                        document.getElementById('messagePassword').innerHTML = 'Can not use same current password';
+                                    }
+                                    else if (count === 1)
+                                    {
+
+                                    } else {
                                     var newPass = document.getElementById('newPass').value;
-                                    console.log(userInf);
                                     $.ajax({
                                         type: "PUT",
                                         dataType: "json",
@@ -131,32 +172,17 @@
                                         headers: {
                                             Authorization: 'Bearer ' + token},
                                         data: JSON.stringify({
-                                            "address": userInf.address,
-                                            "gender": userInf.gender,
-                                            "dob": userInf.dob,
-                                            "fullname": userInf.fullname,
-                                            "mail": userInf.mail,
-                                            "id": userInf.id,
-                                            "image": userInf.image,
+                                            
                                             "password": newPass,
-                                            "phone": userInf.phone,
-                                            "roleId": {
-                                                "id": userInf.roleId.id
-
-                                            },
-                                            "clinicId": {
-                                                "id": userInf.clinicId.id
-                                            },
-                                            "status": userInf.status,
-                                            "token": userInf.token,
-                                            "username": userInf.username
+                                            
                                         }),
-                                        url: "https://bt-application.herokuapp.com/api/userinfor/edit",
+                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/account/pw/" +newPass,
                                         complete: function (jqXHR, textStatus) {
-                                            password = localStorage.setItem("password", newPass);
+                                            password = sessionStorage.setItem("password",newPass);
                                             alert("Change Password Successfully");
                                             window.location.href = "profileReceptionist.jsp";
                                         }})
+                                    }
                                 })
 
 

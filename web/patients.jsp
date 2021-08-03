@@ -54,7 +54,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
 
                         <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
 
@@ -151,7 +151,7 @@
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patients",
                     success: function (data) {
                         var a = JSON.stringify(data);
-                        console.log(data);
+//                        console.log(data);
                         
                         
                         
@@ -167,28 +167,17 @@
                                 if (value.phone === txtValue) {
                                     localStorage.setItem("dataPat", JSON.stringify(value));
                                     $(document).on('click', '[id^="delete"]', function () {
-                                        console.log(value);
+//                                        console.log(value);
                                         $.ajax({
-                                            type: "PUT",
+                                            type: "DELETE",
                                             dataType: "json",
-                                            contentType: "application/json; charset=UTF-8",
+                                            contentType: "application/json; charset=utf-8",
                                             headers: {
-                                                Authorization: 'Bearer ' + token},
-                                            data: JSON.stringify({
-                                                "address": value.address,
-                                                "gender": value.gender,
-                                                "dob": value.dob,
-                                                "fullname": value.name,
-                                                "id": value.id,
-                                                "mail": value.mail,
-                                                "password": value.password,
-                                                "phone": value.phone,
-                                                
-                                                "status": "disable",
-                                                "image": value.image,
-                                                "token": value.token,
-                                            }),
-                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patients",
+                                            Authorization: 'Bearer ' + token},
+                                            beforeSend:function(){
+                                                return confirm("Are you sure?");
+                                             },
+                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/account/" + value.accountId,
                                             complete: function (jqXHR) {
                                                 if (jqXHR.status === 200) {
                                                     window.location.href = "patients.jsp";
