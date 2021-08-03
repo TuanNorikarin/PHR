@@ -13,7 +13,7 @@
             <ul class="nav user-menu float-right">
 
                 <li class="nav-item dropdown d-none d-sm-block">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span id="number" class="badge badge-pill bg-danger float-right">0</span></a>
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o" id="icon"></i> <span id="number" class="badge badge-pill bg-danger float-right">0</span></a>
                     <div class="dropdown-menu notifications">
                         <div class="topnav-dropdown-header">
                             <span>Notifications</span>
@@ -21,14 +21,10 @@
                         <div id='show' class="drop-scroll">
                             <ul class="notification-list">
                                 <li class="notification-message">
-                                    <a href="activities.html">
+                                    <a href="http://localhost:8080/PHR/doctorCheckRequest.jsp">
                                         <div class="media">
-                                            <span class="avatar">
-                                                <img alt="John Doe" src="assets/img/user.jpg" class="img-fluid rounded-circle">
-                                            </span>
-                                            <div class="media-body">
-                                                <p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-                                                <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+                                            <div class="media-body" id="listNotification">
+
                                             </div>
                                         </div>
                                     </a>
@@ -66,9 +62,19 @@
             </div>
         </div>
         <script src="assets/js/moment.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-messaging.js"></script>
+        <script src="notification/notificationService.js"></script>
         <script>
+            $("#icon").click(function (){
+                var number = parseInt($('#number').html());
+                    
+                    console.log(",,,,,,,",number);
+                    
+                    $('#number').text(0);
+            });
             var url = sessionStorage.getItem("avatar");
-            
+
             $('.rounded-circle').attr({
                 'src': url,
             });
@@ -82,7 +88,7 @@
             });
             var token = sessionStorage.getItem("key");
             console.log(token);
-                                                       //redirect to login when user not login
+            //redirect to login when user not login
             if (token == null) {
                 document.location.href = "login.html";
             }
@@ -90,7 +96,7 @@
             var cliID = sessionStorage.getItem("clinicID");
             console.log(cliID);
             var user = sessionStorage.getItem("name");
-            
+
             var firstName = user.split(" ");
             var name = firstName[firstName.length - 1];
             $("#welcomeUser").text(name);
