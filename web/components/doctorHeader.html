@@ -14,7 +14,7 @@
             <ul class="nav user-menu float-right">
 
                 <li class="nav-item dropdown d-none d-sm-block">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span id="number" class="badge badge-pill bg-danger float-right">0</span></a>
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o" id="icon"></i> <span id="number" class="badge badge-pill bg-danger float-right">0</span></a>
                     <div class="dropdown-menu notifications">
                         <div class="topnav-dropdown-header">
                             <span>Notifications</span>
@@ -22,14 +22,10 @@
                         <div id='show' class="drop-scroll">
                             <ul class="notification-list">
                                 <li class="notification-message">
-                                    <a href="">
+                                    <a href="http://localhost:8080/PHR/doctorCheckRequest.jsp">
                                         <div class="media">
-                                            <span class="avatar">
-                                                <img alt="John Doe" src="assets/img/user.jpg" class="img-fluid rounded-circle">
-                                            </span>
-                                            <div class="media-body">
-                                                <p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-                                                <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+                                            <div class="media-body" id="listNotification">
+
                                             </div>
                                         </div>
                                     </a>
@@ -67,6 +63,9 @@
             </div>
         </div>
         <script src="assets/js/moment.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-messaging.js"></script>
+        <script src="notification/notificationService.js"></script>
         <script>
             var url = sessionStorage.getItem("avatar");
             
@@ -99,24 +98,5 @@
             var firstName = user.split(" ");
             var name = firstName[firstName.length - 1];
             $("#welcomeUser").text(name);
-//            $(document).on('click', '[id^="click"]', function () {
-//                var values = $(this)[0].className;
-//                values = values.split("notification-list ");
-//                console.log(values);
-//                localStorage.setItem("idExamination", values[1]);
-//                $.ajax({
-//                    type: "GET",
-//                    dataType: "json",
-//                    contentType: "application/json; charset=UTF-8",
-//                    headers: {
-//                        Authorization: 'Bearer ' + token},
-//                    url: "https://bt-application.herokuapp.com/api/testrequest/findbyexaminationid/" + values[1],
-//                    success: function (data) {
-//                        localStorage.setItem("dataTestRequestId", JSON.stringify(data));
-//                        window.location.href = "checkMorePackage.jsp";
-//
-//                    }, error: function (jqXHR, textStatus, errorThrown) {
-//
-//                    }})
-//            });
+
         </script>

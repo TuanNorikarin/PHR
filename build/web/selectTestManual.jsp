@@ -185,11 +185,11 @@
                                             dataShow.childIndex = '-'
 
                                             element.samplelst.forEach(e => {
-                                                if (e.type === 'Male') {
+                                                if (e.type === 'Male' || e.type === 'male') {
                                                     dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                                } else if (e.type === 'Female') {
+                                                } else if (e.type === 'Female' || e.type === 'female') {
                                                     dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                                } else if (e.type === 'Child') {
+                                                } else if (e.type === 'Child' || e.type === 'child') {
                                                     dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
                                                 }
                                             });
@@ -233,8 +233,7 @@
                                                     return row.childIndex;
                                                 }
                                             }
-                                        }, 'childIndex',
-                                                },
+                                        },
                                                 {
                                                     data: 'id',
                                                     render: function (data, type, row, meta) {
