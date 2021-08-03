@@ -64,12 +64,28 @@
                         </div>-->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Clinic</label><br/>
+                                    <label>District</label><br/>
                                     <select name="district" id="inputDistrict" class="form-control">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="Go Vap">Gò Vấp</option>
+                                        <option value="Binh Thanh">Bình Thạnh</option>
+                                        <option value="Thu Duc">Thủ Đức</option>
+                                        <option value="Binh Tan">Bình Tân</option>
+                                        <option value="Tan Binh">Tân Bình</option>
+                                        <option value="Phu Nhuan">Phú Nhuận</option>
+                                        <option value="Tan Phu">Tân Phú</option>
+                                        
                                     </select>
                                     <span id='messageDistrict'></span>
                                 </div>
