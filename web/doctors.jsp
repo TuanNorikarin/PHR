@@ -252,13 +252,24 @@
                                                     });
                                                 }
                                             });
-                                            x = x + '<div id="testClick" class="col-md-4 col-sm-4 col-lg-3 pagination__item"><div class="profile-widget"><div class="doctor-img"><a id="avaDoctor" class="avatar" onclick="getDoctor('+data[index].id+')" href="profileDoctorForAdmin.jsp"><img id="avatar" alt="" src="'
+//                                            console.log(item.image);
+                                            if(item.image === null){
+                                                 x = x + '<div id="testClick" class="col-md-4 col-sm-4 col-lg-3 pagination__item"><div class="profile-widget"><div class="doctor-img"><a id="avaDoctor" class="avatar" onclick="getDoctor('+data[index].id+')" href="profileDoctorForAdmin.jsp"><img id="avatar" alt="" src="'
+                                                    + "assets/img/user.jpg" + '"></a></div><div class="dropdown profile-action"><a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" onclick="getDoctor('+data[index].id+')" href="edit-doctor.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a></div></div><h4 class="doctor-name text-ellipsis"><a class="fullName" href="">'
+                                                    + data[index].name + '</a></h4><div class="' + index + '">'
+                                                    + data[index].status + '</div><div class="user-country"><i id="colorIcon" class="fa fa-hospital-o"></i>  '
+                                                    + data[index].clinicName + '</div><div class="doctorId">' + ' ' + data[index].id + '</div></div></div>'
+                                            
+                                            }else{
+                                                x = x + '<div id="testClick" class="col-md-4 col-sm-4 col-lg-3 pagination__item"><div class="profile-widget"><div class="doctor-img"><a id="avaDoctor" class="avatar" onclick="getDoctor('+data[index].id+')" href="profileDoctorForAdmin.jsp"><img id="avatar" alt="" src="'
                                                     + data[index].image + '"></a></div><div class="dropdown profile-action"><a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" onclick="getDoctor('+data[index].id+')" href="edit-doctor.jsp"><i class="fa fa-pencil m-r-5"></i> Edit</a></div></div><h4 class="doctor-name text-ellipsis"><a class="fullName" href="">'
                                                     + data[index].name + '</a></h4><div class="' + index + '">'
                                                     + data[index].status + '</div><div class="user-country"><i id="colorIcon" class="fa fa-hospital-o"></i>  '
                                                     + data[index].clinicName + '</div><div class="doctorId">' + ' ' + data[index].id + '</div></div></div>'
+                                            
+                                            console.log(data);
+                                            }
                                             inActive = data;
-//                                            console.log( data);
                                                 
                                         }
                                         )

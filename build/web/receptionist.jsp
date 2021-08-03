@@ -189,7 +189,11 @@
                             columns: [
                                 {data: "image",
                                     "render": function (data, type, row, meta) {
-                                        return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
+                                        if(row.image === null){
+                                            return '<img width="35" height="35" src="' + "assets/img/user.jpg" + '" class="rounded-circle m-r-5">';
+                                        }else{
+                                            return '<img width="35" height="35" src="' + data + '" class="rounded-circle m-r-5">';
+                                        }
                                     }},
                                 {data: 'name'},
                                 {data: 'clinicName'},
