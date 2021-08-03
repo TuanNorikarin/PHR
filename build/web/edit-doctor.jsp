@@ -209,7 +209,7 @@
                                                      var formData = new FormData();
                                                      var files = $("#avatar").get(0).files;
                                                      if (files.length > 0) {
-                                                            formData.append("image", files[0]);
+                                                            
                                                             formData.append("role", "doctor");
                                                         }
                                                       

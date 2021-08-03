@@ -172,7 +172,7 @@
                 console.log(clinicID +" id");
                
                 var rating = JSON.parse(localStorage.getItem("rating"));
-                console.log(rating);
+                console.log(" Tổng số lần rate" + rating.length);
                 
                 $.ajax({
                    type: "GET",
@@ -183,67 +183,83 @@
                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" +clinicID,
 //                                                        
                  success: function (data) { 
-                     
-                var x = "";
-                var y = "";
-                var count = 0
-                for (var i = 0; i < rating.length; i++) {
-                    count += rating[i].rate;
-                }
-                count = count / rating.length;
-                console.log(count);
-                if (Number.isNaN(count)) {
-                    console.log(Number.isNaN(count));
-                    count = 0;
-                }
-                if (count < 0.5) {
-                    x = '<h3>Rating</h3><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
-                } else if (count > 0.5 && count < 1) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
-                } else if (count > 1 && count < 1.5) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
-                } else if (count > 1.5 && count < 2) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
-                } else if (count > 2 && count < 2.5) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
-                } else if (count > 2.5 && count < 3) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
-                } else if (count > 3 && count < 3.5) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
-                } else if (count > 3.5 && count < 4) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span>';
-                } else if (count > 4 && count < 4.5) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span>';
-                } else if (count > 4.5 && count < 5) {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span>';
-                } else {
-                    x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span>';
-                }
-                for (var j = 0; j < rating.length; j++) {
-                    var time = rating[j].time.split("T");
-                    y += '<li><div class="comment"><div class="comment-author">'
-                            + '<img class="avatar" alt="" src=' + rating[j].userId.image + '></div>'
-                            + '<div class="comment-block"><span class="comment-by">'
-                            + '<span class="blog-author-name">' + rating[j].userId.fullname + '</span></span>'
-                            + '<p>' + rating[j].comment + '</p>'
-                            + '<span class="blog-date">' + time[0] + '</span></div></div></li>';
-                }
-                $("#rating").html(x);
-                $("#comments").html(rating.length);
-                $("#icomments").html(rating.length);
-                $("#listComment").html(y);
-                $('#clinicImg').attr('src', data.image);
-//                document.getElementById("userAdd").innerHTML = data.username;
-                document.getElementById("clinicTitle").innerHTML = data.name;
-                document.getElementById("clinicAddress").innerHTML = data.address;
-                document.getElementById("clinicDistrict").innerHTML = data.district;
-                document.getElementById("clinicPhone").innerHTML = data.phone;
-                if (!data.description) {
-                    document.getElementById("clinicDescription").innerHTML = "..."
+                        
+                        
+                        $('#clinicImg').attr('src', data.image);
+                        document.getElementById("clinicTitle").innerHTML = data.name;
+                        document.getElementById("clinicAddress").innerHTML = data.address;
+                        document.getElementById("clinicDistrict").innerHTML = data.district;
+                        document.getElementById("clinicPhone").innerHTML = data.phone;
+                        if (!data.description) {
+                            document.getElementById("clinicDescription").innerHTML = "..."
 
-                } else {
-                    document.getElementById("clinicDescription").innerHTML = data.description;
-                }
+                        } else {
+                            document.getElementById("clinicDescription").innerHTML = data.description;
+                        }
+                      $.ajax({
+                   type: "GET",
+                   dataType: "json",
+                   contentType: "application/json",
+                       headers: {
+                       Authorization: 'Bearer ' + token},
+                   url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/ratings/" +clinicID,
+//                                                        
+                    success: function (value) { 
+                        console.log(value);
+                        
+                        var x = "";
+                        var y = "";
+                        var count = 0
+                        for (var i = 0; i < rating.length; i++) {
+                            count += rating[i].rate;
+                        }
+                        count = count / rating.length;
+                        console.log(count);
+                        if (Number.isNaN(count)) {
+                            console.log(Number.isNaN(count));
+                            count = 0;
+                        }
+                        if (count < 0.5) {
+                            x = '<h3>Rating</h3><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+                        } else if (count > 0.5 && count < 1) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+                        } else if (count > 1 && count < 1.5) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+                        } else if (count > 1.5 && count < 2) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+                        } else if (count > 2 && count < 2.5) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+                        } else if (count > 2.5 && count < 3) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+                        } else if (count > 3 && count < 3.5) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+                        } else if (count > 3.5 && count < 4) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span>';
+                        } else if (count > 4 && count < 4.5) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span>';
+                        } else if (count > 4.5 && count < 5) {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span>';
+                        } else {
+                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span>';
+                        }
+                        for (var j = 0; j < rating.length; j++) {
+                            var time = rating[j].time.split("T");
+                            y += '<li><div class="comment"><div class="comment-author">'
+//                                    + '<img class="avatar" alt="" src=' + rating[j].userId.image + '></div>'
+//                                    + '<div class="comment-block"><span class="comment-by">'
+//                                    + '<span class="blog-author-name">' + rating[j].userId.fullname + '</span></span>'
+                                    + '<p>' + rating[j].comment + '</p>'
+                                    + '<span class="blog-date">' + time[0] + '</span></div></div></li>';
+                        }
+                        $("#rating").html(x);
+                        $("#comments").html(rating.length);
+                        $("#icomments").html(rating.length);
+                        $("#listComment").html(y);
+                
+//                document.getElementById("userAdd").innerHTML = data.username;
+                
+                  }});
+                
                 
                 }});
             }

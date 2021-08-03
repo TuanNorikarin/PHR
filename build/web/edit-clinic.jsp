@@ -31,7 +31,7 @@
                 overflow:hidden
             }
             img#imgPreview{
-                width: 300px;
+                width: 450px;
                 height: 300px;
             }
             input#imgClinic.form-control{
