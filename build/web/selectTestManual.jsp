@@ -234,7 +234,6 @@
                                                 }
                                             }
                                         },
-                                            
                                                 {
                                                     data: 'id',
                                                     render: function (data, type, row, meta) {
@@ -284,35 +283,14 @@
                                         data: 'description',
                                     },
                                     {
-                                            data: 'maleIndex',
-                                            render: function (data, type, row, meta) {
-                                                if ( row.maleIndex === '-9999--9999') {
-                                                    return "Âm tính";
-                                                }else{
-                                                    return row.maleIndex;
-                                                }
-                                            }
-                                        },
-                                        {
-                                            data: 'femaleindex',
-                                            render: function (data, type, row, meta) {
-                                                if ( row.femaleindex === '-9999--9999') {
-                                                    return "Âm tính";
-                                                }else{
-                                                    return row.femaleindex;
-                                                }
-                                            }
-                                        },
-                                        {
-                                            data: 'childIndex',
-                                            render: function (data, type, row, meta) {
-                                                if ( row.childIndex === '-9999--9999') {
-                                                    return "Âm tính";
-                                                }else{
-                                                    return row.childIndex;
-                                                }
-                                            }
-                                        },
+                                        data: 'maleIndex',
+                                    },
+                                    {
+                                        data: 'femaleindex',
+                                    },
+                                    {
+                                        data: 'childIndex',
+                                    },
                                     {
                                         data: 'id',
                                         render: function (data, type, row, meta) {

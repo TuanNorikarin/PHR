@@ -21,17 +21,14 @@
                 color: black;
                 font-weight: 500;
             }
-
             .sidebar-menu li#aPatient a {
                 color: #009efb;
                 /*background-color: #2a9c31;*/
                 background-color: #e3e7e8;
             }
-
             button#createExamination.btn.btn-primary.submit-btn {
                 margin-left: 180%;
             }
-
             .error {
                 border-color: #FF0000 !important;
             }
@@ -63,22 +60,20 @@
                                 </select>
                             </div>
                         </div>
-<!--<<<<<<< Updated upstream
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Description</label>
-                                <textarea class="form-control" id="description" maxlength="255"
-                                          name="description" rows="3"></textarea>
-=======-->
-<!--                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Type</label>
-                                <input class="form-control" id='inputType' name="type" type="text">
-                                <span id='messageType' /></span>
-
-                            </div>
-                        </div>-->
+                        <!--<<<<<<< Updated upstream
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Description</label>
+                                                        <textarea class="form-control" id="description" maxlength="255"
+                                                                  name="description" rows="3"></textarea>
+                        =======-->
+                        <!--                        <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Type</label>
+                                                        <input class="form-control" id='inputType' name="type" type="text">
+                                                        <span id='messageType' /></span>
+                                                    </div>
+                                                </div>-->
 
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -110,17 +105,12 @@
             <script src="assets/js/app.js"></script>
             <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
             <script type="text/javascript">
-
-
                 //                =====================================Insert===============================================
                 window.onload = function () {
-                    
                     var patientId = sessionStorage.getItem('patientId');
                     var listTest = sessionStorage.getItem('listTestId');
-
                     console.log('------' + patientId + '-----' + listTest);
                 }
-
                 $(document).ready(function () {
                     var cliId = sessionStorage.getItem("clinicID");
                     console.log(cliId);
@@ -129,61 +119,70 @@
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         headers: {
-
-                             Authorization: 'Bearer ' + token
-
+                            Authorization: 'Bearer ' + token
                         },
                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/clinic/" + cliId,
                         success: function (data) {
+                            console.log(data);
                             for (var i in data) {
-                                $('#doctorName').append('<option value=' + data[i].id + '>' + data[i].name + ' - ' + data[i].phone + '</option>');
+                                $('#doctorName').append('<option value=' + data[i].id + '-' + data[i].accountId + '>' + data[i].name + ' - ' + data[i].phone + '</option>');
                             }
                         }
                     });
-
                 });
-
                 //======================================= submit to create examination==========================
                 $('#createExamination').click(function (event) {
-
                     var description = checkNull($('#description').val());
                     var patientId = checkNull(sessionStorage.getItem('patientId'));
-                    var doctorId = checkNull($('option:selected').val());
+                    var doctorId = checkNull($('option:selected').val()).split("-")[0];
+                    var doctorAccountId = checkNull($('option:selected').val()).split("-")[1];
                     var listPackageTest = parseStringToInt(sessionStorage.getItem('packageId'));
                     var listTest = parseStringToInt(sessionStorage.getItem('listTestId'));
                     console.log(sessionStorage.getItem('listTestId'))
-                    console.log(typeof(listTest));
-                    console.log(listTest);
+                    console.log(typeof (doctorId));
+                    console.log(doctorId);
                     console.log("//////////");
-
-                    
-                    console.log(typeof(listPackageTest));
-                    console.log(listPackageTest)
+                    console.log(doctorAccountId);
+                    console.log(listPackageTest);
                     $.ajax({
                         type: "POST",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         headers: {
-                             Authorization: 'Bearer ' + token
+                            Authorization: 'Bearer ' + token
 //                            'Access-Control-Allow-Origin': '*',
                         },
                         data: JSON.stringify({
-
                             "description": description,
-
                             "doctorId": doctorId,
                             "packageId": listPackageTest,
                             "patientId": patientId,
                             "testId": listTest,
-
                         }),
                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
                         complete: function (jqXHR) {
                             if (jqXHR.status === 200) {
-                                alert("Create Request Successfully");
-                                window.location.href = "receptionistPatients.jsp";
+                                $.ajax({
+                                type: "POST",
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                headers: {
+                                    Authorization: 'Bearer ' + token
+//                            'Access-Control-Allow-Origin': '*',
+                                },
+                                data: JSON.stringify({
+                                    "accountId": doctorAccountId,
+                                    "message": "You have a new patient"
+                                }),
+                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/notification",
+                                complete: function (jqXHR) {
+                                    if (jqXHR.status === 200) {
+                                        alert("Create Request Successfully");
+                                        window.location.href = "receptionistPatients.jsp";
+                                    }
+                                }});
                             }
-                        }               });
+                        }});
                 });
                 function checkNull(data) {
                     if (data === null) {
@@ -191,17 +190,15 @@
                     }
                     return data;
                 }
-
-                
-                function parseStringToInt(list){
-                   var result = []
-                   if(list !== null){
-                       let temp = list.split(',');
-                       console.log(temp);
-                       for (var i = 0; i < temp.length; i++) {
-                       result.push(parseInt(temp[i]));
+                function parseStringToInt(list) {
+                    var result = []
+                    if (list !== null) {
+                        let temp = list.split(',');
+                        console.log(temp);
+                        for (var i = 0; i < temp.length; i++) {
+                            result.push(parseInt(temp[i]));
+                        }
                     }
-                   }
                     return result;
                 }
             </script>
