@@ -370,8 +370,11 @@
                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/rating",
                                         complete: function (jqXHR) {
                                                         if (jqXHR.status === 201 || jqXHR.status === 200) {
-                                                            alert("COMPLETE!!!")
-                                                            window.location.href = "doctorCheckRequest.jsp";
+                                                            alertify.alert('COMPLETE ✔');
+                                                                setTimeout(function(){
+                                                                    window.location.href = "doctorCheckRequest.jsp";
+                                                             },1500);
+                                                            
                                                         }
                                                     }
                                     });

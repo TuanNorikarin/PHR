@@ -548,9 +548,11 @@
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 201 || jqXHR.status === 200) {
                                     
-                                    toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                    alert("Update Successfully!");
-                                    window.location.href = "testIndex.jsp";
+                                    alertify.alert('Update Successfully ✔');
+                                            setTimeout(function(){
+                                                window.location.href = "testIndex.jsp";
+                                         },1700);
+                                    
 
                                 }
                                 else if (jqXHR.status === 400){

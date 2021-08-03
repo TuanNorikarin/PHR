@@ -487,9 +487,11 @@
                                                                     complete: function (jqXHR) {
 
                                                                         if (jqXHR.status === 200) {
-                                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                                                            alert("Update Successfully");
-                                                                            window.location.href = "patients.jsp";
+                                                                            alertify.alert('Update Successfully ✔');
+                                                                                setTimeout(function(){
+                                                                                    window.location.href = "patients.jsp";
+                                                                             },1700);
+                                                                            
                                                                         }
                                                                     }
                                                                 });

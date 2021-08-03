@@ -162,7 +162,6 @@
                         document.getElementById('messageDes').style.color = 'red';
                         document.getElementById('messageDes').innerHTML = 'Description must be less than 255 letters ✘';
                     } else {
-                        toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                         console.log(dataPackage.id);
                         $.ajax({
                             type: "PUT",
@@ -180,7 +179,11 @@
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 200) {
-                                    window.location.href = "test.jsp";
+                                    alertify.alert('Update Successfully ✔');
+                                            setTimeout(function(){
+                                                window.location.href = "test.jsp";
+                                         },1500);
+                                    
                                 }
                             }
                         });

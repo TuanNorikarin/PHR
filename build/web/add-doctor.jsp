@@ -408,9 +408,11 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200 || jqXHR.status === 201) {
-                                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                                                            alert("Create Successfully!");
-                                                                            window.location.href = "doctors.jsp";
+                                                                            alertify.alert('Create Successfully!');
+                                                                                setTimeout(function(){
+                                                                                   window.location.href = "doctors.jsp";
+                                                                                },1500);
+                                                                            
                                                                         }
                                                                     }
                                                                 });

@@ -32,6 +32,8 @@
             .error {
                 border-color: #FF0000 !important;
             }
+            
+            
         </style>
     </head>
 
@@ -51,7 +53,7 @@
                 <div class="col-lg-8 offset-lg-2">
                     <div class="row">
 
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
 
                             <div class="form-group">
                                 <label>Select Doctor</label><br />
@@ -177,8 +179,12 @@
                                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/notification",
                                 complete: function (jqXHR) {
                                     if (jqXHR.status === 200) {
-                                        alert("Create Request Successfully");
-                                        window.location.href = "receptionistPatients.jsp";
+                                        
+                                        alertify.alert('Create Examination Successfully!');
+                                         setTimeout(function(){
+                                             window.location.href = "receptionistPatients.jsp";
+                                     },1700);
+                                        
                                     }
                                 }});
                             }

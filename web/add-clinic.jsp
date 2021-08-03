@@ -13,6 +13,9 @@
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
         <link rel="stylesheet" type="text/css" href="assets/css/customStyle.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        
+    
+
         <style>
             .sidebar-menu li a {
                 color: black;
@@ -191,7 +194,7 @@
                                             }
 //                =====================================Insert===============================================
                                             $(document).ready(function () {
-
+                                                
                                                var token = sessionStorage.getItem("key");
                                                 $("#inputClinicname").click(function () {
                                                     $('#inputClinicname').removeClass('error');
@@ -294,7 +297,6 @@
                                                         document.getElementById('messagePhone').style.color = 'red';
                                                         document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                     } else {
-                                                        toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                         function uploadImage() {
                                                              {
                                                                 ajax("https://firebasestorage.googleapis.com/v0/b/upload-image-45245.appspot.com/o/1627884556038-user.jpg?alt=media&token=22b2529d-120e-4625-a7d1-fc680918acf5");
@@ -321,8 +323,12 @@
                                                                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic",
                                                                 complete: function (jqXHR) {
                                                                     if (jqXHR.status === 200) {
-                                                                        alert("Create Successfully!");
-                                                                        window.location.href = "clinics.jsp";
+//                                                                        alert("Create Successfully!");
+                                                                           alertify.alert('Create Successfully!');
+                                                                            setTimeout(function(){
+                                                                                window.location.href = "clinics.jsp";
+                                                                            },1500);
+                                                                          
                                                                         
                                                                     }
                                                                 }

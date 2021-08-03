@@ -401,7 +401,6 @@
                                                         else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             
                                                                 return   $.ajax({
                                                                     type: "PUT",
@@ -421,8 +420,11 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200 || jqXHR.status === 201) {
-                                                                            alert("Update Successfully");
-                                                                            window.location.href = "doctors.jsp";
+                                                                            alertify.alert('Update Successfully!');
+                                                                                setTimeout(function(){
+                                                                                    window.location.href = "doctors.jsp";
+                                                                            },1700);
+                                                                            
                                                                         }
                                                                     }
                                                                 });

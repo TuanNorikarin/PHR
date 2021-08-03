@@ -176,9 +176,11 @@
                             complete: function (jqXHR) {
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 201 || jqXHR.status === 200) {
-                                    toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                    alert("Create Successfully");
-                                    window.location.href = "test.jsp";
+                                    alertify.alert('Create Successfully!');
+                                  setTimeout(function(){
+                                        window.location.href = "test.jsp";
+                                  },1500);
+           
                                 }
                             }
                         });

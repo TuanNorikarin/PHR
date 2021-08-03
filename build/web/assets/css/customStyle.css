@@ -222,3 +222,26 @@ img#img{
 div.card-box.profile-header{
     height: 210px;
 }
+
+
+
+/*======================Custom Alert=================*/
+
+
+            div.ajs-header{
+                display: none;
+            }
+            div.ajs-content{
+                height: 140px;
+                font-size: 1.7em;
+                text-align: center;
+                color: #009efb;
+            }
+            
+            button.ajs-button.ajs-ok{
+                display: none;
+            }
+            
+            div.ajs-footer{
+                display: none;
+            }

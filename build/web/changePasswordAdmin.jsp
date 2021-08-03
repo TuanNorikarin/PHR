@@ -172,9 +172,12 @@
                                         }),
                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/accounts/account/pw/" +newPass,
                                         complete: function (jqXHR, textStatus) {
-                                            password = sessionStorage.setItem("password",newPass);
-                                            alert("Change Password Successfully");
+                                            alertify.alert('Change Password Successfully!');
+                                             setTimeout(function(){
+                                                 password = sessionStorage.setItem("password",newPass);
                                             window.location.href = "profileAdmin.jsp";
+                                            },2000);
+                                            
                                         }})
                                     }
                                 })

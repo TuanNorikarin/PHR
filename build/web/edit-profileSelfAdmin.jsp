@@ -278,8 +278,11 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
-                                                                            alert("Update Successfully! Login again to view your changed!");
-                                                                            window.location.href = "profileAdmin.jsp";
+                                                                            alertify.alert('Update Successfully ✔ Login again to view your changed!');
+                                                                                setTimeout(function(){
+                                                                                    window.location.href = "profileAdmin.jsp";
+                                                                             },2000);
+                                                                            
                                                                             }
                                                                         }
                                                                 });

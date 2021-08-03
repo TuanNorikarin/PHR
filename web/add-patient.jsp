@@ -374,7 +374,6 @@
                                                         } else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             function uploadImage() {
                                                                  {
                                                                     ajax("https://firebasestorage.googleapis.com/v0/b/upload-image-45245.appspot.com/o/1627884556038-user.jpg?alt=media&token=22b2529d-120e-4625-a7d1-fc680918acf5");
@@ -400,8 +399,11 @@
                                                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/patients/patient",
                                                                     complete: function (jqXHR) {
                                                                         if (jqXHR.status === 201 || jqXHR.status === 200) {
-                                                                        toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});    
-                                                                        window.location.href = "patients.jsp";
+                                                                            alertify.alert('Create Successfully!');
+                                                                                setTimeout(function(){
+                                                                                    window.location.href = "patients.jsp";
+                                                                                },1700);
+                                                                        
                                                                         }
                                                                     }
                                                                 });

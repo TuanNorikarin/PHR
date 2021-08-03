@@ -360,7 +360,6 @@
                                                         document.getElementById('messagePhone').style.color = 'red';
                                                         document.getElementById('messagePhone').innerHTML = 'Incorrect phone number format ✘';
                                                     } else {
-                                                        toastr["success"]("Update Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                         
                                                             return  $.ajax({
                                                                 type: "PUT",
@@ -384,8 +383,11 @@
                                                                 complete: function (jqXHR) {
                                                                     console.log(jqXHR.status);
                                                                     if (jqXHR.status === 200) {
-                                                                        alert("Update Successfully");
-                                                                        window.location.href = "clinics.jsp";
+                                                                        alertify.alert('Update Successfully!');
+                                                                        setTimeout(function(){
+                                                                                window.location.href = "clinics.jsp";
+                                                                        },1500);
+                                                                        
                                                                     }
                                                                 }
                                                             });

@@ -498,9 +498,11 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200) {
-                                                                            toastr["success"]("Update Successfully Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
-                                                                            alert("Update Successfully")
-                                                                            window.location.href = "receptionist.jsp";
+                                                                            alertify.alert('Update Successfully ✔');
+                                                                                setTimeout(function(){
+                                                                                    window.location.href = "receptionist.jsp";
+                                                                             },1700);
+                                                                            
                                                                             }
                                                                         }
                                                                 });

@@ -390,7 +390,6 @@
                                                         } else if (count === 1) {
 
                                                         } else {
-                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
                                                             function uploadImage() {
                                                                 
                                                                 {
@@ -418,9 +417,11 @@
                                                                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionist",
                                                                     complete: function (jqXHR) {
                                                                         if (jqXHR.status === 200) {
-                                                                            toastr["success"]("Create Successfully!", "Success", {"progressBar": true, "closeButton": true, "positionClass": "toast-top-full-width"});
+                                                                            alertify.alert('Create Successfully!');
+                                                                                setTimeout(function(){
+                                                                                    window.location.href = "receptionist.jsp";
+                                                                                },1600);
                                                                             
-                                                                            window.location.href = "receptionist.jsp";
                                                                         }
                                                                     }
                                                                 });

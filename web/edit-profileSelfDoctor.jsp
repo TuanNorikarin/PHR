@@ -346,8 +346,11 @@
                                                                     complete: function (jqXHR) {
                                                                         console.log(jqXHR.status);
                                                                         if (jqXHR.status === 200 || jqXHR.status === 201) {
-                                                                            alert("Update Successfully! Login again to view your changed!");
-                                                                            window.location.href = "profileDoctor.jsp";
+                                                                             alertify.alert('Update Successfully ✔ Login again to view your changed!');
+                                                                                setTimeout(function(){
+                                                                                    window.location.href = "profileDoctor.jsp";
+                                                                             },2000);
+                                                                            
                                                                         }
                                                                     }
                                                                 });

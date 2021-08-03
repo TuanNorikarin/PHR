@@ -15,10 +15,28 @@
         <link rel="stylesheet" type="text/css" href="assets/css/customStyle.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
 
         <style>
             .error {
                 border-color: #FF0000 !important;
+            }
+            div.ajs-header{
+                display: none;
+            }
+            div.ajs-content{
+                font-size: 1.5em;
+                text-align: center;
+                color: turquoise;
             }
         </style>
     </head>
@@ -39,22 +57,7 @@
                                     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
                                     <script type="text/javascript">
                                         $(document).ready(function () {
-                                            var key = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Mjc3NjA2ODgsInVzZXIiOnsicGFzc3dvcmQiOm51bGwsImF1dGhvcml0aWVzIjpbIkFETUlOIl0sInVzZXJuYW1lIjoiMDExMTQ1Njc4OSJ9fQ.fKqZFgGqUSKDwO1__-UGTrFGQTeWP90uJboEYUv7p7g";                                               
-                                            var jsonPayload = str => decodeURIComponent(Array.prototype.map.call(atob(str), c =>
-                                                        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-                                                        ).join(''));
-
-                                            var parseJwt = token => JSON.parse(
-                                                      jsonPayload(token.split('.')[1].replace('-', '+').replace('_', '/'))
-                                                    );
-                                            var form = document.getElementById("form");
-                                                  form.addEventListener("submit", (e) => {
-                                                      
-                                                     form.out.value = JSON.stringify(
-                                                        parseJwt(key)
-                                                     )
-                                                     e.preventDefault();
-                                                  })
+                                            alertify.alert('Successfully!');
                                         });
                                     </script>
 

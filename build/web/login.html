@@ -14,11 +14,31 @@
         <link rel="stylesheet" type="text/css" href="assets/css/customStyle.css">
             
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>       
 
 
         <style>
             .error {
                 border-color: #FF0000 !important;
+            }
+            
+            button.ajs-button.ajs-ok{
+                display: none;
+            }
+            div.ajs-content{
+                height: 140px;
+                font-size: 2em;
+            }
+            div.ajs-footer{
+                display: none;
             }
         </style>
     </head>
@@ -28,7 +48,6 @@
             
             $(document).ready(function () {
     
-                
                                 function parseJwt (token) {
 //                                        var token = localStorage.getItem("key");
                                         
@@ -128,7 +147,12 @@
                                             sessionStorage.setItem("accountId", infor.accountId);
                                             sessionStorage.setItem("id", infor.id);
                                             sessionStorage.setItem("roleID", roleID);
-                                            window.location.href = "adminIndex.jsp";
+                                            
+                                            alertify.alert('Login Success ✔');
+                                            setTimeout(function(){
+                                                window.location.href = "adminIndex.jsp";
+                                            },1300);
+                                            
                                         },
                                         error: function (jqXHR, textStatus, errorThrown) {
 
@@ -160,7 +184,12 @@
                                                 sessionStorage.setItem("id", infor.id);
                                                 sessionStorage.setItem("clinicID", infor.clinicId);
                                                 sessionStorage.setItem("roleID", roleID);
+                                                
+                                                alertify.alert('Login Success ✔');
+                                                setTimeout(function(){
                                                 window.location.href = "doctorIndex.jsp";
+                                                },1300);
+                                                
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {
 
@@ -192,19 +221,19 @@
                                                 sessionStorage.setItem("id", infor.id);
                                                 sessionStorage.setItem("clinicID", infor.clinicId);
                                                 sessionStorage.setItem("roleID", roleID);
+                                                
+                                                alertify.alert('Login Success ✔');
+                                                setTimeout(function(){
                                                 window.location.href = "receptionistIndex.jsp";
+                                                },1300);
+                                                
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {
 
 
                                             }
                                         });
-                
-                                        
-                                        
                                     }
-                                    
-
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
 //                                console.log(data);
