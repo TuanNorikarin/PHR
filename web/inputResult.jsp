@@ -77,6 +77,13 @@
                 text-align: right;
             }
             
+            textArea#textArea1.form-control, textArea#textArea.form-control{
+                font-size: 1.2em;
+                
+            }
+            #namePackage{
+                color: salmon;
+            }
 
         </style>
     </head>
@@ -93,7 +100,7 @@
                     <div class="col-8 testPackage">
 
                         <table id="testPackageTable" name="requesttable" class="table table-border table-striped custom-table datatable mb-0">
-                            <caption id="namePackage" style="caption-side:top">Result</caption>
+                            <caption id="namePackage" style="caption-side:top">RESULT</caption>
 
                             <thead>
 

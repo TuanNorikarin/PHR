@@ -48,6 +48,10 @@
                 left: 50px;
                 width: 90%;
             }
+            div.blog-content{
+                color: black;
+                font-size: 15px;
+            }
         </style>
 
     </head>
@@ -97,7 +101,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+                              <!---------------Chart Here----------------------->
+                              <div class="row" hidden="">
 
                 <div class="col-12">
                     <div class="card">
@@ -113,7 +118,10 @@
                     </div>
                 </div>
             </div>
+                                 <!---------------Chart Here----------------------->
             <div class="row">
+                
+                
                 <div class="col-md-12 clinicIndex">
                     <div class="blog-view">
                         <article class="blog blog-single-post">
@@ -122,7 +130,7 @@
                                 <div class="post-left">
 <!--                                    <ul>
                                         <li><a href="#."><i class="fa fa-user-o"></i> By <span id="userAdd"></span></a></li>
-                                    </ul>-->
+                                    </ul>
                                 </div>
 <!--                                <div class="post-right"><a href="#."><i  class="fa fa-comment-o"></i><span id="icomments"></span></a></div>-->
                             </div>
@@ -188,8 +196,9 @@
             </div>
             
         </div>
-        <div class="overlay"></div>
+        
     </div>
+        <div class="overlay"></div>
     <%--<%@include file="components/doctorFooter.html" %>--%>
     <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
