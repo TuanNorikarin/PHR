@@ -43,6 +43,11 @@
             div.loading.overlay{
                 display: block;
             }
+            
+            img#clinicImg.img-fluid{
+                left: 50px;
+                width: 90%;
+            }
         </style>
 
     </head>
@@ -108,6 +113,80 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 clinicIndex">
+                    <div class="blog-view">
+                        <article class="blog blog-single-post">
+                            <h3 id="clinicTitle" class="blog-title"></h3>
+                            <div class="blog-info clearfix">
+                                <div class="post-left">
+<!--                                    <ul>
+                                        <li><a href="#."><i class="fa fa-user-o"></i> By <span id="userAdd"></span></a></li>
+                                    </ul>-->
+                                </div>
+<!--                                <div class="post-right"><a href="#."><i  class="fa fa-comment-o"></i><span id="icomments"></span></a></div>-->
+                            </div>
+                            <div class="blog-image">
+                                <a href="#."><img id="clinicImg" alt="" src="" class="img-fluid"></a>
+                            </div>
+                            <div class="blog-content">
+
+                                <div>
+                                    Địa chỉ: <span id="clinicAddress"></span>
+                                </div>
+                                <div>
+                                    Quận: <span id="clinicDistrict"></span>
+                                </div>
+                                <div>
+                                    Điện thoại: <span id="clinicPhone"></span>
+                                </div>
+                                <div>
+                                    Thời gian làm việc: <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+Thứ hai đến thứ bảy: 7:30 – 19:30.
+                                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+Chủ nhật: 7:30 – 11:30.
+                                    <br/>
+                                    <br/>
+                                </div>
+
+                                <div>
+                                    Giới thiệu: <br/> <span id="clinicDescription"></span>
+                                </div>
+
+                            </div>
+                        </article>
+<!--                        <div id='rating' class="widget blog-share clearfix">
+                            <h3>Rating</h3>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </div>-->
+
+<!--                        <div class="widget blog-comments clearfix">
+                            <h3>Comments (<span id="comments">0</span>) </h3> 
+                            <ul id='listComment' class="comments-list">
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment-author">
+                                            <img class="avatar" alt="" src="assets/img/user.jpg">
+                                        </div>
+                                        <div class="comment-block">
+                                            <span class="comment-by">
+                                                <span class="blog-author-name"></span>
+                                            </span>
+                                            <p></p>
+                                            <span class="blog-date"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>-->
+
+                    </div>
+                </div>
+
+            </div>
+            
         </div>
         <div class="overlay"></div>
     </div>
@@ -183,6 +262,97 @@
                              error: function (jqXHR, textStatus, errorThrown) {
                              }
                              });
+                             
+                                                 $.ajax({
+                   type: "GET",
+                   dataType: "json",
+                   contentType: "application/json",
+                       headers: {
+                       Authorization: 'Bearer ' + token},
+                   url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" +clinicId,
+//                                                        
+                 success: function (data) { 
+                        
+                        
+                        $('#clinicImg').attr('src', data.image);
+                        document.getElementById("clinicTitle").innerHTML = data.name;
+                        document.getElementById("clinicAddress").innerHTML = data.address;
+                        document.getElementById("clinicDistrict").innerHTML = data.district;
+                        document.getElementById("clinicPhone").innerHTML = data.phone;
+                        if (!data.description) {
+                            document.getElementById("clinicDescription").innerHTML = "..."
+
+                        } else {
+                            document.getElementById("clinicDescription").innerHTML = data.description;
+                        }
+//                      $.ajax({
+//                   type: "GET",
+//                   dataType: "json",
+//                   contentType: "application/json",
+//                       headers: {
+//                       Authorization: 'Bearer ' + token},
+//                   url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/ratings/" +clinicId,
+////                                                        
+//                    success: function (value) { 
+//                        console.log(value);
+//                        
+//                        var x = "";
+//                        var y = "";
+//                        var count = 0
+//                        for (var i = 0; i < rating.length; i++) {
+//                            count += rating[i].rate;
+//                        }
+//                        count = count / rating.length;
+//                        console.log(count);
+//                        if (Number.isNaN(count)) {
+//                            console.log(Number.isNaN(count));
+//                            count = 0;
+//                        }
+//                        if (count < 0.5) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 0.5 && count < 1) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 1 && count < 1.5) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 1.5 && count < 2) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 2 && count < 2.5) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 2.5 && count < 3) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 3 && count < 3.5) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 3.5 && count < 4) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 4 && count < 4.5) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span>';
+//                        } else if (count > 4.5 && count < 5) {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked1"></span>';
+//                        } else {
+//                            x = '<h3>Rating</h3><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span>';
+//                        }
+//                        for (var j = 0; j < rating.length; j++) {
+//                            var time = rating[j].time.split("T");
+//                            y += '<li><div class="comment"><div class="comment-author">'
+//                                    + '<img class="avatar" alt="" src=' + rating[j].image + '></div>'
+//                                    + '<div class="comment-block"><span class="comment-by">'
+//                                    + '<span class="blog-author-name">' + rating[j].name + '</span></span>'
+//                                    + '<p>' + rating[j].comment + '</p>'
+//                                    + '<span class="blog-date">' + time[0] + '</span></div></div></li>';
+//                        }
+//                        $("#rating").html(x);
+//                        $("#comments").html(rating.length);
+//                        $("#icomments").html(rating.length);
+//                        $("#listComment").html(y);
+//                
+//                
+//                  }});
+                
+                
+                }});
+                             
+                             
+                             
                              },
                              error: function (jqXHR, textStatus, errorThrown) {
                              }

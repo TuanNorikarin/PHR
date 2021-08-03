@@ -139,14 +139,14 @@
                                 <li>
                                     <div class="comment">
                                         <div class="comment-author">
-                                            <img class="avatar" alt="" src="assets/img/user.jpg">
+                                            <!--<img class="avatar" alt="" src="assets/img/user.jpg">-->
                                         </div>
                                         <div class="comment-block">
                                             <span class="comment-by">
-                                                <span class="blog-author-name">Diana Bailey</span>
+                                                <span class="blog-author-name"></span>
                                             </span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim ornare nisi, vitae mattis nulla ante id dui.</p>
-                                            <span class="blog-date">December 6, 2017</span>
+                                            <p></p>
+                                            <span class="blog-date"></span>
                                         </div>
                                     </div>
                                 </li>
@@ -245,9 +245,9 @@
                         for (var j = 0; j < rating.length; j++) {
                             var time = rating[j].time.split("T");
                             y += '<li><div class="comment"><div class="comment-author">'
-//                                    + '<img class="avatar" alt="" src=' + rating[j].userId.image + '></div>'
-//                                    + '<div class="comment-block"><span class="comment-by">'
-//                                    + '<span class="blog-author-name">' + rating[j].userId.fullname + '</span></span>'
+                                    + '<img class="avatar" alt="" src=' + rating[j].image + '></div>'
+                                    + '<div class="comment-block"><span class="comment-by">'
+                                    + '<span class="blog-author-name">' + rating[j].name + '</span></span>'
                                     + '<p>' + rating[j].comment + '</p>'
                                     + '<span class="blog-date">' + time[0] + '</span></div></div></li>';
                         }

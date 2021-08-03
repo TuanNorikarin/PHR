@@ -81,11 +81,13 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-8 testPackage">
-                        <h3 id="packageName" class="blog-title"></h3>
+                    <h3 id="packageName" class="blog-title"></h3>
+                    <span id='messageName'></span>
+                    <div id="hiddenWall" class="col-8 testPackage">
+                        
                         <table id="testPackageTable" class="table table-border table-striped custom-table datatable mb-0">
                             <!--<caption id="namePackage" style="caption-side:top"></caption>-->
-
+                            
                             <thead>
 
                                 <tr>
@@ -103,11 +105,11 @@
                                 <tr>
 
                                     <td id="name"></td>
-                                    <td id="male"><span id='messageName'></span></td>
+                                    <td id="male"></td>
                                     <td id="female"></td>
                                     <td id="children"></td>
                                     <td id="delete"></td>
-
+                                    
 
 
 
@@ -115,9 +117,10 @@
                                 </tr>
 
 
-
+                                
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </div>
@@ -152,6 +155,13 @@
                     $("button[id='buttonX']").removeAttr('disabled');
                 }
                 console.log(testId);
+//                console.log(typeof(testId));
+                if(testId === 0){
+                $('#hiddenWall').addClass('error');
+                 document.getElementById("hiddenWall").style.display = "none";
+                 document.getElementById('messageName').style.color = 'green';
+                 document.getElementById('messageName').innerHTML = 'NO TEST IN THIS PACKAGE YET';
+                 }
 
 
 
@@ -159,6 +169,7 @@
             });
 
             window.onload = function () {
+                
 
                 var packageName = sessionStorage.getItem("packageName");
                 document.getElementById("packageName").innerHTML = packageName;
@@ -170,7 +181,7 @@
                 var valueArray = [];
                 var arrayTotal = [];
                 var testName = [];
-                console.log(dataPackage.name);
+                console.log(valueArray);
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -196,6 +207,9 @@
 
                                 var mainData = [];
                                 console.log(data);
+//                                console.log(typeof(data));
+                                
+                                
                                 data.forEach(element => {
                                     var dataShow = new Object();
                                     dataShow.name = element.name;
@@ -338,25 +352,16 @@
                         console.log(data);
                         for (var i = 0; i < data.length; i++) {
                             let id = data[i].id.toString();
-                            console.log(typeof (id));
+//                            console.log(typeof (id));
                             for (var j = 0; j < listTestId.length; j++) {
-                                console.log(listTestId[j]);
+//                                console.log(listTestId[j]);
                                 if (id === listTestId[j]) {
                                     listTestDouple.push(j);
 
                                 }
                             }
                         }
-//                        if (listTestDouple.length !== 0) {
-//                            let flag = true;
-//
-//                            while (flag) {
-//                                if (confirm('Some test you choice have been in package, do you want to remove them?')) {
-//                                    flag = false;
-//                                } else {
-//                                }
-//                            }
-//                        }
+
 
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -364,11 +369,7 @@
                     }
                 });
                     sessionStorage.setItem('packageId', dataPackage.id);
-//                if (confirm('Do you want to choose some other testing services?')) {
                     window.location.href = "add-TestToPackage.jsp";
-//                } else {
-//                    window.location.href = "createExamination.jsp";
-//                }
 
             });
 
