@@ -59,6 +59,13 @@
             #indexTable {
                 width: 100% !important;
             }
+            button.ajs-button.ajs-ok{
+                display: inline;
+            }
+            
+            div.ajs-footer{
+                display: block;
+            }
         </style>
     </head>
 
@@ -373,12 +380,19 @@
                 sessionStorage.removeItem('listTestId');
                 sessionStorage.setItem('listTestId', array);
 
-
-                if (confirm('Do you want to choose some other package testing services?')) {
-                    window.location.href = "selectTestPackage.jsp";
-                } else {
-                    window.location.href = "createExamination.jsp";
-                }
+//
+//                if (confirm('Do you want to choose some other package testing services?')) {
+//                    window.location.href = "selectTestPackage.jsp";
+//                } else {
+//                    window.location.href = "createExamination.jsp";
+//                }
+                alertify.confirm("Do you want select other Packages test?",
+                 function(){
+                     alertify.success(window.location.href = "selectTestPackage.jsp");
+                           },
+                 function(){
+                    alertify.error(window.location.href = "createExamination.jsp");
+                           });   
 
             });
         </script>

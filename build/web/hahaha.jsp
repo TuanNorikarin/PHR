@@ -38,6 +38,13 @@
                 text-align: center;
                 color: turquoise;
             }
+            button.ajs-button.ajs-ok{
+                display: inline;
+            }
+            
+            div.ajs-footer{
+                display: block;
+            }
         </style>
     </head>
                                 <body>
@@ -57,7 +64,13 @@
                                     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
                                     <script type="text/javascript">
                                         $(document).ready(function () {
-                                            alertify.alert('Successfully!');
+                                            alertify.confirm("This is a confirm dialog.",
+                                            function(){
+                                              alertify.success(window.location.href = "selectTestManual.jsp");
+                                            },
+                                            function(){
+                                              alertify.error(window.location.href = "createExamination.jsp");
+                                            });
                                         });
                                     </script>
 

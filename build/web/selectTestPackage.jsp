@@ -37,6 +37,13 @@
             #description {
                 display: none;
             }
+            button.ajs-button.ajs-ok{
+                display: inline;
+            }
+            
+            div.ajs-footer{
+                display: block;
+            }
         </style>
     </head>
 
@@ -203,11 +210,21 @@
                     }
                 });
                 sessionStorage.setItem('packageId', id);
-                if (confirm('Do you want to choose some other testing services?')) {
-                    window.location.href = "selectTestManual.jsp";
-                } else {
-                    window.location.href = "createExamination.jsp";
-                }
+//                if (confirm('Do you want to choose some other testing services?')) {
+//                    window.location.href = "selectTestManual.jsp";
+//                } else {
+//                    window.location.href = "createExamination.jsp";
+//                }
+                 alertify.confirm("Do you want select other tests?",
+                 function(){
+                     alertify.success(window.location.href = "selectTestManual.jsp");
+                           },
+                 function(){
+                    alertify.error(window.location.href = "createExamination.jsp");
+                           });   
+                    
+                    
+                    
             }
         </script>
     </body>
