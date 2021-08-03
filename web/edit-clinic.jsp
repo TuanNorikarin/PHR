@@ -269,7 +269,7 @@
                                                 
                                                 
                                                 $("input[name='clinicName']").val(data.name);
-                                                $("input[name='district']").val(data.district);
+                                                $("select[name='district']").val(data.district);
 //                                                
                                                 $("textarea[name='description']").val(data.description);
                                                 $("textarea[name='address']").val(data.address);
@@ -298,7 +298,7 @@
                                                     var imageOld = data.image;
                                                     var clinicName = $("input[name='clinicName']").val(); //lấy giá trị trong input user
 
-                                                    var district = $("input[name='district']").val();
+                                                    var district = $("select[name='district']").val();
                                                     var imgClinic = $("input[name='imgClinic']").val();
                                                     var description = $("textarea[name='description']").val();
                                                     var address = $("textarea[name='address']").val();

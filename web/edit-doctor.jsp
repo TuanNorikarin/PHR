@@ -224,6 +224,7 @@
                                                             data: formData,
                                                             success: function (response) {
 //                                                                alert("OK rồi");
+                                                                alert(this.files[0].size);
                                                                 newImg = response;
                                                             },
                                                             error: function (er) {
