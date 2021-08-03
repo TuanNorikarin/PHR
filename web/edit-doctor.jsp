@@ -209,7 +209,7 @@
                                                      var formData = new FormData();
                                                      var files = $("#avatar").get(0).files;
                                                      if (files.length > 0) {
-                                                            
+                                                            formData.append("image", files[0]);
                                                             formData.append("role", "doctor");
                                                         }
                                                       
@@ -217,15 +217,14 @@
                                                             headers: {
                                                                 Authorization: 'Bearer ' + token,
                                                             },
-                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + data +"/doctor",
+                                                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/profile/pic/" + id +"/doctor",
                                                             type:"POST",
                                                             processData: false,
                                                             contentType: false,
                                                             data: formData,
                                                             success: function (response) {
-//                                                                alert("OK rồi");
-                                                                alert(this.files[0].size);
-                                                                newImg = response;
+                                                                alert("OK rồi");
+//                                                                newImg = response;
                                                             },
                                                             error: function (er) {
 //                                                                alert("Lỗiiiiiiiiiiiiii");
