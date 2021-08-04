@@ -1,0 +1,22 @@
+SMAP
+selectTestManual_jsp.java
+JSP
+*S JSP
+*F
++ 0 selectTestManual.jsp
+selectTestManual.jsp
++ 1 recepHeader.html
+components/recepHeader.html
++ 2 recepSidebar.html
+components/recepSidebar.html
++ 3 recepFooter.html
+components/recepFooter.html
+*L
+1,72:51
+1#1,150:123
+72#0,2:273
+1#2,101:275
+73#0,59:376
+1#3,215:435
+131#0,276:649
+*E
