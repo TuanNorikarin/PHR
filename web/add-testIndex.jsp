@@ -78,8 +78,14 @@
                                     <span id='messageName'></span>
                                 </div>
                             </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label><span class="text-danger">Adult </span></label>
+                                   
+                                </div>
+                            </div>
                             <div class="col-sm-4"></div>
-
+                            
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Male Value Min. </label>
@@ -112,20 +118,51 @@
                                     <span id='messageFemaleMax'></span>
                                 </div>
                             </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label><span class="text-danger">Children </span></label>
+                                   
+                                </div>
+                            </div>
                             <div class="col-sm-4"></div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label>Child Min. </label>
-                                    <input class="form-control inputValue" id='childMin' name="childMin" type="number" step=".01" value="0">
+                                    <label>Male Value Min. </label>
+                                    <input class="form-control inputValue" id='childMinMale' name="childMinMale" type="number" step=".01" value="0">
                                     <span id='messageChildMin'></span>
                                 </div>
                             </div>
                             <div class="col-sm-2"></div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label>Child Max. </label>
-                                    <input class="form-control inputValue" id='childMax' name="childMax" type="number" step=".01" value="0">
+                                    <label>Male Value Max. </label>
+                                    <input class="form-control inputValue" id='childMaxMale' name="childMaxMale" type="number" step=".01" value="0">
                                     <span id='messageChildMax'></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Female Value Min. </label>
+                                    <input class="form-control inputValue" id='childMinFemale' name="childMinFemale" type="number" step=".01" value="0">
+                                    <span id='messageChildMin'></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Female Value Max. </label>
+                                    <input class="form-control inputValue" id='childMaxFemale' name="childMaxFemale" type="number" step=".01" value="0">
+                                    <span id='messageChildMin'></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label><span class="text-danger">Price </span></label>
+                                    <input class="form-control inputValue" id='price' name="price" type="number" step=".01" value="0">
+                                    <span id='messageChildMin'></span>
                                 </div>
                             </div>
                             <div class="col-sm-4"></div>

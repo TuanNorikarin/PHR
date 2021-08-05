@@ -55,10 +55,17 @@
                                     <span id='messageName'></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-3 divPrice">
+                                <div class="form-group">
+                                    <label><span class="text-danger">Price </span></label>
+                                    <input class="form-control inputValue" id='price' name="price" type="number" step=".01" value="0">
+                                    <span id='messageChildMin'></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Description</label>
-                                   <textarea style="resize:none" class="form-control" id='description' name="description"> </textarea>
+                                   <textarea  class="form-control" id='description' name="description"> </textarea>
                                     <span id='messageDes'></span>
                                 </div>
                             </div>

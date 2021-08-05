@@ -61,6 +61,9 @@
             .addButton{
                 left: 35%;
             }
+            .divPrice{
+                float: right;
+            }
 
         </style>
     </head>
@@ -120,6 +123,13 @@
                                 
                             </tbody>
                         </table>
+                        <div class="col-sm-3 divPrice">
+                                <div class="form-group">
+                                    <label><span class="text-danger">Price </span></label>
+                                    <input class="form-control inputValue" id='price' name="price" type="number" step=".01" value="0">
+                                    <span id='messageChildMin'></span>
+                                </div>
+                            </div>
                         
                     </div>
                 </div>

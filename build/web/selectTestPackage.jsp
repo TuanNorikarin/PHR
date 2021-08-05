@@ -82,9 +82,9 @@
                                 <tr>
                                     <th style="width: 25%">Name</th>
 
-                                    <th style="width: 70%">Description</th>
+                                    <th style="width: 50%">Description</th>
 
-
+                                    <th style="width: 25%">Price</th>
                                     <th style="width: 5%" class="text-right">Action</th>
                                 </tr>
                             </thead>
@@ -93,6 +93,7 @@
                                     <td id="name"></td>
 
                                     <td id="description"></td>
+                                    <td id="price"></td>
 
                                     <td>
                                         <button class="selectPackage"> <a> Select</a> </button>
@@ -140,6 +141,7 @@
                             columns: [
                                 {data: 'name'},
                                 {data: 'description'},
+                                {data: 'price'},
                                 {
                                     data: 'id',
                                     "render": function (data, type, row, meta) {

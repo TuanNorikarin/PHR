@@ -66,6 +66,9 @@
             div.ajs-footer{
                 display: block;
             }
+            .divPrice{
+                float: right;
+            }
         </style>
     </head>
 
@@ -120,6 +123,13 @@
 
                             </tbody>
                         </table>
+                        <div class="col-sm-3 divPrice">
+                                <div class="form-group">
+                                    <label><span class="text-danger">Price </span></label>
+                                    <input class="form-control inputValue" id='price' name="price" type="number" step=".01" value="0">
+                                    <span id='messageChildMin'></span>
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <div class="col-sm-8 col-9 text-right m-b-20 addButton">
