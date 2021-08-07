@@ -130,13 +130,16 @@
                         var array = "";
                         var arrayTime = [];
                         var a = JSON.stringify(data);
-
-
                         var b = JSON.parse(a);
                         console.log(b);
                         var listPatient = [];
                         if (b !== null) {
                             for (var i = 0; i < b.length; i++) {
+                                console.log(b[i].dob)
+                                console.log(new Date(b[i].dob).getFullYear())
+                                var dobYear = new Date(b[i].dob).getFullYear()
+                                var currentYear = new Date().getFullYear()
+                                var diffYear = parseInt(currentYear) - parseInt(dobYear)
                                 var patient = new Object();
                                 patient.name = b[i].patientName;
                                 patient.description = b[i].description;
@@ -146,11 +149,10 @@
                                 }else{
                                     gender = 2;
                                 }
-                                patient.dataPatient = b[i].examinationId + "." + gender;
+                                patient.dataPatient = b[i].examinationId + "." + gender + "." + diffYear;
                                 listPatient.push(patient);
                             }
                         }
-                        
 
                         $('#checkRequestTable').DataTable({
                             data: listPatient,
@@ -160,9 +162,8 @@
                                 {
                                     data: 'dataPatient',
                                     render: function (data, type, row, meta) {
-                                        return '<td><button class="btn btn-primary inputResult" onClick="selectPatientToInputResult('+data+')"> <a> Select</a> </button></td>'
+                                        return '<td><button class="btn btn-primary inputResult" onClick="selectPatientToInputResult(\''+data+'\')"> <a> Select</a> </button></td>'
                                     }
-
                                 }
                             ],
                             "bDestroy": true,
@@ -183,11 +184,13 @@
                 })
             };
             function selectPatientToInputResult(dataPatient) {
-                console.log(dataPatient);
                 var patientData = (dataPatient+"").split(".");
                 var examId = patientData[0];
                 var gender = (patientData[1] === "1") ? "Male" : "Female";
-                console.log(examId+"......"+gender);
+                var typeGender = gender
+                if(parseInt(patientData[2]) <= 12) {
+                    typeGender = "Child-" + gender
+                }
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -195,18 +198,17 @@
                     headers: {
                     Authorization: 'Bearer ' + token
                     },
-                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examination-details/examination-detail/examination/" + examId + "?typeGender=" + gender,
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examination-details/examination-detail/examination/" + examId + "?typeGender=" + typeGender,
                     success: function (data) {
                         localStorage.setItem("dataTestRequestId", JSON.stringify(data));
-//                                            window.location.href = "checkMorePackage.jsp";
                         sessionStorage.setItem("patientGender", gender);
+                        sessionStorage.setItem("typeGender", typeGender)
                         window.location.href = "inputResult.jsp";
-                    }, error: function (jqXHR, textStatus, errorThrown) {
-                        
+                    }, 
+                    error: function (jqXHR, textStatus, errorThrown) {    
                         console.log(errorThrown)
                     }})
             }
-
         </script>
     </body>
 
