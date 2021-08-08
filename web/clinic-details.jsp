@@ -148,7 +148,10 @@
                                             <p></p>
                                             <span class="blog-date"></span>
                                         </div>
-                                    </div>
+                                        <div>
+                                            <button class="clss-commnet">Block</button>
+                                        </div>
+                                    </div>                                    
                                 </li>
                             </ul>
                         </div>
@@ -164,6 +167,22 @@
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/jquery.slimscroll.js"></script>
         <script src="assets/js/app.js"></script>
+        <script>
+            function disableComment(id) {
+            var token = sessionStorage.getItem("key");
+               $.ajax({
+                    type: "PUT",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    headers: {Authorization: 'Bearer ' + token},
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/rating/" + id + "?status=disable",
+                    complete: function (jqXHR) {
+                        window.location.href = "clinic-details.jsp";
+                    }
+                });
+            };
+
+        </script>
         <script  type="text/javascript">
 
             window.onload = function () {
@@ -183,8 +202,6 @@
                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" +clinicID,
 //                                                        
                  success: function (data) { 
-                        
-                        
                         $('#clinicImg').attr('src', data.image);
                         document.getElementById("clinicTitle").innerHTML = data.name;
                         document.getElementById("clinicAddress").innerHTML = data.address;
@@ -247,7 +264,7 @@
                             y += '<li><div class="comment"><div class="comment-author">'
                                     + '<img class="avatar" alt="" src=' + rating[j].image + '></div>'
                                     + '<div class="comment-block"><span class="comment-by">'
-                                    + '<span class="blog-author-name">' + rating[j].name + '</span></span>'
+                                    + '<span class="blog-author-name">' + rating[j].name + '</span>&nbsp &nbsp<span onclick="disableComment('+ rating[j].id +')"><i class="fa fa-eye"></i></span></span>'
                                     + '<p>' + rating[j].comment + '</p>'
                                     + '<span class="blog-date">' + time[0] + '</span></div></div></li>';
                         }

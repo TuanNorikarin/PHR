@@ -530,6 +530,7 @@
 //                              
                                 "name": name,
                                 "description": description,
+                                "price": 0,
                                 "samplelst": [
                                         {
                                           "description": "",

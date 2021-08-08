@@ -636,13 +636,13 @@ public final class testIndex_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                \r\n");
       out.write("//                                console.log(dataShow.id);\r\n");
       out.write("                                    element.samplelst.forEach(e => {\r\n");
-      out.write("                                        if (e.type === 'Male' || e.type === 'male') {\r\n");
+      out.write("                                        if (e.type === 'Child-Male' || e.type === 'Child-Male') {\r\n");
       out.write("                                            dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;\r\n");
-      out.write("                                        } else if (e.type === 'Female' || e.type === 'female') {\r\n");
+      out.write("                                        } else if (e.type === 'Child-Female' || e.type === 'Child-Female') {\r\n");
       out.write("                                            dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;\r\n");
       out.write("                                        } else if (e.type === 'Child' || e.type === 'child') {\r\n");
       out.write("                                            dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;\r\n");
-      out.write("                                        }\r\n");
+      out.write("                                        } \r\n");
       out.write("                                    });\r\n");
       out.write("                                    mainData.push(dataShow);\r\n");
       out.write("                                });\r\n");
