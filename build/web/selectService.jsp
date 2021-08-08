@@ -296,54 +296,7 @@
     <script type="text/javascript">
         
         window.onload = function () {
-            var token = sessionStorage.getItem("key");
-            var ids = sessionStorage.getItem('listTestId');
-            if (ids !== null) {
-                var listTestId = ids.split(",");
-            }
-            
-            
-            
-            console.log(listTestId);
-            var listTestDouple = [];
-//            var id = 1;
-//            function getpackageId(id) {
-//            
-//            sessionStorage.setItem('packageId', id);
-//            
-//            }
-//            $.ajax({
-//                type: "GET",
-//                dataType: "json",
-//                contentType: "application/json; charset=UTF-8",
-//                headers: { Authorization: 'Bearer ' + token },
-//                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + 1,
-//                success: function (data) {
-//                    console.log('Data contains: '+data);
-//                    for (var i = 0; i < data.length; i++) {
-//                        let id = data[i].id.toString();
-//                        console.log(typeof (id));
-//                        for (var j = 0; j < listTestId.length; j++) {
-//                            console.log(listTestId[j]);
-//                            if (id === listTestId[j]) {
-//                                listTestDouple.push(j);
-//                            }
-//                        }
-//                    }
-//                    if (listTestDouple.length !== 0) {
-//                        let flag = true;
-//                        while (flag) {
-//                            if (confirm('Some test you choice have been in package, do you want to remove them?')) {
-//                                flag = false;
-//                            } else {
-//                            }
-//                        }
-//                    }
-//                },
-//                error: function (jqXHR, textStatus, errorThrown) {
-//                    console.log(' Error in processing! ' + textStatus);
-//                }
-//            });
+            var token = sessionStorage.getItem("key");         
             $.ajax({
                 type: "GET",
                 dataType: "json",
@@ -533,7 +486,9 @@
         };
         
         
-        $("#my-modal-add").on('shown.bs.modal', function (e) {
+        $("#my-modal-add").on('shown.bs.modal', function (e) {    
+            var token = sessionStorage.getItem("key");        
+            var itemSave = [];
             $(document).ready(function () {
                 var cliId = sessionStorage.getItem("clinicID");
                 $.ajax({
@@ -551,23 +506,48 @@
                     }
                 });
             });
+            var idsitempk = [];
+            var idsitem = [];
+            $('.checkbox-item:checkbox').filter(':checked').each(function (e) {
+                idsitem.push(parseInt($(this).data('id')));
+                itemSave.push(parseInt($(this).data('id')));
+            });
+            var idspk = [];
+            $('.checkbox-pk:checkbox').filter(':checked').each(function (e) {
+                idspk.push(parseInt($(this).data('id')));
+            });
+            if (idspk.length > 0) {
+                for (var i = 0; i < idspk.length; i++) {
+                    var _id = idspk[i];
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        contentType: "application/json; charset=UTF-8",
+                        headers: { Authorization: 'Bearer ' + token },
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + _id,
+                        success: function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                itemSave.push(data[i].id);
+                            }                            
+                            if (itemSave .length > 0) {
+                                itemSave = itemSave.filter(function (value, index, array) { 
+                                    return array.indexOf(value) === index;
+                                });
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(' Error in processing! ' + textStatus);
+                        }
+                    });
+                }
+            }
             
             $('#createExamination').click(function (event) { 
                 var selected = $('#doctorName').find('option:selected').val();
-                var token = sessionStorage.getItem("key");
                 var description = $('.clss-description-area').val();
                 var patientId = parseInt(checkNull(sessionStorage.getItem('patientId')));
                 var doctorId = parseInt(selected.split("-")[0]);
-                var doctorAccountId = parseInt(selected.split("-")[1]);
-                var idspk = [];
-                $('.checkbox-pk:checkbox').filter(':checked').each(function (e) {
-                    idspk.push(parseInt($(this).data('id')));
-                });
-                var idsitem = [];
-                $('.checkbox-item:checkbox').filter(':checked').each(function (e) {
-                    idsitem.push(parseInt($(this).data('id')));
-                    
-                });
+                var doctorAccountId = parseInt(selected.split("-")[1]);                
                 if (description === null || description === "") {
                     alert('Please entering description!')
                 }
@@ -580,12 +560,13 @@
                         data: JSON.stringify({
                             "description": description,
                             "doctorId": doctorId,
-                            "packageId": idspk,
+                            "packageId": idsitempk,
                             "patientId": patientId,
-                            "testId": idsitem,
+                            "testId": itemSave,
                         }),
                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
                         complete: function (jqXHR) {
+                            debugger
                             if (jqXHR.status === 200) {
                                 $.ajax({
                                 type: "POST",
