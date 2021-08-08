@@ -101,7 +101,7 @@
 </head>
 
 <%@include file="components/doctorHeader.html" %>
-    <%@include file="components/doctorSidebar.html" %>
+<%@include file="components/doctorSidebar.html" %>
 
         <div class="page-wrapper">
             <div class="content">
@@ -190,8 +190,6 @@
                 <script src="assets/js/jquery.slimscroll.js"></script>
                 <script src="assets/js/select2.min.js"></script>
                 <script src="assets/js/jquery.dataTables.min.js"></script>
-                <!--        <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-                <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>-->
                 <script src="assets/js/dataTables.bootstrap4.min.js"></script>
                 <script src="assets/js/moment.min.js"></script>
                 <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
@@ -209,12 +207,16 @@
                     var listDiagnose = []
 
                     var token = sessionStorage.getItem("key");
+                   
                     window.onload = function () {
+                        
                         var dataTestRequestId = JSON.parse(localStorage.getItem("dataTestRequestId"));
                         var dataTestRequest = JSON.parse(localStorage.getItem("dataTestRequestId"));
 
                         var patientGender = sessionStorage.getItem("patientGender")
                         var typeGender = sessionStorage.getItem('typeGender')
+                        var patientID = sessionStorage.getItem("patientID");
+                        console.log(patientID + " patientID");
 
                         var namePackage = localStorage.getItem("namePackage");
                         var valueArray = [];
@@ -225,6 +227,24 @@
                         var todayRating = moment().format("YYYY-MM-DDTHH:mm:ss");
                         var today = moment().format("YYYY-MM-DDTHH:mm:ss");
                         var dayExpire = moment().add(2, 'd').format("YYYY-MM-DD");
+                        
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            contentType: "application/json",
+                                headers: {
+                                Authorization: 'Bearer ' + token},
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/diseases/diseases/" + 7,
+                             success: function (data) { 
+                                 console.log(data);
+                                 var a = JSON.stringify(data);
+                                 var b = JSON.parse(a);
+                                 var name = data.name;
+                                 console.log(a);
+//                                 console.log(b);
+
+                        }});
+                        
                         $.ajax({
                             type: "GET",
                             dataType: "json",

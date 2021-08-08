@@ -112,6 +112,7 @@
                 var doctorID = sessionStorage.getItem("doctorID");
                 console.log(doctorID + " doctorID");
                 window.onload = function () {
+                sessionStorage.removeItem('patientID');    
                 var token = sessionStorage.getItem("key");
                 var id = localStorage.getItem("userId");
                 var arrayTestRequest = [];
@@ -143,14 +144,18 @@
                                 var patient = new Object();
                                 patient.name = b[i].patientName;
                                 patient.description = b[i].description;
+                                patient.patientId = b[i].patientId;
+                                console.log(b[i].patientId + " patientID")
                                 var gender;
                                 if(b[i].gender === "Male"){
                                     gender = 1;
                                 }else{
                                     gender = 2;
                                 }
-                                patient.dataPatient = b[i].examinationId + "." + gender + "." + diffYear;
+                                
+                                patient.dataPatient = b[i].examinationId + "." + gender + "." + diffYear + "." + b[i].patientId;
                                 listPatient.push(patient);
+                                console.log(patient.patientId);
                             }
                         }
 
@@ -187,10 +192,13 @@
                 var patientData = (dataPatient+"").split(".");
                 var examId = patientData[0];
                 var gender = (patientData[1] === "1") ? "Male" : "Female";
-                var typeGender = gender
+                var typeGender = gender;
                 if(parseInt(patientData[2]) <= 12) {
-                    typeGender = "Child-" + gender
+                    typeGender = "Child-" + gender;
                 }
+                var patientID = patientData[3];
+                
+                console.log(patientData[3] +" hajds");
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -203,6 +211,7 @@
                         localStorage.setItem("dataTestRequestId", JSON.stringify(data));
                         sessionStorage.setItem("patientGender", gender);
                         sessionStorage.setItem("typeGender", typeGender)
+                        sessionStorage.setItem("patientID", patientID);
                         window.location.href = "inputResult.jsp";
                     }, 
                     error: function (jqXHR, textStatus, errorThrown) {    

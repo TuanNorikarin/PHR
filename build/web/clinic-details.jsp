@@ -148,7 +148,7 @@
                                             <p></p>
                                             <span class="blog-date"></span>
                                         </div>
-                                        <div>
+                                        <div hidden="">
                                             <button class="clss-commnet">Block</button>
                                         </div>
                                     </div>                                    
@@ -175,6 +175,9 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     headers: {Authorization: 'Bearer ' + token},
+                    beforeSend:function(){
+                             return confirm("Are you sure?");
+                     },
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/rating/" + id + "?status=disable",
                     complete: function (jqXHR) {
                         window.location.href = "clinic-details.jsp";
@@ -201,7 +204,7 @@
                        Authorization: 'Bearer ' + token},
                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/clinics/clinic/" +clinicID,
 //                                                        
-                 success: function (data) { 
+                    success: function (data) { 
                         $('#clinicImg').attr('src', data.image);
                         document.getElementById("clinicTitle").innerHTML = data.name;
                         document.getElementById("clinicAddress").innerHTML = data.address;

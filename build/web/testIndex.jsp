@@ -30,13 +30,16 @@
             div.dropdown.dropdown-action{
                 float: right;
             }
-            #description{
-                display: none;    
-            }
+            
             #indexTable {
                 width: 100% !important;
             }
-
+            div.col-sm-3.col-3{
+                position: relative; 
+                left:160px;
+                top: 80px;
+                z-index: 10;
+            }
         </style>
     </head>
 
@@ -45,28 +48,34 @@
 
     <div class="page-wrapper">
         <div class="content">
+            
             <div class="row">
                 <div class="col-sm-2 col-3">
                     <h4 class="page-title">All Test Indexes</h4>
                 </div>
-                 <div class="col-sm-6 col-3">
-                     <label><h4>Choose Children value</h4></label>
+                 <div class="col-sm-3 col-3">
+                     <label><h4>Type</h4></label>
                      <select>
-                         <option value="children">Children</option>
                          <option value="adult">Adult</option>
+                         <option value="children">Children</option>
+                         
                      </select>
-                </div>
+                    </div>
                 <div class="col-sm-4 col-3 text-right m-b-20">
                     <buttom class="btn btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#my-modal-add"><i class="fa fa-plus"></i> Add Test Index</buttom>
                 </div>
+                
                 <!--<div class="col-sm-4 col-3 text-right m-b-20">
                     <a href="add-testIndex.jsp" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Test Index</a>
                 </div>-->
             </div>
+            
 
             <div class="row">
+                
                 <div class="col-md-12">
                     <div class="">
+                        
 
                         <table id="indexTable" class="table table-border table-striped custom-table datatable mb-0">
 
@@ -194,7 +203,7 @@
                                     </div> 
                                     <div class="col-sm-6">
                                         <label>Description</label>
-                                        <textarea style="resize:none" class="form-control" id='description' name="description"> </textarea>
+                                        <textarea class="form-control" id='description' name="description"> </textarea>
                                         <span id='messageDes'></span>
                                     </div> 
                                 </div>
@@ -292,7 +301,7 @@
                                     </div> 
                                     <div class="col-sm-6">
                                         <label>Description</label>
-                                        <textarea style="resize:none" class="form-control" id='descriptionEdit' name="descriptionEdit"> </textarea>
+                                        <textarea class="form-control" id='descriptionEdit' name="descriptionEdit"> </textarea>
                                         <span id='messageDesEdit'></span>
                                     </div> 
                                 </div>
@@ -447,6 +456,9 @@
                 var idFemale = "";
                 var idChild =  "";
                 var token = sessionStorage.getItem("key");
+                
+//===============================================Add Text Index==================================================
+
                 $("#inputName").click(function () {
                     $('#inputName').removeClass('error');
                     document.getElementById('messageName').innerHTML = '';
@@ -501,6 +513,7 @@
                     document.getElementById('messageChildMinFemale').innerHTML = '';
                     $('#childMaxFemale').removeClass('error');
                     document.getElementById('messageChildMaxFemale').innerHTML = '';
+                    
                     var regexp = /^-?\d{1,4}(\.\d{0,2})?$/;
                     var name = $("input[name='name']").val(); //lấy giá trị trong input user
                     var price = $("input[name='price']").val(); 
@@ -520,6 +533,16 @@
                             count = 1;
                         }
                     }
+                    
+                    console.log(name +" name");
+                    console.log(regexp.test(maleMax));
+                    console.log(allTestIndex);
+                    console.log(maleMin + " maleMin");
+                    console.log(maleMax + " maleMax");
+                    console.log(femaleMin + " FemaleMin");
+                    console.log(femaleMax + " femaleMax");
+                    console.log(price + " price");
+                    
                     if (name.length === 0 || name.length > 30) {
                         $('#inputName').addClass('error');
                         document.getElementById('messageName').style.color = 'red';
@@ -879,10 +902,8 @@
                             }),
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index",
                             complete: function (jqXHR) {
-//                                debugger
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 201 || jqXHR.status === 200) {
-//                                    alert("Create Successfully!");
                                     alertify.alert('Create Successfully!');
                                     setTimeout(function(){
                                         window.location.href = "testIndex.jsp";
@@ -1022,6 +1043,8 @@
                 })
             });
             
+//            -============================================ Update Form==============================================
+           
             $("#my-modal-Edit").on('shown.bs.modal', function (e) {
                 //For Edit
                 var dataId = JSON.parse(localStorage.getItem("dataTestID"));
@@ -1053,10 +1076,19 @@
                         var femaleMax = data.samplelst[1].indexValueMax;
                         $("#femaleMaxEdit").val(femaleMax);
 
-                        var childMin = data.samplelst[2].indexValueMin;
-                        $("#childMinEdit").val(childMin);
-                        var childMax = data.samplelst[2].indexValueMax;
-                        $("#childMaxEdit").val(childMax);
+                        var childMaleMin = data.samplelst[2].indexValueMin;
+                        $("#childMinMaleEdit").val(childMaleMin);
+                        var childMaleMax = data.samplelst[2].indexValueMax;
+                        $("#childMaxMaleEdit").val(childMaleMax);
+                        
+                        var childFemaleMin = data.samplelst[3].indexValueMin;
+                        $("#childMinFemaleEdit").val(childFemaleMin);
+                        var childFemaleMax = data.samplelst[3].indexValueMax;
+                        $("#childMaxFemaleEdit").val(childFemaleMax);
+                        
+                        var price = data.price;
+                        $("#priceEdit").val(price);
+                        
                         $("#inputNameEdit").click(function () {
                             $('#inputNameEdit').removeClass('error');
                             document.getElementById('messageNameEdit').innerHTML = '';
@@ -1100,6 +1132,7 @@
                     }
                 });
             });
+            
 
             $("#updateTestIndex").click(function (event) {
                 event.preventDefault();
@@ -1123,18 +1156,20 @@
                 document.getElementById('messageChildMinFemaleEdit').innerHTML = '';
                 $('#childMaxFemaleEdit').removeClass('error');
                 document.getElementById('messageChildMaxFemaleEdit').innerHTML = '';
+                
+                
                 var regexp = /^-?\d{1,4}(\.\d{0,2})?$/;
-                var name = $("input[name='nameEdit']").val(); //lấy giá trị trong input user
-                var price = $("input[name='priceEdit']").val(); 
-                var description = $("textarea[name='descriptionEdit']").val();
-                var maleMin = $("input[name='maleMinEdit']").val();
-                var maleMax = $("input[name='maleMaxEdit']").val();
-                var femaleMin = $("input[name='femaleMinEdit']").val();
-                var femaleMax = $("input[name='femaleMaxEdit']").val();
-                var childMinMale = $("input[name='childMinMaleEdit']").val();
-                var childMaxMale = $("input[name='childMaxMaleEdit']").val();
-                var childMinFemale = $("input[name='childMinFemaleEdit']").val();
-                var childMaxFemale = $("input[name='childMaxFemaleEdit']").val();                    
+                var nameEdit = $("input[name='nameEdit']").val(); //lấy giá trị trong input user
+                var priceEdit = $("input[name='priceEdit']").val(); 
+                var descriptionEdit = $("textarea[name='descriptionEdit']").val();
+                var maleMinEdit = $("input[name='maleMinEdit']").val();
+                var maleMaxEdit = $("input[name='maleMaxEdit']").val();
+                var femaleMinEdit = $("input[name='femaleMinEdit']").val();
+                var femaleMaxEdit = $("input[name='femaleMaxEdit']").val();
+                var childMinMaleEdit = $("input[name='childMinMaleEdit']").val();
+                var childMaxMaleEdit = $("input[name='childMaxMaleEdit']").val();
+                var childMinFemaleEdit = $("input[name='childMinFemaleEdit']").val();
+                var childMaxFemaleEdit = $("input[name='childMaxFemaleEdit']").val();                    
                 var count = 0;                    
                 var allTestIndex = JSON.parse(localStorage.getItem("allTestIndex"));                    
                 for (var i = 0; i < allTestIndex.length; i++) {
@@ -1142,51 +1177,61 @@
                         count = 1;
                     }
                 }
+                    console.log(nameEdit +" nameEdit");
+                    console.log(regexp.test(maleMax));
+                    console.log(allTestIndex);
+                    console.log(maleMinEdit + " maleMinEdit");
+                    console.log(childMinMaleEdit + " childMinMaleEdit");
+                    console.log(childMaxFemaleEdit + " childMaxFemaleEdit");
+                    console.log(priceEdit + " price");
+                
+                
+                
                 if (name.length === 0 || name.length > 30) {
                     $('#inputNameEdit').addClass('error');
                     document.getElementById('messageNameEdit').style.color = 'red';
                     document.getElementById('messageNameEdit').innerHTML = 'Name must between (1-30) letter ✘';
-                    if (description.length > 255) {
+                    if (descriptionEdit.length > 255) {
                         $('#descriptionEdit').addClass('error');
                         document.getElementById('messageDesEdit').style.color = 'red';
                         document.getElementById('messageDesEdit').innerHTML = 'Descreption must be less than 255 in length ✘';
                     }
-                    if (!regexp.test(maleMin)) {
+                    if (!regexp.test(maleMinEdit)) {
                         $('#maleMinEdit').addClass('error');
                         document.getElementById('messageMaleMinEdit').style.color = 'red';
                         document.getElementById('messageMaleMinEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(maleMax)) {
+                    if (!regexp.test(maleMaxEdit)) {
                         $('#maleMaxEdit').addClass('error');
                         document.getElementById('messageMaleMaxEdit').style.color = 'red';
                         document.getElementById('messageMaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMin)) {
+                    if (!regexp.test(femaleMinEdit)) {
                         $('#femaleMinEdit').addClass('error');
                         document.getElementById('messageFemaleMinEdit').style.color = 'red';
                         document.getElementById('messageFemaleMinEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMax)) {
+                    if (!regexp.test(femaleMaxEdit)) {
                         $('#femaleMaxEdit').addClass('error');
                         document.getElementById('messageFemaleMaxEdit').style.color = 'red';
                         document.getElementById('messageFemaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinMale)) {
+                    if (!regexp.test(childMinMaleEdit)) {
                         $('#childMinMaleEdit').addClass('error');
                         document.getElementById('messageChildMinMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxMale)) {
+                    if (!regexp.test(childMaxMaleEdit)) {
                         $('#childMaxMaleEdit').addClass('error');
                         document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinFemale)) {
+                    if (!regexp.test(childMinFemaleEdit)) {
                         $('#childMinFemaleEdit').addClass('error');
                         document.getElementById('messageChildMinFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxFemale)) {
+                    if (!regexp.test(childMaxFemaleEdit)) {
                         $('#childMaxFemaleEdit').addClass('error');
                         document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
@@ -1196,47 +1241,47 @@
                     $('#inputNameEdit').addClass('error');
                     document.getElementById('messageNameEdit').style.color = 'red';
                     document.getElementById('messageNameEdit').innerHTML = 'Name already exists ✘';
-                    if (description.length > 255) {
+                    if (descriptionEdit.length > 255) {
                         $('#descriptionEdit').addClass('error');
                         document.getElementById('messageDesEdit').style.color = 'red';
                         document.getElementById('messageDesEdit').innerHTML = 'Descreption must be less than 255 in length ✘';
                     }
-                    if (!regexp.test(maleMin)) {
+                    if (!regexp.test(maleMinEdit)) {
                         $('#maleMinEdit').addClass('error');
                         document.getElementById('messageMaleMinEdit').style.color = 'red';
                         document.getElementById('messageMaleMinEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(maleMax)) {
+                    if (!regexp.test(maleMaxEdit)) {
                         $('#maleMaxEdit').addClass('error');
                         document.getElementById('messageMaleMaxEdit').style.color = 'red';
                         document.getElementById('messageMaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMin)) {
+                    if (!regexp.test(femaleMinEdit)) {
                         $('#femaleMinEdit').addClass('error');
                         document.getElementById('messageFemaleMinEdit').style.color = 'red';
                         document.getElementById('messageFemaleMinEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMax)) {
+                    if (!regexp.test(femaleMaxEdit)) {
                         $('#femaleMaxEdit').addClass('error');
                         document.getElementById('messageFemaleMaxEdit').style.color = 'red';
                         document.getElementById('messageFemaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinMale)) {
+                    if (!regexp.test(childMinMaleEdit)) {
                         $('#childMinMaleEdit').addClass('error');
                         document.getElementById('messageChildMinMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxMale)) {
+                    if (!regexp.test(childMaxMaleEdit)) {
                         $('#childMaxMaleEdit').addClass('error');
                         document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinFemale)) {
+                    if (!regexp.test(childMinFemaleEdit)) {
                         $('#childMinFemaleEdit').addClass('error');
                         document.getElementById('messageChildMinFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMax)) {
+                    if (!regexp.test(childMaxEdit)) {
                         $('#childMaxFemaleEdit').addClass('error');
                         document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
@@ -1247,47 +1292,47 @@
                     document.getElementById('messageDesEdit').style.color = 'red';
                     document.getElementById('messageDesEdit').innerHTML = 'Descreption must be less than 255 in length ✘';
 
-                    if (!regexp.test(maleMin)) {
+                    if (!regexp.test(maleMinEdit)) {
                         $('#maleMinEdit').addClass('error');
                         document.getElementById('messageMaleMinEdit').style.color = 'red';
                         document.getElementById('messageMaleMinEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(maleMax)) {
+                    if (!regexp.test(maleMaxEdit)) {
                         $('#maleMaxEdit').addClass('error');
                         document.getElementById('messageMaleMaxEdit').style.color = 'red';
                         document.getElementById('messageMaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMin)) {
+                    if (!regexp.test(femaleMinEdit)) {
                         $('#femaleMinEdit').addClass('error');
                         document.getElementById('messageFemaleMinEdit').style.color = 'red';
                         document.getElementById('messageFemaleMinEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMax)) {
+                    if (!regexp.test(femaleMaxEdit)) {
                         $('#femaleMaxEdit').addClass('error');
                         document.getElementById('messageFemaleMaxEdit').style.color = 'red';
                         document.getElementById('messageFemaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinMale)) {
+                    if (!regexp.test(childMinMaleEdit)) {
                         $('#childMinMaleEdit').addClass('error');
                         document.getElementById('messageChildMinMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxMale)) {
+                    if (!regexp.test(childMaxMaleEdit)) {
                         $('#childMaxMaleEdit').addClass('error');
                         document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinFemale)) {
+                    if (!regexp.test(childMinFemaleEdit)) {
                         $('#childMinFemaleEdit').addClass('error');
                         document.getElementById('messageChildMinFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxFemale)) {
+                    if (!regexp.test(childMaxFemaleEdit)) {
                         $('#childMaxFemaleEdit').addClass('error');
                         document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                } else if (!regexp.test(maleMin)) {
+                } else if (!regexp.test(maleMinEdit)) {
                     $('#maleMinEdit').addClass('error');
                     document.getElementById('messageMaleMinEdit').style.color = 'red';
                     document.getElementById('messageMaleMinEdit').innerHTML = 'Value invalid ✘';
@@ -1296,167 +1341,167 @@
                         document.getElementById('messageMaleMaxEdit').style.color = 'red';
                         document.getElementById('messageMaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMin)) {
+                    if (!regexp.test(femaleMinEdit)) {
                         $('#femaleMinEdit').addClass('error');
                         document.getElementById('messageFemaleMinEdit').style.color = 'red';
                         document.getElementById('messageFemaleMinEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMax)) {
+                    if (!regexp.test(femaleMaxEdit)) {
                         $('#femaleMaxEdit').addClass('error');
                         document.getElementById('messageFemaleMaxEdit').style.color = 'red';
                         document.getElementById('messageFemaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinMale)) {
+                    if (!regexp.test(childMinMaleEdit)) {
                         $('#childMinMaleEdit').addClass('error');
                         document.getElementById('messageChildMinMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxMale)) {
+                    if (!regexp.test(childMaxMaleEdit)) {
                         $('#childMaxMaleEdit').addClass('error');
                         document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinFemale)) {
+                    if (!regexp.test(childMinFemaleEdit)) {
                         $('#childMinFemaleEdit').addClass('error');
                         document.getElementById('messageChildMinFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxFemale)) {
+                    if (!regexp.test(childMaxFemaleEdit)) {
                         $('#childMaxFemaleEdit').addClass('error');
                         document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                } else if (!regexp.test(maleMax)) {
+                } else if (!regexp.test(maleMaxEdit)) {
                     $('#maleMaxEdit').addClass('error');
                     document.getElementById('messageMaleMaxEdit').style.color = 'red';
                     document.getElementById('messageMaleMaxEdit').innerHTML = 'Value invalid ✘';
-                    if (!regexp.test(femaleMin)) {
+                    if (!regexp.test(femaleMinEdit)) {
                         $('#femaleMinEdit').addClass('error');
                         document.getElementById('messageFemaleMinEdit').style.color = 'red';
                         document.getElementById('messageFemaleMinEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(femaleMax)) {
+                    if (!regexp.test(femaleMaxEdit)) {
                         $('#femaleMaxEdit').addClass('error');
                         document.getElementById('messageFemaleMaxEdit').style.color = 'red';
                         document.getElementById('messageFemaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinMale)) {
+                    if (!regexp.test(childMinMaleEdit)) {
                         $('#childMinMaleEdit').addClass('error');
                         document.getElementById('messageChildMinMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxMale)) {
+                    if (!regexp.test(childMaxMaleEdit)) {
                         $('#childMaxMaleEdit').addClass('error');
                         document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinFemale)) {
+                    if (!regexp.test(childMinFemaleEdit)) {
                         $('#childMinFemaleEdit').addClass('error');
                         document.getElementById('messageChildMinFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxFemale)) {
+                    if (!regexp.test(childMaxFemaleEdit)) {
                         $('#childMaxFemaleEdit').addClass('error');
                         document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                } else if (!regexp.test(femaleMin)) {
+                } else if (!regexp.test(femaleMinEdit)) {
                     $('#femaleMinEdit').addClass('error');
                     document.getElementById('messageFemaleMinEdit').style.color = 'red';
                     document.getElementById('messageFemaleMinEdit').innerHTML = 'Value invalid ✘';
 
-                    if (!regexp.test(femaleMax)) {
+                    if (!regexp.test(femaleMaxEdit)) {
                         $('#femaleMaxEdit').addClass('error');
                         document.getElementById('messageFemaleMaxEdit').style.color = 'red';
                         document.getElementById('messageFemaleMaxEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinMale)) {
+                    if (!regexp.test(childMinMaleEdit)) {
                         $('#childMinMaleEdit').addClass('error');
                         document.getElementById('messageChildMinMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxMale)) {
+                    if (!regexp.test(childMaxMaleEdit)) {
                         $('#childMaxMaleEdit').addClass('error');
                         document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinFemale)) {
+                    if (!regexp.test(childMinFemaleEdit)) {
                         $('#childMinFemaleEdit').addClass('error');
                         document.getElementById('messageChildMinFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxFemale)) {
+                    if (!regexp.test(childMaxFemaleEdit)) {
                         $('#childMaxFemaleEdit').addClass('error');
                         document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                } else if (!regexp.test(femaleMax)) {
+                } else if (!regexp.test(femaleMaxEdit)) {
                     $('#femaleMaxEdit').addClass('error');
                     document.getElementById('messageFemaleMaxEdit').style.color = 'red';
                     document.getElementById('messageFemaleMaxEdit').innerHTML = 'Value invalid ✘';
 
-                    if (!regexp.test(childMinMale)) {
+                    if (!regexp.test(childMinMaleEdit)) {
                         $('#childMinMale').addClass('error');
                         document.getElementById('messageChildMinMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMaxMale)) {
+                    if (!regexp.test(childMaxMaleEdit)) {
                         $('#childMaxMaleEdit').addClass('error');
                         document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                    if (!regexp.test(childMinFemale)) {
+                    if (!regexp.test(childMinFemaleEdit)) {
                         $('#childMinFemaleEdit').addClass('error');
                         document.getElementById('messageChildMinFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMinFemaleEdit').innerHTML = 'Value invalid ✘';
                     }                        
-                    if (!regexp.test(childMaxFemale)) {
+                    if (!regexp.test(childMaxFemaleEdit)) {
                         $('#childMaxFemaleEdit').addClass('error');
                         document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                } else if (!regexp.test(childMinMale)) {
+                } else if (!regexp.test(childMinMaleEdit)) {
                     $('#childMinMaleEdit').addClass('error');
                     document.getElementById('messageChildMinMaleEdit').style.color = 'red';
                     document.getElementById('messageChildMinMaleEdit').innerHTML = 'Value invalid ✘';
 
-                    if (!regexp.test(childMaxMale)) {
+                    if (!regexp.test(childMaxMaleEdit)) {
                         $('#childMaxMaleEdit').addClass('error');
                         document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                } else if (!regexp.test(childMaxMale)) {
+                } else if (!regexp.test(childMaxMaleEdit)) {
                     $('#childMaxMaleEdit').addClass('error');
                     document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                     document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value invalid ✘';
-                }else if (!regexp.test(childMinFemale)) {
+                }else if (!regexp.test(childMinFemaleEdit)) {
                     $('#childMinFemaleEdit').addClass('error');
                     document.getElementById('messageChildMinFemaleEdit').style.color = 'red';
                     document.getElementById('messageChildMinFemaleEdit').innerHTML = 'Value invalid ✘';
 
-                    if (!regexp.test(childMaxFemale)) {
+                    if (!regexp.test(childMaxFemaleEdit)) {
                         $('#childMaxFemaleEdit').addClass('error');
                         document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                         document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
                     }
-                } else if (!regexp.test(childMaxFemale)) {
+                } else if (!regexp.test(childMaxFemaleEdit)) {
                     $('#childMaxFemaleEdit').addClass('error');
                     document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                     document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value invalid ✘';
-                } else if (parseFloat(maleMax) < parseFloat(maleMin)) {
+                } else if (parseFloat(maleMaxEdit) < parseFloat(maleMinEdit)) {
                     console.log("a");
                     $('#maleMaxEdit').addClass('error');
                     document.getElementById('messageMaleMaxEdit').style.color = 'red';
                     document.getElementById('messageMaleMaxEdit').innerHTML = 'Value max less than value min ✘';
-                } else if (parseFloat(femaleMax) < parseFloat(femaleMin)) {
+                } else if (parseFloat(femaleMaxEdit) < parseFloat(femaleMinEdit)) {
                     $('#femaleMaxEdit').addClass('error');
                     document.getElementById('messageFemaleMaxEdit').style.color = 'red';
                     document.getElementById('messageFemaleMaxEdit').innerHTML = 'Value max less than value min ✘';
-                } else if (parseFloat(childMaxMale) < parseFloat(childMinMale)) {
+                } else if (parseFloat(childMaxMaleEdit) < parseFloat(childMinMaleEdit)) {
                     $('#childMaxMaleEdit').addClass('error');
                     document.getElementById('messageChildMaxMaleEdit').style.color = 'red';
                     document.getElementById('messageChildMaxMaleEdit').innerHTML = 'Value max less than value min ✘';
-                }else if (parseFloat(childMaxFemale) < parseFloat(childMinFemale)) {
+                }else if (parseFloat(childMaxFemaleEdit) < parseFloat(childMinFemaleEdit)) {
                     $('#childMaxFemaleEdit').addClass('error');
                     document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                     document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value max less than value min ✘';
@@ -1468,39 +1513,39 @@
                         headers: { Authorization: 'Bearer ' + token},
                         data: JSON.stringify({
                             "id": idGroup,
-                            "name": name,
-                            "price": price,
-                            "description": description,
+                            "name": nameEdit,
+                            "price": priceEdit,
+                            "description": descriptionEdit,
                             "samplelst": [
                                 {
                                     "description": "",
                                     "id": idMale,
-                                    "indexValueMax": maleMax,
-                                    "indexValueMin": maleMin,
+                                    "indexValueMax": maleMaxEdit,
+                                    "indexValueMin": maleMinEdit,
                                     "testId": idTest,
                                     "type": "Male"
                                 },
                                 {
                                     "description": "",
                                     "id": idFemale,
-                                    "indexValueMax": femaleMax,
-                                    "indexValueMin": femaleMin,
+                                    "indexValueMax": femaleMaxEdit,
+                                    "indexValueMin": femaleMinEdit,
                                     "testId": idTest,
                                     "type": "Female"
                                 },
                                 {
                                     "description": "",
                                     "id": idChildMale,
-                                    "indexValueMax": childMaxMale,
-                                    "indexValueMin": childMinMale,
+                                    "indexValueMax": childMaxMaleEdit,
+                                    "indexValueMin": childMinMaleEdit,
                                     "testId": idTest,
                                     "type": "Child-Male"
                                   },
                                 {
                                     "description": "",
                                     "id": idChildFemale,
-                                    "indexValueMax": childMaxFemale,
-                                    "indexValueMin": childMinFemale,
+                                    "indexValueMax": childMaxFemaleEdit,
+                                    "indexValueMin": childMinFemaleEdit,
                                     "testId": idTest,
                                     "type": "Child-Female"
                                 }

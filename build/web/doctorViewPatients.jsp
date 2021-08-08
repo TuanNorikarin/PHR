@@ -50,7 +50,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="">
 
                         <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
 

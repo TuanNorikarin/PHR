@@ -1,0 +1,22 @@
+SMAP
+selectService_jsp.java
+JSP
+*S JSP
+*F
++ 0 selectService.jsp
+selectService.jsp
++ 1 recepHeader.html
+components/recepHeader.html
++ 2 recepSidebar.html
+components/recepSidebar.html
++ 3 recepFooter.html
+components/recepFooter.html
+*L
+1,104:51
+1#1,150:155
+104#0,2:305
+1#2,101:307
+105#0,170:408
+1#3,215:578
+274#0,481:792
+*E

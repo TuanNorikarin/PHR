@@ -23,11 +23,13 @@
                 background-color: #e3e7e8;
             }
             table, th, td {
-                border: 1px solid black;
+                border: 3px solid black;
                 text-align: center;
             }
-            thead{
+            thead {
                 text-align: center;
+                color: #009efb;
+                font-weight: bolder;
             }
             .close{
                 margin-right: 40%;
@@ -53,13 +55,30 @@
             .testPackage{
                 left: 12%;
             }
-            .addButton{
-                left: 35%;
-            }
+            
             .divPrice{
                 float: right;
             }
-
+            button#buttonAdd.btn.btn.btn-primary{
+                position: relative;
+                left: 300px;
+            }
+            h3#packageName.blog-title{
+                position: relative;
+                left: 200px;
+            }
+            div.col-md-12.testtables{
+                position: relative;
+                left: -90px;
+            }
+            div.col-sm-3.col-3{
+                position: relative; 
+                left:590px;
+                top: 80px;
+                margin-bottom: 10px;
+                z-index: 10;
+            }
+           
         </style>
     </head>
 
@@ -69,25 +88,25 @@
         <div class="content">
             <div class="form-group row">
                 <div class="col-sm-3 col-3"></div>
-                 <div class="col-sm-6 col-3">
-                     <label><h4>Choose Children value</h4></label>
+                 <div class="col-sm-3 col-3">
+                     <label><h4>Type</h4></label>
                      <select>
-                         <option value="children">Children</option>
                          <option value="adult">Adult</option>
+                         <option value="children">Children</option>
                      </select>
                 </div>
-                <div class="col-sm-3 col-3">
-                    <div>
-                        <buttom id="buttonAdd" class="btn btn btn-primary"><i class="fa fa-plus"></i> Add Text Indexes to Package</buttom>
+                
+                    <div class="addButton">
+                        <button id="buttonAdd" class="btn btn btn-primary"><i class="fa fa-plus"></i> Add Text Indexes to Package</button>
                     </div>
-                </div>
+                
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 testtables">
                     <h3 id="packageName" class="blog-title"></h3>
                     <span id='messageName'></span>
-                    <div id="hiddenWall" class="col-8 testPackage">                        
-                        <table id="testPackageTable" class="table table-border table-striped custom-table datatable mb-0">
+                    <div id="hiddenWall" class="col-10 testPackage table-responsive">                        
+                        <table id="testPackageTable" class="table  table-bordered datatable  mb-0">
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>
@@ -244,10 +263,8 @@
                                         }
                                     },
                                     {
-                                        data: 'price',
-                                        render: function (data, type, row, meta) {                                            
-                                            return row.price;
-                                        }
+                                        data: 'price'
+                                        
                                     },
                                     {
                                         defaultContent: '<td id="actionIcon" class="close"><button id="buttonX" type="button" class="close" aria-label="Close"><span class="deleteButton" aria-hidden="true">&times;</span></button></td>'
@@ -256,7 +273,9 @@
                                     "bDestroy": true,
                                     "bFilter": false,
                                     "aaSorting": [],
-                                    "bSort": false
+                                    "bPaginate": false,
+                                    "bSort": false,
+                                    "bInfo": false,
                                 });
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
@@ -264,32 +283,32 @@
                                 }
                             })
                         }
-                        $('#testPackageTable tbody').on('click', 'button', function () {
-                            var tr = $(this).closest("tr");
-                            var rowindex = tr.index();
-                            table = document.getElementById("testPackageTable");
-                            tr = table.getElementsByTagName("tr");
-                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
-                            txtValue = td.textContent;
-                            for (var i = 0; i < data.length; i++) {
-                                if (data[i].name === txtValue) {
-                                    $.ajax({
-                                        type: "DELETE",
-                                        dataType: "json",
-                                        contentType: "application/json; charset=utf-8",
-                                        headers: {
-                                            Authorization: 'Bearer ' + token},
-                                        beforeSend:function(){
-                                                return confirm("Are you sure?");
-                                             },
-                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test/" + dataPackage.id + "/" + data[i].id,
-                                        complete: function (jqXHR) {
-                                            window.location.href = "test-detail.jsp";
-                                        }
-                                    });
-                                }
-                            }
-                        });
+//                        $('#testPackageTable tbody').on('click', 'button', function () {
+//                            var tr = $(this).closest("tr");
+//                            var rowindex = tr.index();
+//                            table = document.getElementById("testPackageTable");
+//                            tr = table.getElementsByTagName("tr");
+//                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
+//                            txtValue = td.textContent;
+//                            for (var i = 0; i < data.length; i++) {
+//                                if (data[i].name === txtValue) {
+//                                    $.ajax({
+//                                        type: "DELETE",
+//                                        dataType: "json",
+//                                        contentType: "application/json; charset=utf-8",
+//                                        headers: {
+//                                            Authorization: 'Bearer ' + token},
+//                                        beforeSend:function(){
+//                                                return confirm("Are you sure?");
+//                                             },
+//                                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test/" + dataPackage.id + "/" + data[i].id,
+//                                        complete: function (jqXHR) {
+//                                            window.location.href = "test-detail.jsp";
+//                                        }
+//                                    });
+//                                }
+//                            }
+//                        });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(' Error in processing! ' + textStatus);
@@ -375,14 +394,11 @@
                                         dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
                                     } else if (e.type === 'Female' || e.type === 'female') {
                                         dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                    } else if (e.type === 'Child' || e.type === 'child') {
-                                        dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                    }
+                                    } 
                                 });
                                 _totalPrice = _totalPrice + parseFloat(element.price);
                                 mainData.push(dataShow);
                             });
-                        debugger
                             $('.clss-input-price').val(_totalPrice).trigger('change');
                             localStorage.setItem("testName", testName);
 //                                $('#testPackageTable').append('<caption style="caption-side: top">' + dataPackage.name + '</caption>');
@@ -411,10 +427,8 @@
                                     }
                                 },
                                 {
-                                    data: 'price',
-                                    render: function (data, type, row, meta) {                                            
-                                        return row.price;
-                                    }
+                                    data: 'price'
+                                   
                                 },
                                 {
                                     defaultContent: '<td id="actionIcon" class="close"><button id="buttonX" type="button" class="close" aria-label="Close"><span class="deleteButton" aria-hidden="true">&times;</span></button></td>'
@@ -423,7 +437,9 @@
                             "bDestroy": true,
                             "bFilter": false,
                             "aaSorting": [],
-                            "bSort": false
+                            "bPaginate": false,
+                            "bSort": false,
+                            "bInfo": false,
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -453,7 +469,7 @@
                                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test/" + dataPackage.id + "/" + data[i].id,
                                 complete: function (jqXHR) {
 
-                                    window.location.href = "hahaha.jsp";
+                                    window.location.href = "test-detail.jsp";
 
                                 }
                             });

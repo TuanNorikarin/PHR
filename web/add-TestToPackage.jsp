@@ -138,7 +138,6 @@
             };
             
             $('.add-to-package').click(function (event) {
-                debugger
                 var ids = [];
                 var packageId = sessionStorage.getItem('packageId');
                 $('.checkbox-pk:checkbox').filter(':checked').each(function (e) {
@@ -162,7 +161,10 @@
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test",
                             complete: function (jqXHR) {
                                 if (jqXHR.status === 200) {
-                                    window.location.href = "add-TestToPackage.jsp";
+                                    alertify.alert('Add Successfully ✔');
+                                    setTimeout(function () {
+                                        window.location.href = "test-detail.jsp";
+                                    }, 1000);
                                 }else {  
                                     alert("Some component are faulty!");
                                     
@@ -369,8 +371,11 @@
                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test",
                                         complete: function (jqXHR) {
                                         if (jqXHR.status === 200) {
-//                                        alert("Add Successfully!");
-                                        window.location.href = "add-TestToPackage.jsp";
+                                            alertify.alert('Add Successfully ✔');
+                                            setTimeout(function () {
+                                                window.location.href = "add-TestToPackage.jsp";
+                                            }, 1000);
+                                        
 
                                       }
                                     }

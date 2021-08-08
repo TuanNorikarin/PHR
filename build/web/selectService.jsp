@@ -3,7 +3,7 @@
         <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo-dark.png">
-        <title>MPMR - Manage Personal Medical Record</title>
+        <title>PHR - Manage Personal Health Record</title>
         <link href='http://fonts.googleapis.com/css?family=Roboto+Slab&subset=latin,greek' rel='stylesheet' type='text/css'>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
@@ -77,10 +77,9 @@
                 display: block;
             }.divPrice{
                 float: right;
-            }.addButton {
-                left: 30%;
-                padding-top: 20px;
-            }input[type=checkbox] {
+            }
+            
+            input[type=checkbox] {
                 transform: scale(1.5);
                 -ms-transform: scale(1.5);
                 -webkit-transform: scale(1.5);
@@ -92,7 +91,8 @@
                 display: none;
             }#indexTable {
                 width: 100% !important;
-            }button.ajs-button.ajs-ok{
+            }
+            button.ajs-button.ajs-ok{
                 display: inline;
             }div.ajs-footer{
                 display: block;
@@ -156,7 +156,7 @@
                                         </th>
                                         <th style="width: 15%">Male Value</th>
                                         <th style="width: 15%">FeMale Value</th>
-                                        <th style="width: 15%">Children Value</th>
+                                        <th style="width: 15%">Price</th>
                                         <th style="width: 5%" class="text-right">Select</th>
                                     </tr>
                                 </thead>
@@ -183,10 +183,19 @@
                                     </div>
                                 </div>
                             </div>
+                        
+                        <script>
+                            function calPrice() {
+                                let rowElements = document.getElementsByTagName('tr');
+                                document.getElementById('price').value = '';
+                            }
+                           
+                        </script>
+                        
                         </div>
-                        <div class="col-sm-8 col-9 text-right m-b-20 addButton">
+<!--                        <div class="col-sm-8 col-9 text-right m-b-20 addButton">
                             <a id="addTest" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i>Create Examination</a>
-                        </div>
+                        </div>-->
                     </div>
                 </fieldset>                
             </div> 
@@ -213,7 +222,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-12">
                                     <label for="exampleFormControlTextarea1">Description</label>
-                                    <textarea style="display: inline-block !important" class="form-control" id="description" maxlength="255" name="description" rows="3"></textarea>
+                                    <textarea style="display: inline-block !important" class="form-control clss-description-area" id="description" maxlength="255" name="description" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -281,7 +290,6 @@
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/js/jquery.slimscroll.js"></script>
-    <script src="assets/js/select2.min.js"></script>
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
     <script src="assets/js/app.js"></script>
@@ -289,6 +297,53 @@
         
         window.onload = function () {
             var token = sessionStorage.getItem("key");
+            var ids = sessionStorage.getItem('listTestId');
+            if (ids !== null) {
+                var listTestId = ids.split(",");
+            }
+            
+            
+            
+            console.log(listTestId);
+            var listTestDouple = [];
+//            var id = 1;
+//            function getpackageId(id) {
+//            
+//            sessionStorage.setItem('packageId', id);
+//            
+//            }
+//            $.ajax({
+//                type: "GET",
+//                dataType: "json",
+//                contentType: "application/json; charset=UTF-8",
+//                headers: { Authorization: 'Bearer ' + token },
+//                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + 1,
+//                success: function (data) {
+//                    console.log('Data contains: '+data);
+//                    for (var i = 0; i < data.length; i++) {
+//                        let id = data[i].id.toString();
+//                        console.log(typeof (id));
+//                        for (var j = 0; j < listTestId.length; j++) {
+//                            console.log(listTestId[j]);
+//                            if (id === listTestId[j]) {
+//                                listTestDouple.push(j);
+//                            }
+//                        }
+//                    }
+//                    if (listTestDouple.length !== 0) {
+//                        let flag = true;
+//                        while (flag) {
+//                            if (confirm('Some test you choice have been in package, do you want to remove them?')) {
+//                                flag = false;
+//                            } else {
+//                            }
+//                        }
+//                    }
+//                },
+//                error: function (jqXHR, textStatus, errorThrown) {
+//                    console.log(' Error in processing! ' + textStatus);
+//                }
+//            });
             $.ajax({
                 type: "GET",
                 dataType: "json",
@@ -296,6 +351,7 @@
                 headers: {Authorization: 'Bearer ' + token},
                 url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/packages/packages",
                 success: function (data) {
+                    console.log(data);
                     allData = $('#patientTable').DataTable({
                         data: data,
                         columns: [
@@ -351,6 +407,7 @@
                                         dataShow.id = element.id;
                                         dataShow.name = element.name;
                                         dataShow.description = element.description;
+                                        dataShow.price = element.price;
                                         dataShow.maleIndex = '-';
                                         dataShow.femaleindex = '-';
                                         dataShow.childIndex = '-';
@@ -359,9 +416,7 @@
                                                 dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
                                             } else if (e.type === 'Female' || e.type === 'female') {
                                                 dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                            } else if (e.type === 'Child' || e.type === 'child') {
-                                                dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                            }
+                                            } 
                                         });
                                         mainData.push(dataShow);
                                     });
@@ -391,14 +446,7 @@
                                                 }
                                             },
                                             {
-                                                data: 'childIndex',
-                                                render: function (data, type, row, meta) {
-                                                    if ( row.childIndex === '-9999--9999') {
-                                                        return "Âm tính";
-                                                    }else{
-                                                        return row.childIndex;
-                                                    }
-                                                }
+                                                data: 'price'
                                             },
                                             {
                                                 data: 'id',
@@ -419,9 +467,10 @@
                         }
                     } else {
                         data.forEach(element => {
-                            var dataShow = new Object();
+                            var dataShow = new Object();                    //Bảng này đang load
                             dataShow.id = element.id;
                             dataShow.name = element.name;
+                            dataShow.price = element.price;
                             dataShow.description = element.description;
                             dataShow.maleIndex = '-';
                             dataShow.femaleindex = '-';
@@ -431,13 +480,11 @@
                                     dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
                                 } else if (e.type === 'Female') {
                                     dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                } else if (e.type === 'Child') {
-                                    dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                }
+                                } 
                             });
                             mainData.push(dataShow);
                         });
-                        table = $('#indexTable').DataTable({
+                        table = $('#indexTable').DataTable({               //Bảng này đang load
                             data: mainData,
                             columns: [
                                 {data: 'name'},
@@ -463,14 +510,8 @@
                                     }
                                 },
                                 {
-                                    data: 'childIndex',
-                                    render: function (data, type, row, meta) {
-                                        if ( row.childIndex === '-9999--9999') {
-                                            return "Âm tính";
-                                        }else{
-                                            return row.childIndex;
-                                        }
-                                    }
+                                    data: 'price',
+                                    
                                 },
                                 {
                                     data: 'id',
@@ -490,54 +531,7 @@
                 }
             })
         };
-        function getpackageId(id) {
-            var ids = sessionStorage.getItem('listTestId');
-            if (ids !== null) {
-                var listTestId = ids.split(",");
-            }
-            console.log(listTestId);
-            var listTestDouple = [];
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                contentType: "application/json; charset=UTF-8",
-                headers: { Authorization: 'Bearer ' + token },
-                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + id,
-                success: function (data) {
-                    console.log(data);
-                    for (var i = 0; i < data.length; i++) {
-                        let id = data[i].id.toString();
-                        console.log(typeof (id));
-                        for (var j = 0; j < listTestId.length; j++) {
-                            console.log(listTestId[j]);
-                            if (id === listTestId[j]) {
-                                listTestDouple.push(j);
-                            }
-                        }
-                    }
-                    if (listTestDouple.length !== 0) {
-                        let flag = true;
-                        while (flag) {
-                            if (confirm('Some test you choice have been in package, do you want to remove them?')) {
-                                flag = false;
-                            } else {
-                            }
-                        }
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(' Error in processing! ' + textStatus);
-                }
-            });
-            sessionStorage.setItem('packageId', id);
-            alertify.confirm("Do you want select other tests?",
-            function(){
-                alertify.success(window.location.href = "selectTestManual.jsp");
-                      },
-            function(){
-               alertify.error(window.location.href = "createExamination.jsp");
-                      }); 
-        }
+        
         
         $("#my-modal-add").on('shown.bs.modal', function (e) {
             $(document).ready(function () {
@@ -558,59 +552,64 @@
                 });
             });
             
-            $('#createExamination').click(function (event) {         
+            $('#createExamination').click(function (event) { 
+                var selected = $('#doctorName').find('option:selected').val();
                 var token = sessionStorage.getItem("key");
-                var description = checkNull($('#description').val());
-                var patientId = checkNull(sessionStorage.getItem('patientId'));
-                var doctorId = checkNull($('option:selected').val()).split("-")[0];
-                var doctorAccountId = checkNull($('option:selected').val()).split("-")[1];
+                var description = $('.clss-description-area').val();
+                var patientId = parseInt(checkNull(sessionStorage.getItem('patientId')));
+                var doctorId = parseInt(selected.split("-")[0]);
+                var doctorAccountId = parseInt(selected.split("-")[1]);
                 var idspk = [];
-                debugger
                 $('.checkbox-pk:checkbox').filter(':checked').each(function (e) {
-                    idspk.push($(this).data('id'));
+                    idspk.push(parseInt($(this).data('id')));
                 });
                 var idsitem = [];
                 $('.checkbox-item:checkbox').filter(':checked').each(function (e) {
-                    idsitem.push($(this).data('id'));
+                    idsitem.push(parseInt($(this).data('id')));
+                    
                 });
-                $.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    headers: { Authorization: 'Bearer ' + token },
-                    data: JSON.stringify({
-                        "description": description,
-                        "doctorId": doctorId,
-                        "packageId": idspk,
-                        "patientId": patientId,
-                        "testId": idsitem,
-                    }),
-                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
-                    complete: function (jqXHR) {
-                        debugger
-                        if (jqXHR.status === 200) {
-                            $.ajax({
-                            type: "POST",
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                            headers: {Authorization: 'Bearer ' + token},
-                            data: JSON.stringify({
-                                "accountId": doctorAccountId,
-                                "message": "You have a new patient"
-                            }),
-                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/notification",
-                            complete: function (jqXHR) {
-                                if (jqXHR.status === 200) {
+                if (description === null || description === "") {
+                    alert('Please entering description!')
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        headers: { Authorization: 'Bearer ' + token },
+                        data: JSON.stringify({
+                            "description": description,
+                            "doctorId": doctorId,
+                            "packageId": idspk,
+                            "patientId": patientId,
+                            "testId": idsitem,
+                        }),
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
+                        complete: function (jqXHR) {
+                            if (jqXHR.status === 200) {
+                                $.ajax({
+                                type: "POST",
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                headers: {Authorization: 'Bearer ' + token},
+                                data: JSON.stringify({
+                                    "accountId": doctorAccountId,
+                                    "message": "You have a new patient"
+                                }),
+                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/notification",
+                                complete: function (jqXHR) {
+                                    if (jqXHR.status === 200) {
 
-                                    alertify.alert('Create Examination Successfully!');
-                                     setTimeout(function(){
-                                         window.location.href = "receptionistPatients.jsp";
-                                 },1700);
+                                        alertify.alert('Create Examination Successfully!');
+                                         setTimeout(function(){
+                                             window.location.href = "receptionistPatients.jsp";
+                                     },1700);
 
-                                }
-                            }});
-                        }
-                    }});
+                                    }
+                                }});
+                            }
+                        }});
+                    }
             });
             function checkNull(data) {
                 if (data === null) {
@@ -640,16 +639,18 @@
                 $("#priceEdit").val(dataPackage[0].price);
                 $("#descriptionEdit").val(dataPackage[0].description);
             }
-            var html = "";
-            if (data.length > 0) {
-                html += '<table>';
-                html += '<tr><td>' + "Danh sách kết quả" + '</<td></tr>';
-                for (var i = 0; i < data.length; i++) {
-                    html = '<tr><td>' + data[i].name + '</<td></tr>'
-                }
-                html += '</table>';
-            }
-            $('.clss-result-data').html(html);
+            
+            //Chờ call api load package detail
+//            var html = "";
+//            if (data.length > 0) {
+//                html += '<table>';
+//                html += '<tr><td>' + "Danh sách kết quả" + '</<td></tr>';
+//                for (var i = 0; i < data.length; i++) {
+//                    html = '<tr><td>' + data[i].name + '</<td></tr>'
+//                }
+//                html += '</table>';
+//            }
+//            $('.clss-result-data').html(html);
         });
         
         var getObjectByValue = function (array, key, value) {
@@ -675,79 +676,7 @@
                 $("#id_CheckAll").prop('checked', false);
         };
 
-        $('.add-to-package').click(function (event) {
-            var ids = [];
-            var packageId = sessionStorage.getItem('packageId');
-            $('.checkbox-pk:checkbox').filter(':checked').each(function (e) {
-                ids.push({
-                    id: $(this).data('id'),
-                    testid: $(this).data('testid')
-                });
-            });
-            if (ids.length > 0) {
-                for (var i = 0; i < ids.length; i++) {
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        headers: {Authorization: 'Bearer ' + token},
-                        data: JSON.stringify({
-                             "id": ids[i].id,
-                             "packageId": packageId,
-                             "testId": data[i].testid
-                        }),
-                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-test",
-                        complete: function (jqXHR) {
-                            if (jqXHR.status === 200) {
-                                window.location.href = "add-TestToPackage.jsp";
-                            }else {  
-                                alert("Some component are faulty!");
-                            }
-                        }
-                    });
-                }                    
-            }
-        });
-   
-        $('#addTest').click(function (event) {
-            var listId = sessionStorage.getItem('listTestId');
-            var array = jQuery.makeArray(listId);
-            console.log('luc dau' + array);
-            var checkArray = [];
-            if (array.length !== 0) {
-                checkArray = array[0].toString().split(",");
-                console.log('......' + checkArray);
-            }
-            var checkboxTMP = document.getElementsByName('checkBox');
-            for (var i = 0; i < checkboxTMP.length; i++) {
-                console.log('bat dau lay du lieu');
-                if (checkboxTMP[i].checked === true) {
-                    console.log('du lieu dc select' + checkboxTMP[i].value);
-                    let flag = false;
-                    for (var j = 0; j < checkArray.length; j++) {
-                        console.log('check douple' + checkArray[j]);
-                        if (checkArray[j] === checkboxTMP[i].value) {
-                            flag = true;
-                            console.log("douple");
-                            break;
-                        }
-                    }
-                    if (!flag) {
-                        array.push(checkboxTMP[i].value);
-                    }
-                }
-            }
-            console.log('sau khi su li' + array);
-            sessionStorage.removeItem('listTestId');
-            sessionStorage.setItem('listTestId', array);
-            alertify.confirm("Do you want select other Packages test?",
-             function(){
-                 alertify.success(window.location.href = "selectTestPackage.jsp");
-                       },
-             function(){
-                alertify.error(window.location.href = "createExamination.jsp");
-                       });
-        });
+
     </script>
     
 </body>

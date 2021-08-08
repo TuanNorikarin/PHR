@@ -209,6 +209,9 @@
                     var idTest =  data.samplelst[0].testId;
                     var idFemale = data.samplelst[1].id;
                     var idChild = data.samplelst[2].id;
+                    
+//     
+                    
                $("#inputName").val(name);
                 var description = data.description;
                 console.log(description);
@@ -282,6 +285,8 @@
                     document.getElementById('messageChildMin').innerHTML = '';
                     $('#childMax').removeClass('error');
                     document.getElementById('messageChildMax').innerHTML = '';
+                    
+                    
                     var regexp = /^-?\d{1,4}(\.\d{0,2})?$/;
                     var name = $("input[name='name']").val(); //lấy giá trị trong input user
                     var description = $("textarea[name='description']").val();
