@@ -56,23 +56,7 @@
                 <div class="col-sm-4 col-3">
                     <h4 class="page-title">Test Package</h4>
                 </div>
-                <!--                <div class="col-sm-8 col-9 text-right m-b-20">
-                                <a href="add-testPackage.jsp" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Test Package</a>
-                            </div>-->
             </div>
-            <!--            <form role="form" id="form-buscar">
-                        <div class="form-group">
-                            <div class="input-group ">
-                                <input id="1" class="custom-seach " type="text" name="search" placeholder="Search..." required/>
-                                <span class="input-group-btn">
-                                    &nbsp;
-                                    <button class="btn btn-success custom-btn " type="submit">
-                                        <i class="fa fa-search"></i> Search
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                    </form>-->
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">

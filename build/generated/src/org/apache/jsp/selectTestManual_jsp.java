@@ -116,6 +116,9 @@ public final class selectTestManual_jsp extends org.apache.jasper.runtime.HttpJs
       out.write("            div.ajs-footer{\r\n");
       out.write("                display: block;\r\n");
       out.write("            }\r\n");
+      out.write("            .divPrice{\r\n");
+      out.write("                float: right;\r\n");
+      out.write("            }\r\n");
       out.write("        </style>\r\n");
       out.write("    </head>\r\n");
       out.write("\r\n");
@@ -423,6 +426,13 @@ public final class selectTestManual_jsp extends org.apache.jasper.runtime.HttpJs
       out.write("\r\n");
       out.write("                            </tbody>\r\n");
       out.write("                        </table>\r\n");
+      out.write("                        <div class=\"col-sm-3 divPrice\">\r\n");
+      out.write("                                <div class=\"form-group\">\r\n");
+      out.write("                                    <label><span class=\"text-danger\">Price </span></label>\r\n");
+      out.write("                                    <input class=\"form-control inputValue\" id='price' name=\"price\" type=\"number\" step=\".01\" value=\"0\">\r\n");
+      out.write("                                    <span id='messageChildMin'></span>\r\n");
+      out.write("                                </div>\r\n");
+      out.write("                            </div>\r\n");
       out.write("                    </div>\r\n");
       out.write("                </div>\r\n");
       out.write("                <div class=\"col-sm-8 col-9 text-right m-b-20 addButton\">\r\n");

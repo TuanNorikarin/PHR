@@ -195,24 +195,20 @@
                 var token = sessionStorage.getItem("key");
                 var dataId = JSON.parse(localStorage.getItem("dataTestID"));
                 console.log(dataId + " ID");
-                
-                
-//                var name = data.name;
-//                console.log(name);
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        contentType: "application/json",
-                        headers: {
-                            Authorization: 'Bearer ' + token},
-                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index/" +dataId,
-                        success: function (data) { 
-                        var name = data.name;    
-                        var idGroup = data.id;
-                        var idMale =  data.samplelst[0].id;
-                        var idTest =  data.samplelst[0].testId;
-                        var idFemale = data.samplelst[1].id;
-                        var idChild = data.samplelst[2].id;
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json",
+                    headers: {
+                        Authorization: 'Bearer ' + token},
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index/" +dataId,
+                    success: function (data) { 
+                    var name = data.name;    
+                    var idGroup = data.id;
+                    var idMale =  data.samplelst[0].id;
+                    var idTest =  data.samplelst[0].testId;
+                    var idFemale = data.samplelst[1].id;
+                    var idChild = data.samplelst[2].id;
                $("#inputName").val(name);
                 var description = data.description;
                 console.log(description);

@@ -879,7 +879,7 @@
                             }),
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-index",
                             complete: function (jqXHR) {
-                                debugger
+//                                debugger
                                 console.log(jqXHR.status);
                                 if (jqXHR.status === 201 || jqXHR.status === 200) {
 //                                    alert("Create Successfully!");
@@ -1006,7 +1006,7 @@
                                 },
                                 {   data: 'id',
                                     render: function (data, type, row, meta) {
-                                        return '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" onclick="getTestId('+data+')" href = "edit-testIndex.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  </div></div></td>'
+                                        return '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" onclick="getTestId('+data+')"  data-toggle="modal" data-target="#my-modal-Edit"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  </div></div></td>'
                                     }
                                 }
                             ],
@@ -1037,7 +1037,8 @@
                         idMale =  data.samplelst[0].id;
                         idTest =  data.samplelst[0].testId;
                         idFemale = data.samplelst[1].id;
-                        idChild = data.samplelst[2].id;
+                        idChildMale = data.samplelst[2].id;
+                        idChildFemale = data.samplelst[3].id;
                         $("#inputNameEdit").val(name);
                         var description = data.description;
                         console.log(description);
@@ -1459,7 +1460,7 @@
                     $('#childMaxFemaleEdit').addClass('error');
                     document.getElementById('messageChildMaxFemaleEdit').style.color = 'red';
                     document.getElementById('messageChildMaxFemaleEdit').innerHTML = 'Value max less than value min ✘';
-                } else {                         
+                } else {  
                     $.ajax({
                         type: "PUT",
                         dataType: "json",
@@ -1489,16 +1490,20 @@
                                 },
                                 {
                                     "description": "",
+                                    "id": idChildMale,
                                     "indexValueMax": childMaxMale,
                                     "indexValueMin": childMinMale,
+                                    "testId": idTest,
                                     "type": "Child-Male"
                                   },
                                 {
                                     "description": "",
+                                    "id": idChildFemale,
                                     "indexValueMax": childMaxFemale,
                                     "indexValueMin": childMinFemale,
+                                    "testId": idTest,
                                     "type": "Child-Female"
-                                }   
+                                }
                             ],
                             "status": "enable"
 
