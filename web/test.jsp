@@ -30,9 +30,7 @@
             #patientTable {
                 width: 100% !important;
             }
-            #description{
-                display: none;    
-            }
+            
             div.table-responsive{
              table-layout: fixed;   
     width: 100% !important;

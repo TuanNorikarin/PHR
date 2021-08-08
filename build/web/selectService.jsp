@@ -207,7 +207,7 @@
                 <div class="modal-content">
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Test Package</h4>
+                        <h4 class="modal-title">Create Examination</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <!-- Modal body -->
@@ -296,7 +296,61 @@
     <script type="text/javascript">
         
         window.onload = function () {
+<<<<<<< Updated upstream
             var token = sessionStorage.getItem("key");         
+=======
+            var token = sessionStorage.getItem("key");
+            var ids = sessionStorage.getItem('listTestId');
+            if (ids !== null) {
+                var listTestId = ids.split(",");
+            }
+            
+            
+            
+            console.log(listTestId);
+            var listTestDouple = [];
+            
+//            var id = 1;
+//            function getpackageId(id) {
+//            
+//            sessionStorage.setItem('packageId', id);
+//            
+//            }
+//            $.ajax({
+//                type: "GET",
+//                dataType: "json",
+//                contentType: "application/json; charset=UTF-8",
+//                headers: { Authorization: 'Bearer ' + token },
+//                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + 1,
+//                success: function (data) {
+//                    console.log('Data contains: '+data);
+//                    for (var i = 0; i < data.length; i++) {
+//                        let id = data[i].id.toString();
+//                        console.log(typeof (id));
+//                        for (var j = 0; j < listTestId.length; j++) {
+//                            console.log(listTestId[j]);
+//                            if (id === listTestId[j]) {
+//                                listTestDouple.push(j);
+//                            }
+//                        }
+//                    }
+//                    if (listTestDouple.length !== 0) {
+//                        let flag = true;
+//                        while (flag) {
+//                            if (confirm('Some test you choice have been in package, do you want to remove them?')) {
+//                                flag = false;
+//                            } else {
+//                            }
+//                        }
+//                    }
+//                },
+//                error: function (jqXHR, textStatus, errorThrown) {
+//                    console.log(' Error in processing! ' + textStatus);
+//                }
+//            });
+
+
+>>>>>>> Stashed changes
             $.ajax({
                 type: "GET",
                 dataType: "json",

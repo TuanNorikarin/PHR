@@ -106,7 +106,7 @@
                     <h3 id="packageName" class="blog-title"></h3>
                     <span id='messageName'></span>
                     <div id="hiddenWall" class="col-10 testPackage table-responsive">                        
-                        <table id="testPackageTable" class="table  table-bordered datatable  mb-0">
+                        <table id="testPackageTable" class="table table-bordered datatable mb-0">
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>

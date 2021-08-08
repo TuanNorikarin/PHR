@@ -97,6 +97,18 @@
             #namePackage {
                 color: salmon;
             }
+            button.viewDiseases{
+                position: relative;
+                left: 980px;
+                top: 90px;
+                z-index: 10;
+            }
+            table#diseasesTable{
+                width: 600px !important;
+            }
+            div.modal-content{
+                width: 630px;
+            }
         </style>
 </head>
 
@@ -104,6 +116,58 @@
 <%@include file="components/doctorSidebar.html" %>
 
         <div class="page-wrapper">
+                      
+        <div class="">
+
+                <!-- Button to Open the Modal -->
+              <button type="button" class="btn btn-primary btn-lg viewDiseases" data-toggle="modal" data-target="#myModalDisease">
+              <i class="fa fa-eye"></i> View Patient's Diseases
+              </button>
+
+
+                <!-- The Modal -->
+              <div class="modal" id="myModalDisease">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Patient's Diseases</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table id="diseasesTable" class="table table-bordered datatable mb-0">
+
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th id='description' >Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr> 
+                                    <td id="name"></td>
+                                    <td id="description"></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          </div>
+            
+            
+            
             <div class="content">
                 <div class="row">
                     <div class="col-md-12">
@@ -231,19 +295,48 @@
                         $.ajax({
                             type: "GET",
                             dataType: "json",
-                            contentType: "application/json",
-                                headers: {
-                                Authorization: 'Bearer ' + token},
-                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/diseases/diseases/" + 7,
-                             success: function (data) { 
-                                 console.log(data);
-                                 var a = JSON.stringify(data);
-                                 var b = JSON.parse(a);
-                                 var name = data.name;
-                                 console.log(a);
-//                                 console.log(b);
+                            contentType: "application/json; charset=UTF-8",
+                            headers: {
+                                 Authorization: 'Bearer ' + token
+                            },
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/diseases/diseases/" +patientID,
+                            success: function (data) {
+                                var mainData = [];
+                                console.log(data);
+                                data.forEach(element => {
+                                    var dataShow = new Object();
+                                    dataShow.name = element.name;
+                                    dataShow.description = element.description;
 
-                        }});
+                                    mainData.push(dataShow);
+                                });
+                                console.log(mainData);
+                                table = $('#diseasesTable').DataTable({
+                                    data: mainData,
+                                    columns: [
+                                        { data: 'name' },
+                                        {
+                                            data: 'description',"width": "70%",
+                                        },
+                                        
+                                       
+                                    ],
+                                    "bDestroy": true,
+                                    "bFilter": false,
+                                    "bPaginate": false,
+                                    "bInfo": false,
+                                    "aaSorting": [],
+                                    "bSort": false
+                                   
+
+                                });
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(' Error in processing! ' + textStatus);
+                            }
+
+                        })
                         
                         $.ajax({
                             type: "GET",
