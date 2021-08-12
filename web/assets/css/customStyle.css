@@ -245,3 +245,9 @@ div.card-box.profile-header{
             div.ajs-footer{
                 display: none;
             }
+            
+            
+ /*====================== Modal Popup =================*/ 
+            .modal-backdrop{
+                background: #7f7f7f;
+            }

@@ -33,7 +33,15 @@
             
             div.table-responsive{
              table-layout: fixed;   
-    width: 100% !important;
+             width: 100% !important;
+            }
+            
+            textarea#description.form-control, textarea#descriptionEdit.form-control{
+                height: 140px;
+            }
+            
+            .modal-backdrop{
+                background: #7f7f7f;
             }
             
         </style>
@@ -105,11 +113,11 @@
                                         <input class="form-control" id='inputName' name="name" type="text" >
                                         <span id='messageName'></span>
                                     </div>
-                                     <div class="col-sm-6">
+<!--                                     <div class="col-sm-6">
                                         <label><span class="text-danger">Price </span></label>
                                         <input class="form-control inputValue" id='price' name="price" type="number" step=".01" value="0">
                                         <span id='messageChildMin'></span>
-                                    </div>                                    
+                                    </div>                                    -->
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-12">
@@ -149,11 +157,11 @@
                                         <input class="form-control" id='inputNameEdit' name="nameEdit" type="text" >
                                         <span id='messageNameEdit'></span>
                                     </div>
-                                     <div class="col-sm-6">
+<!--                                     <div class="col-sm-6">
                                         <label><span class="text-danger">Price </span></label>
                                         <input class="form-control inputValue" id='priceEdit' name="priceEdit" type="number" step=".01" value="0">
                                         <span id='messageChildMinEdit'></span>
-                                    </div>                                    
+                                    </div>                                    -->
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-12">
@@ -275,6 +283,7 @@
             });
             
             $("#my-modal-Edit").on('shown.bs.modal', function (e) {
+//                $('.modal-backdrop').css('background', '#7f7f7f');
                 var token = sessionStorage.getItem("key");
                 var testName = localStorage.getItem("testName");
                 var allDataPackage = JSON.parse(localStorage.getItem("allDataPackage"));

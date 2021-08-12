@@ -34,7 +34,7 @@
             display: inline-block;
             width: 90px;
             height: 34px;
-            left: 700px;
+            left: 58%;
           }
             h4.busyLabel{
               position: relative;

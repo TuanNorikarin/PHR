@@ -99,7 +99,7 @@
             }
             button.viewDiseases{
                 position: relative;
-                left: 980px;
+                left: 77%;
                 top: 90px;
                 z-index: 10;
             }
