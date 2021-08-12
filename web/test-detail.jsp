@@ -129,7 +129,7 @@
                         <div class="col-sm-3 divPrice">
                             <div class="form-group">
                                 <label><span class="text-danger">Price </span></label>
-                                <input class="form-control inputValue clss-input-price" id='price' name="price" type="number" step=".01" value="0">
+                                <input class="form-control inputValue clss-input-price" id='price' name="price" type="number" step=".01" value="0" readonly>
                                 <span id='messageChildMin'></span>
                             </div>
                         </div>                        

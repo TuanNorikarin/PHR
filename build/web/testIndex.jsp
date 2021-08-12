@@ -40,6 +40,10 @@
                 top: 80px;
                 z-index: 10;
             }
+            button.btn.btn-primary.addTestButton{
+                position: relative; 
+                left: 250px;
+            }
         </style>
     </head>
 
@@ -62,7 +66,7 @@
                      </select>
                     </div>
                 <div class="col-sm-4 col-3 text-right m-b-20">
-                    <buttom class="btn btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#my-modal-add"><i class="fa fa-plus"></i> Add Test Index</buttom>
+                    <button class="btn btn-primary addTestButton" data-toggle="modal" data-target="#my-modal-add"><i class="fa fa-plus"></i> Add Test Index</button>
                 </div>
                 
                 <!--<div class="col-sm-4 col-3 text-right m-b-20">
@@ -77,12 +81,12 @@
                     <div class="">
                         
 
-                        <table id="indexTable" class="table table-border table-striped custom-table datatable mb-0">
+                        <table id="indexTable" class="table table-bordered datatable mb-0">
 
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>
-                                    <!--<th id='description' style="width: 30%">Description</th>-->
+                                    <th id='description' style="width: 30%">Description</th>
                                     <th style="width: 15%">Male Value</th>
                                     <th style="width: 15%">FeMale Value</th>
                                     <th style="width: 15%">Price</th>
@@ -95,7 +99,7 @@
                                 <tr> 
 
                                     <td id="name"></td>
-                                    <!--<td id="description"></td>-->
+                                    <td id="description"></td>
                                     <td id="maleVal"></td>
                                     <td id="femaleVal"></td>
                                     <td id="priceVal"></td>
@@ -399,6 +403,9 @@
                             data: mainData,
                             columns: [
                                 { data: 'name' },
+                                {
+                                    data: 'description'
+                                },
 
                                 {
                                     data: 'maleIndex',
@@ -998,6 +1005,9 @@
                             data: mainData,
                             columns: [
                                 { data: 'name' },
+                                {
+                                    data: 'description'
+                                },
 
                                 {
                                     data: 'maleIndex',

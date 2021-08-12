@@ -173,6 +173,7 @@
                             ],
                             "bDestroy": true,
                             "bFilter": true,
+                            "aaSorting": [],
 //                            "createdRow": function (row, data, dataIndex) {
 //                                $('td:eq(1)', row).css('display', 'none');
 //                            }

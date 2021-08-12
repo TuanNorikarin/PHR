@@ -27,6 +27,98 @@
             div.dropdown.dropdown-action{
                 float: right;
             }
+            
+            /*------ Switch Button ---------*/
+            .switch {
+            position: relative;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            left: 700px;
+          }
+            h4.busyLabel{
+              position: relative;
+              right: 52px;
+              top: 7px;
+              color: goldenrod;
+          }
+
+          .switch input {display:none;}
+
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ca2222;
+            -webkit-transition: .4s;
+            transition: .4s;
+          }
+
+          .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+          }
+
+          input:checked + .slider {
+            background-color: #2ab934;
+          }
+
+          input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+          }
+
+          input:checked + .slider:before {
+            -webkit-transform: translateX(55px);
+            -ms-transform: translateX(55px);
+            transform: translateX(55px);
+          }
+
+          /*------ ADDED CSS ---------*/
+          .on
+          {
+            display: none;
+          }
+
+          .on, .off
+          {
+            color: white;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            font-size: 10px;
+            font-family: Verdana, sans-serif;
+          }
+
+          input:checked+ .slider .on
+          {display: block;}
+
+          input:checked + .slider .off
+          {display: none;}
+
+          /*--------- END --------*/
+
+          /* Rounded sliders */
+          .slider.round {
+            border-radius: 34px;
+          }
+
+          .slider.round:before {
+            border-radius: 50%;}
+          
+          
+            
+            
         </style>
     </head>
 
@@ -39,23 +131,21 @@
                 <div class="col-sm-4 col-3">
                     <h4 class="page-title">Waiting Requests</h4>
                 </div>
-                <!--                <div class="col-sm-8 col-9 text-right m-b-20">
-                                    <a href="add-testPackage.jsp" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Test Package</a>
-                                </div>-->
-            </div>
-            <!--            <form role="form" id="form-buscar">
-                            <div class="form-group">
-                                <div class="input-group ">
-                                    <input id="1" class="custom-seach " type="text" name="search" placeholder="Search..." required/>
-                                    <span class="input-group-btn">
-                                        &nbsp;
-                                        <button class="btn btn-success custom-btn " type="submit">
-                                            <i class="fa fa-search"></i> Search
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>-->
+                <!-----------------Busy Button-=========================->-->
+                
+                <label class="switch">
+                <h4 class="busyLabel">Busy</h4>
+                <input type="checkbox" id="togBtn">
+                <div class="slider round"><!--
+                 <!--ADDED HTML -->
+                 <span class="on">ON</span>
+                 <span class="off">OFF</span>
+                 <!--END-->
+                </div>
+               </label>
+                
+                </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="">
@@ -117,6 +207,59 @@
                 var id = localStorage.getItem("userId");
                 var arrayTestRequest = [];
                 var arrayTestRequestTotal = [];
+                
+// ==============================Busy Function===============================================
+                
+                $(function(){
+                var test = sessionStorage.input === 'true'? true: false;
+                $('#togBtn').prop('checked', test || false);
+                });
+
+                $('#togBtn').on('change', function() {
+                    sessionStorage.input = $(this).is(':checked');
+                    console.log($(this).is(':checked'));
+                });
+
+//                $(document).ready(function() {
+                //set initial state.
+                $('#togBtn').val(this.checked);
+
+                $('#togBtn').change(function() {
+                    if($(this).is(":checked")) {
+//                    
+                            $.ajax({
+                            type: "PUT",
+                            dataType: "json",
+                            contentType: "application/json; charset=UTF-8",
+                            headers: {Authorization: 'Bearer ' + token},
+        //                    
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/false",
+                            success: function (data) {
+
+                                alertify.alert('You will NOT receive examination request any more!');
+
+                            }
+                       });         
+                    }else if($(this).not(':checked')){
+                            
+                            $.ajax({
+                            type: "PUT",
+                            dataType: "json",
+                            contentType: "application/json; charset=UTF-8",
+                            headers: {Authorization: 'Bearer ' + token},
+        //                    
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/true",
+                            success: function (data) {
+                            alertify.alert('You will receive examination request');
+                            }
+                        });
+
+                        }
+                $('#togBtn').val(this.checked);        
+                });
+            
+//        });
+//      =======================================Get Examination================================
                 $.ajax({
                     type: "GET",
                     dataType: "json",

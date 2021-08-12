@@ -33,7 +33,12 @@
             #indexTable {
                 width: 100% !important;
             }
-            
+            div.col-sm-3.col-3{
+                position: relative; 
+                
+                top: 80px;
+                z-index: 10;
+            }
 
         </style>
     </head>
@@ -47,24 +52,29 @@
                 <div class="col-sm-4 col-3">
                     <h4 class="page-title">All Test Indexes</h4>
                 </div>
-                <!--                <div class="col-sm-8 col-9 text-right m-b-20">
-                                    <a href="add-testIndex.jsp" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Test Index</a>
-                                </div>-->
+                <div class="col-sm-3 col-3">
+                     <label><h4>Type</h4></label>
+                     <select>
+                         <option value="adult">Adult</option>
+                         <option value="children">Children</option>
+                         
+                     </select>
+                    </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="">
 
-                        <table id="indexTable" class="table table-border table-striped custom-table datatable mb-0">
+                        <table id="indexTable" class="table table-bordered datatable mb-0">
 
                             <thead>
                                 <tr>
                                     <th style="width: 20%">Name</th>
-                                    <th id='description' style="width: 20%; display: block !important;">Description</th>
+                                    <th>Description</th>
                                     <th style="width: 20%">Male Value</th>
                                     <th style="width: 20%">Female Value</th>
-                                    <th style="width: 20%">Children Value</th>
+                                    <th style="width: 20%">Price</th>
                                     <!--<th style="width: 5%" class="text-right">Action</th>-->
                                 </tr>
                             </thead>
@@ -77,7 +87,7 @@
                                     <td id="description"></td>
                                     <td id="maleVal"></td>
                                     <td id="femaleVal"></td>
-                                    <td id="childVal"></td>
+                                    <td id="priceVal"></td>
                                 </tr>
 
 
@@ -108,8 +118,6 @@
                 $("div").removeClass("loading");
             });
 
-
-
                         window.onload = function () {
                         var token = sessionStorage.getItem("key");
                         var testName = localStorage.getItem("testName");
@@ -128,7 +136,7 @@
                                     var dataShow = new Object();
                                     dataShow.name = element.name;
                                     dataShow.description = element.description;
-
+                                    dataShow.price = element.price;
                                     dataShow.maleIndex = '-';
                                     dataShow.femaleindex = '-';
                                     dataShow.childIndex = '-'
@@ -138,11 +146,7 @@
                                             dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
                                         } else if (e.type === 'Female' || e.type === 'female') {
                                             dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
-                                        } else if (e.type === 'Child' || e.type === 'child') {
-                                            dataShow.childIndex = e.indexValueMin + '-' + e.indexValueMax;
-                                        }else if (e.indexValueMin === "-9999" || e.indexValueMax === "-9999"){
-                                            datashow.maleIndex === "Âm tính";
-                                        }
+                                        } 
                                     });
                                     mainData.push(dataShow);
                                 });
@@ -175,13 +179,9 @@
                                             }
                                         },
                                         {
-                                            data: 'childIndex',
-                                            render: function (data, type, row, meta) {
-                                                if ( row.childIndex === '-9999--9999') {
-                                                    return "Âm tính";
-                                                }else{
-                                                    return row.childIndex;
-                                                }
+                                            data: 'price',
+                                            render: function (data, type, row, meta) {                                                
+                                                return row.price;
                                             }
                                         },
                                     ],
@@ -197,6 +197,128 @@
                             }
 
                         })
+                        
+                $('select').on('change', function() {
+                var _type = $(this).val();
+                var token = sessionStorage.getItem("key");
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    headers: {
+                        Authorization: 'Bearer ' + token},
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/tests/test-indexs",
+                    success: function (data) {
+                        var mainData = [];
+                        console.log(data);
+                        data.forEach(element => {                           
+
+                            var dataShow = new Object();
+                            dataShow.id = element.id;
+//                          dataShow.testId = element.samplelst[0];
+                            dataShow.name = element.name;
+                            dataShow.description = element.description;
+
+                            dataShow.maleIndex = '-';
+                            dataShow.femaleindex = '-';
+                            dataShow.price = element.price;
+                            element.samplelst.forEach(e => {
+                                if (_type === "adult") {
+                                    if (e.type === 'Male' || e.type === 'male') {
+                                        dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } else if (e.type === 'Female' || e.type === 'female') {
+                                        dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                    }
+                                }
+                                else {
+                                    if (e.type === 'Child-Male') {
+                                        dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                    }else if (e.type === 'Child-Female') {
+                                        dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                    }
+                                }
+                            });
+                            mainData.push(dataShow);
+                        });
+                        
+                        localStorage.setItem("allTestIndex", JSON.stringify(mainData));
+                        var a = JSON.stringify(data);
+                        var b = JSON.parse(a);
+                        
+                        $('#indexTable tbody').on('click', 'td', function ()
+                        {
+                            var tr = $(this).closest("tr");
+                            var rowindex = tr.index();
+                            table = document.getElementById("indexTable");
+                            tr = table.getElementsByTagName("tr");
+                            td = tr[rowindex + 1].getElementsByTagName("td")[0];
+                            txtValue = td.textContent;
+                            
+                            $.each(mainData, function (index, value,) {
+                                if (value[0] === txtValue) {
+                                    localStorage.setItem("dataTest", value);
+                                }
+                            });
+                            $.each(mainData, function (index, value) {
+                                console.log(value);
+                                if (value[0] === txtValue) {
+                                    localStorage.setItem("dataTestId", value);
+                                }
+                            });
+
+                        }
+                        );
+                        $('td').click(function () {
+                            var row_index = $(this).parent().index();
+
+                        });
+                        $('#indexTable').DataTable({
+                            data: mainData,
+                            columns: [
+                                { data: 'name' },
+                                {
+                                    data: 'description'
+                                },
+
+                                {
+                                    data: 'maleIndex',
+                                    render: function (data, type, row, meta) {
+                                        if ( row.maleIndex === '-9999--9999') {
+                                            return "Âm tính";
+                                        }else{
+                                            return row.maleIndex;
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'femaleindex',
+                                    render: function (data, type, row, meta) {
+                                        if ( row.femaleindex === '-9999--9999') {
+                                            return "Âm tính";
+                                        }else{
+                                            return row.femaleindex;
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'price',
+                                    render: function (data, type, row, meta) {                                                
+                                        return row.price;
+                                    }
+                                },
+                                
+                            ],
+                            "bDestroy": true,
+                            "bFilter": true,
+
+                        });
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(' Error in processing! ' + textStatus);
+                    }
+                })
+            });
             };
 
 

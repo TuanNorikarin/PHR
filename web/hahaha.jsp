@@ -114,6 +114,63 @@
                     </div>
                 </div>
                 <fieldset>
+                            <div class="">
+
+                <!-- View Package Detail Popup -->
+             
+                <!-- The Modal -->
+              <div class="modal" id="myModalPackageDetail">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Package Detail</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table id="packageDetailTable" class="table table-bordered datatable mb-0">
+
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Male</th>
+                                    <th>Female</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr> 
+                                    <td id="name"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-sm-3 divPrice">
+                            <div class="form-group">
+                                <label><span class="text-danger">Price </span></label>
+                                <input class="form-control inputValue clss-input-price" id='price' name="price" type="number" step=".01" value="0">
+                                <span id='messageChildMin'></span>
+                            </div>
+                        </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          </div>
+                    
+                    
                     <legend><h2>Test Package</h2></legend>
                     <div class="form-group">
                         <div class="col-md-12">
@@ -123,7 +180,7 @@
                                         <tr>
                                             <th style="width: 25%">Name</th>
                                             <th style="width: 40%">Description</th>
-                                            <th style="width: 25%">Price</th>
+                                            <!--<th style="width: 25%">Price</th>-->
                                             <th style="width: 15%" class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -131,7 +188,7 @@
                                         <tr>
                                             <td id="name"></td>
                                             <td id="description"></td>
-                                            <td id="price"></td>
+                                            <!--<td id="price"></td>-->
                                             <td>
                                                 <button class="selectPackage"> <a> Select</a> </button>
                                             </td>
@@ -296,13 +353,12 @@
     <script type="text/javascript">
         
         window.onload = function () {
+
             var token = sessionStorage.getItem("key");
             var ids = sessionStorage.getItem('listTestId');
             if (ids !== null) {
                 var listTestId = ids.split(",");
             }
-            
-            
             
             console.log(listTestId);
             var listTestDouple = [];
@@ -360,11 +416,11 @@
                         columns: [
                             {data: 'name'},
                             {data: 'description'},
-                            {data: 'price'},
+//                            {data: 'price'},
                             {
                                 data: 'id',
                                 "render": function (data, type, row, meta) {
-                                    return '<td><div style="display: inline"><button type="button" data-id=' + row.id + ' data-toggle="modal" data-target="#my-modal-Edit" class="btn btn-primary"style="padding-right: 5px">Detail</button>&nbsp &nbsp<input type="checkbox" onchange = "CheckSelectAll(this)" data-id=' + row.id + ' class = "icheck checkbox-pk" /></div></td>'
+                                    return '<td><div style="display: inline"><button type="button" data-id=' + row.id + ' data-toggle="modal" data-target="#myModalPackageDetail" class="btn btn-primary"style="padding-right: 5px"><i class="fa fa-eye"></i> &nbsp;Detail</button>&nbsp &nbsp<input type="checkbox" onchange = "CheckSelectAll(this)" data-id=' + row.id + ' class = "icheck checkbox-pk" /></div></td>'
                                     //return '<td><div style="display: inline"><button type="button" data-id=' + row.id + ' data-toggle="modal" data-target="#my-modal-Edit" class="btn btn-primary"style="padding-right: 5px">Detail</button>&nbsp &nbsp<button type="button" onclick="getpackageId(' + data + ')" class="btn btn-primary">Select</button></div></td>'
                                 }
                             }
@@ -536,7 +592,9 @@
         };
         
         
-        $("#my-modal-add").on('shown.bs.modal', function (e) {
+        $("#my-modal-add").on('shown.bs.modal', function (e) {    
+            var token = sessionStorage.getItem("key");        
+            var itemSave = [];
             $(document).ready(function () {
                 var cliId = sessionStorage.getItem("clinicID");
                 $.ajax({
@@ -554,23 +612,48 @@
                     }
                 });
             });
+            var idsitempk = [];
+            var idsitem = [];
+            $('.checkbox-item:checkbox').filter(':checked').each(function (e) {
+                idsitem.push(parseInt($(this).data('id')));
+                itemSave.push(parseInt($(this).data('id')));
+            });
+            var idspk = [];
+            $('.checkbox-pk:checkbox').filter(':checked').each(function (e) {
+                idspk.push(parseInt($(this).data('id')));
+            });
+            if (idspk.length > 0) {
+                for (var i = 0; i < idspk.length; i++) {
+                    var _id = idspk[i];
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        contentType: "application/json; charset=UTF-8",
+                        headers: { Authorization: 'Bearer ' + token },
+                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + _id,
+                        success: function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                itemSave.push(data[i].id);
+                            }                            
+                            if (itemSave .length > 0) {
+                                itemSave = itemSave.filter(function (value, index, array) { 
+                                    return array.indexOf(value) === index;
+                                });
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(' Error in processing! ' + textStatus);
+                        }
+                    });
+                }
+            }
             
             $('#createExamination').click(function (event) { 
                 var selected = $('#doctorName').find('option:selected').val();
-                var token = sessionStorage.getItem("key");
                 var description = $('.clss-description-area').val();
                 var patientId = parseInt(checkNull(sessionStorage.getItem('patientId')));
                 var doctorId = parseInt(selected.split("-")[0]);
-                var doctorAccountId = parseInt(selected.split("-")[1]);
-                var idspk = [];
-                $('.checkbox-pk:checkbox').filter(':checked').each(function (e) {
-                    idspk.push(parseInt($(this).data('id')));
-                });
-                var idsitem = [];
-                $('.checkbox-item:checkbox').filter(':checked').each(function (e) {
-                    idsitem.push(parseInt($(this).data('id')));
-                    
-                });
+                var doctorAccountId = parseInt(selected.split("-")[1]);                
                 if (description === null || description === "") {
                     alert('Please entering description!')
                 }
@@ -583,12 +666,13 @@
                         data: JSON.stringify({
                             "description": description,
                             "doctorId": doctorId,
-                            "packageId": idspk,
+                            "packageId": idsitempk,
                             "patientId": patientId,
-                            "testId": idsitem,
+                            "testId": itemSave,
                         }),
                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
                         complete: function (jqXHR) {
+                            debugger
                             if (jqXHR.status === 200) {
                                 $.ajax({
                                 type: "POST",
@@ -632,16 +716,104 @@
                 return result;
             }            
         });
-        $("#my-modal-Edit").on('shown.bs.modal', function (e) {
+        $("#myModalPackageDetail").on('shown.bs.modal', function (e) {
             var id = $(e.relatedTarget).data('id');
             var allDataPackage = JSON.parse(localStorage.getItem("allDataPackage"));
             var dataPackage = getObjectByValue(allDataPackage, "id", id);
+            console.log(id);
+            var _totalPrice = 0;
             //For Edit test package
-            if (dataPackage.length > 0) {
-                $("#inputNameEdit").val(dataPackage[0].name);
-                $("#priceEdit").val(dataPackage[0].price);
-                $("#descriptionEdit").val(dataPackage[0].description);
-            }
+                 $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    headers: { Authorization: 'Bearer ' + token},
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + id,
+                    success: function (data) {
+                        var a = JSON.stringify(data);
+                        var b = JSON.parse(a);
+                        var mainData = [];
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            contentType: "application/json; charset=UTF-8",
+                            headers: {
+                                Authorization: 'Bearer ' + token},
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" +id,
+                            success: function (data) {
+                            console.log(data);
+                            data.forEach(element => {
+                                var dataShow = new Object();
+                                dataShow.name = element.name;
+                                dataShow.price = element.price;
+                                dataShow.description = element.description;
+                                dataShow.maleIndex = '-';
+                                dataShow.femaleindex = '-';
+                                dataShow.childIndex = '-';                                    
+                                element.samplelst.forEach(e => {
+                                    if (e.type === 'Male' || e.type === 'male') {
+                                        dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } else if (e.type === 'Female' || e.type === 'female') {
+                                        dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } 
+                                });
+                                _totalPrice = _totalPrice + parseFloat(element.price);
+                                mainData.push(dataShow);
+                            });
+                            $('.clss-input-price').val(_totalPrice).trigger('change');
+                            
+//                                $('#testPackageTable').append('<caption style="caption-side: top">' + dataPackage.name + '</caption>');
+                            $('#packageDetailTable').DataTable({                                    
+                            data: mainData,
+                            columns: [
+                                { data: 'name',},
+                                {
+                                    data: 'maleIndex',
+                                    render: function (data, type, row, meta) {
+                                        if ( row.maleIndex === '-9999--9999') {
+                                            return "Âm tính";
+                                        }else{
+                                            return row.maleIndex;
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'femaleindex',
+                                    render: function (data, type, row, meta) {
+                                        if ( row.femaleindex === '-9999--9999') {
+                                            return "Âm tính";
+                                        }else{
+                                            return row.femaleindex;
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'price'
+                                   
+                                },
+                                
+                            ],
+                            "bDestroy": true,
+                            "bFilter": false,
+                            "aaSorting": [],
+                            "bPaginate": false,
+                            "bSort": false,
+                            "bInfo": false,
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(' Error in processing! ' + textStatus);
+                    }
+                })
+                 
+            },   
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(' Error in processing! ' + textStatus);
+            },
+        })
+            
+            
+            
             
             //Chờ call api load package detail
 //            var html = "";

@@ -99,6 +99,41 @@
             }.divPrice{
                 float: right;
             }
+            
+            button.btn.btn-primary.buttonDetail, input.icheck.checkbox-pk{
+                position: relative;
+                left: 50px;
+            }
+            button.btn.btn-primary.buttonDetail{
+                width: 45%;
+                height: 30px;
+                font-size: 14px;
+            }
+            
+            .btn-danger{
+                width: 15%;
+                height: 30px;
+                font-size: 14px;
+            }
+            
+            button#createExamination.btn.btn-success{
+                width: 100px;
+                height: 30px;
+                font-size: 14px;
+            }
+            div.modal-content.createExam{
+                width: 600px;
+                height: 400px;
+            }
+            textarea.form-control.clss-description-area{
+                height: 180px;
+            }
+            
+            thead {
+                text-align: center;
+                color: #009efb;
+                font-weight: bolder;
+            }
             </style>
     </head>
         <%@include file="components/recepHeader.html" %>
@@ -110,28 +145,85 @@
                         <h4 class="page-title">Select Type Of Test</h4>
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" data-toggle="modal" data-target="#my-modal-add" class="btn btn-primary" style="padding: 10px 15px 10px 15px; font-size: 13px;">Select</button>
+                        <button type="button" data-toggle="modal" data-target="#my-modal-add" class="btn btn-primary" style="padding: 10px 15px 10px 15px; font-size: 13px;">Create Examination</button>
                     </div>
                 </div>
                 <fieldset>
-                    <legend><h2>Test Package</h2></legend>
+                            <div class="">
+
+                <!-- View Package Detail Popup -->
+             
+                <!-- The Modal -->
+              <div class="modal" id="myModalPackageDetail">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Package Detail</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table id="packageDetailTable" class="table table-bordered datatable mb-0">
+
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Male</th>
+                                    <th>Female</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr> 
+                                    <td id="name"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-sm-3 divPrice">
+                            <div class="form-group">
+                                <label><span class="text-danger">Price </span></label>
+                                <input class="form-control inputValue clss-input-price" id='price' name="price" type="number" step=".01" value="0">
+                                <span id='messageChildMin'></span>
+                            </div>
+                        </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger closeButton" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          </div>
+                    
+                    
+                    <legend><h2>Test Packages</h2></legend>
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="">
-                                <table id="patientTable" class="table table-border table-striped custom-table datatable mb-0">
+                                <table id="patientTable" class="table table-bordered datatable mb-0">
                                     <thead>
                                         <tr>
                                             <th style="width: 25%">Name</th>
                                             <th style="width: 40%">Description</th>
-                                            <th style="width: 25%">Price</th>
-                                            <th style="width: 15%" class="text-center">Action</th>
+                                            <!--<th style="width: 25%">Price</th>-->
+                                            <th style="width: 15%" class="text-center packageButton">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td id="name"></td>
                                             <td id="description"></td>
-                                            <td id="price"></td>
+                                            <!--<td id="price"></td>-->
                                             <td>
                                                 <button class="selectPackage"> <a> Select</a> </button>
                                             </td>
@@ -144,7 +236,7 @@
                 </fieldset>
                 
                  <fieldset>
-                     <legend><h2>All Test Indexes</h2></legend>
+                     <legend><h2>Test Indexes</h2></legend>
                     <div class="form-group row">
                     <div class="col-md-12">
                         <div class="">
@@ -204,7 +296,7 @@
         <!-- The Modal ADD-->
         <div class="modal" id="my-modal-add" role="dialog">
             <div class="modal-dialog modal-lg">
-                <div class="modal-content">
+                <div class="modal-content createExam">
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Create Examination</h4>
@@ -296,9 +388,7 @@
     <script type="text/javascript">
         
         window.onload = function () {
-<<<<<<< Updated upstream
-            var token = sessionStorage.getItem("key");         
-=======
+
             var token = sessionStorage.getItem("key");
             var ids = sessionStorage.getItem('listTestId');
             if (ids !== null) {
@@ -350,7 +440,6 @@
 //            });
 
 
->>>>>>> Stashed changes
             $.ajax({
                 type: "GET",
                 dataType: "json",
@@ -364,18 +453,20 @@
                         columns: [
                             {data: 'name'},
                             {data: 'description'},
-                            {data: 'price'},
+//                            {data: 'price'},
                             {
                                 data: 'id',
                                 "render": function (data, type, row, meta) {
-                                    return '<td><div style="display: inline"><button type="button" data-id=' + row.id + ' data-toggle="modal" data-target="#my-modal-Edit" class="btn btn-primary"style="padding-right: 5px">Detail</button>&nbsp &nbsp<input type="checkbox" onchange = "CheckSelectAll(this)" data-id=' + row.id + ' class = "icheck checkbox-pk" /></div></td>'
+                                    return '<td><div style="display: inline"><button type="button" data-id=' + row.id + ' data-toggle="modal" data-target="#myModalPackageDetail" class="btn btn-primary buttonDetail"style="padding-right: 5px"><i class="fa fa-eye"></i> &nbsp;Detail</button>&nbsp &nbsp<input type="checkbox" onchange = "CheckSelectAll(this)" data-id=' + row.id + ' class = "icheck checkbox-pk" /></div></td>'
                                     //return '<td><div style="display: inline"><button type="button" data-id=' + row.id + ' data-toggle="modal" data-target="#my-modal-Edit" class="btn btn-primary"style="padding-right: 5px">Detail</button>&nbsp &nbsp<button type="button" onclick="getpackageId(' + data + ')" class="btn btn-primary">Select</button></div></td>'
                                 }
                             }
                         ],
                         "bDestroy": true,
                         "bFilter": false,
-                        "bSort": false
+                        "bSort": false,
+                        "bLengthChange": false,
+                        "bInfo": false,
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -464,7 +555,9 @@
                                         ],
                                         "bDestroy": true,
                                         "bFilter": false,
-                                        "bSort": false
+                                        "bSort": false,
+                                        "bLengthChange": false,
+                                        "bInfo": false,
                                     });
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
@@ -529,7 +622,9 @@
                             ],
                             "bDestroy": true,
                             "bFilter": false,
-                            "bSort": false
+                            "bSort": false,
+                            "bInfo": false,
+                            
                         });
                     }
                 },
@@ -664,28 +759,103 @@
                 return result;
             }            
         });
-        $("#my-modal-Edit").on('shown.bs.modal', function (e) {
+        $("#myModalPackageDetail").on('shown.bs.modal', function (e) {
             var id = $(e.relatedTarget).data('id');
             var allDataPackage = JSON.parse(localStorage.getItem("allDataPackage"));
             var dataPackage = getObjectByValue(allDataPackage, "id", id);
+            console.log(id);
+            var _totalPrice = 0;
             //For Edit test package
-            if (dataPackage.length > 0) {
-                $("#inputNameEdit").val(dataPackage[0].name);
-                $("#priceEdit").val(dataPackage[0].price);
-                $("#descriptionEdit").val(dataPackage[0].description);
-            }
-            
-            //Chờ call api load package detail
-//            var html = "";
-//            if (data.length > 0) {
-//                html += '<table>';
-//                html += '<tr><td>' + "Danh sách kết quả" + '</<td></tr>';
-//                for (var i = 0; i < data.length; i++) {
-//                    html = '<tr><td>' + data[i].name + '</<td></tr>'
-//                }
-//                html += '</table>';
-//            }
-//            $('.clss-result-data').html(html);
+                 $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    headers: { Authorization: 'Bearer ' + token},
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + id,
+                    success: function (data) {
+                        var a = JSON.stringify(data);
+                        var b = JSON.parse(a);
+                        var mainData = [];
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            contentType: "application/json; charset=UTF-8",
+                            headers: {
+                                Authorization: 'Bearer ' + token},
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" +id,
+                            success: function (data) {
+                            console.log(data);
+                            data.forEach(element => {
+                                var dataShow = new Object();
+                                dataShow.name = element.name;
+                                dataShow.price = element.price;
+                                dataShow.description = element.description;
+                                dataShow.maleIndex = '-';
+                                dataShow.femaleindex = '-';
+                                dataShow.childIndex = '-';                                    
+                                element.samplelst.forEach(e => {
+                                    if (e.type === 'Male' || e.type === 'male') {
+                                        dataShow.maleIndex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } else if (e.type === 'Female' || e.type === 'female') {
+                                        dataShow.femaleindex = e.indexValueMin + '-' + e.indexValueMax;
+                                    } 
+                                });
+                                _totalPrice = _totalPrice + parseFloat(element.price);
+                                mainData.push(dataShow);
+                            });
+                            $('.clss-input-price').val(_totalPrice).trigger('change');
+                            
+//                                $('#testPackageTable').append('<caption style="caption-side: top">' + dataPackage.name + '</caption>');
+                            $('#packageDetailTable').DataTable({                                    
+                            data: mainData,
+                            columns: [
+                                { data: 'name',},
+                                {
+                                    data: 'maleIndex',
+                                    render: function (data, type, row, meta) {
+                                        if ( row.maleIndex === '-9999--9999') {
+                                            return "Âm tính";
+                                        }else{
+                                            return row.maleIndex;
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'femaleindex',
+                                    render: function (data, type, row, meta) {
+                                        if ( row.femaleindex === '-9999--9999') {
+                                            return "Âm tính";
+                                        }else{
+                                            return row.femaleindex;
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'price'
+                                   
+                                },
+                                
+                            ],
+                            "bDestroy": true,
+                            "bFilter": false,
+                            "aaSorting": [],
+                            "bPaginate": false,
+                            "bSort": false,
+                            "bInfo": false,
+                            
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(' Error in processing! ' + textStatus);
+                    }
+                })
+                 
+            },   
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(' Error in processing! ' + textStatus);
+            },
+        })
+
         });
         
         var getObjectByValue = function (array, key, value) {

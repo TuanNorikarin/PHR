@@ -52,7 +52,7 @@
                 </div>
                 <input id="searchPatient" class="custom-seach " type="text" name="search" placeholder=" Search by Phone"
                     required />
-                <button id="buttonPatient">Search</button>
+                <button id="buttonPatient" class="btn btn-primary">Search</button>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="">
