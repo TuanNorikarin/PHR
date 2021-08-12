@@ -142,7 +142,7 @@
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionists",
                     success: function (data) {
                         var a = JSON.stringify(data);
-                        $('#patientTable tbody').on('click', 'td', function ()
+                        $('#patientTable tbody').on('click', 'tr td #delete', function ()
                         {
                             var tr = $(this).closest("tr");
                             var rowindex = tr.index();
@@ -154,7 +154,7 @@
                                 if (value.phone === txtValue) {
                                     
                                     localStorage.setItem("dataRecep", JSON.stringify(value));
-                                    $(document).on('click', '[id^="delete"]', function () {
+//                                    $(document).on('click', '[id^="delete"]', function () {
                                          $.ajax({
                                             type: "DELETE",
                                             dataType: "json",
@@ -172,7 +172,7 @@
                                             }
                                         });
 
-                                    });
+//                                    });
                                 }
                             });
 

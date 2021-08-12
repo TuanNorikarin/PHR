@@ -155,7 +155,7 @@
                         
                         
                         
-                        $('#patientTable tbody').on('click', 'td', function ()
+                        $('#patientTable tbody').on('click', 'tr td #delete', function ()
                         {
                             var tr = $(this).closest("tr");
                             var rowindex = tr.index();
@@ -166,7 +166,7 @@
                             $.each(data, function (index, value) {
                                 if (value.phone === txtValue) {
                                     localStorage.setItem("dataPat", JSON.stringify(value));
-                                    $(document).on('click', '[id^="delete"]', function () {
+//                                    $(document).on('click', '[id^="delete"]', function () {
 //                                        console.log(value);
                                         $.ajax({
                                             type: "DELETE",
@@ -186,7 +186,7 @@
                                             
                                         });
 
-                                    });
+//                                    });
                                 }
                             });
                         }
@@ -220,7 +220,7 @@
                                 {data: 'gender'},
                                 {data: 'status'},
                                 {
-                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "edit-patient.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  <a id="delete" class = "dropdown-item" href = "#" data - toggle = "modal"> <i class = "fa fa-trash-o m-r-5" > </i> Delete</a > </div></div></td>'
+                                    defaultContent: '<td id="actionIcon" class="text-right"><div><a class = "" href = "edit-patient.jsp"> <i class = "fa fa-pencil m-r-5" > </i></a><a id="delete" class = "" href = "#" data - toggle = "modal"> <i class = "fa fa-trash-o m-r-5" > </i> </a ></div></td>'
 
                                 }
                             ],
