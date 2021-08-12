@@ -155,7 +155,7 @@
                         
                         
                         
-                        $('#patientTable tbody').on('click', 'tr td #delete', function ()
+                        $('#patientTable tbody').on('click', 'td', function ()
                         {
                             var tr = $(this).closest("tr");
                             var rowindex = tr.index();
@@ -166,7 +166,7 @@
                             $.each(data, function (index, value) {
                                 if (value.phone === txtValue) {
                                     localStorage.setItem("dataPat", JSON.stringify(value));
-//                                    $(document).on('click', '[id^="delete"]', function () {
+                                    $(document).on('click', '#delete', function () {
 //                                        console.log(value);
                                         $.ajax({
                                             type: "DELETE",
@@ -186,7 +186,7 @@
                                             
                                         });
 
-//                                    });
+                                    });
                                 }
                             });
                         }

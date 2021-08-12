@@ -142,7 +142,7 @@
                     url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/receptionists/receptionists",
                     success: function (data) {
                         var a = JSON.stringify(data);
-                        $('#patientTable tbody').on('click', 'tr td #delete', function ()
+                        $('#patientTable tbody').on('click', 'td', function ()
                         {
                             var tr = $(this).closest("tr");
                             var rowindex = tr.index();
@@ -154,7 +154,7 @@
                                 if (value.phone === txtValue) {
                                     
                                     localStorage.setItem("dataRecep", JSON.stringify(value));
-//                                    $(document).on('click', '[id^="delete"]', function () {
+                                    $(document).on('click', '#delete', function () {
                                          $.ajax({
                                             type: "DELETE",
                                             dataType: "json",
@@ -172,7 +172,7 @@
                                             }
                                         });
 
-//                                    });
+                                    });
                                 }
                             });
 
@@ -200,7 +200,7 @@
                                 {data: 'phone'},
                                 {data: 'status'},
                                 {
-                                    defaultContent: '<td id="actionIcon" class="text-right"><div class ="dropdown dropdown-action"><a href = "#" class="action-icon dropdown-toggle" data-toggle = "dropdown" aria-expanded = "false"> <i class = "fa fa-ellipsis-v" > </i></a><div id = "d" class = "dropdown-menu dropdown-menu-right" ><a class = "dropdown-item" href = "edit-reception.jsp"> <i class = "fa fa-pencil m-r-5" > </i> Edit</a>  <a id ="delete" class = "dropdown-item" href = "#" data - toggle = "modal"> <i class = "fa fa-trash-o m-r-5" > </i> Delete</a > </div></div></td>'
+                                    defaultContent: '<td id="actionIcon" class="text-right"><div><a class = "" href = "edit-reception.jsp"> <i class = "fa fa-pencil m-r-5" > </i> </a>  <a id ="delete" class = "" href = "#" data - toggle = "modal"> <i class = "fa fa-trash-o m-r-5" > </i> </a ></div></td>'
 
                                 }
                             ],
