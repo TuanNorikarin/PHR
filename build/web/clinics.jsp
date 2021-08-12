@@ -200,7 +200,7 @@
                                                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/ratings/" + item.id, // cần api tìm phòng khám theo clinic
                                                             success: function (value) {
                                                                     
-                                                                    localStorage.setItem("rating", JSON.stringify(value));
+                                                                    sessionStorage.setItem("rating", JSON.stringify(value));
                                                                     console.log(value);
                                                                     if (value.length !== 0) {
                                                                     var count = 0;

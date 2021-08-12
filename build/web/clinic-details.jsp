@@ -72,6 +72,9 @@
 
 
             }
+            .fa.fa-trash-o.m-r-5{
+                cursor: pointer;
+            }
         </style>
     </head>
 
@@ -168,33 +171,19 @@
         <script src="assets/js/jquery.slimscroll.js"></script>
         <script src="assets/js/app.js"></script>
         <script>
-            function disableComment(id) {
-            var token = sessionStorage.getItem("key");
-               $.ajax({
-                    type: "PUT",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    headers: {Authorization: 'Bearer ' + token},
-                    beforeSend:function(){
-                             return confirm("Are you sure?");
-                     },
-                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/rating/" + id + "?status=disable",
-                    complete: function (jqXHR) {
-                        window.location.href = "clinic-details.jsp";
-                    }
-                });
-            };
+            
 
         </script>
         <script  type="text/javascript">
-
+            var token = sessionStorage.getItem("key");
+            
             window.onload = function () {
                 
                 var clinicID = JSON.parse(localStorage.getItem("clinicID"));
                 console.log(clinicID +" id");
-               
-                var rating = JSON.parse(localStorage.getItem("rating"));
-                console.log(" Tổng số lần rate" + rating.length);
+               var rating = JSON.parse(sessionStorage.getItem("rating"));
+               console.log(" Tổng số lần rate" + rating.length);
+                
                 
                 $.ajax({
                    type: "GET",
@@ -225,6 +214,7 @@
                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/ratings/" +clinicID,
 //                                                        
                     success: function (value) { 
+                        
                         console.log(value);
                         
                         var x = "";
@@ -267,7 +257,7 @@
                             y += '<li><div class="comment"><div class="comment-author">'
                                     + '<img class="avatar" alt="" src=' + rating[j].image + '></div>'
                                     + '<div class="comment-block"><span class="comment-by">'
-                                    + '<span class="blog-author-name">' + rating[j].name + '</span>&nbsp &nbsp<span onclick="disableComment('+ rating[j].id +')"><i class="fa fa-eye"></i></span></span>'
+                                    + '<span class="blog-author-name">' + rating[j].name + '</span>&nbsp &nbsp<span onclick="disableComment('+ rating[j].id +')"><i class = "fa fa-trash-o m-r-5" ></i></span></span>'
                                     + '<p>' + rating[j].comment + '</p>'
                                     + '<span class="blog-date">' + time[0] + '</span></div></div></li>';
                         }
@@ -283,6 +273,22 @@
                 
                 }});
             }
+            function disableComment(id) {
+            
+               $.ajax({
+                    type: "PUT",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    headers: {Authorization: 'Bearer ' + token},
+                    beforeSend:function(){
+                             return confirm("Are you sure?");
+                     },
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/ratings/rating/" + id + "?status=disable",
+                    complete: function (jqXHR) {
+                        window.location.href = "clinic-details.jsp";
+                    }
+                });
+            };
         </script>
 
     </body>
