@@ -761,10 +761,7 @@
                 $('.clss-group-duplicate').css("display", "block");
             }
             var idsitempk = [];
-            var itemIds = itemSave.map(m=> m.id);
-            for (i = 0; i < itemSave.length; ++i) {
-                itemIds.push(parseInt(itemSave[i].id));
-            }
+            var itemIds = itemSave.map(m=> m.id);  
             $('#createExamination').click(function (event) { 
                 var token = sessionStorage.getItem("key");  
                 var selected = $('#doctorName').find('option:selected').val();
