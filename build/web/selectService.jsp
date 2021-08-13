@@ -130,7 +130,7 @@
             }
             
             thead {
-                text-align: center;
+                
                 color: #009efb;
                 font-weight: bolder;
             }
