@@ -249,7 +249,7 @@
                                                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/doctors/doctor/" + values,
                                                         complete: function (jqXHR) {
                                                             if (jqXHR.status === 200 || jqXHR.status === 201) {
-                                                                window.location.href = "hahaha.jsp";
+                                                                window.location.href = "doctor.jsp";
                                                             }
                                                         }
                                                     });

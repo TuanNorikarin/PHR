@@ -1,0 +1,22 @@
+SMAP
+doctors_jsp.java
+JSP
+*S JSP
+*F
++ 0 doctors.jsp
+doctors.jsp
++ 1 header.html
+components/header.html
++ 2 sidebar.html
+components/sidebar.html
++ 3 recepFooter.html
+components/recepFooter.html
+*L
+1,91:51
+1#1,111:142
+91#0,2:253
+1#2,115:255
+92#0,48:370
+1#3,215:418
+139#0,173:632
+*E
