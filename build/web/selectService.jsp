@@ -63,7 +63,6 @@
                 transform: scale(1.5);
                 -ms-transform: scale(1.5);
                 -webkit-transform: scale(1.5);
-
             }a:not([href]):not([tabindex]) {
                 color: white;
                 text-decoration: none;
@@ -83,7 +82,6 @@
                 transform: scale(1.5);
                 -ms-transform: scale(1.5);
                 -webkit-transform: scale(1.5);
-
             }a:not([href]):not([tabindex]) {
                 color: white;
                 text-decoration: none;
@@ -797,12 +795,10 @@
                             url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/notification",
                             complete: function (jqXHR) {
                                 if (jqXHR.status === 200) {
-
                                     alertify.alert('Create Examination Successfully!');
                                      setTimeout(function(){
                                          window.location.href = "receptionistPatients.jsp";
                                  },1700);
-
                                 }
                             }});
                         }
@@ -923,7 +919,6 @@
                 console.log(' Error in processing! ' + textStatus);
             },
         })
-
         });
         
         var getObjectByValue = function (array, key, value) {
@@ -940,16 +935,12 @@
                 $('.checkbox-pk').each(function () { this.checked = false; }).trigger('change');
             }
         });
-
-
         function CheckSelectAll(e) {
             if ($(".checkbox-pk").length == $(".checkbox-pk:checked").length)
                 $("#id_CheckAll").prop('checked', true);
             else
                 $("#id_CheckAll").prop('checked', false);
         };
-
-
     </script>
     
 </body>
