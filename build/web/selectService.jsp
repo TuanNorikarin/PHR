@@ -203,37 +203,35 @@
               </div>
             </div>
           </div>
-          </div>
-                    
-                    
-                    <legend><h2>Test Packages</h2></legend>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="">
-                                <table id="patientTable" class="table table-bordered datatable mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 25%">Name</th>
-                                            <th style="width: 40%">Description</th>
-                                            <!--<th style="width: 25%">Price</th>-->
-                                            <th style="width: 15%" class="text-center packageButton">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td id="name"></td>
-                                            <td id="description"></td>
-                                            <!--<td id="price"></td>-->
-                                            <td>
-                                                <button class="selectPackage"> <a> Select</a> </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+          </div> 
+                <legend><h2>Test Packages</h2></legend>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="">
+                            <table id="patientTable" class="table table-bordered datatable mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 25%">Name</th>
+                                        <th style="width: 40%">Description</th>
+                                        <!--<th style="width: 25%">Price</th>-->
+                                        <th style="width: 15%" class="text-center packageButton">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="name"></td>
+                                        <td id="description"></td>
+                                        <!--<td id="price"></td>-->
+                                        <td>
+                                            <button class="selectPackage"> <a> Select</a> </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </fieldset>
+                </div>
+            </fieldset>
                 
                  <fieldset>
                      <legend><h2>Test Indexes</h2></legend>
@@ -322,7 +320,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button id="createExamination" type="button" class="btn btn-success">Create</button>
+                        <button type="button" class="btn btn-success" onclick="showModalOrder()">Create</button>
                     </div>
                 </div>
             </div>
@@ -372,6 +370,65 @@
             </div>
         </div>
         
+        <!-- The Modal order-->
+        <div class="modal" id="my-modal-order" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirm Package</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="content">
+                            <fieldset>
+                                <legend>List item order</legend>
+                                <div class="clss-group-order">
+                                    <table class="table tab-content table-border">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%">.No</th>
+                                                <th>Name</th>
+                                                <th style="width: 8%">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="data-group-save">
+
+                                        </tbody>
+                                    </table>
+                                </div> 
+                            </fieldset>
+                            
+                            <hr />
+                            <fieldset class="clss-group-duplicate" style="display: none">
+                                <legend>List item duplicate</legend>
+                                <div>
+                                    <table class="table tab-content table-border">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%">.No</th>
+                                                <th>Name</th>
+                                                <th style="width: 8%">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="data-group-duplicate">
+
+                                        </tbody>
+                                    </table>
+                                </div> 
+                            </fieldset>                            
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button id="createExamination" type="button" class="btn btn-success">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     <%@include file="components/recepFooter.html" %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="assets/js/jquery-3.2.1.min.js"></script>
@@ -385,61 +442,19 @@
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
     <script src="assets/js/app.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript">              
+        var allItems = [];         
+        var itemSave = [];
+        var itemDuplicate = [];
         
         window.onload = function () {
-
             var token = sessionStorage.getItem("key");
             var ids = sessionStorage.getItem('listTestId');
             if (ids !== null) {
                 var listTestId = ids.split(",");
             }
-            
-            
-            
             console.log(listTestId);
             var listTestDouple = [];
-            
-//            var id = 1;
-//            function getpackageId(id) {
-//            
-//            sessionStorage.setItem('packageId', id);
-//            
-//            }
-//            $.ajax({
-//                type: "GET",
-//                dataType: "json",
-//                contentType: "application/json; charset=UTF-8",
-//                headers: { Authorization: 'Bearer ' + token },
-//                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + 1,
-//                success: function (data) {
-//                    console.log('Data contains: '+data);
-//                    for (var i = 0; i < data.length; i++) {
-//                        let id = data[i].id.toString();
-//                        console.log(typeof (id));
-//                        for (var j = 0; j < listTestId.length; j++) {
-//                            console.log(listTestId[j]);
-//                            if (id === listTestId[j]) {
-//                                listTestDouple.push(j);
-//                            }
-//                        }
-//                    }
-//                    if (listTestDouple.length !== 0) {
-//                        let flag = true;
-//                        while (flag) {
-//                            if (confirm('Some test you choice have been in package, do you want to remove them?')) {
-//                                flag = false;
-//                            } else {
-//                            }
-//                        }
-//                    }
-//                },
-//                error: function (jqXHR, textStatus, errorThrown) {
-//                    console.log(' Error in processing! ' + textStatus);
-//                }
-//            });
-
-
             $.ajax({
                 type: "GET",
                 dataType: "json",
@@ -549,7 +564,7 @@
                                             {
                                                 data: 'id',
                                                 render: function (data, type, row, meta) {
-                                                    return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input checkbox-item" data-id=' + row.id + ' value="' + data + '"id="exampleCheck1"></div></td>'
+                                                    return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input checkbox-item" data-id=' + row.id + ' data-name=' + row.name + ' data-price=' + row.price + ' value="' + data + '"id="exampleCheck1"></div></td>'
                                                 }
                                             },
                                         ],
@@ -616,7 +631,7 @@
                                 {
                                     data: 'id',
                                     render: function (data, type, row, meta) {
-                                        return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input checkbox-item" data-id=' + row.id + ' value="' + data + '"id="exampleCheck1"></div></td>'
+                                        return '<td id="actionIcon" class="text-right"><div class="form-check"><input name="checkBox" type="checkbox" class="form-check-input checkbox-item" data-id=' + row.id + ' data-name=' + row.name + ' data-price=' + row.price + ' value="' + data + '"id="exampleCheck1"></div></td>'
                                     }
                                 },
                             ],
@@ -634,10 +649,18 @@
             })
         };
         
+        function showModalOrder(){
+            var description = $('.clss-description-area').val();         
+            if (description === null || description === "") {
+                alert('Please entering description!')
+            }
+            else {
+                 $("#my-modal-order").modal("show");
+             }
+        }
         
         $("#my-modal-add").on('shown.bs.modal', function (e) {    
-            var token = sessionStorage.getItem("key");        
-            var itemSave = [];
+            var token = sessionStorage.getItem("key");  
             $(document).ready(function () {
                 var cliId = sessionStorage.getItem("clinicID");
                 $.ajax({
@@ -655,11 +678,14 @@
                     }
                 });
             });
-            var idsitempk = [];
             var idsitem = [];
             $('.checkbox-item:checkbox').filter(':checked').each(function (e) {
                 idsitem.push(parseInt($(this).data('id')));
-                itemSave.push(parseInt($(this).data('id')));
+                allItems.push({
+                    "id": parseInt($(this).data('id')),
+                    "name": $(this).data('name'),
+                    "price": $(this).data('price')
+                });
             });
             var idspk = [];
             $('.checkbox-pk:checkbox').filter(':checked').each(function (e) {
@@ -676,11 +702,19 @@
                         url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/package-tests/package-detail/" + _id,
                         success: function (data) {
                             for (var i = 0; i < data.length; i++) {
-                                itemSave.push(data[i].id);
+                                allItems.push({
+                                    "id": data[i].id,
+                                    "name": data[i].name,
+                                    "price": data[i].price,
+                                });
                             }                            
-                            if (itemSave .length > 0) {
-                                itemSave = itemSave.filter(function (value, index, array) { 
-                                    return array.indexOf(value) === index;
+                            if (allItems .length > 0) {
+                                //itemSave = itemSave.filter((value, index, array)=>array.findIndex(t=>(t.id === v.id))===i)
+                                itemSave = allItems.filter(function (value, index, array) { 
+                                    return array.findIndex(t=> (t.id === value.id)) === index;
+                                });
+                                itemDuplicate = allItems.filter(function (value, index, array) { 
+                                    return array.findIndex(t=> (t.id === value.id)) != index;
                                 });
                             }
                         },
@@ -689,57 +723,90 @@
                         }
                     });
                 }
+            }      
+        });
+        
+        $("#my-modal-order").on('shown.bs.modal', function (e) {  
+            var _totalPrice = 0;
+            if (itemSave.length > 0) {
+                var html = "";
+                var index = 1;
+                for (var i = 0; i < itemSave.length; i++) {    
+                    html += "<tr>"; 
+                    html += "<td class=''>" + index + "</td>";
+                    html += "<td>" + itemSave[i].name + "</td>";
+                    html += "<td>" + itemSave[i].price + "</td>";                    
+                    html += "</tr>";
+                    _totalPrice = _totalPrice + itemSave[i].price;
+                    index = index + 1;
+                }
+                html = html + "<tr>";
+                html = html + "<td colspan ='2' style='text-align: right'><span style='color: red;'><strong>Total price:</strong></span></td>";
+                html = html + "<td>" + _totalPrice + "</td>";
+                html = html + "</tr>";
+                $('#data-group-save').html(html);
             }
-            
+            if (itemDuplicate.length > 0) {
+                var html = "";
+                var index = 1;
+                for (var i = 0; i < itemDuplicate.length; i++) {    
+                    html += "<tr>"; 
+                    html += "<td class=''>" + index + "</td>";
+                    html += "<td>" + itemDuplicate[i].name + "</td>";
+                    html += "<td>" + itemDuplicate[i].price + "</td>";                    
+                    html += "</tr>";
+                    index = index + 1;
+                }
+                $('#data-group-duplicate').html(html);
+                $('.clss-group-duplicate').css("display", "block");
+            }
+            var idsitempk = [];
+            var itemIds = itemSave.map(m=> m.id);  
             $('#createExamination').click(function (event) { 
+                var token = sessionStorage.getItem("key");  
                 var selected = $('#doctorName').find('option:selected').val();
                 var description = $('.clss-description-area').val();
                 var patientId = parseInt(checkNull(sessionStorage.getItem('patientId')));
                 var doctorId = parseInt(selected.split("-")[0]);
-                var doctorAccountId = parseInt(selected.split("-")[1]);                
-                if (description === null || description === "") {
-                    alert('Please entering description!')
-                }
-                else {
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        headers: { Authorization: 'Bearer ' + token },
-                        data: JSON.stringify({
-                            "description": description,
-                            "doctorId": doctorId,
-                            "packageId": idsitempk,
-                            "patientId": patientId,
-                            "testId": itemSave,
-                        }),
-                        url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
-                        complete: function (jqXHR) {
-                            debugger
-                            if (jqXHR.status === 200) {
-                                $.ajax({
-                                type: "POST",
-                                dataType: "json",
-                                contentType: "application/json; charset=utf-8",
-                                headers: {Authorization: 'Bearer ' + token},
-                                data: JSON.stringify({
-                                    "accountId": doctorAccountId,
-                                    "message": "You have a new patient"
-                                }),
-                                url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/notification",
-                                complete: function (jqXHR) {
-                                    if (jqXHR.status === 200) {
+                var doctorAccountId = parseInt(selected.split("-")[1]); 
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    headers: { Authorization: 'Bearer ' + token },
+                    data: JSON.stringify({
+                        "description": description,
+                        "doctorId": doctorId,
+                        "packageId": idsitempk,
+                        "patientId": patientId,
+                        "price": _totalPrice,
+                        "testId": itemIds,
+                    }),
+                    url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/examinations/examination",
+                    complete: function (jqXHR) {
+                        if (jqXHR.status === 200) {
+                            $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            headers: {Authorization: 'Bearer ' + token},
+                            data: JSON.stringify({
+                                "accountId": doctorAccountId,
+                                "message": "You have a new patient"
+                            }),
+                            url: "http://14.161.47.36:8080/PHR_System-0.0.1-SNAPSHOT/commons/notification",
+                            complete: function (jqXHR) {
+                                if (jqXHR.status === 200) {
 
-                                        alertify.alert('Create Examination Successfully!');
-                                         setTimeout(function(){
-                                             window.location.href = "receptionistPatients.jsp";
-                                     },1700);
+                                    alertify.alert('Create Examination Successfully!');
+                                     setTimeout(function(){
+                                         window.location.href = "receptionistPatients.jsp";
+                                 },1700);
 
-                                    }
-                                }});
-                            }
-                        }});
-                    }
+                                }
+                            }});
+                        }
+                    }});
             });
             function checkNull(data) {
                 if (data === null) {
@@ -759,6 +826,7 @@
                 return result;
             }            
         });
+        
         $("#myModalPackageDetail").on('shown.bs.modal', function (e) {
             var id = $(e.relatedTarget).data('id');
             var allDataPackage = JSON.parse(localStorage.getItem("allDataPackage"));
